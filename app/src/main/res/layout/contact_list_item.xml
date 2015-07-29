@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@null">
+
+    <TextView
+        android:id="@+id/catalog"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/login_register_press"
+        android:textColor="@color/white"
+        android:layout_weight="1.0"
+        android:paddingLeft="15dip"
+        android:paddingTop="5dip"
+        android:paddingBottom="5dip"
+        android:text="A"/>
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/contact_item_bg"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_margin="2dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/contact_user_photo"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="New Text"
+                    android:textSize="20dp"
+                    android:id="@+id/contact_user_name"
+                    android:textColor="@color/text_hint"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/contact_user_photo" />
+
+            </RelativeLayout>
+        
+    </LinearLayout>
+
+</LinearLayout>

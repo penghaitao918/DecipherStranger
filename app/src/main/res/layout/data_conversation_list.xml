@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@null">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/login_button_bg"
+        android:layout_gravity="center_horizontal">
+
+        <RelativeLayout
+            android:layout_margin="5dp"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="5dp"
+                android:id="@+id/conversationPortrait"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"/>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:layout_toRightOf="@+id/conversationPortrait">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="New Text"
+                    android:textSize="20dp"
+                    android:id="@+id/conversationName"
+                    android:textColor="@color/text_checked"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@+id/conversationTime"
+                    android:layout_toStartOf="@+id/conversationTime" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="New Text"
+                    android:textSize="10dp"
+                    android:textColor="@color/text_hint"
+                    android:id="@+id/conversationTime"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="New Text"
+                    android:id="@+id/conversationMessage"
+                    android:textSize="16dp"
+                    android:maxLines="1"
+                    android:textColor="@color/text_hint"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@+id/conversationTime"
+                    android:layout_toStartOf="@+id/conversationTime" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/conversationTime">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:id="@+id/countImage"
+                        android:src="@drawable/badge_ifaux"
+                        android:layout_centerVertical="true"
+                        android:layout_centerHorizontal="true"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="1"
+                        android:id="@+id/count"
+                        android:layout_centerVertical="true"
+                        android:layout_centerHorizontal="true" />
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+        
+    </LinearLayout>
+    
+</LinearLayout>
