@@ -15,16 +15,16 @@ import com.android.decipherstranger.util.MyStatic;
  * 　│　Z ＿,＜　／　　 /`ヽ
  * 　│　　　　　ヽ　　 /　　〉
  * 　 Y　　　　　`　 /　　/
- * 　?●　?　●　　??〈　　/
+ * 　ｲ●　､　●　　⊂⊃〈　　/
  * 　()　 へ　　　　|　＼〈
- * 　　>? ?_　 ィ　 │ ／／      去吧！
- * 　 / へ　　 /　?＜| ＼＼        比卡丘~
- * 　 ヽ_?　　(_／　 │／／           消灭代码BUG
+ * 　　>ｰ ､_　 ィ　 │ ／／      去吧！
+ * 　 / へ　　 /　ﾉ＜| ＼＼        比卡丘~
+ * 　 ヽ_ﾉ　　(_／　 │／／           消灭代码BUG
  * 　　7　　　　　　　|／
- * 　　＞―r￣￣`?―＿
+ * 　　＞―r￣￣`ｰ―＿
  *
  * @author penghaitao
- * @version V1.0
+ * @version V1.1
  * @Date 2015/7/28 13:39
  * @e-mail 785351408@qq.com
  */

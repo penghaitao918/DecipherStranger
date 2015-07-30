@@ -25,7 +25,7 @@ import com.android.decipherstranger.util.MyStatic;
  * 　　＞―r￣￣`ｰ―＿
  *
  * @author penghaitao
- * @version V1.0
+ * @version V1.1
  * @Date 2015/7/28 15:53
  * @e-mail 785351408@qq.com
  */
