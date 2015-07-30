@@ -1,6 +1,10 @@
 package com.android.decipherstranger.activity.LifeActivity;
 
+import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -49,12 +53,21 @@ public class MainActivity extends BaseActivity {
     private SimpleAdapter simpleAdapter = null;
     private ArrayList<Map<String, Object>> list = null;
 
+    private LifeMainBroadcastReceiver receiver = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_life_main);
         this.init();
-        this.setData();
+        this.initData();
+        this.getData();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        super.unregisterReceiver(MainActivity.this.receiver);
     }
 
     private void init() {
@@ -67,10 +80,12 @@ public class MainActivity extends BaseActivity {
         topLayout.setFocusable(true);
         topLayout.setFocusableInTouchMode(true);
         topLayout.requestFocus();
+
+        this.LifeMainBroadcas();
     }
 
-    private void setData() {
-        this.list.addAll(this.selectAll());
+    private void initData() {
+        //    this.list.addAll(this.selectAll());
         this.simpleAdapter = new SimpleAdapter(this,
                 this.list,
                 R.layout.list_item_life,
@@ -84,6 +99,15 @@ public class MainActivity extends BaseActivity {
         simpleAdapter.notifyDataSetChanged();
         /*动态计算ListView的高度*/
         this.fixListViewHeight(dataList);
+    }
+
+    private void getData() {
+/*        progressDialog.setMessage("正在努力获取数据...");
+        progressDialog.onStart();
+        progressDialog.show();*/
+        /**
+         * 此处提交获取服务器数据请求
+         */
     }
 
     private class ViewBinderImpl implements SimpleAdapter.ViewBinder {
@@ -180,6 +204,26 @@ public class MainActivity extends BaseActivity {
                 Intent intent4 = new Intent(this,ShareActivity.class);
                 startActivity(intent4);
                 break;
+        }
+    }
+
+
+    private void LifeMainBroadcas() {
+        //动态方式注册广播接收者
+        this.receiver = new LifeMainBroadcastReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(MyStatic.LIFE_MAIN);
+        this.registerReceiver(receiver, filter);
+    }
+
+    public class LifeMainBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(MyStatic.LIFE_MAIN)) {
+                // TODO 将获取的数据赋值到本地
+                list.addAll(selectAll());
+                simpleAdapter.notifyDataSetChanged();
+            }
         }
     }
 }

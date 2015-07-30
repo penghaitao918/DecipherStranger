@@ -60,10 +60,11 @@
     <string name="others">休闲娱乐</string>
     <string name="lifeName">活动名称</string>
     <string name="lifeSpace">活动地点</string>
-    <string name="lifeTime">活动时间</string>
+    <string name="lifeTime">活动日期</string>
     <string name="peopleMax">活动人数</string>
     <string name="timeEnd">报名截止</string>
     <string name="rallySpace">集合地点</string>
+    <string name="rallyTime">集合时间</string>
     <string name="lifePassword">活动口令</string>
     <string name="publish">发 布</string>
     <string name="partake">参 团</string>
