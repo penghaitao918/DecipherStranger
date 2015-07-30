@@ -5,7 +5,7 @@
     android:background="@drawable/main_bg">
 
     <RelativeLayout
-        android:id="@+id/rl_layout"
+        android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/tab"
@@ -78,31 +78,12 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/lifeShare"
-                android:onClick="MyLifeOnClick"
-                android:textColor="@color/text_hint"
-                android:textSize="18dp"
-                android:id="@+id/share"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true" />
-
-        </RelativeLayout>
-
     </LinearLayout>
 
-    <view
-        android:layout_width="wrap_content"
+    <ListView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        class="android.support.v4.view.ViewPager"
-        android:id="@+id/viewPager"
+        android:id="@+id/listView"
         android:layout_gravity="center_horizontal" />
 
 </LinearLayout>

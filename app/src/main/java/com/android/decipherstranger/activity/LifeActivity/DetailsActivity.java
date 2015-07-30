@@ -3,9 +3,11 @@ package com.android.decipherstranger.activity.LifeActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
+import com.android.decipherstranger.activity.Base.MyApplication;
 import com.android.decipherstranger.util.MyStatic;
 
 /**
@@ -30,10 +32,26 @@ import com.android.decipherstranger.util.MyStatic;
  */
 public class DetailsActivity extends BaseActivity {
 
+    private String account = null;
+    private LinearLayout layout = null;
+    private MyApplication application = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_life_details);
+        application = (MyApplication) getApplication();
+        this.init();
+    }
+
+    private void init() {
+        /*
+         * 判断该活动的发起人与当前账号是否一致，如果一致，则隐藏最下方的两个按钮
+         */
+        this.layout = (LinearLayout) super.findViewById(R.id.flag);
+//        if (this.account.equals(application.getAccount())) {
+//            this.layout.setVisibility(View.GONE);
+//        }
     }
 
     public void LifeDetailsOnClick(View view) {
