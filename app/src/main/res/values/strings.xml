@@ -53,6 +53,7 @@
 
     <string name="life">生 活</string>
     <string name="hobby">猜你喜欢</string>
+    <string name="myLife">个人中心</string>
     <string name="send">发 起</string>
     <string name="food">美 食</string>
     <string name="travel">旅 游</string>
@@ -74,4 +75,6 @@
     <string name="addFriend">加为好友</string>
     <string name="lifeTip">请牢记口令</string>
     <string name="lifeShare">晒 图</string>
+    <string name="doShare">分 享</string>
+    <string name="shareTip">来晒晒图分享一下现在的心情吧~</string>
 </resources>

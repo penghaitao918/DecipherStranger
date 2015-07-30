@@ -162,6 +162,8 @@ public class MainActivity extends BaseActivity {
                 break;*/
             /*我的活动*/
             case R.id.mylife:
+                Intent intent1 = new Intent(this,MyLifeActivity.class);
+                startActivity(intent1);
                 break;
             /*发起*/
             case R.id.sendLife:

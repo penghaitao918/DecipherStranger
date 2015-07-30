@@ -1,5 +1,6 @@
 package com.android.decipherstranger.activity.LifeActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -111,6 +112,10 @@ public class ShareActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.life_back_button:
                 onBackPressed();
+                break;
+            case R.id.myShare:
+                Intent intent = new Intent(this,ShareLifeActivity.class);
+                startActivity(intent);
                 break;
         }
     }

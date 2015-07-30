@@ -49,9 +49,14 @@
         <!--生活-详情-->
         <activity android:name=".activity.LifeActivity.DetailsActivity"/>
         <!--生活-口令-->
-        <activity android:name=".activity.LifeActivity.PasswordActivity"/>
+        <activity android:name=".activity.LifeActivity.PasswordActivity"
+            android:theme="@style/MyDialogStyleBottom"/>
         <!--生活-分享-->
         <activity android:name=".activity.LifeActivity.ShareActivity"/>
+        <!--生活-发送分享-->
+        <activity android:name=".activity.LifeActivity.ShareLifeActivity"/>
+        <!--生活-个人中心-->
+        <activity android:name=".activity.LifeActivity.MyLifeActivity"/>
 
         <!-- 摇一摇 -->
         <activity android:name=".activity.SubpageActivity.ShakeActivity" />
@@ -94,7 +99,7 @@
         <!--百度地图Key-->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="Lzh3rZgTDGNbzDAxY6me92lz" />
+            android:value="8jhcIPCZchUbYrwY1OC8mD5f" />
         <!-- 彭海涛 -->
         <!-- android:value="WN8ktA9ihtBXFIHKPszx64G9" -->
         <!-- android:value="8jhcIPCZchUbYrwY1OC8mD5f"-->
