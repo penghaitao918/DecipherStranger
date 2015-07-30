@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/android/decipherstranger/activity/LifeActivity/DetailsActivity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/android/decipherstranger/activity/LifeActivity/PartakeActivity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/android/decipherstranger/activity/LifeActivity/PasswordActivity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/android/decipherstranger/activity/LifeActivity/SendActivity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/android/decipherstranger/activity/LifeActivity/ShareActivity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/android/decipherstranger/view/MyScrollView.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/advertisement.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_life_details.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_life_main.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_life_partake.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_life_send.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_life_share.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/list_item_life.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/list_item_share.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/winpop_life_password.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/winpop_life_sort.xml" charset="GBK" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>

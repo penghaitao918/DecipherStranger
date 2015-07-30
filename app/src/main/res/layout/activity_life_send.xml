@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
+
+    <RelativeLayout
+        android:id="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/tab"
+        android:layout_gravity="center_horizontal">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/life_back_button"
+            android:onClick="LifeSendOnClick"
+            android:background="@null"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/home_btn"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/send"
+            android:textColor="@color/text_hint"
+            android:textSize="20dp"
+            android:layout_margin="10dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView"
+        android:layout_gravity="center_horizontal" >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_gravity="center_horizontal">
+
+                <Button
+                    android:id="@+id/food"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:paddingTop="2dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="2dp"
+                    android:textSize="18dp"
+                    android:layout_margin="10dp"
+                    android:text="@string/food"
+                    android:textColor="@color/black"
+                    android:onClick="LifeSendOnClick"
+                    android:background="@color/white_green"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
+                <Button
+                    android:id="@+id/travel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:text="@string/travel"
+                    android:paddingTop="2dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="2dp"
+                    android:textSize="18dp"
+                    android:layout_margin="10dp"
+                    android:onClick="LifeSendOnClick"
+                    android:background="@color/orange"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/food"
+                    android:layout_toEndOf="@+id/food" />
+
+                <Button
+                    android:id="@+id/others"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:text="@string/others"
+                    android:paddingTop="2dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="2dp"
+                    android:textSize="18dp"
+                    android:layout_margin="10dp"
+                    android:onClick="LifeSendOnClick"
+                    android:background="@color/yellow"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/travel"
+                    android:layout_toEndOf="@+id/travel" />
+            </RelativeLayout>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:imeOptions="actionNext"
+                android:singleLine="true"
+                android:paddingLeft="20dp"
+                android:drawableRight="@null"
+                android:background="@drawable/login_input_bg"
+                android:maxLength="20"
+                android:maxLines="1"
+                android:textColor="@color/text_hint"
+                android:textColorHint="@color/text_hint"
+                android:textSize="22dp"
+                android:onClick="LifeSendOnClick"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="5dp"
+                android:id="@+id/lifeName"
+                android:hint="@string/lifeName"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:imeOptions="actionNext"
+                android:singleLine="true"
+                android:paddingLeft="20dp"
+                android:drawableRight="@null"
+                android:background="@drawable/login_input_bg"
+                android:maxLength="20"
+                android:maxLines="1"
+                android:textColor="@color/text_hint"
+                android:textColorHint="@color/text_hint"
+                android:textSize="22dp"
+                android:onClick="LifeSendOnClick"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="5dp"
+                android:id="@+id/lifeSpace"
+                android:hint="@string/lifeSpace"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:onClick="LifeSendOnClick"
+                android:background="@drawable/login_input_bg"
+                android:layout_centerHorizontal="true"
+                android:paddingLeft="20dp"
+                android:textSize="22dp"
+                android:textColor="@color/text_hint"
+                android:gravity="left|center"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="5dp"
+                android:id="@+id/lifeTime"
+                android:text="@string/lifeTime"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:imeOptions="actionNext"
+                android:singleLine="true"
+                android:paddingLeft="20dp"
+                android:drawableRight="@null"
+                android:background="@drawable/login_input_bg"
+                android:maxLength="20"
+                android:maxLines="1"
+                android:textColor="@color/text_hint"
+                android:textColorHint="@color/text_hint"
+                android:textSize="22dp"
+                android:onClick="LifeSendOnClick"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="5dp"
+                android:id="@+id/lifePeople"
+                android:hint="@string/peopleMax"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:onClick="LifeSendOnClick"
+                android:background="@drawable/login_input_bg"
+                android:layout_centerHorizontal="true"
+                android:paddingLeft="20dp"
+                android:textSize="22dp"
+                android:textColor="@color/text_hint"
+                android:gravity="left|center"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="5dp"
+                android:id="@+id/timeEnd"
+                android:text="@string/timeEnd"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:imeOptions="actionNext"
+                android:singleLine="true"
+                android:paddingLeft="20dp"
+                android:drawableRight="@null"
+                android:background="@drawable/login_input_bg"
+                android:maxLength="20"
+                android:maxLines="1"
+                android:textColor="@color/text_hint"
+                android:textColorHint="@color/text_hint"
+                android:textSize="22dp"
+                android:onClick="LifeSendOnClick"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="5dp"
+                android:id="@+id/rallySpace"
+                android:hint="@string/rallySpace"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:imeOptions="actionNext"
+                android:singleLine="true"
+                android:paddingLeft="20dp"
+                android:drawableRight="@null"
+                android:background="@drawable/login_input_bg"
+                android:maxLength="20"
+                android:maxLines="1"
+                android:textColor="@color/text_hint"
+                android:textColorHint="@color/text_hint"
+                android:textSize="22dp"
+                android:onClick="LifeSendOnClick"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="5dp"
+                android:id="@+id/lifePassword"
+                android:hint="@string/lifePassword"/>
+
+            <Button
+                android:id="@+id/publish"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/login_button_bg"
+                android:text="@string/publish"
+                android:textColor="@color/btn_text"
+                android:textSize="26dp"
+                android:onClick="LifeSendOnClick"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/register_birth_input" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
+import com.android.decipherstranger.activity.LifeActivity.MainActivity;
 import com.android.decipherstranger.activity.SubpageActivity.GameListActivity;
 import com.android.decipherstranger.activity.SubpageActivity.InvitationActivity;
 import com.android.decipherstranger.activity.SubpageActivity.NearbyListViewActivity;
@@ -27,7 +28,9 @@ public class ServicePageActivity extends BaseActivity {
     public void morePageOnClick(View view) {
         switch (view.getId()) {
             case R.id.friends_trends:
-                Toast.makeText(this,"该扩展功能暂未实现，敬请期待~",Toast.LENGTH_SHORT).show();
+                this.intent = new Intent(this, MainActivity.class);
+                this.startActivity(intent);
+            //    Toast.makeText(this,"该扩展功能暂未实现，敬请期待~",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.friends_invitation:
                 this.intent = new Intent(this, InvitationActivity.class);

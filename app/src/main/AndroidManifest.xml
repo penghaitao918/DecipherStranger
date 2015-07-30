@@ -40,6 +40,19 @@
         <activity android:name=".activity.MainPageActivity.UserPageActivity" />
         <activity android:name=".activity.SubpageActivity.UpdateNameActivity" />
 
+        <!--生活-->
+        <activity android:name=".activity.LifeActivity.MainActivity"/>
+        <!--生活-发起-->
+        <activity android:name=".activity.LifeActivity.SendActivity"/>
+        <!--生活-参团-->
+        <activity android:name=".activity.LifeActivity.PartakeActivity"/>
+        <!--生活-详情-->
+        <activity android:name=".activity.LifeActivity.DetailsActivity"/>
+        <!--生活-口令-->
+        <activity android:name=".activity.LifeActivity.PasswordActivity"/>
+        <!--生活-分享-->
+        <activity android:name=".activity.LifeActivity.ShareActivity"/>
+
         <!-- 摇一摇 -->
         <activity android:name=".activity.SubpageActivity.ShakeActivity" />
 
@@ -99,6 +112,8 @@
 
     </application>
 
+    <!-- 显示顶层浮窗 -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <!-- 这个权限用于进行网络定位 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!-- 这个权限用于访问GPS定位 -->
