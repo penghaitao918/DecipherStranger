@@ -52,6 +52,8 @@ import java.util.Map;
  */
 public class MainActivity extends BaseActivity {
 
+    private int count = 0;
+
     private RelativeLayout topLayout = null;
     private ListView dataList = null;
     private SimpleAdapter simpleAdapter = null;
@@ -108,9 +110,9 @@ public class MainActivity extends BaseActivity {
     }
 
     private void getData() {
-//        progressDialog.setMessage("正在努力获取数据...");
-//        progressDialog.onStart();
-//        progressDialog.show();
+        /**
+         * 此处提交获取服务器数据请求
+         */
         if (NetworkService.getInstance().getIsConnected()) {
             String Msg = "type" + ":" + Integer.toString(GlobalMsgUtils.msgLifeMain) + ":" +
                     "account" + ":" + application.getAccount();
@@ -120,9 +122,6 @@ public class MainActivity extends BaseActivity {
             NetworkService.getInstance().closeConnection();
             Log.v("Login", "已经执行T（）方法");
         }
-        /**
-         * 此处提交获取服务器数据请求
-         */
     }
 
     private class ViewBinderImpl implements SimpleAdapter.ViewBinder {
@@ -253,10 +252,11 @@ public class MainActivity extends BaseActivity {
                     String place = intent.getStringExtra("rePlace");
                     setData(type, name, time, place);
                 }else{
-
+                    if (count < 2) {
+                        count++;
+                        getData();
+                    }
                 }
-                //         list.addAll(selectAll());
-                //         simpleAdapter.notifyDataSetChanged();
             }
         }
     }

@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
+import com.android.decipherstranger.entity.LifeInfo;
 
 
 /**
@@ -52,6 +53,7 @@ public class SendActivity extends BaseActivity {
     private Button rallyTime = null;
     private EditText passwordEdit = null;
 
+    private LifeInfo lifeInfo = null;
     private int classRadInt = -1;
     private String timeBtnString = "";
     private int timeBtnInt = 0;
@@ -67,6 +69,8 @@ public class SendActivity extends BaseActivity {
     }
 
     private void init() {
+        this.lifeInfo = new LifeInfo();
+
         this.classRadio = (RadioGroup) super.findViewById(R.id.classRadio);
         this.nameEdit = (EditText) super.findViewById(R.id.lifeName);
         this.spaceEdit = (EditText) super.findViewById(R.id.lifeSpace);
@@ -87,7 +91,15 @@ public class SendActivity extends BaseActivity {
      * 发送数据到服务器
      */
     private void send() {
-        Log.v("A","# Log # success");
+        lifeInfo.setLifeType(classRadInt);
+        lifeInfo.setLifeName(nameEdit.getText().toString());
+        lifeInfo.setLifeSpace(spaceEdit.getText().toString());
+        lifeInfo.setLifeDate(timeBtnString);
+        lifeInfo.setLifePeople(Integer.parseInt(numPeople.getText().toString()));
+        lifeInfo.setLifeName(endTimeString);
+        lifeInfo.setLifeName(rallySpace.getText().toString());
+        lifeInfo.setLifeName(rallyTime.getText().toString());
+        lifeInfo.setLifeName(passwordEdit.getText().toString());
     }
 
     private boolean check() {
