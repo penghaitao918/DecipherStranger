@@ -22,6 +22,7 @@ package com.android.decipherstranger.entity;
  */
 public class LifeInfo {
 
+    private String account = null;
     private String lifeName = null;
     private int lifeType = 0;
     private String lifeDate = null;
@@ -34,6 +35,7 @@ public class LifeInfo {
 
     public LifeInfo() { }
     public LifeInfo(LifeInfo info) {
+        this.account = info.account;
         this.lifeName = info.lifeName;
         this.lifeType = info.lifeType;
         this.lifeDate = info.lifeDate;
@@ -115,5 +117,13 @@ public class LifeInfo {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
     }
 }

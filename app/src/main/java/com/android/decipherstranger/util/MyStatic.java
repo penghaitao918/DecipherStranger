@@ -41,6 +41,7 @@ public class MyStatic {
     public static final String CONVERSATION_BOARD = "com.android.conversation.board";
     public static final String USER_BOARD = "com.android.user.board";
     public static final String LIFE_MAIN = "com.android.life.main";
+    public static final String LIFE_SEND = "com.android.life.send";
     public static final String LIFE_PARTAKE = "com.android.life.partake";
     
     public static final String CONVERSATION_TYPE = "Type";

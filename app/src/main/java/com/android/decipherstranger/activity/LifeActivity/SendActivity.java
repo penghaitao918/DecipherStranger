@@ -3,6 +3,10 @@ package com.android.decipherstranger.activity.LifeActivity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,7 +22,9 @@ import android.widget.Toast;
 
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
+import com.android.decipherstranger.activity.Base.MyApplication;
 import com.android.decipherstranger.entity.LifeInfo;
+import com.android.decipherstranger.util.MyStatic;
 
 
 /**
@@ -43,6 +49,9 @@ import com.android.decipherstranger.entity.LifeInfo;
  */
 public class SendActivity extends BaseActivity {
 
+    private MyApplication application = null;
+    private LifeSendBroadcastReceiver receiver = null;
+
     private RadioGroup classRadio = null;
     private EditText nameEdit = null;
     private EditText spaceEdit = null;
@@ -65,7 +74,14 @@ public class SendActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_life_send);
+        application = (MyApplication) getApplication();
         this.init();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        super.unregisterReceiver(SendActivity.this.receiver);
     }
 
     private void init() {
@@ -81,6 +97,8 @@ public class SendActivity extends BaseActivity {
         this.rallyTime  = (Button) super.findViewById(R.id.rallyTime);
         this.passwordEdit = (EditText) super.findViewById(R.id.lifePassword);
 
+        this.LifeSendBroadcas();
+
         /*锁定聚焦到顶部*/
         classRadio.setFocusable(true);
         classRadio.setFocusableInTouchMode(true);
@@ -91,15 +109,16 @@ public class SendActivity extends BaseActivity {
      * 发送数据到服务器
      */
     private void send() {
+        lifeInfo.setAccount(application.getAccount());
         lifeInfo.setLifeType(classRadInt);
         lifeInfo.setLifeName(nameEdit.getText().toString());
         lifeInfo.setLifeSpace(spaceEdit.getText().toString());
         lifeInfo.setLifeDate(timeBtnString);
         lifeInfo.setLifePeople(Integer.parseInt(numPeople.getText().toString()));
-        lifeInfo.setLifeName(endTimeString);
-        lifeInfo.setLifeName(rallySpace.getText().toString());
-        lifeInfo.setLifeName(rallyTime.getText().toString());
-        lifeInfo.setLifeName(passwordEdit.getText().toString());
+        lifeInfo.setEndTime(endTimeString);
+        lifeInfo.setRallySpace(rallySpace.getText().toString());
+        lifeInfo.setRallyTime(rallyTimeString);
+        lifeInfo.setPassword(passwordEdit.getText().toString());
     }
 
     private boolean check() {
@@ -138,7 +157,7 @@ public class SendActivity extends BaseActivity {
             Toast.makeText(this,"请输入集合地点",Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (rallyTime.getText().toString().equals("")) {
+        if (rallyTimeString.equals("")) {
             rallyTime.requestFocus();
             Toast.makeText(this,"请选择集合时间",Toast.LENGTH_SHORT).show();
             return false;
@@ -219,6 +238,24 @@ public class SendActivity extends BaseActivity {
                     this.send();
                 }
                 break;
+        }
+    }
+
+    private void LifeSendBroadcas() {
+        //动态方式注册广播接收者
+        this.receiver = new LifeSendBroadcastReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(MyStatic.LIFE_SEND);
+        this.registerReceiver(receiver, filter);
+    }
+
+    public class LifeSendBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(MyStatic.LIFE_SEND)) {
+                // TODO 将获取的数据赋值到本地
+
+            }
         }
     }
 

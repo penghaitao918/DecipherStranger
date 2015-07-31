@@ -65,7 +65,8 @@ public class DATABASE extends SQLiteOpenHelper {
                 "  `type` tinyint(1) DEFAULT NULL)";
         db.execSQL(sql);
     }
-    
+
+    //  通讯录
     private void CreateContactsList(SQLiteDatabase db) {
         String sql = "CREATE TABLE `contacts_list` (" +
                 "  `account` varbinary(20) NOT NULL," +
@@ -80,6 +81,11 @@ public class DATABASE extends SQLiteOpenHelper {
                 ") ";
         db.execSQL(sql);
     }
+
+    // 生活
+/*    private void CreateLifeList(SQLiteOpenHelper db) {
+        String sql = ""
+    }*/
     
     private void DropUserTab(SQLiteDatabase db) {
         String sql = "DROP TABLE IF EXISTS user_tab";
