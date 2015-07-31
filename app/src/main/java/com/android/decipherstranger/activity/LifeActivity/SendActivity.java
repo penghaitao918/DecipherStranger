@@ -2,6 +2,7 @@ package com.android.decipherstranger.activity.LifeActivity;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -50,6 +51,7 @@ import com.android.decipherstranger.util.MyStatic;
 public class SendActivity extends BaseActivity {
 
     private MyApplication application = null;
+    private ProgressDialog progressDialog = null;
     private LifeSendBroadcastReceiver receiver = null;
 
     private RadioGroup classRadio = null;
@@ -86,6 +88,7 @@ public class SendActivity extends BaseActivity {
 
     private void init() {
         this.lifeInfo = new LifeInfo();
+        this.progressDialog = new ProgressDialog(this);
 
         this.classRadio = (RadioGroup) super.findViewById(R.id.classRadio);
         this.nameEdit = (EditText) super.findViewById(R.id.lifeName);
@@ -235,6 +238,9 @@ public class SendActivity extends BaseActivity {
             /*发布*/
             case R.id.publish:
                 if (this.check()) {
+                    progressDialog.setMessage("Login...");
+                    progressDialog.onStart();
+                    progressDialog.show();
                     this.send();
                 }
                 break;
@@ -254,6 +260,7 @@ public class SendActivity extends BaseActivity {
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(MyStatic.LIFE_SEND)) {
                 // TODO 将获取的数据赋值到本地
+                progressDialog.dismiss();
 
             }
         }
