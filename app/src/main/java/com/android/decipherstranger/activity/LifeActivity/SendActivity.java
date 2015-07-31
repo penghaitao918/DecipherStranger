@@ -75,7 +75,6 @@ public class SendActivity extends BaseActivity {
     private LocationClient mLocationClient;
     private MyLocationListener mLocationListener;
 
-    private LifeInfo lifeInfo = null;
     private int classRadInt = -1;
     private String timeBtnString = "";
     private int timeBtnInt = 0;
@@ -113,7 +112,6 @@ public class SendActivity extends BaseActivity {
     }
 
     private void init() {
-        this.lifeInfo = new LifeInfo();
         this.progressDialog = new ProgressDialog(this);
 
         this.classRadio = (RadioGroup) super.findViewById(R.id.classRadio);

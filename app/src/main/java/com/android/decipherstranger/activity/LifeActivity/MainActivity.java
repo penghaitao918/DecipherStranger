@@ -232,7 +232,7 @@ public class MainActivity extends BaseActivity {
         simpleAdapter.notifyDataSetChanged();
         dataList.setAdapter(simpleAdapter);
         fixListViewHeight(dataList);
-        System.out.println(list);
+    //    System.out.println(list);
     }
 
 

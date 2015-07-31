@@ -90,7 +90,7 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
 
         this.init();
         this.initData();
-
+        this.getData();
         this.LifePartakeBroadcas();
     }
 
@@ -137,7 +137,7 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
         /*动态跟新ListView*/
         simpleAdapter.notifyDataSetChanged();
         /*动态计算ListView的高度*/
-        this.fixListViewHeight(dataList);
+    //    this.fixListViewHeight(dataList);
     }
 
     private class ViewBinderImpl implements SimpleAdapter.ViewBinder {
@@ -153,29 +153,17 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
         }
     }
 
-    private ArrayList<Map<String, Object>> selectAll (){
-        Bitmap  bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.ds_icon);
-        ArrayList<Map<String, Object>> all = new ArrayList<Map<String, Object>>();
-        for (int i = 0; i < 10; ++ i) {
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put(MyStatic.LIFE_CLASS, bitmap);
-            map.put(MyStatic.LIFE_NAME, "一起去吃饭啊");
-            map.put(MyStatic.LIFE_TIME, "2015/07/28 9:16");
-            map.put(MyStatic.LIFE_SPACE, "长春工业大学");
-            all.add(map);
-        }
-        return all;
-    }
-
     private class OnItemClickListenerImpl implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            int lifeId = (int) list.get(position).get(MyStatic.LIFE_ID);
             Intent intent = new Intent(PartakeActivity.this, DetailsActivity.class);
+            intent.putExtra(MyStatic.LIFE_ID, lifeId);
             startActivity(intent);
         }
     }
 
-    private void fixListViewHeight(ListView listView) {
+/*    private void fixListViewHeight(ListView listView) {
         // 如果没有设置数据适配器，则ListView没有子项，返回。
         ListAdapter listAdapter = listView.getAdapter();
         int totalHeight = 0;
@@ -195,7 +183,7 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
         // params.height设置ListView完全显示需要的高度
         params.height = totalHeight+ (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
-    }
+    }*/
 
     /**
      * 窗口有焦点的时候，即所有的布局绘制完毕的时候，我们来获取购买布局的高度和myScrollView距离父类布局的顶部位置
@@ -286,18 +274,26 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
             /*类别*/
             case R.id.lifeClass:
                this.lifeList.selectAll(this,1);
+                simpleAdapter.notifyDataSetChanged();
+                dataList.setAdapter(simpleAdapter);
                 break;
             /*距离*/
             case R.id.distance:
                 this.lifeList.selectAll(this, 2);
+                simpleAdapter.notifyDataSetChanged();
+                dataList.setAdapter(simpleAdapter);
                 break;
             /*时间*/
             case R.id.time:
                 this.lifeList.selectAll(this, 3);
+                simpleAdapter.notifyDataSetChanged();
+                dataList.setAdapter(simpleAdapter);
                 break;
             /*欢迎度*/
             case R.id.favorite:
                 this.lifeList.selectAll(this,4);
+                simpleAdapter.notifyDataSetChanged();
+                dataList.setAdapter(simpleAdapter);
                 break;
         }
     }

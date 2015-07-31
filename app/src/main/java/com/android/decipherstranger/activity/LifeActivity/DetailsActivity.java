@@ -33,6 +33,7 @@ import com.android.decipherstranger.util.MyStatic;
 public class DetailsActivity extends BaseActivity {
 
     private String account = null;
+    private Intent intent = null;
     private LinearLayout layout = null;
     private MyApplication application = null;
 
@@ -45,6 +46,9 @@ public class DetailsActivity extends BaseActivity {
     }
 
     private void init() {
+        this.intent = getIntent();
+        int type = intent.getIntExtra(MyStatic.LIFE_ID, 0);
+        System.out.println("### " + type);
         /*
          * 判断该活动的发起人与当前账号是否一致，如果一致，则隐藏最下方的两个按钮
          */
