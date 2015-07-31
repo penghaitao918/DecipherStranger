@@ -21,10 +21,12 @@ import android.widget.RelativeLayout;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.android.decipherstranger.Network.NetworkService;
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
 import com.android.decipherstranger.activity.Base.MyApplication;
 import com.android.decipherstranger.entity.LifeInfo;
+import com.android.decipherstranger.util.GlobalMsgUtils;
 import com.android.decipherstranger.util.MyStatic;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -146,18 +148,19 @@ public class SendActivity extends BaseActivity {
      * 发送数据到服务器
      */
     private void send() {
-        lifeInfo.setAccount(application.getAccount());
-        lifeInfo.setLifeType(classRadInt);
-        lifeInfo.setLifeName(nameEdit.getText().toString());
-        lifeInfo.setLifeSpace(spaceEdit.getText().toString());
-        lifeInfo.setLifeDate(timeBtnString);
-        lifeInfo.setLifePeople(Integer.parseInt(numPeople.getText().toString()));
-        lifeInfo.setEndTime(endTimeString);
-        lifeInfo.setRallySpace(rallySpace.getText().toString());
-        lifeInfo.setRallyTime(rallyTimeString);
-        lifeInfo.setPassword(passwordEdit.getText().toString());
-        lifeInfo.setLatitude(mLatitude);
-        lifeInfo.setLongtitude(mLongtitude);
+        if (NetworkService.getInstance().getIsConnected()){
+            String Msg = "type" + ":" + Integer.toString(GlobalMsgUtils.msgSendActivity) + ":" +
+                    "account"+ ":" + application.getAccount() + ":" +"activity_type" +":" +classRadInt +":" +"activity_name"+ ":" +
+                    nameEdit.getText().toString() + ":" + "activity_place"+":"+ spaceEdit.getText().toString()+":"+ "activity_time" +
+                    ":"+timeBtnString+":"+"people_num"+":"+Integer.parseInt(numPeople.getText().toString())+":"+"end_time"+":"+
+                    endTimeString+":"+"set_place"+":"+rallySpace.getText().toString()+":"+"set_time"+":"+rallyTimeString+":"+"activity_password"+
+                    ":"+passwordEdit.getText().toString()+":"+"mLantitude"+":"+ mLatitude+":"+"mLongtitude"+":"+mLongtitude;
+            Log.v("aaaaa", Msg);
+            NetworkService.getInstance().sendUpload(Msg);
+        }else{
+            NetworkService.getInstance().closeConnection();
+            Log.v("发布", "服务器连接失败");
+        }
     }
 
     private boolean check() {
@@ -304,8 +307,11 @@ public class SendActivity extends BaseActivity {
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(MyStatic.LIFE_SEND)) {
                 // TODO 将获取的数据赋值到本地
-                progressDialog.dismiss();
-
+                if (intent.getBooleanExtra("reResult", true)){
+                    progressDialog.dismiss();
+                    Intent it = new Intent(SendActivity.this,MainActivity.class);
+                    startActivity(it);
+                }
             }
         }
     }

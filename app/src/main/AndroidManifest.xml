@@ -99,12 +99,12 @@
         <!--百度地图Key-->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="8jhcIPCZchUbYrwY1OC8mD5f" />
+            android:value="MoFospIwrq9MMDxeRtmLBBL2" />
         <!-- 彭海涛 -->
         <!-- android:value="WN8ktA9ihtBXFIHKPszx64G9" -->
         <!-- android:value="8jhcIPCZchUbYrwY1OC8mD5f"-->
         <!-- 王鑫 -->
-        <!-- android:value="Lzh3rZgTDGNbzDAxY6me92lz" -->
+        <!-- android:value="MoFospIwrq9MMDxeRtmLBBL2" -->
 
         <service
             android:name="com.baidu.location.f"

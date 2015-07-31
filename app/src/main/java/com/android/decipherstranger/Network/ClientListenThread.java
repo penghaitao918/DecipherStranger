@@ -267,6 +267,13 @@ public class ClientListenThread extends Thread {
                             System.out.println("++++++++++" + jsonObj.getString("re_name"));
                             Log.v("Test","发送啦！！！");
                             break;
+                        case GlobalMsgUtils.msgSendActivity:
+                            Intent itSendActivity = new Intent(MyStatic.LIFE_SEND);
+                            if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)){
+                                itSendActivity.putExtra("reResult",true);
+                            }
+                            clContext.sendBroadcast(itSendActivity);
+                            break;
                         default:
                             if(NetworkService.getInstance().getIsConnected()) {
                                 String testNet = "type"+":"+"ping";
