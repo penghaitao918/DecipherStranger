@@ -46,7 +46,6 @@ public class LoginActivity extends BaseActivity {
     private StringUtils stringUtils = null;
     private SQLiteOpenHelper helper = null;
     private UserTabOperate userInfo = null;
-    private ContactsList contactCach = null;
     private LoginBroadcastReceiver receiver = null;
     private ProgressDialog progressDialog = null;
 

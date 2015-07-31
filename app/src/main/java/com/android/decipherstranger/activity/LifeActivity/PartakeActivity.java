@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
@@ -23,6 +24,9 @@ import android.widget.SimpleAdapter;
 
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
+import com.android.decipherstranger.db.DATABASE;
+import com.android.decipherstranger.db.LifeList;
+import com.android.decipherstranger.db.UserTabOperate;
 import com.android.decipherstranger.util.MyStatic;
 import com.android.decipherstranger.view.MyScrollView;
 
@@ -58,6 +62,8 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
     private SimpleAdapter simpleAdapter = null;
     private ArrayList<Map<String, Object>> list = null;
 
+    private SQLiteOpenHelper helper = null;
+    private LifeList lifeList = null;
     private LifePartakeBroadcastReceiver receiver = null;
 
     private MyScrollView myScrollView;
@@ -91,11 +97,13 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        this.lifeList.clear();
         super.unregisterReceiver(PartakeActivity.this.receiver);
     }
 
     private void init() {
 
+        this.helper = new DATABASE(this);
         myScrollView = (MyScrollView) findViewById(R.id.view);
         mBuyLayout = (LinearLayout) findViewById(R.id.sort);
 
@@ -115,7 +123,8 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
     }
 
     private void initData() {
-    //    this.list.addAll(this.selectAll());
+        this.lifeList = new LifeList(this.helper.getReadableDatabase());
+        this.list.addAll(lifeList.selectAll(this,3));
         this.simpleAdapter = new SimpleAdapter(this,
                 this.list,
                 R.layout.list_item_life,
@@ -254,23 +263,10 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
         }
     }
 
-    private void getData(int type) {
-/*        progressDialog.setMessage("正在努力获取数据...");
-        progressDialog.onStart();
-        progressDialog.show();*/
+    private void getData() {
         /**
          * 此处提交获取服务器数据请求
          */
-        switch (type) {
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-        }
     }
 
     public void LifePartakeOnClick(View view) {
@@ -289,19 +285,19 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
                 break;*/
             /*类别*/
             case R.id.lifeClass:
-                getData(1);
+               this.lifeList.selectAll(this,1);
                 break;
             /*距离*/
             case R.id.distance:
-                getData(2);
+                this.lifeList.selectAll(this, 2);
                 break;
             /*时间*/
             case R.id.time:
-                getData(3);
+                this.lifeList.selectAll(this, 3);
                 break;
             /*欢迎度*/
             case R.id.favorite:
-                getData(4);
+                this.lifeList.selectAll(this,4);
                 break;
         }
     }
@@ -319,8 +315,7 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(MyStatic.LIFE_PARTAKE)) {
                 // TODO 将获取的数据赋值到本地
-                list.addAll(selectAll());
-                simpleAdapter.notifyDataSetChanged();
+            //    lifeList.insert(id, name, type, distance, favorite, space, date);
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.android.decipherstranger.activity.MainPageActivity;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;

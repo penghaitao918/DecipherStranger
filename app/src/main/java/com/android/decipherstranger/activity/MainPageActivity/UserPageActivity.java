@@ -1,6 +1,7 @@
 package com.android.decipherstranger.activity.MainPageActivity;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -125,12 +126,11 @@ public class UserPageActivity extends BaseActivity {
                 contacts.clear();
                 conversationList = new ConversationList(this.helper.getWritableDatabase());
                 conversationList.clear();
-                this.finish();
-                System.exit(0);
+                MyApplication.getInstance().exit();
+            //    System.exit(0);
                 break;
         }
     }
-
 
     private class SwitchOnCheckedChangeListenerImpl1 implements CompoundButton.OnCheckedChangeListener {
         @Override

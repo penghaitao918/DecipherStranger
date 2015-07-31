@@ -120,7 +120,7 @@ public class ContactsList {
     }
 
     /*
-     * 删除指定联系人
+     * 删除所有联系人
      */
     public void clear() {
         String delete = "delete from contacts_list";

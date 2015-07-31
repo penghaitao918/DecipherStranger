@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DATABASE extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "ds_chat.db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 1;
     
     public DATABASE(Context context){
         super(context,DATABASE_NAME,null,DATABASE_VERSION);
@@ -22,6 +22,7 @@ public class DATABASE extends SQLiteOpenHelper {
         this.CreateChatRecord(db);
         this.CreateContactsList(db);
         this.CreateRecentContactsTab(db);
+        this.CreateLifeList(db);
     }
 
     @Override
@@ -30,6 +31,7 @@ public class DATABASE extends SQLiteOpenHelper {
         this.DropChatRecord(db);
         this.DropContactsList(db);
         this.DropRecentContactsTab(db);
+        this.DropLifeList(db);
         DATABASE.this.onCreate(db);
     }
     
@@ -83,9 +85,18 @@ public class DATABASE extends SQLiteOpenHelper {
     }
 
     // 生活
-/*    private void CreateLifeList(SQLiteOpenHelper db) {
-        String sql = ""
-    }*/
+    private void CreateLifeList(SQLiteDatabase db) {
+        String sql = "CREATE TABLE `life_list` (" +
+                "  `life_id` int(11) DEFAULT NULL," +
+                "  `life_name` varchar(50) DEFAULT NULL," +
+                "  `life_class` int(10) DEFAULT NULL," +
+                "  `life_distance` double DEFAULT NULL," +
+                "  `life_favorite` int(20) DEFAULT NULL," +
+                "  `life_space` varchar(50) DEFAULT NULL," +
+                "  `life_date` varchar(10) DEFAULT NULL" +
+                ") ";
+        db.execSQL(sql);
+    }
     
     private void DropUserTab(SQLiteDatabase db) {
         String sql = "DROP TABLE IF EXISTS user_tab";
@@ -104,6 +115,11 @@ public class DATABASE extends SQLiteOpenHelper {
     
     private void DropContactsList(SQLiteDatabase db) {
         String sql = "DROP TABLE IF EXISTS `contacts_list`";
+        db.execSQL(sql);
+    }
+
+    private void DropLifeList(SQLiteDatabase db) {
+        String sql = "DROP TABLE IF EXISTS `lifelist`";
         db.execSQL(sql);
     }
 }

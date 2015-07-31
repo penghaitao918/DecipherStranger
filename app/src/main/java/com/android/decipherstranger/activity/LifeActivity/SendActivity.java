@@ -307,8 +307,10 @@ public class SendActivity extends BaseActivity {
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(MyStatic.LIFE_SEND)) {
                 // TODO 将获取的数据赋值到本地
+                System.out.println("### AAA");
                 if (intent.getBooleanExtra("reResult", true)){
                     progressDialog.dismiss();
+                    System.out.println("### DDD");
                     Intent it = new Intent(SendActivity.this,MainActivity.class);
                     startActivity(it);
                 }
