@@ -162,7 +162,9 @@ public class MainActivity extends BaseActivity {
     private class OnItemClickListenerImpl implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            int lifeId = (int) list.get(position).get(MyStatic.LIFE_ID);
             Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+            intent.putExtra(MyStatic.LIFE_ID, lifeId);
             startActivity(intent);
         }
     }
@@ -207,7 +209,7 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    private void setData (int type, String name, String time, String place){
+    private void setData (int lifeId, int type, String name, String time, String place){
         Bitmap bitmap = null;
         switch (type) {
             // 美食
@@ -221,6 +223,7 @@ public class MainActivity extends BaseActivity {
                 break;
         }
         Map<String, Object> map = new HashMap<String, Object>();
+        map.put(MyStatic.LIFE_ID, lifeId);
         map.put(MyStatic.LIFE_CLASS, bitmap);
         map.put(MyStatic.LIFE_NAME, name);
         map.put(MyStatic.LIFE_TIME, time);
@@ -229,6 +232,7 @@ public class MainActivity extends BaseActivity {
         simpleAdapter.notifyDataSetChanged();
         dataList.setAdapter(simpleAdapter);
         fixListViewHeight(dataList);
+        System.out.println(list);
     }
 
 
@@ -246,11 +250,12 @@ public class MainActivity extends BaseActivity {
             if (intent.getAction().equals(MyStatic.LIFE_MAIN)) {
                 // TODO 将获取的数据赋值到本地
                 if (intent.getBooleanExtra("reResult", true)){
-                    int type =intent.getIntExtra("reType", 3);
+                    int lifeId = intent.getIntExtra("reId", 0);
+                    int type = intent.getIntExtra("reType", 3);
                     String name = intent.getStringExtra("reName");
                     String time = intent.getStringExtra("reTime");
                     String place = intent.getStringExtra("rePlace");
-                    setData(type, name, time, place);
+                    setData(lifeId, type, name, time, place);
                 }else{
                     if (count < 2) {
                         count++;
