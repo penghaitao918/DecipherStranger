@@ -26,6 +26,10 @@ import com.android.decipherstranger.activity.Base.BaseActivity;
 import com.android.decipherstranger.activity.Base.MyApplication;
 import com.android.decipherstranger.entity.LifeInfo;
 import com.android.decipherstranger.util.MyStatic;
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 
 
 /**
@@ -64,6 +68,11 @@ public class SendActivity extends BaseActivity {
     private Button rallyTime = null;
     private EditText passwordEdit = null;
 
+    private double mLatitude;
+    private double mLongtitude;
+    private LocationClient mLocationClient;
+    private MyLocationListener mLocationListener;
+
     private LifeInfo lifeInfo = null;
     private int classRadInt = -1;
     private String timeBtnString = "";
@@ -78,6 +87,21 @@ public class SendActivity extends BaseActivity {
         setContentView(R.layout.activity_life_send);
         application = (MyApplication) getApplication();
         this.init();
+        initLocation();
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        if(!mLocationClient.isStarted()){
+            mLocationClient.start();
+        }
+    }
+
+    @Override
+    protected  void onStop(){
+        super.onStop();
+        mLocationClient.stop();
     }
 
     @Override
@@ -108,6 +132,16 @@ public class SendActivity extends BaseActivity {
         classRadio.requestFocus();
     }
 
+    private void initLocation() {
+        mLocationClient = new LocationClient(this);
+        mLocationListener = new MyLocationListener();
+        mLocationClient.registerLocationListener(mLocationListener);
+
+        LocationClientOption option = new LocationClientOption();
+        option.setOpenGps(true);
+        mLocationClient.setLocOption(option);
+    }
+
     /**
      * 发送数据到服务器
      */
@@ -122,6 +156,8 @@ public class SendActivity extends BaseActivity {
         lifeInfo.setRallySpace(rallySpace.getText().toString());
         lifeInfo.setRallyTime(rallyTimeString);
         lifeInfo.setPassword(passwordEdit.getText().toString());
+        lifeInfo.setLatitude(mLatitude);
+        lifeInfo.setLongtitude(mLongtitude);
     }
 
     private boolean check() {
@@ -244,6 +280,14 @@ public class SendActivity extends BaseActivity {
                     this.send();
                 }
                 break;
+        }
+    }
+
+    public class MyLocationListener implements BDLocationListener {
+        @Override
+        public void onReceiveLocation(BDLocation location){
+            mLatitude = location.getLatitude();
+            mLongtitude = location.getLongitude();
         }
     }
 

@@ -32,6 +32,8 @@ public class LifeInfo {
     private String rallySpace = null;
     private String rallyTime = null;
     private String password = null;
+    private double latitude = 0;
+    private double longtitude = 0;
 
     public LifeInfo() { }
     public LifeInfo(LifeInfo info) {
@@ -125,5 +127,21 @@ public class LifeInfo {
 
     public void setAccount(String account) {
         this.account = account;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongtitude() {
+        return longtitude;
+    }
+
+    public void setLongtitude(double longtitude) {
+        this.longtitude = longtitude;
     }
 }
