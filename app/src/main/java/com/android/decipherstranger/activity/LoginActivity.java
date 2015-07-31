@@ -140,9 +140,9 @@ public class LoginActivity extends BaseActivity {
             String password = LoginActivity.this.pawEdit.getText().toString();
             passwordMD5 = stringUtils.MD5(password);
 
-            Intent it = new Intent(LoginActivity.this, MainPageActivity.class);
+/*            Intent it = new Intent(LoginActivity.this, MainPageActivity.class);
             startActivity(it);
-            finish();
+            finish();*/
 
             if (account.equals("")){
                 Toast.makeText(LoginActivity.this, "请输入用户名", Toast.LENGTH_SHORT).show();

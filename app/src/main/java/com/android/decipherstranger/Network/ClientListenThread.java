@@ -255,6 +255,7 @@ public class ClientListenThread extends Thread {
                             Intent itLife = new Intent("com.android.life.main");
                             if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)){
                                 itLife.putExtra("reResult", true);
+                                itLife.putExtra("reType",jsonObj.getInt("re_activity_type"));
                                 itLife.putExtra("reName",jsonObj.getString("re_name"));
                                 itLife.putExtra("reTime",jsonObj.getString("re_time"));
                                 itLife.putExtra("rePlace",jsonObj.getString("re_place"));

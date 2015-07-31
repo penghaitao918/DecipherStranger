@@ -160,20 +160,6 @@ public class MainActivity extends BaseActivity {
         listView.setLayoutParams(params);
     }
 
-    private ArrayList<Map<String, Object>> selectAll (){
-        Bitmap  bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.ds_icon);
-        ArrayList<Map<String, Object>> all = new ArrayList<Map<String, Object>>();
-        for (int i = 0; i < 10; ++ i) {
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put(MyStatic.LIFE_CLASS, bitmap);
-            map.put(MyStatic.LIFE_NAME, "一起去吃饭啊");
-            map.put(MyStatic.LIFE_TIME, "2015/07/28 9:16");
-            map.put(MyStatic.LIFE_SPACE, "长春工业大学");
-            all.add(map);
-        }
-        return all;
-    }
-
     private class OnItemClickListenerImpl implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -222,6 +208,30 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    private void setData (int type, String name, String time, String place){
+        Bitmap bitmap = null;
+        switch (type) {
+            // 美食
+            case 1:bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.ds_icon);
+                break;
+            // 旅游
+            case 2:bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.ds_icon);
+                break;
+            // 休闲娱乐
+            case 3:bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.ds_icon);
+                break;
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put(MyStatic.LIFE_CLASS, bitmap);
+        map.put(MyStatic.LIFE_NAME, name);
+        map.put(MyStatic.LIFE_TIME, time);
+        map.put(MyStatic.LIFE_SPACE, place);
+        list.add(map);
+        simpleAdapter.notifyDataSetChanged();
+        dataList.setAdapter(simpleAdapter);
+        fixListViewHeight(dataList);
+    }
+
 
     private void LifeMainBroadcas() {
         //动态方式注册广播接收者
@@ -236,13 +246,17 @@ public class MainActivity extends BaseActivity {
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(MyStatic.LIFE_MAIN)) {
                 // TODO 将获取的数据赋值到本地
-                if (intent.getBooleanExtra("reResult", false)){
-
+                if (intent.getBooleanExtra("reResult", true)){
+                    int type =intent.getIntExtra("reType", 3);
+                    String name = intent.getStringExtra("reName");
+                    String time = intent.getStringExtra("reTime");
+                    String place = intent.getStringExtra("rePlace");
+                    setData(type, name, time, place);
                 }else{
 
                 }
-                list.addAll(selectAll());
-                simpleAdapter.notifyDataSetChanged();
+                //         list.addAll(selectAll());
+                //         simpleAdapter.notifyDataSetChanged();
             }
         }
     }
