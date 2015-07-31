@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -18,8 +19,11 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 
+import com.android.decipherstranger.Network.NetworkService;
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
+import com.android.decipherstranger.activity.Base.MyApplication;
+import com.android.decipherstranger.util.GlobalMsgUtils;
 import com.android.decipherstranger.util.MyStatic;
 
 import java.util.ArrayList;
@@ -52,6 +56,7 @@ public class MainActivity extends BaseActivity {
     private ListView dataList = null;
     private SimpleAdapter simpleAdapter = null;
     private ArrayList<Map<String, Object>> list = null;
+    private MyApplication application = null;
 
     private LifeMainBroadcastReceiver receiver = null;
 
@@ -59,6 +64,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_life_main);
+        application = (MyApplication) getApplication();
         this.init();
         this.initData();
         this.getData();
@@ -102,9 +108,18 @@ public class MainActivity extends BaseActivity {
     }
 
     private void getData() {
-/*        progressDialog.setMessage("正在努力获取数据...");
-        progressDialog.onStart();
-        progressDialog.show();*/
+//        progressDialog.setMessage("正在努力获取数据...");
+//        progressDialog.onStart();
+//        progressDialog.show();
+        if (NetworkService.getInstance().getIsConnected()) {
+            String Msg = "type" + ":" + Integer.toString(GlobalMsgUtils.msgLifeMain) + ":" +
+                    "account" + ":" + application.getAccount();
+            Log.v("aaaaa", Msg);
+            NetworkService.getInstance().sendUpload(Msg);
+        } else {
+            NetworkService.getInstance().closeConnection();
+            Log.v("Login", "已经执行T（）方法");
+        }
         /**
          * 此处提交获取服务器数据请求
          */
@@ -221,6 +236,11 @@ public class MainActivity extends BaseActivity {
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(MyStatic.LIFE_MAIN)) {
                 // TODO 将获取的数据赋值到本地
+                if (intent.getBooleanExtra("reResult", false)){
+
+                }else{
+
+                }
                 list.addAll(selectAll());
                 simpleAdapter.notifyDataSetChanged();
             }

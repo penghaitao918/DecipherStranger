@@ -251,6 +251,20 @@ public class ClientListenThread extends Thread {
                             }
                             clContext.sendBroadcast(itReInv);
                             break;
+                        case GlobalMsgUtils.msgLifeMain:
+                            Intent itLife = new Intent("com.android.life.main");
+                            if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)){
+                                itLife.putExtra("reResult", true);
+                                itLife.putExtra("reName",jsonObj.getString("re_name"));
+                                itLife.putExtra("reTime",jsonObj.getString("re_time"));
+                                itLife.putExtra("rePlace",jsonObj.getString("re_place"));
+                            }else{
+                                itLife.putExtra("reResult", false);
+                            }
+                            clContext.sendBroadcast(itLife);
+                            System.out.println("++++++++++" + jsonObj.getString("re_name"));
+                            Log.v("Test","发送啦！！！");
+                            break;
                         default:
                             if(NetworkService.getInstance().getIsConnected()) {
                                 String testNet = "type"+":"+"ping";
