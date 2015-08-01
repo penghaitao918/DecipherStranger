@@ -71,6 +71,7 @@ public class DetailsActivity extends BaseActivity {
     private void getData() {
         //  send type
         int type = intent.getIntExtra(MyStatic.LIFE_ID, 0);
+        int lifeClass = intent.getIntExtra(MyStatic.LIFE_CLASS, 0);
         System.out.println("### " + type);
     }
 

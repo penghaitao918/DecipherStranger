@@ -160,8 +160,10 @@ public class MainActivity extends BaseActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             int lifeId = (int) list.get(position).get(MyStatic.LIFE_ID);
+            int lifeClass = (int) list.get(position).get(MyStatic.LIFE_CLASS);
             Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
             intent.putExtra(MyStatic.LIFE_ID, lifeId);
+            intent.putExtra(MyStatic.LIFE_CLASS,lifeClass);
             startActivity(intent);
         }
     }
