@@ -5,12 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.android.decipherstranger.Network.NetworkService;
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
 import com.android.decipherstranger.activity.Base.MyApplication;
+import com.android.decipherstranger.util.GlobalMsgUtils;
 import com.android.decipherstranger.util.MyStatic;
 
 /**
@@ -74,6 +77,16 @@ public class DetailsActivity extends BaseActivity {
         int type = intent.getIntExtra(MyStatic.LIFE_ID, 0);
         int lifeClass = intent.getIntExtra(MyStatic.LIFE_CLASS, 0);
         System.out.println("### " + type);
+        if (NetworkService.getInstance().getIsConnected()){
+            String Msg = "type" +  ":" + GlobalMsgUtils.msgDetialsActivity + ":" +
+                    "activityId" + ":" + type + ":" + "activityType" + ":" + lifeClass +
+                    ":" + "currentAccount" + ":" + account;
+            Log.v("aaaaa", Msg);
+            NetworkService.getInstance().sendUpload(Msg);
+        }else {
+            NetworkService.getInstance().closeConnection();
+            Log.v("Login", "已经执行T（）方法");
+        }
     }
 
     public void LifeDetailsOnClick(View view) {
@@ -101,6 +114,9 @@ public class DetailsActivity extends BaseActivity {
         }
     }
 
+    public void setData(){
+
+    }
     private void LifeDetailsBroadcast() {
         //动态方式注册广播接收者
         this.receiver = new LifeDetailsBroadcastReceiver();
@@ -116,8 +132,7 @@ public class DetailsActivity extends BaseActivity {
                 // TODO 将获取的数据赋值到本地
                 System.out.println("### AAA");
                 if (intent.getBooleanExtra("reResult", true)){
-                //    Intent it = new Intent(SendActivity.this,MainActivity.class);
-                //    startActivity(it);
+                    setData();
                 }
             }
         }
