@@ -7,14 +7,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import com.android.decipherstranger.R;
-import com.android.decipherstranger.entity.Contacts;
 import com.android.decipherstranger.util.MyStatic;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * へ　　　　　／|
@@ -71,6 +68,7 @@ public class LifeList {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put(MyStatic.LIFE_ID,  result.getInt(0));
             map.put(MyStatic.LIFE_NAME, result.getString(1));
+            map.put(MyStatic.LIFE_CLASSINT, result.getInt(2));
             Bitmap bitmap = null;
             switch (result.getInt(2)) {
                 // 美食

@@ -6,18 +6,15 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
@@ -26,13 +23,11 @@ import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
 import com.android.decipherstranger.db.DATABASE;
 import com.android.decipherstranger.db.LifeList;
-import com.android.decipherstranger.db.UserTabOperate;
 import com.android.decipherstranger.util.MyStatic;
 import com.android.decipherstranger.view.MyScrollView;
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -157,10 +152,10 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             int lifeId = (int) list.get(position).get(MyStatic.LIFE_ID);
-            int lifeClass = (int) list.get(position).get(MyStatic.LIFE_CLASS);
+            int lifeType = (int) list.get(position).get(MyStatic.LIFE_CLASSINT);
             Intent intent = new Intent(PartakeActivity.this, DetailsActivity.class);
             intent.putExtra(MyStatic.LIFE_ID, lifeId);
-            intent.putExtra(MyStatic.LIFE_CLASS,lifeClass);
+            intent.putExtra(MyStatic.LIFE_CLASSINT,lifeType);
             startActivity(intent);
         }
     }

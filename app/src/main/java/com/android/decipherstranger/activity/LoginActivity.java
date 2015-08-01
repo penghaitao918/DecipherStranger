@@ -70,13 +70,13 @@ public class LoginActivity extends BaseActivity {
         this.sharedPreferencesUtils = new SharedPreferencesUtils(this, MyStatic.FILENAME_USER);
         initView();
         getCheckBox();
-    }
-    
-    @Override
-    protected void onResume() {
-        super.onResume();
         loginBroadcas();
     }
+    
+/*    @Override
+    protected void onResume() {
+        super.onResume();
+    }*/
     
     @Override
     protected void onDestroy() {

@@ -1,6 +1,5 @@
 package com.android.decipherstranger.activity.LifeActivity;
 
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -160,10 +159,10 @@ public class MainActivity extends BaseActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             int lifeId = (int) list.get(position).get(MyStatic.LIFE_ID);
-            int lifeClass = (int) list.get(position).get(MyStatic.LIFE_CLASS);
+            int lifeType = (int) list.get(position).get(MyStatic.LIFE_CLASSINT);
             Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
             intent.putExtra(MyStatic.LIFE_ID, lifeId);
-            intent.putExtra(MyStatic.LIFE_CLASS,lifeClass);
+            intent.putExtra(MyStatic.LIFE_CLASSINT,lifeType);
             startActivity(intent);
         }
     }
@@ -223,6 +222,7 @@ public class MainActivity extends BaseActivity {
         }
         Map<String, Object> map = new HashMap<String, Object>();
         map.put(MyStatic.LIFE_ID, lifeId);
+        map.put(MyStatic.LIFE_CLASSINT, type);
         map.put(MyStatic.LIFE_CLASS, bitmap);
         map.put(MyStatic.LIFE_NAME, name);
         map.put(MyStatic.LIFE_TIME, time);

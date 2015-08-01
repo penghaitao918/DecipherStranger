@@ -56,6 +56,7 @@ public class ClientListenThread extends Thread {
                     }
                 }
                 if (reMsg != null) {
+                    Log.v("AAA", reMsg);
                     System.out.println(reMsg);
                     JSONObject jsonObj = new JSONObject(reMsg);
                     Log.v("能不能接到aaaaa", reMsg);
@@ -273,6 +274,7 @@ public class ClientListenThread extends Thread {
                             break;
                         case GlobalMsgUtils.msgDetialsActivity:
                             Intent itDetials = new Intent(MyStatic.LIFE_DETAILS);
+                            System.out.println("### AAAAAAAAAAAAA~");
                             if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)){
                                 itDetials.putExtra("reResult",true);
                                 itDetials.putExtra("re_name",jsonObj.getString("re_name"));

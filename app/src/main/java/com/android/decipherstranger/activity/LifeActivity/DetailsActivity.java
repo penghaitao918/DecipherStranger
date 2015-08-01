@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.decipherstranger.Network.NetworkService;
 import com.android.decipherstranger.R;
@@ -38,18 +39,32 @@ import com.android.decipherstranger.util.MyStatic;
  */
 public class DetailsActivity extends BaseActivity {
 
-    private String account = null;
+    private String myAccount = null;
+    private String sendAccount = null;
+    private String password = null;
+    private int lifeId = 0;
+    private int lifeClass = 0;
     private Intent intent = null;
-    private LinearLayout layout = null;
     private MyApplication application = null;
     private LifeDetailsBroadcastReceiver receiver = null;
+
+    private LinearLayout layout = null;
+    private TextView textView1 = null;
+    private TextView textView2 = null;
+    private TextView textView3 = null;
+    private TextView textView4 = null;
+    private TextView textView5 = null;
+    private TextView textView6 = null;
+    private TextView textView7 = null;
+    private TextView textView8 = null;
+    private TextView textView9 = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_life_details);
         application = (MyApplication) getApplication();
-    //    this.init();
+        this.init();
         this.LifeDetailsBroadcast();
         this.getData();
     }
@@ -62,25 +77,27 @@ public class DetailsActivity extends BaseActivity {
 
     private void init() {
         this.intent = getIntent();
-        /*
-         * 判断该活动的发起人与当前账号是否一致，如果一致，则隐藏最下方的两个按钮
-         */
         this.layout = (LinearLayout) super.findViewById(R.id.flag);
-//        if (this.account.equals(application.getAccount())) {
-//            this.layout.setVisibility(View.GONE);
-//        }
+        this.textView1 = (TextView) super.findViewById(R.id.textView11);
+        this.textView2 = (TextView) super.findViewById(R.id.textView22);
+        this.textView3 = (TextView) super.findViewById(R.id.textView33);
+        this.textView4 = (TextView) super.findViewById(R.id.textView44);
+        this.textView5 = (TextView) super.findViewById(R.id.textView55);
+        this.textView6 = (TextView) super.findViewById(R.id.textView66);
+        this.textView7 = (TextView) super.findViewById(R.id.textView77);
+        this.textView8 = (TextView) super.findViewById(R.id.textView88);
+        this.textView9 = (TextView) super.findViewById(R.id.textView99);
     }
 
     private void getData() {
-        //  send type
-        this.account = application.getAccount();
-        int type = intent.getIntExtra(MyStatic.LIFE_ID, 0);
-        int lifeClass = intent.getIntExtra(MyStatic.LIFE_CLASS, 0);
-        System.out.println("### " + type);
+        this.myAccount = application.getAccount();
+        this.lifeId = intent.getIntExtra(MyStatic.LIFE_ID, 0);
+        this.lifeClass = intent.getIntExtra(MyStatic.LIFE_CLASSINT, 0);
+        System.out.println("### " + lifeId);
         if (NetworkService.getInstance().getIsConnected()){
             String Msg = "type" +  ":" + GlobalMsgUtils.msgDetialsActivity + ":" +
-                    "activityId" + ":" + type + ":" + "activityType" + ":" + lifeClass +
-                    ":" + "currentAccount" + ":" + account;
+                    "activityId" + ":" + lifeId + ":" + "activityType" + ":" + lifeClass +
+                    ":" + "currentAccount" + ":" + myAccount;
             Log.v("aaaaa", Msg);
             NetworkService.getInstance().sendUpload(Msg);
         }else {
@@ -104,9 +121,9 @@ public class DetailsActivity extends BaseActivity {
                  */
                 //  发送请求，在广播执行跳转
                 Intent intent = new Intent(this,PasswordActivity.class);
-                intent.putExtra(MyStatic.LIFE_PASSWORD,"233333");
+                intent.putExtra(MyStatic.LIFE_PASSWORD, password);
                 startActivity(intent);
-            //    Toast.makeText(this,"您已报名，无需重复报名",Toast.LENGTH_SHORT).show();
+                //    Toast.makeText(this,"您已报名，无需重复报名",Toast.LENGTH_SHORT).show();
                 break;
             /*加为好友*/
             case R.id.addFriend:
@@ -114,9 +131,24 @@ public class DetailsActivity extends BaseActivity {
         }
     }
 
-    public void setData(){
-
+    public void setData(String name, String date, String place, int people, String endTime, String setPlace, String setTime, int number){
+        textView1.setText(name);
+        textView2.setText(lifeClass);
+        textView3.setText(date);
+        textView4.setText(place);
+        textView5.setText(people);
+        textView6.setText(endTime);
+        textView7.setText(setPlace);
+        textView8.setText(setTime);
+        textView9.setText(number);
+          /*
+         * 判断该活动的发起人与当前账号是否一致，如果一致，则隐藏最下方的两个按钮
+         */
+        if (myAccount.equals(sendAccount)) {
+            layout.setVisibility(View.GONE);
+        }
     }
+
     private void LifeDetailsBroadcast() {
         //动态方式注册广播接收者
         this.receiver = new LifeDetailsBroadcastReceiver();
@@ -130,9 +162,18 @@ public class DetailsActivity extends BaseActivity {
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(MyStatic.LIFE_DETAILS)) {
                 // TODO 将获取的数据赋值到本地
-                System.out.println("### AAA");
                 if (intent.getBooleanExtra("reResult", true)){
-                    setData();
+                    String name = intent.getStringExtra("re_name");
+                    String time = intent.getStringExtra("re_time");
+                    String place = intent.getStringExtra("re_place");
+                    int people = intent.getIntExtra("re_number", 0);
+                    String endTime = intent.getStringExtra("re_end_time");
+                    String setPlace = intent.getStringExtra("re_set_place");
+                    String setTime = intent.getStringExtra("re_set_time");
+                    int number = intent.getIntExtra("re_current_number", 0);
+                    sendAccount = intent.getStringExtra("re_send_account");
+                    password = intent.getStringExtra("re_activity_password");
+                    setData(name,time,place,people,endTime,setPlace,setTime,number);
                 }
             }
         }
