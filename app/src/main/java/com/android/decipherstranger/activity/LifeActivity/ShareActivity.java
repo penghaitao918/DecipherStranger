@@ -150,7 +150,7 @@ public class ShareActivity extends BaseActivity {
             if (intent.getAction().equals(MyStatic.LIFE_SHARE)) {
                 // TODO 将获取的数据赋值到本地
                 if (intent.getBooleanExtra("reResult", true)){
-
+                    count = 3;
                     //    setDataList();
                 }else{
                     if (count < 2) {

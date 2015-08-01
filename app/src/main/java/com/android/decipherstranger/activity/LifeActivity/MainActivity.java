@@ -52,8 +52,6 @@ import java.util.Map;
  */
 public class MainActivity extends BaseActivity {
 
-    private int count = 0;
-
     private RelativeLayout topLayout = null;
     private ListView dataList = null;
     private SimpleAdapter simpleAdapter = null;
@@ -151,11 +149,10 @@ public class MainActivity extends BaseActivity {
             // 计算所有子项的高度和
             totalHeight += listViewItem.getMeasuredHeight();
         }
-
         ViewGroup.LayoutParams params = listView.getLayoutParams();
         // listView.getDividerHeight()获取子项间分隔符的高度
         // params.height设置ListView完全显示需要的高度
-        params.height = totalHeight+ (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
     }
 
@@ -229,10 +226,7 @@ public class MainActivity extends BaseActivity {
         map.put(MyStatic.LIFE_TIME, time);
         map.put(MyStatic.LIFE_SPACE, place);
         list.add(map);
-        simpleAdapter.notifyDataSetChanged();
-        dataList.setAdapter(simpleAdapter);
-        fixListViewHeight(dataList);
-    //    System.out.println(list);
+        //    System.out.println(list);
     }
 
 
@@ -257,10 +251,10 @@ public class MainActivity extends BaseActivity {
                     String place = intent.getStringExtra("rePlace");
                     setData(lifeId, type, name, time, place);
                 }else{
-                    if (count < 2) {
-                        count++;
-                        getData();
-                    }
+                    System.out.println("### 哎哟我去");
+                    simpleAdapter.notifyDataSetChanged();
+                    dataList.setAdapter(simpleAdapter);
+                    fixListViewHeight(dataList);
                 }
             }
         }

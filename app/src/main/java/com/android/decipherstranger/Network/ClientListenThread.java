@@ -26,7 +26,7 @@ public class ClientListenThread extends Thread {
 
     private InputStreamReader inputStreamReader;
     private BufferedReader bufferedReader;
-    
+
     private MyApplication application = null;
 
     public ClientListenThread(Context context, Socket s, MyApplication application) {
@@ -36,27 +36,22 @@ public class ClientListenThread extends Thread {
     }
 
     public void run() {
-        System.out.println("### 我在这里111");
         super.run();
         try {
-            System.out.println("### 我在这里222");
             inputStreamReader = new InputStreamReader(clSocket.getInputStream());
             bufferedReader = new BufferedReader(inputStreamReader);
             String reMsg = new String();
             String test = new String();
             while (true) {
-                System.out.println("### 我在这里333");
-                        while(true){
-                            System.out.println("### 我在这里444");
-                            test = bufferedReader.readLine();
-                            if(test.contains("+++++")){
-                                reMsg += test.substring(0, test.length()-5);
-                                break;
-                            }
-                            else if(test != null){
-                                reMsg += test;
-                            }
-                    else {
+                while(true){
+                    System.out.println("### 我在这里~");
+                    test = bufferedReader.readLine();
+                    if(test.contains("+++++")){
+                        reMsg += test.substring(0, test.length()-5);
+                        break;
+                    } else if(test != null){
+                        reMsg += test;
+                    } else {
                         break;
                     }
                 }
@@ -65,7 +60,7 @@ public class ClientListenThread extends Thread {
                     JSONObject jsonObj = new JSONObject(reMsg);
                     Log.v("能不能接到aaaaa", reMsg);
                     int msgType = jsonObj.getInt("re_type");            // type of message received
-                    System.out.println("++++++++++++这是一条消息" + msgType);
+                    System.out.println("### ++++++++++++这是一条消息" + msgType);
                     switch (msgType) {
                         case GlobalMsgUtils.msgLogin:
                             Intent itLogin = new Intent("com.android.decipherstranger.LOGIN");
@@ -273,9 +268,7 @@ public class ClientListenThread extends Thread {
                             Intent itSendActivity = new Intent(MyStatic.LIFE_SEND);
                             if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)){
                                 itSendActivity.putExtra("reResult",true);
-                                System.out.println("### CCC");
                             }
-                            System.out.println("### BBB");
                             clContext.sendBroadcast(itSendActivity);
                             break;
                         default:

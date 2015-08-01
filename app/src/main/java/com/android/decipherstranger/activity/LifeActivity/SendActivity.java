@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +26,8 @@ import com.android.decipherstranger.Network.NetworkService;
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
 import com.android.decipherstranger.activity.Base.MyApplication;
+import com.android.decipherstranger.activity.LoginActivity;
+import com.android.decipherstranger.activity.MainPageActivity.MainPageActivity;
 import com.android.decipherstranger.entity.LifeInfo;
 import com.android.decipherstranger.util.GlobalMsgUtils;
 import com.android.decipherstranger.util.MyStatic;
@@ -88,11 +91,10 @@ public class SendActivity extends BaseActivity {
         setContentView(R.layout.activity_life_send);
         application = (MyApplication) getApplication();
         this.init();
-        initLocation();
     }
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
         if(!mLocationClient.isStarted()){
             mLocationClient.start();
@@ -103,6 +105,7 @@ public class SendActivity extends BaseActivity {
     protected  void onStop(){
         super.onStop();
         mLocationClient.stop();
+
     }
 
     @Override
@@ -125,6 +128,7 @@ public class SendActivity extends BaseActivity {
         this.passwordEdit = (EditText) super.findViewById(R.id.lifePassword);
 
         this.LifeSendBroadcas();
+        initLocation();
 
         /*锁定聚焦到顶部*/
         classRadio.setFocusable(true);
@@ -275,7 +279,7 @@ public class SendActivity extends BaseActivity {
             /*发布*/
             case R.id.publish:
                 if (this.check()) {
-                    progressDialog.setMessage("Login...");
+                    progressDialog.setMessage("正在提交数据,请稍后...");
                     progressDialog.onStart();
                     progressDialog.show();
                     this.send();
@@ -304,13 +308,14 @@ public class SendActivity extends BaseActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(MyStatic.LIFE_SEND)) {
-                // TODO 将获取的数据赋值到本地
-                System.out.println("### AAA");
                 if (intent.getBooleanExtra("reResult", true)){
-                    progressDialog.dismiss();
-                    System.out.println("### DDD");
-                    Intent it = new Intent(SendActivity.this,MainActivity.class);
-                    startActivity(it);
+                    Handler handler = new Handler();
+                    handler.postDelayed( new Runnable() {
+                        public void run() {
+                            progressDialog.dismiss();
+                            onBackPressed();
+                        }
+                    }, 1500);
                 }
             }
         }
