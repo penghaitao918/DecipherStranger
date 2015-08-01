@@ -43,6 +43,10 @@ public class MyStatic {
     public static final String LIFE_MAIN = "com.android.life.main";
     public static final String LIFE_SEND = "com.android.life.send";
     public static final String LIFE_PARTAKE = "com.android.life.partake";
+    public static final String LIFE_DETAILS = "com.android.life.details";
+    public static final String LIFE_PAW = "com.android.life.password";
+    public static final String LIFE_SHARE = "com.android.life.share";
+    public static final String LIFE_SHARE_DO = "com.android.life.share.do";
     
     public static final String CONVERSATION_TYPE = "Type";
     public static final String CONVERSATION_ACCOUNT = "conversationAccount";

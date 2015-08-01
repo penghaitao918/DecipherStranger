@@ -36,14 +36,18 @@ public class ClientListenThread extends Thread {
     }
 
     public void run() {
+        System.out.println("### 我在这里111");
         super.run();
         try {
+            System.out.println("### 我在这里222");
             inputStreamReader = new InputStreamReader(clSocket.getInputStream());
             bufferedReader = new BufferedReader(inputStreamReader);
             String reMsg = new String();
             String test = new String();
             while (true) {
+                System.out.println("### 我在这里333");
                         while(true){
+                            System.out.println("### 我在这里444");
                             test = bufferedReader.readLine();
                             if(test.contains("+++++")){
                                 reMsg += test.substring(0, test.length()-5);
@@ -264,8 +268,6 @@ public class ClientListenThread extends Thread {
                                 itLife.putExtra("reResult", false);
                             }
                             clContext.sendBroadcast(itLife);
-                            System.out.println("++++++++++" + jsonObj.getString("re_name"));
-                            Log.v("Test","发送啦！！！");
                             break;
                         case GlobalMsgUtils.msgSendActivity:
                             Intent itSendActivity = new Intent(MyStatic.LIFE_SEND);

@@ -1,11 +1,21 @@
 package com.android.decipherstranger.activity.LifeActivity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
+import com.android.decipherstranger.activity.Base.MyApplication;
+import com.android.decipherstranger.util.ChangeUtils;
+import com.android.decipherstranger.util.MyStatic;
 
 /**
  * へ　　　　　／|
@@ -29,10 +39,29 @@ import com.android.decipherstranger.activity.Base.BaseActivity;
  */
 public class ShareLifeActivity extends BaseActivity {
 
+    private EditText editText = null;
+    private ImageButton imageButton = null;
+    private MyApplication application = null;
+    private ShareLifeBroadcastReceiver receiver = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_life_share_do);
+        this.init();
+        this.ShareLifeBroadcas();
+    }
+
+    private void init() {
+        application = (MyApplication) getApplication();
+        this.editText = (EditText) super.findViewById(R.id.editText);
+        this.imageButton = (ImageButton) super.findViewById(R.id.imageButton);
+    }
+
+    private void send() {
+        String account = application.getAccount();
+        String message = editText.getText().toString();
+        Bitmap bitmap = imageButton.getDrawingCache();
     }
 
     public void SendShareOnclick(View view) {
@@ -44,6 +73,27 @@ public class ShareLifeActivity extends BaseActivity {
                 break;
             case R.id.imageButton:
                 break;
+        }
+    }
+
+    private void ShareLifeBroadcas() {
+        //动态方式注册广播接收者
+        IntentFilter filter = new IntentFilter();
+        this.receiver = new ShareLifeBroadcastReceiver();
+        filter.addAction(MyStatic.LIFE_SHARE_DO);
+        this.registerReceiver(receiver, filter);
+    }
+
+    public class ShareLifeBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(MyStatic.LIFE_SHARE_DO)) {
+                if (intent.getBooleanExtra("reResult", true)){
+
+                }else{
+
+                }
+            }
         }
     }
 

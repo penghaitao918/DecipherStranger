@@ -1,17 +1,23 @@
 package com.android.decipherstranger.activity.LifeActivity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 
+import com.android.decipherstranger.Network.NetworkService;
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
+import com.android.decipherstranger.util.GlobalMsgUtils;
 import com.android.decipherstranger.util.MyStatic;
 
 import java.util.ArrayList;
@@ -40,23 +46,27 @@ import java.util.Map;
  */
 public class ShareActivity extends BaseActivity {
 
+    private int count = 0;
     private RelativeLayout topLayout = null;
     private ListView dataList = null;
     private SimpleAdapter simpleAdapter = null;
     private ArrayList<Map<String, Object>> list = null;
+    private LifeShareBroadcastReceiver receiver = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_life_share);
         this.init();
-        this.setData();
+        this.initData();
+        this.LifeShareBroadcas();
+        this.getData();
     }
 
     private void init() {
         this.list = new ArrayList< Map<String, Object> >();
         this.dataList = (ListView) super.findViewById(R.id.lifeShare);
-    //    this.dataList.setOnItemClickListener(new OnItemClickListenerImpl());
+        //    this.dataList.setOnItemClickListener(new OnItemClickListenerImpl());
 
         /*锁定聚焦到顶部*/
         topLayout = (RelativeLayout) super.findViewById(R.id.top);
@@ -65,8 +75,8 @@ public class ShareActivity extends BaseActivity {
         topLayout.requestFocus();
     }
 
-    private void setData() {
-        this.list.addAll(this.selectAll());
+    private void initData() {
+        //    this.list.addAll(this.selectAll());
         this.simpleAdapter = new SimpleAdapter(this,
                 this.list,
                 R.layout.list_item_share,
@@ -78,6 +88,14 @@ public class ShareActivity extends BaseActivity {
         this.dataList.setAdapter(simpleAdapter);
         /*动态跟新ListView*/
         simpleAdapter.notifyDataSetChanged();
+    }
+
+
+    private void getData() {
+        /**
+         * 此处提交获取服务器数据请求
+         */
+
     }
 
     private class ViewBinderImpl implements SimpleAdapter.ViewBinder {
@@ -93,19 +111,17 @@ public class ShareActivity extends BaseActivity {
         }
     }
 
-    private ArrayList<Map<String, Object>> selectAll (){
-        Bitmap  bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.ds_icon);
-        ArrayList<Map<String, Object>> all = new ArrayList< Map<String, Object> >();
-        for (int i = 0; i < 5; ++ i) {
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put(MyStatic.SHARE_PORTRAIT, bitmap);
-            map.put(MyStatic.SHARE_NAME, "我是小涛啊");
-            map.put(MyStatic.SHARE_MESSAGE, "今天风好大，把我吹成了傻逼-。-凑点字数看能不能出现第二行QAQ");
-            map.put(MyStatic.SHARE_PHOTO, bitmap);
-            map.put(MyStatic.SHARE_TIME, "2015/07/28 18:14");
-            all.add(map);
-        }
-        return all;
+    private void setDataList (Bitmap portrait, String account, String message, Bitmap photo, String time){
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put(MyStatic.SHARE_PORTRAIT, portrait);
+        map.put(MyStatic.SHARE_NAME, account);
+        map.put(MyStatic.SHARE_MESSAGE, message);
+        map.put(MyStatic.SHARE_PHOTO, photo);
+        map.put(MyStatic.SHARE_TIME, time);
+        list.add(map);
+        simpleAdapter.notifyDataSetChanged();
+        dataList.setAdapter(simpleAdapter);
+        //    return all;
     }
 
     public void LifeShareOnclick(View view) {
@@ -117,6 +133,32 @@ public class ShareActivity extends BaseActivity {
                 Intent intent = new Intent(this,ShareLifeActivity.class);
                 startActivity(intent);
                 break;
+        }
+    }
+
+    private void LifeShareBroadcas() {
+        //动态方式注册广播接收者
+        this.receiver = new LifeShareBroadcastReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(MyStatic.LIFE_SHARE);
+        this.registerReceiver(receiver, filter);
+    }
+
+    public class LifeShareBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(MyStatic.LIFE_SHARE)) {
+                // TODO 将获取的数据赋值到本地
+                if (intent.getBooleanExtra("reResult", true)){
+
+                    //    setDataList();
+                }else{
+                    if (count < 2) {
+                        count++;
+                        getData();
+                    }
+                }
+            }
         }
     }
 

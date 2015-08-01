@@ -56,13 +56,13 @@ public class LifeList {
     public ArrayList<Map<String, Object>> selectAll (Context context, int type){
         String sql = "";
         switch (type) {
-            case 1: sql = "SELECT * FROM life_list ORDER BY life_class ASC";
+            case 1: sql = "SELECT * FROM 'life_list' ORDER BY 'life_class' ASC";
                 break;
-            case 2: sql = "SELECT * FROM life_list ORDER BY life_distance ASC";
+            case 2: sql = "SELECT * FROM 'life_list' ORDER BY 'life_distance' ASC";
                 break;
-            case 3: sql = "SELECT * FROM life_list ORDER BY 'life_date' ASC";
+            case 3: sql = "SELECT * FROM 'life_list' ORDER BY 'life_date' ASC";
                 break;
-            case 4: sql = "SELECT * FROM life_list ORDER BY life_favorite ASC";
+            case 4: sql = "SELECT * FROM 'life_list' ORDER BY 'life_favorite' ASC";
                 break;
         }
         Cursor result = this.db.rawQuery(sql, null);
