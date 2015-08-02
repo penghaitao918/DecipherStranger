@@ -303,7 +303,7 @@ public class ClientListenThread extends Thread {
                                 itShowAll.putExtra("reName",jsonObj.getString("re_name"));
                                 itShowAll.putExtra("rePlace",jsonObj.getString("re_place"));
                                 itShowAll.putExtra("reTime",jsonObj.getString("re_time"));
-                                itShowAll.putExtra("reType",jsonObj.getInt("re_type"));
+                                itShowAll.putExtra("reType",jsonObj.getInt("re_activity_type"));
                                 itShowAll.putExtra("reDistance",jsonObj.getDouble("distance"));
                                 itShowAll.putExtra("reFavorite",jsonObj.getInt("favorite"));
                             }else if (jsonObj.getString("re_message").equals("finish")){
