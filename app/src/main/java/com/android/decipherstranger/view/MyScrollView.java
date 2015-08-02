@@ -65,7 +65,7 @@ public class MyScrollView extends ScrollView {
             //此时的距离和记录下的距离不相等，在隔5毫秒给handler发送消息
             if(lastScrollY != scrollY){
                 lastScrollY = scrollY;
-                handler.sendMessageDelayed(handler.obtainMessage(), 5);
+                handler.sendMessageDelayed(handler.obtainMessage(), 3);
             }
             if(onScrollListener != null){
                 onScrollListener.onScroll(scrollY);
@@ -88,7 +88,7 @@ public class MyScrollView extends ScrollView {
         }
         switch(ev.getAction()){
             case MotionEvent.ACTION_UP:
-                handler.sendMessageDelayed(handler.obtainMessage(), 5);
+                handler.sendMessageDelayed(handler.obtainMessage(), 3);
                 break;
         }
         return super.onTouchEvent(ev);
