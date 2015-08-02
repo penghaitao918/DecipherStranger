@@ -270,7 +270,7 @@ public class SendActivity extends BaseActivity {
                             public void onTimeSet(TimePicker timePicker, int hour, int minute) {
                                 rallyTime.setTextColor(Color.parseColor("#ffa79c88"));
                                 rallyTime.setText(hour + " : " + minute );
-                                rallyTimeString = endTime.getText().toString();
+                                rallyTimeString = rallyTime.getText().toString();
                             }
                         },9,0,true);
                 dialog2.show();
