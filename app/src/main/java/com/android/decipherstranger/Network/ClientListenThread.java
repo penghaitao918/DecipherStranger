@@ -295,6 +295,22 @@ public class ClientListenThread extends Thread {
                                 itDetials.putExtra("re_matter",jsonObj.getString("re_matter"));
                             }
                             clContext.sendBroadcast(itDetials);
+                        case GlobalMsgUtils.msgShowAllActivity :
+                            Intent itShowAll = new Intent(MyStatic.LIFE_PARTAKE);
+                            if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)){
+                                itShowAll.putExtra("reResult","true");
+                                itShowAll.putExtra("reId",jsonObj.getInt("re_id"));
+                                itShowAll.putExtra("reName",jsonObj.getString("re_name"));
+                                itShowAll.putExtra("rePlace",jsonObj.getString("re_place"));
+                                itShowAll.putExtra("reTime",jsonObj.getString("re_time"));
+                                itShowAll.putExtra("reType",jsonObj.getInt("re_type"));
+                                itShowAll.putExtra("reDistance",jsonObj.getDouble("distance"));
+                                itShowAll.putExtra("reFavorite",jsonObj.getInt("favorite"));
+                            }else if (jsonObj.getString("re_message").equals("finish")){
+                                itShowAll.putExtra("reResult","finish");
+                            }else {
+                                itShowAll.putExtra("reResult","false");
+                            }
                         default:
                             if(NetworkService.getInstance().getIsConnected()) {
                                 String testNet = "type"+":"+"ping";

@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,11 +20,14 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
+import com.android.decipherstranger.Network.NetworkService;
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
 import com.android.decipherstranger.db.DATABASE;
 import com.android.decipherstranger.db.LifeList;
+import com.android.decipherstranger.util.GlobalMsgUtils;
 import com.android.decipherstranger.util.MyStatic;
 import com.android.decipherstranger.view.MyScrollView;
 import com.baidu.location.BDLocation;
@@ -280,6 +284,15 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
         /**
          * 此处提交获取服务器数据请求
          */
+        if (NetworkService.getInstance().getIsConnected()){
+            String Msg = "type"+":"+ GlobalMsgUtils.msgShowAllActivity+":"+"latitude"+":"+mLatitude
+                    +":"+"longtitude"+":"+mLongtitude;
+            NetworkService.getInstance().sendUpload(Msg);
+            Log.v("aaaaa",Msg);
+        }else{
+            NetworkService.getInstance().closeConnection();
+            Log.v("ShowAllActivity","已执行T()方法");
+        }
     }
 
     private void initLocation() {
@@ -387,8 +400,20 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(MyStatic.LIFE_PARTAKE)) {
-                // TODO 将获取的数据赋值到本地
-            //    insert(id, name, type, distance, favorite, space, date);
+                if (intent.getStringExtra("reResult").equals("true")){
+                    int id = intent.getIntExtra("reId",0);
+                    String name = intent.getStringExtra("reName");
+                    String date = intent.getStringExtra("reTime");
+                    String space = intent.getStringExtra("rePlace");
+                    int type = intent.getIntExtra("reType", 0);
+                    double distance = intent.getDoubleExtra("reDistance", 0);
+                    int favorite = intent.getIntExtra("reFavorite",0);
+                    // TODO 将数据存入List
+                }else if (intent.getStringExtra("reResult").equals("finish")){
+                    //TODO 显示数据
+                }else {
+                    Toast.makeText(context, "没有活动=_=！！！", Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }
