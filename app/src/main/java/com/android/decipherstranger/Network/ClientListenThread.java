@@ -291,7 +291,8 @@ public class ClientListenThread extends Thread {
                                     itDetials.putExtra("re_activity_password",jsonObj.getString("activity_password"));
                                 }
                             }else {
-                                itDetials.putExtra("reResult",false);
+                                itDetials.putExtra("reResult", false);
+                                itDetials.putExtra("re_matter",jsonObj.getString("re_matter"));
                             }
                             clContext.sendBroadcast(itDetials);
                         default:
