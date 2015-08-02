@@ -155,7 +155,7 @@ public class SendActivity extends BaseActivity {
                     nameEdit.getText().toString() + ":" + "activity_place"+":"+ spaceEdit.getText().toString()+":"+ "activity_time" +
                     ":"+timeBtnString+":"+"people_num"+":"+Integer.parseInt(numPeople.getText().toString())+":"+"end_time"+":"+
                     endTimeString+":"+"set_place"+":"+rallySpace.getText().toString()+":"+"set_time"+":"+rallyTimeString+":"+"activity_password"+
-                    ":"+passwordEdit.getText().toString()+":"+"mLantitude"+":"+ mLatitude+":"+"mLongtitude"+":"+mLongtitude;
+                    ":"+passwordEdit.getText().toString()+":"+"mLatitude"+":"+ mLatitude+":"+"mLongtitude"+":"+mLongtitude;
             Log.v("aaaaa", Msg);
             NetworkService.getInstance().sendUpload(Msg);
         }else{

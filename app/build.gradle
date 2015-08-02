@@ -23,4 +23,5 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:22.1.1'
     compile files('E:/workspace_for_Android/DecipherStranger/libs/BaiduLBS_Android.jar')
+    compile files('E:/workspace/DecipherStranger/libs/BaiduLBS_Android.jar')
 }
