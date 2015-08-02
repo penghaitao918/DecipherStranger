@@ -22,6 +22,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.decipherstranger.Network.NetworkService;
@@ -73,6 +74,10 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
     private MyLocationListener mLocationListener;
 
     private RelativeLayout topLayout = null;
+    private TextView textView1 = null;
+    private TextView textView2 = null;
+    private TextView textView3 = null;
+    private TextView textView4 = null;
     private ListView dataList = null;
     private SimpleAdapter simpleAdapter = null;
     private ArrayList<Map<String, Object>> list = null;
@@ -150,6 +155,11 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
         this.list = new ArrayList<Map<String, Object>>();
         this.dataList = (ListView) super.findViewById(R.id.listView);
         this.dataList.setOnItemClickListener(new OnItemClickListenerImpl());
+
+        this.textView1 = (TextView) super.findViewById(R.id.classText);
+        this.textView2 = (TextView) super.findViewById(R.id.distanceText);
+        this.textView3 = (TextView) super.findViewById(R.id.timeText);
+        this.textView4 = (TextView) super.findViewById(R.id.favoriteText);
 
         /*锁定聚焦到顶部*/
         topLayout = (RelativeLayout) super.findViewById(R.id.top);
@@ -351,32 +361,6 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
         System.out.println("### sort " + list);
     }
 
-/*    public class ComparatorLife implements Comparator {
-
-        public int flag = 0;
-
-        public ComparatorLife(int flag) {
-            this.flag = flag;
-        }
-
-        public int compare(Object o1, Object o2) {
-            Map<String, Object> map1 = (Map<String, Object>) o1;
-            Map<String, Object> map2 = (Map<String, Object>) o2;
-            //  降序排序
-            switch (flag) {
-                case 1:
-                    return  ( (int) map1.get(MyStatic.LIFE_CLASSINT) - (int) map2.get(MyStatic.LIFE_CLASSINT));
-                case 2:
-                    return  ( (int)((double) map1.get(MyStatic.LIFE_DISTANCE)) - (int)((double) map2.get(MyStatic.LIFE_DISTANCE)) );
-                case 3:
-                    return ((String) map2.get(MyStatic.LIFE_TIME)).compareTo((String) map1.get(MyStatic.LIFE_TIME));
-                case 4:
-                    return  ( (int) map1.get(MyStatic.LIFE_FAVORITE) - (int) map2.get(MyStatic.LIFE_FAVORITE));
-            }
-            return  ( (int) map1.get(MyStatic.LIFE_FAVORITE) - (int) map2.get(MyStatic.LIFE_FAVORITE));
-        }
-    }*/
-
     public void LifePartakeOnClick(View view) {
         switch (view.getId()) {
             /*返回*/
@@ -394,18 +378,34 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
             /*类别*/
             case R.id.lifeClass:
                 sort(1);
+                textView1.setTextColor(getResources().getColor(R.color.red));
+                textView2.setTextColor(getResources().getColor(R.color.black_grey));
+                textView3.setTextColor(getResources().getColor(R.color.black_grey));
+                textView4.setTextColor(getResources().getColor(R.color.black_grey));
                 break;
             /*距离*/
             case R.id.lifeDistance:
                 sort(2);
+                textView1.setTextColor(getResources().getColor(R.color.black_grey));
+                textView2.setTextColor(getResources().getColor(R.color.red));
+                textView3.setTextColor(getResources().getColor(R.color.black_grey));
+                textView4.setTextColor(getResources().getColor(R.color.black_grey));
                 break;
             /*时间*/
             case R.id.lifeTime:
                 sort(3);
+                textView1.setTextColor(getResources().getColor(R.color.black_grey));
+                textView2.setTextColor(getResources().getColor(R.color.black_grey));
+                textView3.setTextColor(getResources().getColor(R.color.red));
+                textView4.setTextColor(getResources().getColor(R.color.black_grey));
                 break;
             /*欢迎度*/
             case R.id.lifeFavorite:
                 sort(4);
+                textView1.setTextColor(getResources().getColor(R.color.black_grey));
+                textView2.setTextColor(getResources().getColor(R.color.black_grey));
+                textView3.setTextColor(getResources().getColor(R.color.black_grey));
+                textView4.setTextColor(getResources().getColor(R.color.red));
                 break;
         }
     }
