@@ -71,6 +71,8 @@ public class MyStatic {
     public static final String ADVERTISEMENT = "http://www.cnsoftbei.com/";
     public static final String LIFE_ID = "lifeId";
     public static final String LIFE_CLASSINT = "lifeType";
+    public static final String LIFE_DISTANCE = "distance";
+    public static final String LIFE_FAVORITE = "favorite";
     public static final String LIFE_CLASS = "lifeClass";
     public static final String LIFE_NAME = "lifeName";
     public static final String LIFE_TIME = "lifeTime";

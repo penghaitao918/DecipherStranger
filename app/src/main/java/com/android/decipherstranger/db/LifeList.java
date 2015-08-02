@@ -42,12 +42,12 @@ public class LifeList {
     }
 
     // 存储数据
-    public void insert(int id, String name, int type, double distance, int favorite, String space, String date) {
+/*    public void insert(int id, String name, int type, double distance, int favorite, String space, String date) {
         String sql = "insert  into `life_list` values (?, ?, ?, ?, ?, ?, ?)";
         Object args[] = new Object[]{id, name, type, distance, favorite, space, date};
         this.db.execSQL(sql, args);
         this.db.close();
-    }
+    }*/
 
     //  排序
     public ArrayList<Map<String, Object>> selectAll (Context context, int type){

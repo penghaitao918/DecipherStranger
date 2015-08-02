@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.decipherstranger.Network.NetworkService;
 import com.android.decipherstranger.R;
@@ -129,9 +130,9 @@ public class DetailsActivity extends BaseActivity {
                     NetworkService.getInstance().closeConnection();
                     Log.v("Attend","已执行T()方法");
                 }
-                Intent intent = new Intent(this,PasswordActivity.class);
+/*                Intent intent = new Intent(this,PasswordActivity.class);
                 intent.putExtra(MyStatic.LIFE_PASSWORD, password);
-                startActivity(intent);
+                startActivity(intent);*/
                 //    Toast.makeText(this,"您已报名，无需重复报名",Toast.LENGTH_SHORT).show();
                 break;
             /*加为好友*/
@@ -187,12 +188,18 @@ public class DetailsActivity extends BaseActivity {
                         setData(name,activityTypeName,time,place,people,endTime,setPlace,setTime,number);
                     }else{
                         //弹窗显示活动口令
+                        //  报名人数+1
+                        Intent intent0 = new Intent(DetailsActivity.this,PasswordActivity.class);
+                        intent0.putExtra(MyStatic.LIFE_PASSWORD, password);
+                        System.out.println("### password " + password);
+                        startActivity(intent0);
                     }
                 }else{
                     if (intent.getStringExtra("re_matter").equals("details")){
                         //活动详情数据获取失败
                     }else{
                         //弹窗显示已参加过此活动
+                        Toast.makeText(DetailsActivity.this,"您已报名，无需重复报名", Toast.LENGTH_SHORT).show();
                     }
                 }
             }

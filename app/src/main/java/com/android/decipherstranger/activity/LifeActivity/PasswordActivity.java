@@ -48,6 +48,7 @@ public class PasswordActivity extends BaseActivity {
     private void init(){
         Intent intent = getIntent();
         this.lifePassword = intent.getStringExtra(MyStatic.LIFE_PASSWORD);
+        System.out.println("### password 222 " + lifePassword);
         this.textView = (TextView) super.findViewById(R.id.lifePassword);
         this.textView.setText(lifePassword);
     }
@@ -55,11 +56,12 @@ public class PasswordActivity extends BaseActivity {
     public void LifePasswordOnclick(View view) {
         switch (view.getId()) {
             case R.id.blank:
-                Intent intent = new Intent(PasswordActivity.this, MainActivity.class);
+                onBackPressed();
+/*                Intent intent = new Intent(PasswordActivity.this, MainActivity.class);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
-                PasswordActivity.this.finish();
+                PasswordActivity.this.finish();*/
                 break;
         }
     }

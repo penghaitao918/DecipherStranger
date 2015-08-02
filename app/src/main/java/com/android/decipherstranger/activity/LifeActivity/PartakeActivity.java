@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -28,6 +29,9 @@ import com.android.decipherstranger.view.MyScrollView;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -254,6 +258,48 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
          */
     }
 
+    //    lifeList.setData(id, name, type, distance, favorite, space, date);
+    private void setData (int lifeId, String name, int type, double distance, int favorite, String space, String date){
+        Bitmap bitmap = null;
+        switch (type) {
+            // 美食
+            case 1:bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.ds_icon);
+                break;
+            // 旅游
+            case 2:bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.ds_icon);
+                break;
+            // 休闲娱乐
+            case 3:bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.ds_icon);
+                break;
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put(MyStatic.LIFE_ID, lifeId);
+        map.put(MyStatic.LIFE_CLASSINT, type);
+        map.put(MyStatic.LIFE_DISTANCE,distance);
+        map.put(MyStatic.LIFE_FAVORITE, favorite);
+        map.put(MyStatic.LIFE_TIME, date);
+
+        map.put(MyStatic.LIFE_CLASS, bitmap);
+        map.put(MyStatic.LIFE_NAME, name);
+        map.put(MyStatic.LIFE_SPACE, space);
+        list.add(map);
+        //    System.out.println(list);
+    }
+
+    private void sort(final String flag) {
+        Comparator comp = new Comparator() {
+            public int compare(Object o1, Object o2) {
+                Map<String, Object> map1 = (Map<String, Object>) o1;
+                Map<String, Object> map2 = (Map<String, Object>) o2;
+                //  降序排序
+                return ((String) map1.get(flag)).compareTo((String) map2.get(flag));
+            }
+        };
+        Collections.sort(list, comp);
+        simpleAdapter.notifyDataSetChanged();
+
+    }
+
     public void LifePartakeOnClick(View view) {
         switch (view.getId()) {
             /*返回*/
@@ -270,27 +316,19 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
                 break;*/
             /*类别*/
             case R.id.lifeClass:
-               this.lifeList.selectAll(this,1);
-                simpleAdapter.notifyDataSetChanged();
-                dataList.setAdapter(simpleAdapter);
+                sort(MyStatic.LIFE_CLASSINT);
                 break;
             /*距离*/
             case R.id.distance:
-                this.lifeList.selectAll(this, 2);
-                simpleAdapter.notifyDataSetChanged();
-                dataList.setAdapter(simpleAdapter);
+                sort(MyStatic.LIFE_DISTANCE);
                 break;
             /*时间*/
             case R.id.time:
-                this.lifeList.selectAll(this, 3);
-                simpleAdapter.notifyDataSetChanged();
-                dataList.setAdapter(simpleAdapter);
+                sort(MyStatic.LIFE_TIME);
                 break;
             /*欢迎度*/
             case R.id.favorite:
-                this.lifeList.selectAll(this,4);
-                simpleAdapter.notifyDataSetChanged();
-                dataList.setAdapter(simpleAdapter);
+                sort(MyStatic.LIFE_FAVORITE);
                 break;
         }
     }
@@ -308,7 +346,7 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(MyStatic.LIFE_PARTAKE)) {
                 // TODO 将获取的数据赋值到本地
-            //    lifeList.insert(id, name, type, distance, favorite, space, date);
+            //    insert(id, name, type, distance, favorite, space, date);
             }
         }
     }
