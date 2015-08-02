@@ -74,8 +74,6 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
     private SimpleAdapter simpleAdapter = null;
     private ArrayList<Map<String, Object>> list = null;
 
-    private SQLiteOpenHelper helper = null;
-    private LifeList lifeList = null;
     private LifePartakeBroadcastReceiver receiver = null;
 
     private MyScrollView myScrollView;
@@ -123,14 +121,12 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        this.lifeList.clear();
         super.unregisterReceiver(PartakeActivity.this.receiver);
     }
 
     private void init() {
         initLocation();
 
-        this.helper = new DATABASE(this);
         myScrollView = (MyScrollView) findViewById(R.id.view);
         mBuyLayout = (LinearLayout) findViewById(R.id.sort);
 
@@ -150,8 +146,6 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
     }
 
     private void initData() {
-        this.lifeList = new LifeList(this.helper.getReadableDatabase());
-        this.list.addAll(lifeList.selectAll(this,3));
         this.simpleAdapter = new SimpleAdapter(this,
                 this.list,
                 R.layout.list_item_life,
@@ -334,6 +328,7 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
     }
 
     private void sort(final String flag) {
+        System.out.println("### 产生了onclick");
         Comparator comp = new Comparator() {
             public int compare(Object o1, Object o2) {
                 Map<String, Object> map1 = (Map<String, Object>) o1;
@@ -366,15 +361,15 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
                 sort(MyStatic.LIFE_CLASSINT);
                 break;
             /*距离*/
-            case R.id.distance:
+            case R.id.lifeDistance:
                 sort(MyStatic.LIFE_DISTANCE);
                 break;
             /*时间*/
-            case R.id.time:
+            case R.id.lifeTime:
                 sort(MyStatic.LIFE_TIME);
                 break;
             /*欢迎度*/
-            case R.id.favorite:
+            case R.id.lifeFavorite:
                 sort(MyStatic.LIFE_FAVORITE);
                 break;
         }
@@ -408,9 +403,12 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
                     int type = intent.getIntExtra("reType", 0);
                     double distance = intent.getDoubleExtra("reDistance", 0);
                     int favorite = intent.getIntExtra("reFavorite",0);
+                    setData(id, name, type, distance, favorite, space, date);
                     // TODO 将数据存入List
                 }else if (intent.getStringExtra("reResult").equals("finish")){
                     //TODO 显示数据
+                    System.out.println("### 哎哟我去");
+                    simpleAdapter.notifyDataSetChanged();
                 }else {
                     Toast.makeText(context, "没有活动=_=！！！", Toast.LENGTH_SHORT).show();
                 }

@@ -312,6 +312,10 @@ public class SendActivity extends BaseActivity {
                     handler.postDelayed( new Runnable() {
                         public void run() {
                             progressDialog.dismiss();
+                            Intent intent = new Intent(SendActivity.this, MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                            SendActivity.this.finish();
                             onBackPressed();
                         }
                     }, 1500);
