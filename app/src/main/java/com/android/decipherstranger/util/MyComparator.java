@@ -34,16 +34,19 @@ public class MyComparator implements Comparator {
     public int compare(Object o1, Object o2) {
         Map<String, Object> map1 = (Map<String, Object>) o1;
         Map<String, Object> map2 = (Map<String, Object>) o2;
-        //  降序排序
         switch (flag) {
             case 1:
+                //  升序排序
                 return  ( (int) map1.get(MyStatic.LIFE_CLASSINT) - (int) map2.get(MyStatic.LIFE_CLASSINT));
             case 2:
+                //  升序排序
                 return  ( (int)((double) map1.get(MyStatic.LIFE_DISTANCE)) - (int)((double) map2.get(MyStatic.LIFE_DISTANCE)) );
             case 3:
+                //  升序排序
                 return ((String) map1.get(MyStatic.LIFE_TIME)).compareTo((String) map2.get(MyStatic.LIFE_TIME));
             case 4:
-                return  ( (int) map1.get(MyStatic.LIFE_FAVORITE) - (int) map2.get(MyStatic.LIFE_FAVORITE));
+                //  降序排序
+                return  ( (int) map2.get(MyStatic.LIFE_FAVORITE) - (int) map1.get(MyStatic.LIFE_FAVORITE));
         }
         return  ( (int) map1.get(MyStatic.LIFE_FAVORITE) - (int) map2.get(MyStatic.LIFE_FAVORITE));
     }
