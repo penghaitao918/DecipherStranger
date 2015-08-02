@@ -30,6 +30,7 @@ import com.android.decipherstranger.activity.Base.BaseActivity;
 import com.android.decipherstranger.db.DATABASE;
 import com.android.decipherstranger.db.LifeList;
 import com.android.decipherstranger.util.GlobalMsgUtils;
+import com.android.decipherstranger.util.MyComparator;
 import com.android.decipherstranger.util.MyStatic;
 import com.android.decipherstranger.view.MyScrollView;
 import com.baidu.location.BDLocation;
@@ -344,13 +345,13 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
 
     private void sort(int flag) {
         System.out.println("### 产生了onclick");
-        ComparatorLife comp = new ComparatorLife(flag);
+        MyComparator comp = new MyComparator(flag);
         Collections.sort(list, comp);
         simpleAdapter.notifyDataSetChanged();
         System.out.println("### sort " + list);
     }
 
-    public class ComparatorLife implements Comparator {
+/*    public class ComparatorLife implements Comparator {
 
         public int flag = 0;
 
@@ -374,7 +375,7 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
             }
             return  ( (int) map1.get(MyStatic.LIFE_FAVORITE) - (int) map2.get(MyStatic.LIFE_FAVORITE));
         }
-    }
+    }*/
 
     public void LifePartakeOnClick(View view) {
         switch (view.getId()) {
