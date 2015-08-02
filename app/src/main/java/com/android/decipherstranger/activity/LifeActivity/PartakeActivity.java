@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
@@ -28,8 +27,6 @@ import android.widget.Toast;
 import com.android.decipherstranger.Network.NetworkService;
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
-import com.android.decipherstranger.db.DATABASE;
-import com.android.decipherstranger.db.LifeList;
 import com.android.decipherstranger.util.GlobalMsgUtils;
 import com.android.decipherstranger.util.MyComparator;
 import com.android.decipherstranger.util.MyStatic;
@@ -42,7 +39,6 @@ import com.baidu.location.LocationClientOption;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -78,9 +74,9 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
     private TextView textView2 = null;
     private TextView textView3 = null;
     private TextView textView4 = null;
-    private ListView dataList = null;
+    private ListView listView = null;
     private SimpleAdapter simpleAdapter = null;
-    private ArrayList<Map<String, Object>> list = null;
+    private ArrayList<Map<String, Object>> dataList = null;
 
     private LifePartakeBroadcastReceiver receiver = null;
 
@@ -152,9 +148,9 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
         mWindowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         screenWidth = mWindowManager.getDefaultDisplay().getWidth();
 
-        this.list = new ArrayList<Map<String, Object>>();
-        this.dataList = (ListView) super.findViewById(R.id.listView);
-        this.dataList.setOnItemClickListener(new OnItemClickListenerImpl());
+        this.dataList = new ArrayList<Map<String, Object>>();
+        this.listView = (ListView) super.findViewById(R.id.listView);
+        this.listView.setOnItemClickListener(new OnItemClickListenerImpl());
 
         this.textView1 = (TextView) super.findViewById(R.id.classText);
         this.textView2 = (TextView) super.findViewById(R.id.distanceText);
@@ -170,18 +166,18 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
 
     private void initData() {
         this.simpleAdapter = new SimpleAdapter(this,
-                this.list,
+                this.dataList,
                 R.layout.list_item_life,
                 new String[]{MyStatic.LIFE_CLASS, MyStatic.LIFE_NAME, MyStatic.LIFE_TIME, MyStatic.LIFE_SPACE},
                 new int[]{R.id.life_class, R.id.life_name, R.id.life_time, R.id.life_space}
         );
         /*实现ViewBinder()这个接口*/
         simpleAdapter.setViewBinder(new ViewBinderImpl());
-        this.dataList.setAdapter(simpleAdapter);
+        this.listView.setAdapter(simpleAdapter);
         /*动态跟新ListView*/
         simpleAdapter.notifyDataSetChanged();
         /*动态计算ListView的高度*/
-        this.fixListViewHeight(dataList);
+        this.fixListViewHeight(listView);
     }
 
     private class ViewBinderImpl implements SimpleAdapter.ViewBinder {
@@ -200,8 +196,8 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
     private class OnItemClickListenerImpl implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            int lifeId = (int) list.get(position).get(MyStatic.LIFE_ID);
-            int lifeType = (int) list.get(position).get(MyStatic.LIFE_CLASSINT);
+            int lifeId = (int) dataList.get(position).get(MyStatic.LIFE_ID);
+            int lifeType = (int) dataList.get(position).get(MyStatic.LIFE_CLASSINT);
             Intent intent = new Intent(PartakeActivity.this, DetailsActivity.class);
             intent.putExtra(MyStatic.LIFE_ID, lifeId);
             intent.putExtra(MyStatic.LIFE_CLASSINT, lifeType);
@@ -348,17 +344,15 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
         map.put(MyStatic.LIFE_CLASS, bitmap);
         map.put(MyStatic.LIFE_NAME, name);
         map.put(MyStatic.LIFE_SPACE, space);
-        list.add(map);
-        System.out.println("### list " + list);
-        //    System.out.println(list);
+        dataList.add(map);
     }
 
     private void sort(int flag) {
         System.out.println("### 产生了onclick");
         MyComparator comp = new MyComparator(flag);
-        Collections.sort(list, comp);
+        Collections.sort(dataList, comp);
         simpleAdapter.notifyDataSetChanged();
-        System.out.println("### sort " + list);
+        System.out.println("### sort " + dataList);
     }
 
     public void LifePartakeOnClick(View view) {
@@ -444,8 +438,8 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
                     //TODO 显示数据
                     System.out.println("### 哎哟我去");
                     simpleAdapter.notifyDataSetChanged();
-                    dataList.setAdapter(simpleAdapter);
-                    fixListViewHeight(dataList);
+                    listView.setAdapter(simpleAdapter);
+                    fixListViewHeight(listView);
                 } else {
                     Toast.makeText(context, "### 没有活动=_=！！！", Toast.LENGTH_SHORT).show();
                 }

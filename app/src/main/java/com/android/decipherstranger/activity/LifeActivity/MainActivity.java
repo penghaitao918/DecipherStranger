@@ -52,9 +52,9 @@ import java.util.Map;
 public class MainActivity extends BaseActivity {
 
     private RelativeLayout topLayout = null;
-    private ListView dataList = null;
+    private ListView listView = null;
     private SimpleAdapter simpleAdapter = null;
-    private ArrayList<Map<String, Object>> list = null;
+    private ArrayList<Map<String, Object>> dataList = null;
     private MyApplication application = null;
 
     private LifeMainBroadcastReceiver receiver = null;
@@ -76,9 +76,9 @@ public class MainActivity extends BaseActivity {
     }
 
     private void init() {
-        this.list = new ArrayList<Map<String, Object>>();
-        this.dataList = (ListView) super.findViewById(R.id.listView);
-        this.dataList.setOnItemClickListener(new OnItemClickListenerImpl());
+        this.dataList = new ArrayList<Map<String, Object>>();
+        this.listView = (ListView) super.findViewById(R.id.listView);
+        this.listView.setOnItemClickListener(new OnItemClickListenerImpl());
 
         /*锁定聚焦到顶部*/
         topLayout = (RelativeLayout) super.findViewById(R.id.top);
@@ -90,20 +90,19 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initData() {
-        //    this.list.addAll(this.selectAll());
         this.simpleAdapter = new SimpleAdapter(this,
-                this.list,
+                this.dataList,
                 R.layout.list_item_life,
                 new String[] {MyStatic.LIFE_CLASS, MyStatic.LIFE_NAME, MyStatic.LIFE_TIME, MyStatic.LIFE_SPACE},
                 new int[] {R.id.life_class, R.id.life_name, R.id.life_time, R.id.life_space}
         );
         /*实现ViewBinder()这个接口*/
         simpleAdapter.setViewBinder(new ViewBinderImpl());
-        this.dataList.setAdapter(simpleAdapter);
+        this.listView.setAdapter(simpleAdapter);
         /*动态跟新ListView*/
         simpleAdapter.notifyDataSetChanged();
         /*动态计算ListView的高度*/
-        this.fixListViewHeight(dataList);
+        this.fixListViewHeight(listView);
     }
 
     private void getData() {
@@ -158,8 +157,8 @@ public class MainActivity extends BaseActivity {
     private class OnItemClickListenerImpl implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            int lifeId = (int) list.get(position).get(MyStatic.LIFE_ID);
-            int lifeType = (int) list.get(position).get(MyStatic.LIFE_CLASSINT);
+            int lifeId = (int) dataList.get(position).get(MyStatic.LIFE_ID);
+            int lifeType = (int) dataList.get(position).get(MyStatic.LIFE_CLASSINT);
             Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
             intent.putExtra(MyStatic.LIFE_ID, lifeId);
             intent.putExtra(MyStatic.LIFE_CLASSINT,lifeType);
@@ -227,8 +226,7 @@ public class MainActivity extends BaseActivity {
         map.put(MyStatic.LIFE_NAME, name);
         map.put(MyStatic.LIFE_TIME, time);
         map.put(MyStatic.LIFE_SPACE, place);
-        list.add(map);
-        //    System.out.println(list);
+        dataList.add(map);
     }
 
 
@@ -255,8 +253,8 @@ public class MainActivity extends BaseActivity {
                 }else{
                     System.out.println("### 哎哟我去");
                     simpleAdapter.notifyDataSetChanged();
-                    dataList.setAdapter(simpleAdapter);
-                    fixListViewHeight(dataList);
+                    listView.setAdapter(simpleAdapter);
+                    fixListViewHeight(listView);
                 }
             }
         }
