@@ -26,6 +26,10 @@ import com.android.decipherstranger.db.DATABASE;
 import com.android.decipherstranger.db.LifeList;
 import com.android.decipherstranger.util.MyStatic;
 import com.android.decipherstranger.view.MyScrollView;
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 
 
 import java.util.ArrayList;
@@ -55,6 +59,11 @@ import java.util.Map;
  * @e-mail 785351408@qq.com
  */
 public class PartakeActivity extends BaseActivity implements MyScrollView.OnScrollListener {
+
+    private double mLatitude;
+    private double mLongtitude;
+    private LocationClient mLocationClient;
+    private MyLocationListener mLocationListener;
 
     private RelativeLayout topLayout = null;
     private ListView dataList = null;
@@ -94,6 +103,20 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        if(!mLocationClient.isStarted()){
+            mLocationClient.start();
+        }
+    }
+
+    @Override
+    protected  void onStop(){
+        super.onStop();
+        mLocationClient.stop();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         this.lifeList.clear();
@@ -101,6 +124,7 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
     }
 
     private void init() {
+        initLocation();
 
         this.helper = new DATABASE(this);
         myScrollView = (MyScrollView) findViewById(R.id.view);
@@ -258,6 +282,16 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
          */
     }
 
+    private void initLocation() {
+        mLocationClient = new LocationClient(this);
+        mLocationListener = new MyLocationListener();
+        mLocationClient.registerLocationListener(mLocationListener);
+
+        LocationClientOption option = new LocationClientOption();
+        option.setOpenGps(true);
+        mLocationClient.setLocOption(option);
+    }
+
     //    lifeList.setData(id, name, type, distance, favorite, space, date);
     private void setData (int lifeId, String name, int type, double distance, int favorite, String space, String date){
         Bitmap bitmap = null;
@@ -330,6 +364,14 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
             case R.id.favorite:
                 sort(MyStatic.LIFE_FAVORITE);
                 break;
+        }
+    }
+
+    public class MyLocationListener implements BDLocationListener {
+        @Override
+        public void onReceiveLocation(BDLocation location){
+            mLatitude = location.getLatitude();
+            mLongtitude = location.getLongitude();
         }
     }
 

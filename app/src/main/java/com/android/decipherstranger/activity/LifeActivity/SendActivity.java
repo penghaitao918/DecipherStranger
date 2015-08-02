@@ -105,7 +105,6 @@ public class SendActivity extends BaseActivity {
     protected  void onStop(){
         super.onStop();
         mLocationClient.stop();
-
     }
 
     @Override
