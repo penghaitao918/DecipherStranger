@@ -57,11 +57,6 @@ public class PasswordActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.blank:
                 onBackPressed();
-/*                Intent intent = new Intent(PasswordActivity.this, MainActivity.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                PasswordActivity.this.finish();*/
                 break;
         }
     }

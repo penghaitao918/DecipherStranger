@@ -45,6 +45,7 @@ public class DetailsActivity extends BaseActivity {
     private String password = null;
     private int lifeId = 0;
     private int lifeClass = 0;
+    private int number = 0;
     private Intent intent = null;
     private MyApplication application = null;
     private LifeDetailsBroadcastReceiver receiver = null;
@@ -141,7 +142,7 @@ public class DetailsActivity extends BaseActivity {
         }
     }
 
-    public void setData(String name, String typeName, String date, String place, int people, String endTime, String setPlace, String setTime, int number){
+    public void setData(String name, String typeName, String date, String place, int people, String endTime, String setPlace, String setTime){
         textView1.setText(name);
         textView2.setText(typeName);
         textView3.setText(date);
@@ -182,13 +183,15 @@ public class DetailsActivity extends BaseActivity {
                         String setPlace = intent.getStringExtra("re_set_place");
                         String setTime = intent.getStringExtra("re_set_time");
                         String activityTypeName = intent.getStringExtra("activity_type_name");
-                        int number = intent.getIntExtra("re_current_number", 0);
+                        number = intent.getIntExtra("re_current_number", 0);
                         sendAccount = intent.getStringExtra("re_send_account");
                         password = intent.getStringExtra("re_activity_password");
-                        setData(name,activityTypeName,time,place,people,endTime,setPlace,setTime,number);
+                        setData(name,activityTypeName,time,place,people,endTime,setPlace,setTime);
                     }else{
                         //弹窗显示活动口令
                         //  报名人数+1
+                        number ++;
+                        textView9.setText(number+"");
                         Intent intent0 = new Intent(DetailsActivity.this,PasswordActivity.class);
                         intent0.putExtra(MyStatic.LIFE_PASSWORD, password);
                         System.out.println("### password " + password);
