@@ -131,16 +131,16 @@ public class DetailsActivity extends BaseActivity {
         }
     }
 
-    public void setData(String name, String date, String place, int people, String endTime, String setPlace, String setTime, int number){
+    public void setData(String name, String typeName, String date, String place, int people, String endTime, String setPlace, String setTime, int number){
         textView1.setText(name);
-        textView2.setText(lifeClass);
+        textView2.setText(typeName);
         textView3.setText(date);
         textView4.setText(place);
-        textView5.setText(people);
+        textView5.setText(people+"");
         textView6.setText(endTime);
         textView7.setText(setPlace);
         textView8.setText(setTime);
-        textView9.setText(number);
+        textView9.setText(number+"");
           /*
          * 判断该活动的发起人与当前账号是否一致，如果一致，则隐藏最下方的两个按钮
          */
@@ -170,10 +170,15 @@ public class DetailsActivity extends BaseActivity {
                     String endTime = intent.getStringExtra("re_end_time");
                     String setPlace = intent.getStringExtra("re_set_place");
                     String setTime = intent.getStringExtra("re_set_time");
+                    String activityTypeName = intent.getStringExtra("activity_type_name");
                     int number = intent.getIntExtra("re_current_number", 0);
                     sendAccount = intent.getStringExtra("re_send_account");
                     password = intent.getStringExtra("re_activity_password");
-                    setData(name,time,place,people,endTime,setPlace,setTime,number);
+                    setData(name,activityTypeName,time,place,people,endTime,setPlace,setTime,number);
+                    System.out.println("++++++++++++++++"+name);
+                    System.out.println("++++++++++++++++"+people);
+                    System.out.println("++++++++++++++++"+endTime);
+                    System.out.println("++++++++++++++++数据显示了");
                 }
             }
         }
