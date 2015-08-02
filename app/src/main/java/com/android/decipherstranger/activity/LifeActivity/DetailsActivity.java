@@ -163,22 +163,28 @@ public class DetailsActivity extends BaseActivity {
             if (intent.getAction().equals(MyStatic.LIFE_DETAILS)) {
                 // TODO 将获取的数据赋值到本地
                 if (intent.getBooleanExtra("reResult", true)){
-                    String name = intent.getStringExtra("re_name");
-                    String time = intent.getStringExtra("re_time");
-                    String place = intent.getStringExtra("re_place");
-                    int people = intent.getIntExtra("re_number", 0);
-                    String endTime = intent.getStringExtra("re_end_time");
-                    String setPlace = intent.getStringExtra("re_set_place");
-                    String setTime = intent.getStringExtra("re_set_time");
-                    String activityTypeName = intent.getStringExtra("activity_type_name");
-                    int number = intent.getIntExtra("re_current_number", 0);
-                    sendAccount = intent.getStringExtra("re_send_account");
-                    password = intent.getStringExtra("re_activity_password");
-                    setData(name,activityTypeName,time,place,people,endTime,setPlace,setTime,number);
-                    System.out.println("++++++++++++++++"+name);
-                    System.out.println("++++++++++++++++"+people);
-                    System.out.println("++++++++++++++++"+endTime);
-                    System.out.println("++++++++++++++++数据显示了");
+                    if (intent.getStringExtra("re_matter").equals("details")){
+                        String name = intent.getStringExtra("re_name");
+                        String time = intent.getStringExtra("re_time");
+                        String place = intent.getStringExtra("re_place");
+                        int people = intent.getIntExtra("re_number", 0);
+                        String endTime = intent.getStringExtra("re_end_time");
+                        String setPlace = intent.getStringExtra("re_set_place");
+                        String setTime = intent.getStringExtra("re_set_time");
+                        String activityTypeName = intent.getStringExtra("activity_type_name");
+                        int number = intent.getIntExtra("re_current_number", 0);
+                        sendAccount = intent.getStringExtra("re_send_account");
+                        password = intent.getStringExtra("re_activity_password");
+                        setData(name,activityTypeName,time,place,people,endTime,setPlace,setTime,number);
+                    }else{
+                        //弹窗显示活动口令
+                    }
+                }else{
+                    if (intent.getStringExtra("re_matter").equals("details")){
+                        //活动详情数据获取失败
+                    }else{
+                        //弹窗显示已参加过此活动
+                    }
                 }
             }
         }

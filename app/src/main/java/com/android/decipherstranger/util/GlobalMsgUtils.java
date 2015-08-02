@@ -25,4 +25,6 @@ public class GlobalMsgUtils {
     public static final int msgLifeMain = 18;
     public static final int msgSendActivity = 19;
     public static final int msgDetialsActivity = 20;
+    public static final int msgShowAllActivity = 21;
+    public static final int msgAttendActivity = 22;
 }
