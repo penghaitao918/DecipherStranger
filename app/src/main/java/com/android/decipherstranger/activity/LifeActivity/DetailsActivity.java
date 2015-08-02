@@ -120,6 +120,15 @@ public class DetailsActivity extends BaseActivity {
                  * 否则跳出已报名提示
                  */
                 //  发送请求，在广播执行跳转
+                if (NetworkService.getInstance().getIsConnected()){
+                    String Msg = "type"+":"+GlobalMsgUtils.msgAttendActivity+":"+"activityId"+":"+
+                            lifeId+":"+"account"+":"+myAccount;
+                    Log.v("aaaaa",Msg);
+                    NetworkService.getInstance().sendUpload(Msg);
+                }else{
+                    NetworkService.getInstance().closeConnection();
+                    Log.v("Attend","已执行T()方法");
+                }
                 Intent intent = new Intent(this,PasswordActivity.class);
                 intent.putExtra(MyStatic.LIFE_PASSWORD, password);
                 startActivity(intent);
