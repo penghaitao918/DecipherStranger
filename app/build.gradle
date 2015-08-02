@@ -5,11 +5,11 @@ android {
     buildToolsVersion "23.0.0 rc3"
 
     defaultConfig {
-        applicationId "decipherstranger.android.com.decipherstranger"
+        applicationId "android.com.decipherstranger"
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 1
-        versionName "1.1"
+        versionName "1.1.3"
     }
     buildTypes {
         release {

@@ -13,10 +13,12 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
@@ -81,15 +83,25 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
     private WindowManager mWindowManager;
     /* 手机屏幕宽度 */
     private int screenWidth;
-    /** 悬浮框View  */
+    /**
+     * 悬浮框View
+     */
     private static View suspendView;
-    /** 悬浮框的参数 */
+    /**
+     * 悬浮框的参数
+     */
     private static WindowManager.LayoutParams suspendLayoutParams;
-    /** 排序布局的高度 */
+    /**
+     * 排序布局的高度
+     */
     private int buyLayoutHeight;
-    /** myScrollView与其父类布局的顶部距离 */
+    /**
+     * myScrollView与其父类布局的顶部距离
+     */
     private int myScrollViewTop;
-    /** 排序布局与其父类布局的顶部距离 */
+    /**
+     * 排序布局与其父类布局的顶部距离
+     */
     private int buyLayoutTop;
 
 
@@ -107,13 +119,13 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
     @Override
     protected void onStart() {
         super.onStart();
-        if(!mLocationClient.isStarted()){
+        if (!mLocationClient.isStarted()) {
             mLocationClient.start();
         }
     }
 
     @Override
-    protected  void onStop(){
+    protected void onStop() {
         super.onStop();
         mLocationClient.stop();
     }
@@ -149,8 +161,8 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
         this.simpleAdapter = new SimpleAdapter(this,
                 this.list,
                 R.layout.list_item_life,
-                new String[] {MyStatic.LIFE_CLASS, MyStatic.LIFE_NAME, MyStatic.LIFE_TIME, MyStatic.LIFE_SPACE},
-                new int[] {R.id.life_class, R.id.life_name, R.id.life_time, R.id.life_space}
+                new String[]{MyStatic.LIFE_CLASS, MyStatic.LIFE_NAME, MyStatic.LIFE_TIME, MyStatic.LIFE_SPACE},
+                new int[]{R.id.life_class, R.id.life_name, R.id.life_time, R.id.life_space}
         );
         /*实现ViewBinder()这个接口*/
         simpleAdapter.setViewBinder(new ViewBinderImpl());
@@ -158,15 +170,15 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
         /*动态跟新ListView*/
         simpleAdapter.notifyDataSetChanged();
         /*动态计算ListView的高度*/
-    //    this.fixListViewHeight(dataList);
+        this.fixListViewHeight(dataList);
     }
 
     private class ViewBinderImpl implements SimpleAdapter.ViewBinder {
         @Override
         public boolean setViewValue(View view, Object data, String textRepresentation) {
             // TODO Auto-generated method stub
-            if(view instanceof ImageView && data instanceof Bitmap){
-                ImageView i = (ImageView)view;
+            if (view instanceof ImageView && data instanceof Bitmap) {
+                ImageView i = (ImageView) view;
                 i.setImageBitmap((Bitmap) data);
                 return true;
             }
@@ -181,20 +193,20 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
             int lifeType = (int) list.get(position).get(MyStatic.LIFE_CLASSINT);
             Intent intent = new Intent(PartakeActivity.this, DetailsActivity.class);
             intent.putExtra(MyStatic.LIFE_ID, lifeId);
-            intent.putExtra(MyStatic.LIFE_CLASSINT,lifeType);
+            intent.putExtra(MyStatic.LIFE_CLASSINT, lifeType);
             startActivity(intent);
         }
     }
 
-/*    private void fixListViewHeight(ListView listView) {
+    private void fixListViewHeight(ListView listView) {
         // 如果没有设置数据适配器，则ListView没有子项，返回。
         ListAdapter listAdapter = listView.getAdapter();
         int totalHeight = 0;
         if (listAdapter == null) {
             return;
         }
-        for (int index = 0, len = listAdapter.getCount(); index < len; ++ index) {
-            View listViewItem = listAdapter.getView(index , null, listView);
+        for (int index = 0, len = listAdapter.getCount(); index < len; ++index) {
+            View listViewItem = listAdapter.getView(index, null, listView);
             // 计算子项View 的宽高
             listViewItem.measure(0, 0);
             // 计算所有子项的高度和
@@ -204,9 +216,9 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
         ViewGroup.LayoutParams params = listView.getLayoutParams();
         // listView.getDividerHeight()获取子项间分隔符的高度
         // params.height设置ListView完全显示需要的高度
-        params.height = totalHeight+ (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
-    }*/
+    }
 
     /**
      * 窗口有焦点的时候，即所有的布局绘制完毕的时候，我们来获取购买布局的高度和myScrollView距离父类布局的顶部位置
@@ -214,7 +226,7 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        if(hasFocus){
+        if (hasFocus) {
             buyLayoutHeight = mBuyLayout.getHeight();
             buyLayoutTop = mBuyLayout.getTop();
 
@@ -225,16 +237,15 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
     /**
      * 滚动的回调方法，当滚动的Y距离大于或者等于 购买布局距离父类布局顶部的位置，就显示购买的悬浮框
      * 当滚动的Y的距离小于 购买布局距离父类布局顶部的位置加上购买布局的高度就移除购买的悬浮框
-     *
      */
     @Override
     public void onScroll(int scrollY) {
-        if(scrollY >= buyLayoutTop){
-            if(suspendView == null){
+        if (scrollY >= buyLayoutTop) {
+            if (suspendView == null) {
                 showSuspend();
             }
-        }else if(scrollY <= buyLayoutTop + buyLayoutHeight){
-            if(suspendView != null){
+        } else if (scrollY <= buyLayoutTop + buyLayoutHeight) {
+            if (suspendView != null) {
                 removeSuspend();
             }
         }
@@ -244,10 +255,10 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
     /**
      * 显示购买的悬浮框
      */
-    private void showSuspend(){
-        if(suspendView == null){
+    private void showSuspend() {
+        if (suspendView == null) {
             suspendView = LayoutInflater.from(this).inflate(R.layout.winpop_life_sort, null);
-            if(suspendLayoutParams == null){
+            if (suspendLayoutParams == null) {
                 suspendLayoutParams = new WindowManager.LayoutParams();
                 suspendLayoutParams.type = WindowManager.LayoutParams.TYPE_PHONE;
                 suspendLayoutParams.format = PixelFormat.RGBA_8888;
@@ -267,8 +278,8 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
     /**
      * 移除购买的悬浮框
      */
-    private void removeSuspend(){
-        if(suspendView != null){
+    private void removeSuspend() {
+        if (suspendView != null) {
             mWindowManager.removeView(suspendView);
             suspendView = null;
         }
@@ -278,14 +289,14 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
         /**
          * 此处提交获取服务器数据请求
          */
-        if (NetworkService.getInstance().getIsConnected()){
-            String Msg = "type"+":"+ GlobalMsgUtils.msgShowAllActivity+":"+"latitude"+":"+mLatitude
-                    +":"+"longtitude"+":"+mLongtitude;
+        if (NetworkService.getInstance().getIsConnected()) {
+            String Msg = "type" + ":" + GlobalMsgUtils.msgShowAllActivity + ":" + "latitude" + ":" + mLatitude
+                    + ":" + "longtitude" + ":" + mLongtitude;
             NetworkService.getInstance().sendUpload(Msg);
-            Log.v("aaaaa",Msg);
-        }else{
+            Log.v("aaaaa", Msg);
+        } else {
             NetworkService.getInstance().closeConnection();
-            Log.v("ShowAllActivity","已执行T()方法");
+            Log.v("ShowAllActivity", "已执行T()方法");
         }
     }
 
@@ -300,23 +311,26 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
     }
 
     //    lifeList.setData(id, name, type, distance, favorite, space, date);
-    private void setData (int lifeId, String name, int type, double distance, int favorite, String space, String date){
+    private void setData(int lifeId, String name, int type, double distance, int favorite, String space, String date) {
         Bitmap bitmap = null;
         switch (type) {
             // 美食
-            case 1:bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.ds_icon);
+            case 1:
+                bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.ds_icon);
                 break;
             // 旅游
-            case 2:bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.ds_icon);
+            case 2:
+                bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.ds_icon);
                 break;
             // 休闲娱乐
-            case 3:bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.ds_icon);
+            case 3:
+                bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.ds_icon);
                 break;
         }
         Map<String, Object> map = new HashMap<String, Object>();
         map.put(MyStatic.LIFE_ID, lifeId);
         map.put(MyStatic.LIFE_CLASSINT, type);
-        map.put(MyStatic.LIFE_DISTANCE,distance);
+        map.put(MyStatic.LIFE_DISTANCE, distance);
         map.put(MyStatic.LIFE_FAVORITE, favorite);
         map.put(MyStatic.LIFE_TIME, date);
 
@@ -324,22 +338,42 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
         map.put(MyStatic.LIFE_NAME, name);
         map.put(MyStatic.LIFE_SPACE, space);
         list.add(map);
+        System.out.println("### list " + list);
         //    System.out.println(list);
     }
 
-    private void sort(final String flag) {
+    private void sort(int flag) {
         System.out.println("### 产生了onclick");
-        Comparator comp = new Comparator() {
-            public int compare(Object o1, Object o2) {
-                Map<String, Object> map1 = (Map<String, Object>) o1;
-                Map<String, Object> map2 = (Map<String, Object>) o2;
-                //  降序排序
-                return ((String) map1.get(flag)).compareTo((String) map2.get(flag));
-            }
-        };
+        ComparatorLife comp = new ComparatorLife(flag);
         Collections.sort(list, comp);
         simpleAdapter.notifyDataSetChanged();
+        System.out.println("### sort " + list);
+    }
 
+    public class ComparatorLife implements Comparator {
+
+        public int flag = 0;
+
+        public ComparatorLife(int flag) {
+            this.flag = flag;
+        }
+
+        public int compare(Object o1, Object o2) {
+            Map<String, Object> map1 = (Map<String, Object>) o1;
+            Map<String, Object> map2 = (Map<String, Object>) o2;
+            //  降序排序
+            switch (flag) {
+                case 1:
+                    return  ( (int) map1.get(MyStatic.LIFE_CLASSINT) - (int) map2.get(MyStatic.LIFE_CLASSINT));
+                case 2:
+                    return  ( (int)((double) map1.get(MyStatic.LIFE_DISTANCE)) - (int)((double) map2.get(MyStatic.LIFE_DISTANCE)) );
+                case 3:
+                    return ((String) map2.get(MyStatic.LIFE_TIME)).compareTo((String) map1.get(MyStatic.LIFE_TIME));
+                case 4:
+                    return  ( (int) map1.get(MyStatic.LIFE_FAVORITE) - (int) map2.get(MyStatic.LIFE_FAVORITE));
+            }
+            return  ( (int) map1.get(MyStatic.LIFE_FAVORITE) - (int) map2.get(MyStatic.LIFE_FAVORITE));
+        }
     }
 
     public void LifePartakeOnClick(View view) {
@@ -358,26 +392,26 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
                 break;*/
             /*类别*/
             case R.id.lifeClass:
-                sort(MyStatic.LIFE_CLASSINT);
+                sort(1);
                 break;
             /*距离*/
             case R.id.lifeDistance:
-                sort(MyStatic.LIFE_DISTANCE);
+                sort(2);
                 break;
             /*时间*/
             case R.id.lifeTime:
-                sort(MyStatic.LIFE_TIME);
+                sort(3);
                 break;
             /*欢迎度*/
             case R.id.lifeFavorite:
-                sort(MyStatic.LIFE_FAVORITE);
+                sort(4);
                 break;
         }
     }
 
     public class MyLocationListener implements BDLocationListener {
         @Override
-        public void onReceiveLocation(BDLocation location){
+        public void onReceiveLocation(BDLocation location) {
             mLatitude = location.getLatitude();
             mLongtitude = location.getLongitude();
         }
@@ -395,24 +429,27 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(MyStatic.LIFE_PARTAKE)) {
-                if (intent.getStringExtra("reResult").equals("true")){
-                    int id = intent.getIntExtra("reId",0);
-                    String name = intent.getStringExtra("reName");
-                    String date = intent.getStringExtra("reTime");
-                    String space = intent.getStringExtra("rePlace");
-                    int type = intent.getIntExtra("reType", 0);
-                    double distance = intent.getDoubleExtra("reDistance", 0);
-                    int favorite = intent.getIntExtra("reFavorite",0);
-                    setData(id, name, type, distance, favorite, space, date);
+                if (intent.getStringExtra("reResult").equals("true")) {
                     // TODO 将数据存入List
-                }else if (intent.getStringExtra("reResult").equals("finish")){
+                    int id = intent.getIntExtra("reId", 0);
+                    String name = intent.getStringExtra("reName");
+                    String space = intent.getStringExtra("rePlace");
+                    String date = intent.getStringExtra("reTime");
+                    int type = intent.getIntExtra("reType", 0);
+                    double distance = intent.getDoubleExtra("reDistance", 0.0);
+                    int favorite = intent.getIntExtra("reFavorite", 0);
+                    setData(id, name, type, distance, favorite, space, date);
+                } else if (intent.getStringExtra("reResult").equals("finish")) {
                     //TODO 显示数据
                     System.out.println("### 哎哟我去");
                     simpleAdapter.notifyDataSetChanged();
-                }else {
-                    Toast.makeText(context, "没有活动=_=！！！", Toast.LENGTH_SHORT).show();
+                    dataList.setAdapter(simpleAdapter);
+                    fixListViewHeight(dataList);
+                } else {
+                    Toast.makeText(context, "### 没有活动=_=！！！", Toast.LENGTH_SHORT).show();
                 }
             }
         }
     }
+
 }

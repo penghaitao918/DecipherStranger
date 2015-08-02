@@ -59,7 +59,7 @@ public class ClientListenThread extends Thread {
                     Log.v("AAA", reMsg);
                     System.out.println(reMsg);
                     JSONObject jsonObj = new JSONObject(reMsg);
-                    Log.v("能不能接到aaaaa", reMsg);
+                    Log.v(" ### 能不能接到", reMsg);
                     int msgType = jsonObj.getInt("re_type");            // type of message received
                     System.out.println("### ++++++++++++这是一条消息" + msgType);
                     switch (msgType) {
@@ -295,22 +295,26 @@ public class ClientListenThread extends Thread {
                                 itDetials.putExtra("re_matter",jsonObj.getString("re_matter"));
                             }
                             clContext.sendBroadcast(itDetials);
+                            break;
                         case GlobalMsgUtils.msgShowAllActivity :
                             Intent itShowAll = new Intent(MyStatic.LIFE_PARTAKE);
+                            System.out.println("### " + jsonObj.getString("re_message"));
                             if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)){
-                                itShowAll.putExtra("reResult","true");
+                                itShowAll.putExtra("reResult", "true");
                                 itShowAll.putExtra("reId",jsonObj.getInt("re_id"));
                                 itShowAll.putExtra("reName",jsonObj.getString("re_name"));
                                 itShowAll.putExtra("rePlace",jsonObj.getString("re_place"));
                                 itShowAll.putExtra("reTime",jsonObj.getString("re_time"));
                                 itShowAll.putExtra("reType",jsonObj.getInt("re_activity_type"));
-                                itShowAll.putExtra("reDistance",jsonObj.getDouble("distance"));
+                                itShowAll.putExtra("reDistance",jsonObj.getDouble("re_distance"));
                                 itShowAll.putExtra("reFavorite",jsonObj.getInt("favorite"));
                             }else if (jsonObj.getString("re_message").equals("finish")){
-                                itShowAll.putExtra("reResult","finish");
+                                itShowAll.putExtra("reResult", "finish");
                             }else {
-                                itShowAll.putExtra("reResult","false");
+                                itShowAll.putExtra("reResult", "false");
                             }
+                            clContext.sendBroadcast(itShowAll);
+                            break;
                         default:
                             if(NetworkService.getInstance().getIsConnected()) {
                                 String testNet = "type"+":"+"ping";
