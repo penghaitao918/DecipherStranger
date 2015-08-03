@@ -315,6 +315,15 @@ public class ClientListenThread extends Thread {
                             }
                             clContext.sendBroadcast(itShowAll);
                             break;
+                        case GlobalMsgUtils.msgShareActivity :
+                            Intent itShare = new Intent(MyStatic.LIFE_SHARE_DO);
+                            if (jsonObj.getString("reMessage").equals(MyStatic.resultTrue)){
+                                itShare.putExtra("reResult",true);
+                            }else {
+                                itShare.putExtra("reResult",false);
+                            }
+                            clContext.sendBroadcast(itShare);
+                            break;
                         default:
                             if(NetworkService.getInstance().getIsConnected()) {
                                 String testNet = "type"+":"+"ping";

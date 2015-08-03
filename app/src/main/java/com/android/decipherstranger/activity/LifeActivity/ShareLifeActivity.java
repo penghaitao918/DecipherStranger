@@ -5,16 +5,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.android.decipherstranger.Network.NetworkService;
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
 import com.android.decipherstranger.activity.Base.MyApplication;
 import com.android.decipherstranger.util.ChangeUtils;
+import com.android.decipherstranger.util.ImageCompression;
 import com.android.decipherstranger.util.MyStatic;
 
 /**
@@ -43,7 +49,11 @@ public class ShareLifeActivity extends BaseActivity {
     private ImageButton imageButton = null;
     private MyApplication application = null;
     private ShareLifeBroadcastReceiver receiver = null;
+    private String photo = null;
+    private String smallPhoto = null;
 
+    private static final int IMAGE_REQUEST_CODE = 0;
+    private static final int RESULT_REQUEST_CODE = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +71,15 @@ public class ShareLifeActivity extends BaseActivity {
     private void send() {
         String account = application.getAccount();
         String message = editText.getText().toString();
-        Bitmap bitmap = imageButton.getDrawingCache();
+        if(NetworkService.getInstance().getIsConnected()){
+            String Msg = "type"+":"+"23"+":"+"account"+":"+account+":"+"activitySpeech"+":"+message+":"+
+                    "photo"+":"+photo+":"+"smallPhoto"+":"+smallPhoto;
+            Log.v("aaaaa", Msg);
+            NetworkService.getInstance().sendUpload(Msg);
+        }else {
+            NetworkService.getInstance().closeConnection();
+            Log.v("晒图", "服务器连接失败");
+        }
     }
 
     public void SendShareOnclick(View view) {
@@ -72,8 +90,60 @@ public class ShareLifeActivity extends BaseActivity {
             case R.id.send_share:
                 break;
             case R.id.imageButton:
+                selectPhoto();
                 break;
         }
+    }
+
+    public  void selectPhoto(){
+        Intent intentFromGallery = new Intent();
+        intentFromGallery.setType("image/*"); // 设置文件类型
+        intentFromGallery
+                .setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intentFromGallery,
+                IMAGE_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if (requestCode == IMAGE_REQUEST_CODE){
+            try {
+                startPhotoZoom(data.getData());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else {
+            if (data!= null){
+                getImageToView(data);
+            }
+        }
+    }
+
+    public void getImageToView(Intent data){
+        Bundle extras = data.getExtras();
+        if (extras != null){
+            Bitmap selectPhoto = extras.getParcelable("data");
+            photo = ChangeUtils.toBinary(selectPhoto);
+            smallPhoto = ChangeUtils.toBinary(ImageCompression.compressSimplify(selectPhoto, 0.3f));
+            Drawable drawable = new BitmapDrawable(this.getResources(), selectPhoto);
+            imageButton.setImageDrawable(drawable);
+        }
+
+    }
+    public void startPhotoZoom(Uri uri) {
+
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, "image/*");
+        // 设置裁剪
+        intent.putExtra("crop", "true");
+        // aspectX aspectY 是宽高的比例
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        // outputX outputY 是裁剪图片宽高
+        intent.putExtra("outputX", 340);
+        intent.putExtra("outputY", 340);
+        intent.putExtra("return-data", true);
+        startActivityForResult(intent, RESULT_REQUEST_CODE);
     }
 
     private void ShareLifeBroadcas() {
@@ -89,9 +159,9 @@ public class ShareLifeActivity extends BaseActivity {
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(MyStatic.LIFE_SHARE_DO)) {
                 if (intent.getBooleanExtra("reResult", true)){
-
+                        //TODO 显示分享成功，跳转页面
                 }else{
-
+                        //TODO 显示分享失败
                 }
             }
         }

@@ -27,4 +27,5 @@ public class GlobalMsgUtils {
     public static final int msgDetialsActivity = 20;
     public static final int msgShowAllActivity = 21;
     public static final int msgAttendActivity = 22;
+    public static final int msgShareActivity = 23;
 }
