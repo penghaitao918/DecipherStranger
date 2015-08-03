@@ -317,7 +317,7 @@ public class ClientListenThread extends Thread {
                             break;
                         case GlobalMsgUtils.msgShareActivity :
                             Intent itShare = new Intent(MyStatic.LIFE_SHARE_DO);
-                            if (jsonObj.getString("reMessage").equals(MyStatic.resultTrue)){
+                            if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)){
                                 itShare.putExtra("reResult",true);
                             }else {
                                 itShare.putExtra("reResult",false);

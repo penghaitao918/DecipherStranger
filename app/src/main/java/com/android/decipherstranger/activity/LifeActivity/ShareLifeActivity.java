@@ -176,7 +176,8 @@ public class ShareLifeActivity extends BaseActivity {
             if (intent.getAction().equals(MyStatic.LIFE_SHARE_DO)) {
                 if (intent.getBooleanExtra("reResult", true)){
                         //TODO 显示分享成功，跳转页面
-                    onBackPressed();
+                    Intent it = new Intent(ShareLifeActivity.this,ShareActivity.class);
+                    startActivity(it);
                 }else{
                         //TODO 显示分享失败
                     Toast.makeText(ShareLifeActivity.this,"分享失败，请检查网络连接~",Toast.LENGTH_SHORT).show();
