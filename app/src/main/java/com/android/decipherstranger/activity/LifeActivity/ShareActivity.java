@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -16,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
@@ -25,10 +23,10 @@ import com.android.decipherstranger.db.LifeShare;
 import com.android.decipherstranger.util.MyStatic;
 import com.android.decipherstranger.view.AutoListView;
 
+import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Map;
-import java.util.Random;
 
 /**
  * へ　　　　　／|
@@ -54,14 +52,13 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
 
     private RelativeLayout topLayout = null;
     private SQLiteOpenHelper helper = null;
-    private LifeShare lifeShare = null;
+    private LifeShare shareList = null;
 
     private AutoListView listView;
     private SimpleAdapter simpleAdapter = null;
     private ArrayList<Map<String, Object>> dataList = null;
 
-    //	当前最大数据条数
-    private int Count = 0;
+    private int minId = 0;
 
     private LifeShareBroadcastReceiver receiver = null;
 
@@ -85,16 +82,24 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
     /* 刷新 */
     @Override
     public void onRefresh() {
-        //	loadData(AutoListView.REFRESH);
-        //	获取服务器前20条数据，并返回 刷新标记
-        Toast.makeText(this, "刷新", Toast.LENGTH_SHORT).show();
+        refresh();
+        //    Toast.makeText(this, "刷新", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onLoad() {
-        //	loadData(AutoListView.LOAD);
-        //	获取从 count + 1 到 count + 10 的数据，  并返回加载标记
-        Toast.makeText(this,"加载",Toast.LENGTH_SHORT).show();
+        getMinId();
+        load();
+        //  Toast.makeText(this,"加载",Toast.LENGTH_SHORT).show();
+    }
+
+    private void refresh() {
+        //  TODO 向服务器发送刷新请求,获取最新的20条数据（这是一个ID为逆序的数组）
+    }
+
+    private void load() {
+      //send  minId;
+        //  TODO 向服务器发送加载数据,获取ID<count的10条数据（从count-1到count-10）
     }
 
     private void init() {
@@ -120,21 +125,37 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
         this.listView.setOnLoadListener(this);
     }
 
-
     private void initData() {
         this.helper = new DATABASE(this);
-        this.lifeShare = new LifeShare(helper.getReadableDatabase());
-		/*	此处获取数据库既有数据*/
-        //	this.dataList.addAll(this.selectAll());
+        this.shareList = new LifeShare(helper.getReadableDatabase());
         new Thread(new Runnable() {
             @Override
             public void run() {
                 Message msg = handler.obtainMessage();
                 msg.what = AutoListView.REFRESH;
-                msg.obj = lifeShare.selectAll(ShareActivity.this);
+                msg.obj = shareList.refresh();
                 handler.sendMessage(msg);
             }
         }).start();
+        this.refresh();
+    }
+
+    private void loadData() {
+        this.shareList = new LifeShare(helper.getReadableDatabase());
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Message msg = handler.obtainMessage();
+                msg.what = AutoListView.LOAD;
+                msg.obj = shareList.load(minId);
+                handler.sendMessage(msg);
+            }
+        }).start();
+    }
+
+    private void getMinId() {
+        this.shareList = new LifeShare(helper.getReadableDatabase());
+        this.minId = shareList.getMinId();
     }
 
     private void fixListViewHeight(AutoListView listView) {
@@ -157,44 +178,6 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
         // params.height设置ListView完全显示需要的高度
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
-    }
-
-    private void loadData(final int what) {
-        // 这里模拟从服务器获取数据
-        new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(700);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                Message msg = handler.obtainMessage();
-                msg.what = what;
-                msg.obj = getData();
-                handler.sendMessage(msg);
-            }
-        }).start();
-    }
-
-    // 测试数据
-    public ArrayList<Map<String, Object>> getData() {
-        Bitmap  bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.ds_icon);
-        ArrayList<Map<String, Object>> all = new ArrayList<Map<String, Object>>();
-
-        Random random = new Random();
-        for (int i = 0; i < 10; i++) {
-            long l = random.nextInt(10000);
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put(MyStatic.SHARE_PORTRAIT, bitmap);
-            map.put(MyStatic.SHARE_NAME, "我是小涛啊" + l);
-            map.put(MyStatic.SHARE_MESSAGE, "今天风好大，把我吹成了傻逼-。-凑点字数看能不能出现第二行QAQ");
-            map.put(MyStatic.SHARE_PHOTO, bitmap);
-            map.put(MyStatic.SHARE_TIME, "2015/07/28 18:14");
-            all.add(map);
-        }
-        return all;
     }
 
     public void LifeShareOnclick(View view) {
@@ -257,7 +240,29 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
             if (intent.getAction().equals(MyStatic.LIFE_SHARE)) {
                 // TODO 将获取的数据赋值到本地
                 if (intent.getBooleanExtra("reResult", true)){
-
+                    //  获取返回类型为 刷新 还是 加载, 刷新为1，加载为0
+                    int type = 0;
+                    int id = 0;
+                    Bitmap portrait = null;
+                    String account = null;
+                    String message = null;
+                    Bitmap photo = null;
+                    String time = null;
+                    int number = 0;
+                    switch (type) {
+                        case MyStatic.REFRESH:
+                            shareList = new LifeShare(helper.getWritableDatabase());
+                            shareList.clear();
+                            shareList = new LifeShare(helper.getWritableDatabase());
+                            shareList.insert(id, portrait, account, message, photo, time, number);
+                            initData();
+                            break;
+                        case MyStatic.LOAD:
+                            shareList = new LifeShare(helper.getWritableDatabase());
+                            shareList.insert(id, portrait, account, message, photo, time, number);
+                            loadData();
+                            break;
+                    }
                 }else{
 
                 }

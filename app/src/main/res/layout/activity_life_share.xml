@@ -48,7 +48,17 @@
 
     </RelativeLayout>
 
-    <ScrollView
+    <view
+        android:layout_marginTop="10dp"
+        class="com.android.decipherstranger.view.AutoListView"
+        android:id="@+id/lifeShare"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@null"
+        android:listSelector="#00000000"/>
+
+<!--    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/scrollView2"
@@ -66,18 +76,8 @@
                 android:background="@drawable/life_logo"
                 android:layout_gravity="center_horizontal" />
 
-            <view
-                android:layout_marginTop="10dp"
-                class="com.android.decipherstranger.view.AutoListView"
-                android:id="@+id/lifeShare"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="@null"
-                android:listSelector="#00000000"/>
-
         </LinearLayout>
 
-    </ScrollView>
+    </ScrollView>-->
 
 </LinearLayout>

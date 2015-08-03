@@ -57,38 +57,66 @@ public class LifeShare {
         this.db.close();
     }
 
-    //  排序
-    public ArrayList<Map<String, Object>> selectAll (Context context){
+    //  刷新
+    public ArrayList<Map<String, Object>> refresh(){
         String sql = "SELECT * FROM life_share ORDER BY id DESC";
         Cursor result = this.db.rawQuery(sql, null);
         ArrayList<Map<String, Object>> all = new ArrayList<Map<String, Object>>();
-        Bitmap bitmap = bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ds_icon);
 
-/*        for (result.moveToFirst(); !result.isAfterLast(); result.moveToNext()) {
+        for (result.moveToFirst(); !result.isAfterLast(); result.moveToNext()) {
             Map<String, Object> map = new HashMap<String, Object>();
-            map.put(MyStatic.LIFE_ID,  result.getInt(0));
-            map.put(MyStatic.LIFE_NAME, result.getString(1));
-            map.put(MyStatic.LIFE_CLASSINT, result.getInt(2));
-            map.put(MyStatic.LIFE_CLASS, bitmap);
-            map.put(MyStatic.LIFE_SPACE, result.getString(5));
-            map.put(MyStatic.LIFE_TIME, result.getString(6));
-            all.add(map);
-        }*/
-
-        Random random = new Random();
-        for (int i = 0; i < 10; i++) {
-            long l = random.nextInt(10000);
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put(MyStatic.SHARE_PORTRAIT, bitmap);
-            map.put(MyStatic.SHARE_NAME, "我是小涛啊" + l);
-            map.put(MyStatic.SHARE_MESSAGE, "今天风好大，把我吹成了傻逼-。-凑点字数看能不能出现第二行QAQ");
-            map.put(MyStatic.SHARE_PHOTO, bitmap);
-            map.put(MyStatic.SHARE_TIME, "2015/07/28 18:14");
+            map.put(MyStatic.SHARE_ID,  result.getInt(0));
+            byte[] inPortrait = result.getBlob(1);
+            Bitmap portrait = BitmapFactory.decodeByteArray(inPortrait, 0, inPortrait.length);
+            map.put(MyStatic.SHARE_PORTRAIT, portrait);
+            map.put(MyStatic.SHARE_NAME, result.getString(2));
+            map.put(MyStatic.SHARE_MESSAGE, result.getString(3));
+            byte[] inPhoto = result.getBlob(4);
+            Bitmap photo = BitmapFactory.decodeByteArray(inPhoto, 0, inPhoto.length);
+            map.put(MyStatic.SHARE_PHOTO, photo);
+            map.put(MyStatic.SHARE_TIME, result.getString(5));
+            map.put(MyStatic.SHARE_NUM, result.getInt(6));
             all.add(map);
         }
-
         this.db.close();
         return all;
+    }
+
+    //  加载
+    public ArrayList<Map<String, Object>> load(int id){
+        String sql = "SELECT * FROM life_share WHERE id<? ORDER BY id DESC";
+        String args[] = new String[]{ String.valueOf(id) };
+        Cursor result = this.db.rawQuery(sql, args);
+        ArrayList<Map<String, Object>> all = new ArrayList<Map<String, Object>>();
+
+        for (result.moveToFirst(); !result.isAfterLast(); result.moveToNext()) {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put(MyStatic.SHARE_ID,  result.getInt(0));
+            byte[] inPortrait = result.getBlob(1);
+            Bitmap portrait = BitmapFactory.decodeByteArray(inPortrait, 0, inPortrait.length);
+            map.put(MyStatic.SHARE_PORTRAIT, portrait);
+            map.put(MyStatic.SHARE_NAME, result.getString(2));
+            map.put(MyStatic.SHARE_MESSAGE, result.getString(3));
+            byte[] inPhoto = result.getBlob(4);
+            Bitmap photo = BitmapFactory.decodeByteArray(inPhoto, 0, inPhoto.length);
+            map.put(MyStatic.SHARE_PHOTO, photo);
+            map.put(MyStatic.SHARE_TIME, result.getString(5));
+            map.put(MyStatic.SHARE_NUM, result.getInt(6));
+            all.add(map);
+        }
+        this.db.close();
+        return all;
+    }
+
+    //  获取当前最小ID
+    public int getMinId() {
+        int id = 0;
+        String sql = "SELECT id FROM life_share ORDER BY id ASC LIMIT 1";
+        Cursor result = this.db.rawQuery(sql, null);
+        if (result.moveToNext()){
+            id = result.getInt(0);
+        }
+        return id;
     }
 
     // 清空

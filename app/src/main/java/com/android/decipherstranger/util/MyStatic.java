@@ -82,11 +82,13 @@ public class MyStatic {
     public static final String LIFE_TIME = "lifeTime";
     public static final String LIFE_SPACE = "lifeSpace";
     public static final String LIFE_PASSWORD = "LifePassword";
+    public static final String SHARE_ID = "shareId";
     public static final String SHARE_PORTRAIT = "sharePortrait";
     public static final String SHARE_NAME = "shareName";
     public static final String SHARE_MESSAGE = "shareMessage";
     public static final String SHARE_PHOTO = "sharePhoto";
     public static final String SHARE_TIME = "shareTime";
+    public static final String SHARE_NUM = "shareNum";
 
     //  设置全局静态变量
     public static String friendAccount = null;          //  所添加好友account
