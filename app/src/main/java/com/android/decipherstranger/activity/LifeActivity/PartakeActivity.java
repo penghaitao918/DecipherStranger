@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -365,6 +366,9 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
                 break;
             /*广告*/
             case R.id.advertisement:
+                Uri uri = Uri.parse(MyStatic.ADVERTISEMENT);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
                 break;
             /*删除广告*/
 /*            case R.id.exitButton:

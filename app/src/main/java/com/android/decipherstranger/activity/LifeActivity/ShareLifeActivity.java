@@ -54,12 +54,19 @@ public class ShareLifeActivity extends BaseActivity {
 
     private static final int IMAGE_REQUEST_CODE = 0;
     private static final int RESULT_REQUEST_CODE = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_life_share_do);
         this.init();
         this.ShareLifeBroadcas();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        super.unregisterReceiver(ShareLifeActivity.this.receiver);
     }
 
     private void init() {
@@ -88,6 +95,15 @@ public class ShareLifeActivity extends BaseActivity {
                 onBackPressed();
                 break;
             case R.id.send_share:
+                if (editText.getText().toString().equals("")) {
+                    Toast.makeText(this,"分享内容不能为空！",Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                if (photo == null) {
+                    Toast.makeText(this,"请选择图片！",Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                send();
                 break;
             case R.id.imageButton:
                 selectPhoto();
@@ -160,8 +176,10 @@ public class ShareLifeActivity extends BaseActivity {
             if (intent.getAction().equals(MyStatic.LIFE_SHARE_DO)) {
                 if (intent.getBooleanExtra("reResult", true)){
                         //TODO 显示分享成功，跳转页面
+                    onBackPressed();
                 }else{
                         //TODO 显示分享失败
+                    Toast.makeText(ShareLifeActivity.this,"分享失败，请检查网络连接~",Toast.LENGTH_SHORT).show();
                 }
             }
         }

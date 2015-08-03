@@ -22,7 +22,7 @@ public class DATABASE extends SQLiteOpenHelper {
         this.CreateChatRecord(db);
         this.CreateContactsList(db);
         this.CreateRecentContactsTab(db);
-        this.CreateLifeList(db);
+        this.CreateLifeShare(db);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class DATABASE extends SQLiteOpenHelper {
         this.DropChatRecord(db);
         this.DropContactsList(db);
         this.DropRecentContactsTab(db);
-        this.DropLifeList(db);
+        this.DropLifeShare(db);
         DATABASE.this.onCreate(db);
     }
     
@@ -85,16 +85,17 @@ public class DATABASE extends SQLiteOpenHelper {
     }
 
     // 生活
-    private void CreateLifeList(SQLiteDatabase db) {
-        String sql = "CREATE TABLE `life_list` (" +
-                "  `life_id` int(11) DEFAULT NULL," +
-                "  `life_name` varchar(50) DEFAULT NULL," +
-                "  `life_class` int(10) DEFAULT NULL," +
-                "  `life_distance` double DEFAULT NULL," +
-                "  `life_favorite` int(20) DEFAULT NULL," +
-                "  `life_space` varchar(50) DEFAULT NULL," +
-                "  `life_date` varchar(10) DEFAULT NULL" +
-                ") ";
+    private void CreateLifeShare(SQLiteDatabase db) {
+        String sql = "CREATE TABLE `life_share` (" +
+                "  `id` int(11) NOT NULL," +
+                "  `portrait` mediumblob," +
+                "  `account` varchar(20) DEFAULT NULL," +
+                "  `message` mediumblob," +
+                "  `photo` mediumblob," +
+                "  `time` varchar(20) DEFAULT NULL," +
+                "  `number` int(4) DEFAULT NULL," +
+                "  PRIMARY KEY (`id`)" +
+                ")";
         db.execSQL(sql);
     }
     
@@ -118,8 +119,8 @@ public class DATABASE extends SQLiteOpenHelper {
         db.execSQL(sql);
     }
 
-    private void DropLifeList(SQLiteDatabase db) {
-        String sql = "DROP TABLE IF EXISTS `lifelist`";
+    private void DropLifeShare(SQLiteDatabase db) {
+        String sql = "DROP TABLE IF EXISTS `life_share`";
         db.execSQL(sql);
     }
 }

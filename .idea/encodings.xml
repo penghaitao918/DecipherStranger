@@ -8,7 +8,7 @@
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/android/decipherstranger/activity/LifeActivity/ShareActivity.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/android/decipherstranger/adapter/ListViewAdapter.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/android/decipherstranger/util/TimeUtils.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/android/decipherstranger/view/AutoListView.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/android/decipherstranger/view/AutoListView.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/android/decipherstranger/view/MyScrollView.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-hdpi/loading_0.png" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-hdpi/loading_1.png" charset="GBK" />

@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.util.MyStatic;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,36 +35,32 @@ import java.util.Random;
  * @Date 2015/7/31 12:01
  * @e-mail penghaitao918@163.com
  */
-public class LifeList {
+public class LifeShare {
 
     private SQLiteDatabase db = null;
 
-    public LifeList(SQLiteDatabase db){
+    public LifeShare(SQLiteDatabase db){
         this.db = db;
     }
 
     // 存储数据
-    public void insert(int id, String name, int type, double distance, int favorite, String space, String date) {
-        String sql = "insert  into `life_list` values (?, ?, ?, ?, ?, ?, ?)";
-        Object args[] = new Object[]{id, name, type, distance, favorite, space, date};
+    public void insert(int id, Bitmap portrait, String account, String message, Bitmap photo, String time, int number) {
+        ByteArrayOutputStream osPortrait = new ByteArrayOutputStream();
+        portrait.compress(Bitmap.CompressFormat.PNG, 100, osPortrait);
+
+        ByteArrayOutputStream osPhoto = new ByteArrayOutputStream();
+        photo.compress(Bitmap.CompressFormat.PNG, 100, osPhoto);
+
+        String sql = "insert  into `life_share` values (?, ?, ?, ?, ?, ?, ?)";
+        Object args[] = new Object[]{id, osPortrait.toByteArray(), account, message, osPhoto.toByteArray(), time, number};
         this.db.execSQL(sql, args);
         this.db.close();
     }
 
     //  排序
     public ArrayList<Map<String, Object>> selectAll (Context context){
-        String sql = "";
-/*        switch (type) {
-            case 1: sql = "SELECT * FROM 'life_list' ORDER BY 'life_class' ASC";
-                break;
-            case 2: sql = "SELECT * FROM 'life_list' ORDER BY 'life_distance' ASC";
-                break;
-            case 3: sql = "SELECT * FROM 'life_list' ORDER BY 'life_date' ASC";
-                break;
-            case 4: sql = "SELECT * FROM 'life_list' ORDER BY 'life_favorite' ASC";
-                break;
-        }
-        Cursor result = this.db.rawQuery(sql, null);*/
+        String sql = "SELECT * FROM life_share ORDER BY id DESC";
+        Cursor result = this.db.rawQuery(sql, null);
         ArrayList<Map<String, Object>> all = new ArrayList<Map<String, Object>>();
         Bitmap bitmap = bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ds_icon);
 

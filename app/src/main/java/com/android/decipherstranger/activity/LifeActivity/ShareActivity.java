@@ -10,21 +10,18 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
-import com.android.decipherstranger.Network.NetworkService;
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
-import com.android.decipherstranger.db.ConversationList;
 import com.android.decipherstranger.db.DATABASE;
-import com.android.decipherstranger.db.LifeList;
-import com.android.decipherstranger.util.GlobalMsgUtils;
+import com.android.decipherstranger.db.LifeShare;
 import com.android.decipherstranger.util.MyStatic;
 import com.android.decipherstranger.view.AutoListView;
 
@@ -57,7 +54,7 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
 
     private RelativeLayout topLayout = null;
     private SQLiteOpenHelper helper = null;
-    private LifeList lifeList = null;
+    private LifeShare lifeShare = null;
 
     private AutoListView listView;
     private SimpleAdapter simpleAdapter = null;
@@ -126,7 +123,7 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
 
     private void initData() {
         this.helper = new DATABASE(this);
-        this.lifeList = new LifeList(helper.getReadableDatabase());
+        this.lifeShare = new LifeShare(helper.getReadableDatabase());
 		/*	此处获取数据库既有数据*/
         //	this.dataList.addAll(this.selectAll());
         new Thread(new Runnable() {
@@ -134,10 +131,32 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
             public void run() {
                 Message msg = handler.obtainMessage();
                 msg.what = AutoListView.REFRESH;
-                msg.obj = lifeList.selectAll(ShareActivity.this);
+                msg.obj = lifeShare.selectAll(ShareActivity.this);
                 handler.sendMessage(msg);
             }
         }).start();
+    }
+
+    private void fixListViewHeight(AutoListView listView) {
+        // 如果没有设置数据适配器，则ListView没有子项，返回。
+        ListAdapter listAdapter = listView.getAdapter();
+        int totalHeight = 0;
+        if (listAdapter == null) {
+            return;
+        }
+        for (int index = 0, len = listAdapter.getCount(); index < len; ++index) {
+            View listViewItem = listAdapter.getView(index, null, listView);
+            // 计算子项View 的宽高
+            listViewItem.measure(0, 0);
+            // 计算所有子项的高度和
+            totalHeight += listViewItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        // listView.getDividerHeight()获取子项间分隔符的高度
+        // params.height设置ListView完全显示需要的高度
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
     }
 
     private void loadData(final int what) {
@@ -192,7 +211,6 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
 
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
-            //	List<String> result = (List<String>) msg.obj;
             ArrayList<Map<String, Object>> result = (ArrayList<Map<String, Object>>) msg.obj;
             switch (msg.what) {
                 case AutoListView.REFRESH:
@@ -207,6 +225,8 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
             }
             listView.setResultSize(result.size());
             simpleAdapter.notifyDataSetChanged();
+            /*动态计算ListView的高度*/
+            fixListViewHeight(listView);
         };
     };
 
