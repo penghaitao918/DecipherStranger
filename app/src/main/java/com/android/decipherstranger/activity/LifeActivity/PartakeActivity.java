@@ -8,6 +8,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -404,6 +406,15 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
         }
     }
 
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message message) {
+            simpleAdapter.notifyDataSetChanged();
+            listView.setAdapter(simpleAdapter);
+            fixListViewHeight(listView);
+        }
+    };
+
     public class MyLocationListener implements BDLocationListener {
         @Override
         public void onReceiveLocation(BDLocation location) {
@@ -437,9 +448,8 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
                 } else if (intent.getStringExtra("reResult").equals("finish")) {
                     //TODO 显示数据
                     System.out.println("### 哎哟我去");
-                    simpleAdapter.notifyDataSetChanged();
-                    listView.setAdapter(simpleAdapter);
-                    fixListViewHeight(listView);
+                    Message message = new Message();
+                    handler.sendMessage(message);
                 } else {
                     Toast.makeText(context, "### 没有活动=_=！！！", Toast.LENGTH_SHORT).show();
                 }

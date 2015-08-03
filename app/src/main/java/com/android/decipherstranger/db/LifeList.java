@@ -12,6 +12,7 @@ import com.android.decipherstranger.util.MyStatic;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * へ　　　　　／|
@@ -42,17 +43,17 @@ public class LifeList {
     }
 
     // 存储数据
-/*    public void insert(int id, String name, int type, double distance, int favorite, String space, String date) {
+    public void insert(int id, String name, int type, double distance, int favorite, String space, String date) {
         String sql = "insert  into `life_list` values (?, ?, ?, ?, ?, ?, ?)";
         Object args[] = new Object[]{id, name, type, distance, favorite, space, date};
         this.db.execSQL(sql, args);
         this.db.close();
-    }*/
+    }
 
     //  排序
-    public ArrayList<Map<String, Object>> selectAll (Context context, int type){
+    public ArrayList<Map<String, Object>> selectAll (Context context){
         String sql = "";
-        switch (type) {
+/*        switch (type) {
             case 1: sql = "SELECT * FROM 'life_list' ORDER BY 'life_class' ASC";
                 break;
             case 2: sql = "SELECT * FROM 'life_list' ORDER BY 'life_distance' ASC";
@@ -62,30 +63,33 @@ public class LifeList {
             case 4: sql = "SELECT * FROM 'life_list' ORDER BY 'life_favorite' ASC";
                 break;
         }
-        Cursor result = this.db.rawQuery(sql, null);
+        Cursor result = this.db.rawQuery(sql, null);*/
         ArrayList<Map<String, Object>> all = new ArrayList<Map<String, Object>>();
-        for (result.moveToFirst(); !result.isAfterLast(); result.moveToNext()) {
+        Bitmap bitmap = bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ds_icon);
+
+/*        for (result.moveToFirst(); !result.isAfterLast(); result.moveToNext()) {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put(MyStatic.LIFE_ID,  result.getInt(0));
             map.put(MyStatic.LIFE_NAME, result.getString(1));
             map.put(MyStatic.LIFE_CLASSINT, result.getInt(2));
-            Bitmap bitmap = null;
-            switch (result.getInt(2)) {
-                // 美食
-                case 1:bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ds_icon);
-                    break;
-                // 旅游
-                case 2:bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ds_icon);
-                    break;
-                // 休闲娱乐
-                case 3:bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ds_icon);
-                    break;
-            }
             map.put(MyStatic.LIFE_CLASS, bitmap);
             map.put(MyStatic.LIFE_SPACE, result.getString(5));
             map.put(MyStatic.LIFE_TIME, result.getString(6));
             all.add(map);
+        }*/
+
+        Random random = new Random();
+        for (int i = 0; i < 10; i++) {
+            long l = random.nextInt(10000);
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put(MyStatic.SHARE_PORTRAIT, bitmap);
+            map.put(MyStatic.SHARE_NAME, "我是小涛啊" + l);
+            map.put(MyStatic.SHARE_MESSAGE, "今天风好大，把我吹成了傻逼-。-凑点字数看能不能出现第二行QAQ");
+            map.put(MyStatic.SHARE_PHOTO, bitmap);
+            map.put(MyStatic.SHARE_TIME, "2015/07/28 18:14");
+            all.add(map);
         }
+
         this.db.close();
         return all;
     }

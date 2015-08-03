@@ -24,6 +24,10 @@ import android.graphics.Bitmap;
  */
 public class MyStatic {
     //  设置全局静态常量
+
+    public static final int LOAD = 0;
+    public static final int REFRESH = 1;
+
     public static final String FILENAME_USER = "UserInfo";
     public static final String USER_MOVE = "Move";
     public static final String USER_MUSIC = "Music";

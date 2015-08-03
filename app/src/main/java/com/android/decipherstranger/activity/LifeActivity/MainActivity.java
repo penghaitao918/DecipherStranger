@@ -8,6 +8,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +26,7 @@ import com.android.decipherstranger.activity.Base.BaseActivity;
 import com.android.decipherstranger.activity.Base.MyApplication;
 import com.android.decipherstranger.util.GlobalMsgUtils;
 import com.android.decipherstranger.util.MyStatic;
+import com.android.decipherstranger.view.AutoListView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -229,6 +232,15 @@ public class MainActivity extends BaseActivity {
         dataList.add(map);
     }
 
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message message) {
+            simpleAdapter.notifyDataSetChanged();
+            listView.setAdapter(simpleAdapter);
+            fixListViewHeight(listView);
+        }
+    };
+
 
     private void LifeMainBroadcas() {
         //动态方式注册广播接收者
@@ -252,9 +264,8 @@ public class MainActivity extends BaseActivity {
                     setData(lifeId, type, name, time, place);
                 }else{
                     System.out.println("### 哎哟我去");
-                    simpleAdapter.notifyDataSetChanged();
-                    listView.setAdapter(simpleAdapter);
-                    fixListViewHeight(listView);
+                    Message message = new Message();
+                    handler.sendMessage(message);
                 }
             }
         }

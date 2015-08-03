@@ -6,8 +6,21 @@
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/android/decipherstranger/activity/LifeActivity/PasswordActivity.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/android/decipherstranger/activity/LifeActivity/SendActivity.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/android/decipherstranger/activity/LifeActivity/ShareActivity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/android/decipherstranger/adapter/ListViewAdapter.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/android/decipherstranger/util/TimeUtils.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/android/decipherstranger/view/AutoListView.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/android/decipherstranger/view/MyScrollView.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-hdpi/loading_0.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-hdpi/loading_1.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-hdpi/loading_2.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-hdpi/loading_3.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-hdpi/loading_4.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-hdpi/loading_5.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-hdpi/loading_6.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-hdpi/loading_7.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-hdpi/pull_to_refresh_arrow.png" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/advertisement.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/custom_progress_bar.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_life_details.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_life_main.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_life_partake.xml" charset="GBK" />
@@ -15,6 +28,8 @@
     <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_life_share.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/layout/list_item_life.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/layout/list_item_share.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/listview_footer.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/pull_to_refresh_header.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/layout/winpop_life_password.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/layout/winpop_life_sort.xml" charset="GBK" />
     <file url="PROJECT" charset="UTF-8" />

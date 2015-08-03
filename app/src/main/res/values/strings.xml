@@ -78,4 +78,15 @@
     <string name="lifeShare">晒 图</string>
     <string name="doShare">分 享</string>
     <string name="shareTip">来晒晒图分享一下现在的心情吧~</string>
+
+    <!-- 自定义组件 -->
+    <string name="pull_to_refresh">下拉可以刷新</string>
+    <string name="release_to_refresh">松开可以刷新</string>
+    <string name="lastUpdateTime">最近更新：%s</string>
+    <string name="load_full">已加载全部</string>
+    <string name="no_data">暂无数据</string>
+    <string name="more">加载中</string>
+    <!-- 消除警告，可忽略 -->
+    <string name="d">图片描述</string>
+
 </resources>
