@@ -52,6 +52,7 @@ public class ShareLifeActivity extends BaseActivity {
     private ShareLifeBroadcastReceiver receiver = null;
     private String photo = null;
     private String smallPhoto = null;
+    private String message = null;
     private ProgressDialog progressDialog = null;
 
     private static final int IMAGE_REQUEST_CODE = 0;
@@ -80,7 +81,7 @@ public class ShareLifeActivity extends BaseActivity {
 
     private void send() {
         String account = application.getAccount();
-        String message = editText.getText().toString();
+        message = editText.getText().toString();
         if(NetworkService.getInstance().getIsConnected()){
             String Msg = "type"+":"+"23"+":"+"account"+":"+account+":"+"activitySpeech"+":"+message+":"+
                     "photo"+":"+photo+":"+"smallPhoto"+":"+smallPhoto;
@@ -98,7 +99,9 @@ public class ShareLifeActivity extends BaseActivity {
                 onBackPressed();
                 break;
             case R.id.send_share:
-                if (editText.getText().toString().equals("")) {
+                progressDialog.setMessage("正在提交数据,请稍后...");
+                progressDialog.onStart();
+                if (message.equals("")) {
                     Toast.makeText(this,"分享内容不能为空！",Toast.LENGTH_SHORT).show();
                     break;
                 }
@@ -106,8 +109,6 @@ public class ShareLifeActivity extends BaseActivity {
                     Toast.makeText(this,"请选择图片！",Toast.LENGTH_SHORT).show();
                     break;
                 }
-                progressDialog.setMessage("正在提交数据,请稍后...");
-                progressDialog.onStart();
                 progressDialog.show();
                 send();
                 break;

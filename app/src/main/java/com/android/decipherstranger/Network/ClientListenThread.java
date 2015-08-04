@@ -44,7 +44,6 @@ public class ClientListenThread extends Thread {
             String test = new String();
             while (true) {
                 while(true){
-                    System.out.println("### 我在这里~");
                     test = bufferedReader.readLine();
                     if(test.contains("+++++")){
                         reMsg += test.substring(0, test.length()-5);
@@ -328,7 +327,7 @@ public class ClientListenThread extends Thread {
                             Intent itShowShare = new Intent(MyStatic.LIFE_SHARE);
                             itShowShare.putExtra("reRequestType",jsonObj.getInt("re_requestType"));
                             if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)){
-                                itShowShare.putExtra("reResult",true);
+                                itShowShare.putExtra("reResult","true");
                                 itShowShare.putExtra("reId",jsonObj.getInt("reId"));
                                 itShowShare.putExtra("reAccount",jsonObj.getString("reAccount"));
                                 itShowShare.putExtra("reUserPhoto",jsonObj.getString("reUserPhoto"));
@@ -340,7 +339,7 @@ public class ClientListenThread extends Thread {
                             }else if (jsonObj.getString("re_message").equals("finish")){
                                 itShowShare.putExtra("reResult","finish");
                             }else {
-                                itShowShare.putExtra("reResult",false);
+                                itShowShare.putExtra("reResult","false");
                             }
                             clContext.sendBroadcast(itShowShare);
                             break;

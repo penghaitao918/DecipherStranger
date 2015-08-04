@@ -49,7 +49,6 @@
     </RelativeLayout>
 
     <view
-        android:layout_marginTop="10dp"
         class="com.android.decipherstranger.view.AutoListView"
         android:id="@+id/lifeShare"
         android:layout_width="match_parent"

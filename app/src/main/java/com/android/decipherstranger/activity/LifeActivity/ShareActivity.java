@@ -256,7 +256,7 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
         //动态方式注册广播接收者
         this.receiver = new LifeShareBroadcastReceiver();
         IntentFilter filter = new IntentFilter();
-        filter.addAction(MyStatic.LIFE_MAIN);
+        filter.addAction(MyStatic.LIFE_SHARE);
         this.registerReceiver(receiver, filter);
     }
 
@@ -266,7 +266,7 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
             if (intent.getAction().equals(MyStatic.LIFE_SHARE)) {
                 // TODO 将获取的数据赋值到本地
                 int type = intent.getIntExtra("reRequestType", 1);
-                if (intent.getBooleanExtra("reResult", true)){
+                if (intent.getStringExtra("reResult").equals("true")){
                     //  获取返回类型为 刷新 还是 加载, 刷新为1，加载为0
                     int id = intent.getIntExtra("reId",0);
                     String account = intent.getStringExtra("reAccount");
@@ -290,13 +290,11 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
                     }
                 }else if (intent.getStringExtra("reResult").equals("finish")){
                     if (intent.getIntExtra("reRequestType",0) == 1){
-                        System.out.println("++++++++++"+type);
                         initData();
                     }else {
                         loadData();
                     }
-                }
-                else{
+                } else{
                     Toast.makeText(ShareActivity.this,"数据获取失败,请检查网络!!!",Toast.LENGTH_SHORT).show();
                 }
             }

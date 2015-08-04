@@ -450,7 +450,6 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
                     int favorite = intent.getIntExtra("reFavorite", 0);
                     setData(id, name, type, distance, favorite, space, date);
                 } else if (intent.getStringExtra("reResult").equals("finish")) {
-                    //TODO 显示数据
                     System.out.println("### 哎哟我去");
                     Message message = new Message();
                     handler.sendMessage(message);

@@ -51,7 +51,7 @@ public class LifeShare {
         ByteArrayOutputStream osPhoto = new ByteArrayOutputStream();
         photo.compress(Bitmap.CompressFormat.PNG, 100, osPhoto);
 
-        String sql = "insert  into `life_share` values (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert  into `life_share` values (?, ?, ?, ?, ?, ?, ?, ?)";
         Object args[] = new Object[]{id, account, osPortrait.toByteArray(), name, message, osPhoto.toByteArray(), time, number};
         this.db.execSQL(sql, args);
         this.db.close();
@@ -59,7 +59,7 @@ public class LifeShare {
 
     //  刷新
     public ArrayList<Map<String, Object>> refresh(){
-        String sql = "SELECT * FROM life_share ORDER BY id DESC";
+        String sql = "SELECT * FROM `life_share` ORDER BY id DESC";
         Cursor result = this.db.rawQuery(sql, null);
         ArrayList<Map<String, Object>> all = new ArrayList<Map<String, Object>>();
 
@@ -122,7 +122,7 @@ public class LifeShare {
 
     // 清空
     public void clear() {
-        String clear = "DELETE FROM life_list";
+        String clear = "DELETE FROM life_share";
         this.db.execSQL(clear);
         this.db.close();
     }
