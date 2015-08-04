@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -105,6 +106,11 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
         //  TODO 向服务器发送刷新请求,获取最新的20条数据（这是一个ID为逆序的数组）
         if (NetworkService.getInstance().getIsConnected()){
             String Msg = "type"+":"+"24"+":"+"requestType"+":"+"1";
+            Log.v("aaaaa", Msg);
+            NetworkService.getInstance().sendUpload(Msg);
+        }else {
+            NetworkService.getInstance().closeConnection();
+            Log.v("ShowShare","已执行T()方法");
         }
     }
 
@@ -114,6 +120,11 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
         //  TODO 向服务器发送加载数据,获取ID<count的10条数据（从count-1到count-10）
         if (NetworkService.getInstance().getIsConnected()){
             String Msg = "type"+":"+"24"+":"+"requestType"+":"+"0"+":"+"minId"+":"+minId;
+            Log.v("aaaaa", Msg);
+            NetworkService.getInstance().sendUpload(Msg);
+        }else{
+            NetworkService.getInstance().closeConnection();
+            Log.v("ShowShare", "已执行T()方法");
         }
     }
 
