@@ -101,13 +101,17 @@ public class ShareLifeActivity extends BaseActivity {
             case R.id.send_share:
                 progressDialog.setMessage("正在提交数据,请稍后...");
                 progressDialog.onStart();
-                if (message.equals("")) {
-                    Toast.makeText(this,"分享内容不能为空！",Toast.LENGTH_SHORT).show();
-                    break;
-                }
-                if (photo == null) {
-                    Toast.makeText(this,"请选择图片！",Toast.LENGTH_SHORT).show();
-                    break;
+                try {
+                    if (message.equals("")) {
+                        Toast.makeText(this,"分享内容不能为空！",Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    if (photo == null) {
+                        Toast.makeText(this,"请选择图片！",Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 progressDialog.show();
                 send();
