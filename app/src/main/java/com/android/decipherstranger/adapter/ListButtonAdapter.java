@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.decipherstranger.R;
 import com.android.decipherstranger.util.MyStatic;
 
 import java.util.ArrayList;
@@ -154,10 +155,14 @@ public class ListButtonAdapter extends BaseAdapter {
         }
 
         @Override
-        public void onClick(View v) {
-            int vid=v.getId();
-            if (vid == holder.numButton.getId())
-                itemDo(position, count);;
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.numButton:
+                    itemDo(position, count);
+                    break;
+                case R.id.friendButton:
+                    break;
+            }
         }
     }
 

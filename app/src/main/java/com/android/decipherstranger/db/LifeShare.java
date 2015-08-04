@@ -1,19 +1,16 @@
 package com.android.decipherstranger.db;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import com.android.decipherstranger.R;
 import com.android.decipherstranger.util.MyStatic;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 /**
  * へ　　　　　／|

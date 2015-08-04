@@ -26,7 +26,6 @@ import com.android.decipherstranger.activity.Base.BaseActivity;
 import com.android.decipherstranger.activity.Base.MyApplication;
 import com.android.decipherstranger.util.GlobalMsgUtils;
 import com.android.decipherstranger.util.MyStatic;
-import com.android.decipherstranger.view.AutoListView;
 
 import java.util.ArrayList;
 import java.util.HashMap;

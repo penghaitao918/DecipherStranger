@@ -2,7 +2,6 @@
 package com.android.decipherstranger.util;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import com.android.decipherstranger.Network.NetworkService;
 

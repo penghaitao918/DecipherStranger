@@ -22,8 +22,6 @@ import com.android.decipherstranger.Network.NetworkService;
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
 import com.android.decipherstranger.activity.Base.MyApplication;
-import com.android.decipherstranger.activity.LoginActivity;
-import com.android.decipherstranger.activity.MainPageActivity.MainPageActivity;
 import com.android.decipherstranger.util.ChangeUtils;
 import com.android.decipherstranger.util.ImageCompression;
 import com.android.decipherstranger.util.MyStatic;

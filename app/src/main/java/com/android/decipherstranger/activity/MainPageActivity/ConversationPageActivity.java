@@ -1,6 +1,5 @@
 package com.android.decipherstranger.activity.MainPageActivity;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -17,8 +16,8 @@ import android.widget.SimpleAdapter;
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
 import com.android.decipherstranger.activity.SubpageActivity.ChatMsgActivity;
-import com.android.decipherstranger.db.DATABASE;
 import com.android.decipherstranger.db.ConversationList;
+import com.android.decipherstranger.db.DATABASE;
 import com.android.decipherstranger.util.MyStatic;
 
 import java.text.SimpleDateFormat;

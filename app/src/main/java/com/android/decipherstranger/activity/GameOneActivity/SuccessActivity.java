@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -12,15 +11,12 @@ import android.widget.Toast;
 import com.android.decipherstranger.Network.NetworkService;
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
-import com.android.decipherstranger.activity.MainPageActivity.ContactsPageActivity;
-import com.android.decipherstranger.activity.MainPageActivity.ConversationPageActivity;
+import com.android.decipherstranger.activity.Base.MyApplication;
 import com.android.decipherstranger.activity.MainPageActivity.MainPageActivity;
 import com.android.decipherstranger.db.ContactsList;
 import com.android.decipherstranger.db.DATABASE;
 import com.android.decipherstranger.entity.User;
-import com.android.decipherstranger.util.ChangeUtils;
 import com.android.decipherstranger.util.GlobalMsgUtils;
-import com.android.decipherstranger.activity.Base.MyApplication;
 import com.android.decipherstranger.util.MyStatic;
 
 /**

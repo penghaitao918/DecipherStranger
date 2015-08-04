@@ -10,8 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.decipherstranger.entity.NearbyUserInfo;
 import com.android.decipherstranger.R;
+import com.android.decipherstranger.entity.NearbyUserInfo;
 
 import java.util.ArrayList;
 

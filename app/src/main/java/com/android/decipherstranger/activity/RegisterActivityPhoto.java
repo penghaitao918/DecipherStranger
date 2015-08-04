@@ -1,16 +1,13 @@
 package com.android.decipherstranger.activity;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
-import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -25,14 +22,7 @@ import android.widget.Toast;
 
 import com.android.decipherstranger.Network.NetworkService;
 import com.android.decipherstranger.R;
-
-import java.io.File;
-
 import com.android.decipherstranger.activity.Base.BaseActivity;
-import com.android.decipherstranger.activity.MainPageActivity.MainPageActivity;
-import com.android.decipherstranger.entity.User;
-import com.android.decipherstranger.util.ChangeUtils;
-
 import com.android.decipherstranger.entity.User;
 import com.android.decipherstranger.util.ChangeUtils;
 import com.android.decipherstranger.util.GlobalMsgUtils;
@@ -40,6 +30,8 @@ import com.android.decipherstranger.util.ImageCompression;
 import com.android.decipherstranger.util.MyStatic;
 import com.android.decipherstranger.util.StringUtils;
 import com.android.decipherstranger.util.Tools;
+
+import java.io.File;
 
 
 /**

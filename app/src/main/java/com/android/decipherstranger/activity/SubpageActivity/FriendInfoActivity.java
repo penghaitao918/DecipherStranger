@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.android.decipherstranger.Network.NetworkService;
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
+import com.android.decipherstranger.activity.Base.MyApplication;
 import com.android.decipherstranger.activity.MainPageActivity.MainPageActivity;
 import com.android.decipherstranger.db.ChatRecord;
 import com.android.decipherstranger.db.ContactsList;
@@ -28,7 +29,6 @@ import com.android.decipherstranger.db.ConversationList;
 import com.android.decipherstranger.db.DATABASE;
 import com.android.decipherstranger.entity.User;
 import com.android.decipherstranger.util.GlobalMsgUtils;
-import com.android.decipherstranger.activity.Base.MyApplication;
 
 /**
  * Created by WangXin on 2015/4/19 0019.

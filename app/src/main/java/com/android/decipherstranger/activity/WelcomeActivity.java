@@ -1,15 +1,5 @@
 package com.android.decipherstranger.activity;
 
-import com.android.decipherstranger.Network.NetworkService;
-import com.android.decipherstranger.R;
-import com.android.decipherstranger.activity.Base.BaseActivity;
-import com.android.decipherstranger.activity.MainPageActivity.MainPageActivity;
-import com.android.decipherstranger.util.ChangeUtils;
-import com.android.decipherstranger.util.GlobalMsgUtils;
-import com.android.decipherstranger.activity.Base.MyApplication;
-import com.android.decipherstranger.util.MyStatic;
-import com.android.decipherstranger.util.SharedPreferencesUtils;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +7,16 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.android.decipherstranger.Network.NetworkService;
+import com.android.decipherstranger.R;
+import com.android.decipherstranger.activity.Base.BaseActivity;
+import com.android.decipherstranger.activity.Base.MyApplication;
+import com.android.decipherstranger.activity.MainPageActivity.MainPageActivity;
+import com.android.decipherstranger.util.ChangeUtils;
+import com.android.decipherstranger.util.GlobalMsgUtils;
+import com.android.decipherstranger.util.MyStatic;
+import com.android.decipherstranger.util.SharedPreferencesUtils;
 
 
 /**

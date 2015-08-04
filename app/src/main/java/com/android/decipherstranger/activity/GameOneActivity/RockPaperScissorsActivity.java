@@ -22,9 +22,9 @@ import android.widget.TextView;
 
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
+import com.android.decipherstranger.activity.Base.MyApplication;
 import com.android.decipherstranger.dialog.CustomDialogSettings;
 import com.android.decipherstranger.util.GameUtils;
-import com.android.decipherstranger.activity.Base.MyApplication;
 import com.android.decipherstranger.util.MyStatic;
 
 /**

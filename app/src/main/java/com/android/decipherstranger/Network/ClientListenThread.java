@@ -5,12 +5,11 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.android.decipherstranger.activity.Base.MyApplication;
 import com.android.decipherstranger.util.ChangeUtils;
 import com.android.decipherstranger.util.GlobalMsgUtils;
-import com.android.decipherstranger.activity.Base.MyApplication;
 import com.android.decipherstranger.util.MyStatic;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;

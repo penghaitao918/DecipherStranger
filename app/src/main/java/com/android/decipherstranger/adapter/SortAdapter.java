@@ -1,8 +1,5 @@
 package com.android.decipherstranger.adapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -17,7 +14,8 @@ import android.widget.TextView;
 
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.entity.User;
-import com.android.decipherstranger.util.ChangeUtils;
+
+import java.util.ArrayList;
 
 public class SortAdapter extends BaseAdapter implements SectionIndexer {
     private ArrayList<User> list = null;

@@ -12,10 +12,8 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
-import android.widget.SimpleAdapter;
 
 import com.android.decipherstranger.Network.NetworkService;
 import com.android.decipherstranger.R;

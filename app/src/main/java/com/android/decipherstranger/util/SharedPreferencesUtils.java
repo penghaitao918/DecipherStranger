@@ -1,6 +1,5 @@
 package com.android.decipherstranger.util;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 

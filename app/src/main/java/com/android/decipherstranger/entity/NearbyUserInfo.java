@@ -2,11 +2,7 @@ package com.android.decipherstranger.entity;
 
 import android.graphics.Bitmap;
 
-import com.android.decipherstranger.R;
-
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Administrator on 2015/3/20 0020.

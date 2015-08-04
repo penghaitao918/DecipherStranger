@@ -1,7 +1,7 @@
 package com.android.decipherstranger.util;
 
-import android.media.*;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 
 import java.io.IOException;
 

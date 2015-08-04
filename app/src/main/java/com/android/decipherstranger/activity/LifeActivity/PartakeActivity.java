@@ -39,7 +39,6 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;

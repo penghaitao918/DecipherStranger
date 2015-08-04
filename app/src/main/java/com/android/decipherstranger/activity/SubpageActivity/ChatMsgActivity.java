@@ -28,7 +28,6 @@ import com.android.decipherstranger.Network.NetworkService;
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
 import com.android.decipherstranger.activity.Base.MyApplication;
-import com.android.decipherstranger.activity.MainPageActivity.MainPageActivity;
 import com.android.decipherstranger.adapter.ChatMsgViewAdapter;
 import com.android.decipherstranger.db.ChatRecord;
 import com.android.decipherstranger.db.DATABASE;

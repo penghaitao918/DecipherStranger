@@ -1,7 +1,5 @@
 package com.android.decipherstranger.adapter;
 
-import java.util.List;
-
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
@@ -14,7 +12,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.animation.Animation;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,6 +21,8 @@ import com.android.decipherstranger.entity.Contacts;
 import com.android.decipherstranger.util.ChangeUtils;
 import com.android.decipherstranger.util.ImageCompression;
 import com.android.decipherstranger.util.MediaManager;
+
+import java.util.List;
 
 public class ChatMsgViewAdapter extends BaseAdapter {
 
