@@ -265,9 +265,9 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(MyStatic.LIFE_SHARE)) {
                 // TODO 将获取的数据赋值到本地
+                int type = intent.getIntExtra("reRequestType", 1);
                 if (intent.getBooleanExtra("reResult", true)){
                     //  获取返回类型为 刷新 还是 加载, 刷新为1，加载为0
-                    int type = intent.getIntExtra("reRequestType", 1);
                     int id = intent.getIntExtra("reId",0);
                     String account = intent.getStringExtra("reAccount");
                     Bitmap portrait = ChangeUtils.toBitmap(intent.getStringExtra("reUserPhoto"));
@@ -282,15 +282,21 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
                             shareList.clear();
                             shareList = new LifeShare(helper.getWritableDatabase());
                             shareList.insert(id, account, portrait, name, message, photo, time, number);
-                            initData();
                             break;
                         case MyStatic.LOAD:
                             shareList = new LifeShare(helper.getWritableDatabase());
                             shareList.insert(id, account, portrait, name, message, photo, time, number);
-                            loadData();
                             break;
                     }
-                }else{
+                }else if (intent.getStringExtra("reResult").equals("finish")){
+                    if (intent.getIntExtra("reRequestType",0) == 1){
+                        System.out.println("++++++++++"+type);
+                        initData();
+                    }else {
+                        loadData();
+                    }
+                }
+                else{
                     Toast.makeText(ShareActivity.this,"数据获取失败,请检查网络!!!",Toast.LENGTH_SHORT).show();
                 }
             }

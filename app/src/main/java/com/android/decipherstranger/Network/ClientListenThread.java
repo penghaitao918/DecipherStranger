@@ -326,9 +326,9 @@ public class ClientListenThread extends Thread {
                             break;
                         case GlobalMsgUtils.msgShowShare :
                             Intent itShowShare = new Intent(MyStatic.LIFE_SHARE);
+                            itShowShare.putExtra("reRequestType",jsonObj.getInt("re_requestType"));
                             if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)){
                                 itShowShare.putExtra("reResult",true);
-                                itShowShare.putExtra("reRequestType",jsonObj.getInt("re_requestType"));
                                 itShowShare.putExtra("reId",jsonObj.getInt("reId"));
                                 itShowShare.putExtra("reAccount",jsonObj.getString("reAccount"));
                                 itShowShare.putExtra("reUserPhoto",jsonObj.getString("reUserPhoto"));
@@ -337,7 +337,9 @@ public class ClientListenThread extends Thread {
                                 itShowShare.putExtra("reSpeech",jsonObj.getString("reSpeech"));
                                 itShowShare.putExtra("reTime",jsonObj.getString("reTime"));
                                 itShowShare.putExtra("reZan",jsonObj.getInt("reZan"));
-                            }else{
+                            }else if (jsonObj.getString("re_message").equals("finish")){
+                                itShowShare.putExtra("reResult","finish");
+                            }else {
                                 itShowShare.putExtra("reResult",false);
                             }
                             clContext.sendBroadcast(itShowShare);
