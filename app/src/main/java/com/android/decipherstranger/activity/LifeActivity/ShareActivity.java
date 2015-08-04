@@ -304,7 +304,9 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
                         loadData();
                     }
                 } else{
-                    Toast.makeText(ShareActivity.this,"数据获取失败,请检查网络!!!",Toast.LENGTH_SHORT).show();
+                    if(intent.getIntExtra("reRequestType",0) == 0){
+                        //TODO 加载完毕处理
+                    }
                 }
             }
         }
