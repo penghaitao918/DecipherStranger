@@ -117,7 +117,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="New Button"
-                android:id="@+id/button3"
+                android:id="@+id/friendButton"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
@@ -125,23 +125,23 @@
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/imageButton3"
+                android:id="@+id/numButton"
                 android:background="@drawable/ok_icon"
                 android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/button3"
-                android:layout_toStartOf="@+id/button3"/>
+                android:layout_toLeftOf="@+id/friendButton"
+                android:layout_toStartOf="@+id/friendButton"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="10086"
-                android:id="@+id/textView11"
+                android:id="@+id/shareNum"
                 android:textSize="16dp"
                 android:layout_marginRight="5dp"
                 android:textColor="@color/text_hint"
                 android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/imageButton3"
-                android:layout_toStartOf="@+id/imageButton3" />
+                android:layout_toLeftOf="@+id/numButton"
+                android:layout_toStartOf="@+id/numButton" />
 
         </RelativeLayout>
 

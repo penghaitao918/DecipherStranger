@@ -74,6 +74,12 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        this.refresh();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         super.unregisterReceiver(ShareActivity.this.receiver);
@@ -83,22 +89,22 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
     @Override
     public void onRefresh() {
         refresh();
-        //    Toast.makeText(this, "刷新", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onLoad() {
         getMinId();
         load();
-        //  Toast.makeText(this,"加载",Toast.LENGTH_SHORT).show();
     }
 
     private void refresh() {
+        System.out.println("### 刷新");
         //  TODO 向服务器发送刷新请求,获取最新的20条数据（这是一个ID为逆序的数组）
     }
 
     private void load() {
       //send  minId;
+        System.out.println("### 加载");
         //  TODO 向服务器发送加载数据,获取ID<count的10条数据（从count-1到count-10）
     }
 
@@ -114,8 +120,9 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
         this.simpleAdapter = new SimpleAdapter(this,
                 this.dataList,
                 R.layout.list_item_share,
-                new String[] {MyStatic.SHARE_PORTRAIT, MyStatic.SHARE_NAME, MyStatic.SHARE_MESSAGE, MyStatic.SHARE_PHOTO, MyStatic.SHARE_TIME},
-                new int[] {R.id.sharePortrait, R.id.shareName, R.id.shareMessage, R.id.sharePhoto, R.id.shareTime}
+                new String[] {MyStatic.SHARE_PORTRAIT, MyStatic.SHARE_NAME, MyStatic.SHARE_MESSAGE,
+                        MyStatic.SHARE_PHOTO, MyStatic.SHARE_TIME, MyStatic.SHARE_NUM, MyStatic.SHARE_NUM_BTN, MyStatic.SHARE_FRI_BTN},
+                new int[] {R.id.sharePortrait, R.id.shareName, R.id.shareMessage, R.id.sharePhoto, R.id.shareTime, R.id.shareNum, R.id.numButton, R.id.friendButton}
         );
         /*实现ViewBinder()这个接口*/
         this.simpleAdapter.setViewBinder(new ViewBinderImpl());
@@ -137,7 +144,6 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
                 handler.sendMessage(msg);
             }
         }).start();
-        this.refresh();
     }
 
     private void loadData() {
@@ -243,8 +249,9 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
                     //  获取返回类型为 刷新 还是 加载, 刷新为1，加载为0
                     int type = 0;
                     int id = 0;
-                    Bitmap portrait = null;
                     String account = null;
+                    Bitmap portrait = null;
+                    String name = null;
                     String message = null;
                     Bitmap photo = null;
                     String time = null;
@@ -254,12 +261,12 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
                             shareList = new LifeShare(helper.getWritableDatabase());
                             shareList.clear();
                             shareList = new LifeShare(helper.getWritableDatabase());
-                            shareList.insert(id, portrait, account, message, photo, time, number);
+                            shareList.insert(id, account, portrait, name, message, photo, time, number);
                             initData();
                             break;
                         case MyStatic.LOAD:
                             shareList = new LifeShare(helper.getWritableDatabase());
-                            shareList.insert(id, portrait, account, message, photo, time, number);
+                            shareList.insert(id, account, portrait, name, message, photo, time, number);
                             loadData();
                             break;
                     }

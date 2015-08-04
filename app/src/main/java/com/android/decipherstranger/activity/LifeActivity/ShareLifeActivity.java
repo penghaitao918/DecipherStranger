@@ -1,5 +1,6 @@
 package com.android.decipherstranger.activity.LifeActivity;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -51,6 +52,7 @@ public class ShareLifeActivity extends BaseActivity {
     private ShareLifeBroadcastReceiver receiver = null;
     private String photo = null;
     private String smallPhoto = null;
+    private ProgressDialog progressDialog = null;
 
     private static final int IMAGE_REQUEST_CODE = 0;
     private static final int RESULT_REQUEST_CODE = 1;
@@ -70,6 +72,7 @@ public class ShareLifeActivity extends BaseActivity {
     }
 
     private void init() {
+        this.progressDialog = new ProgressDialog(this);
         application = (MyApplication) getApplication();
         this.editText = (EditText) super.findViewById(R.id.editText);
         this.imageButton = (ImageButton) super.findViewById(R.id.imageButton);
@@ -103,6 +106,9 @@ public class ShareLifeActivity extends BaseActivity {
                     Toast.makeText(this,"请选择图片！",Toast.LENGTH_SHORT).show();
                     break;
                 }
+                progressDialog.setMessage("正在提交数据,请稍后...");
+                progressDialog.onStart();
+                progressDialog.show();
                 send();
                 break;
             case R.id.imageButton:
@@ -174,10 +180,10 @@ public class ShareLifeActivity extends BaseActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(MyStatic.LIFE_SHARE_DO)) {
+                progressDialog.dismiss();
                 if (intent.getBooleanExtra("reResult", true)){
                         //TODO 显示分享成功，跳转页面
-                    Intent it = new Intent(ShareLifeActivity.this,ShareActivity.class);
-                    startActivity(it);
+                    onBackPressed();
                 }else{
                         //TODO 显示分享失败
                     Toast.makeText(ShareLifeActivity.this,"分享失败，请检查网络连接~",Toast.LENGTH_SHORT).show();

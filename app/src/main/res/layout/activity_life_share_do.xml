@@ -80,11 +80,12 @@
             android:layout_gravity="center_horizontal" />
 
         <ImageButton
-            android:layout_width="65dp"
-            android:layout_height="65dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/imageButton"
+            android:background="@null"
             android:onClick="SendShareOnclick"
-            android:src="@drawable/app_panel_add_icon"
+            android:src="@drawable/add_icon"
             android:layout_marginLeft="20dp"
             android:layout_marginBottom="20dp" />
 

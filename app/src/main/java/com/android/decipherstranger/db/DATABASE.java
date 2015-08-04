@@ -88,8 +88,9 @@ public class DATABASE extends SQLiteOpenHelper {
     private void CreateLifeShare(SQLiteDatabase db) {
         String sql = "CREATE TABLE `life_share` (" +
                 "  `id` int(11) NOT NULL," +
-                "  `portrait` mediumblob," +
                 "  `account` varchar(20) DEFAULT NULL," +
+                "  `portrait` mediumblob," +
+                "  `name` varchar(20) DEFAULT NULL," +
                 "  `message` mediumblob," +
                 "  `photo` mediumblob," +
                 "  `time` varchar(20) DEFAULT NULL," +
