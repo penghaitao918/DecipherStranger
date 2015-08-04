@@ -16,20 +16,18 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
 import com.android.decipherstranger.Network.NetworkService;
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
+import com.android.decipherstranger.adapter.ListButtonAdapter;
 import com.android.decipherstranger.db.DATABASE;
 import com.android.decipherstranger.db.LifeShare;
 import com.android.decipherstranger.util.ChangeUtils;
 import com.android.decipherstranger.util.MyStatic;
 import com.android.decipherstranger.view.AutoListView;
 
-import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -59,7 +57,7 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
     private LifeShare shareList = null;
 
     private AutoListView listView;
-    private SimpleAdapter simpleAdapter = null;
+    private ListButtonAdapter adapter = null;
     private ArrayList<Map<String, Object>> dataList = null;
 
     private int minId = 0;
@@ -73,14 +71,15 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_life_share);
 
-        this.init();
         this.LifeShareBroadcas();
+        this.refresh();
+        this.init();
         initData();
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onRestart() {
+        super.onRestart();
         this.refresh();
     }
 
@@ -139,7 +138,7 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
 
         this.dataList = new ArrayList<Map<String, Object>>();
         this.listView = (AutoListView) findViewById(R.id.lifeShare);
-        this.simpleAdapter = new SimpleAdapter(this,
+        this.adapter = new ListButtonAdapter(this,
                 this.dataList,
                 R.layout.list_item_share,
                 new String[] {MyStatic.SHARE_PORTRAIT, MyStatic.SHARE_NAME, MyStatic.SHARE_MESSAGE,
@@ -147,8 +146,8 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
                 new int[] {R.id.sharePortrait, R.id.shareName, R.id.shareMessage, R.id.sharePhoto, R.id.shareTime, R.id.shareNum, R.id.numButton, R.id.friendButton}
         );
         /*实现ViewBinder()这个接口*/
-        this.simpleAdapter.setViewBinder(new ViewBinderImpl());
-        this.listView.setAdapter(simpleAdapter);
+    //    this.adapter.setViewBinder(new ViewBinderImpl());
+        this.listView.setAdapter(adapter);
 
         this.listView.setOnRefreshListener(this);
         this.listView.setOnLoadListener(this);
@@ -237,14 +236,14 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
                     break;
             }
          //   listView.setResultSize(result.size());
-            simpleAdapter.notifyDataSetChanged();
-            listView.setAdapter(simpleAdapter);
+            adapter.notifyDataSetChanged();
+            listView.setAdapter(adapter);
             /*动态计算ListView的高度*/
         //    fixListViewHeight(listView);
         };
     };
 
-    private class ViewBinderImpl implements SimpleAdapter.ViewBinder {
+/*    private class ViewBinderImpl implements SimpleAdapter.ViewBinder {
         @Override
         public boolean setViewValue(View view, Object data, String textRepresentation) {
             // TODO Auto-generated method stub
@@ -255,7 +254,7 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
             }
             return false;
         }
-    }
+    }*/
 
     private void LifeShareBroadcas() {
         //动态方式注册广播接收者

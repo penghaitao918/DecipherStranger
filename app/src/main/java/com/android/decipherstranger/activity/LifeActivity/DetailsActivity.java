@@ -15,6 +15,7 @@ import com.android.decipherstranger.Network.NetworkService;
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
 import com.android.decipherstranger.activity.Base.MyApplication;
+import com.android.decipherstranger.activity.GameOneActivity.WelcomeRspActivity;
 import com.android.decipherstranger.util.GlobalMsgUtils;
 import com.android.decipherstranger.util.MyStatic;
 
@@ -138,6 +139,14 @@ public class DetailsActivity extends BaseActivity {
                 break;
             /*加为好友*/
             case R.id.addFriend:
+                Intent intent = new Intent(DetailsActivity.this,WelcomeRspActivity.class);
+                intent.putExtra("Type","AddFriend");
+                intent.putExtra("Account", sendAccount);
+/*                intent.putExtra("Name", FriendName);
+                intent.putExtra("Photo", bitmap);
+                intent.putExtra("Sex",FriendSex);*/
+                startActivity(intent);
+                finish();
                 break;
         }
     }
