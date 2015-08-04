@@ -10,8 +10,10 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -20,6 +22,8 @@ import com.android.decipherstranger.Network.NetworkService;
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
 import com.android.decipherstranger.activity.Base.MyApplication;
+import com.android.decipherstranger.activity.LoginActivity;
+import com.android.decipherstranger.activity.MainPageActivity.MainPageActivity;
 import com.android.decipherstranger.util.ChangeUtils;
 import com.android.decipherstranger.util.ImageCompression;
 import com.android.decipherstranger.util.MyStatic;
@@ -81,7 +85,6 @@ public class ShareLifeActivity extends BaseActivity {
 
     private void send() {
         String account = application.getAccount();
-        message = editText.getText().toString();
         if(NetworkService.getInstance().getIsConnected()){
             String Msg = "type"+":"+"23"+":"+"account"+":"+account+":"+"activitySpeech"+":"+message+":"+
                     "photo"+":"+photo+":"+"smallPhoto"+":"+smallPhoto;
@@ -99,24 +102,28 @@ public class ShareLifeActivity extends BaseActivity {
                 onBackPressed();
                 break;
             case R.id.send_share:
-                progressDialog.setMessage("正在提交数据,请稍后...");
-                progressDialog.onStart();
-                try {
-                    if (message.equals("")) {
-                        Toast.makeText(this,"分享内容不能为空！",Toast.LENGTH_SHORT).show();
-                        break;
+                message = editText.getText().toString();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        progressDialog.setMessage("正在提交数据,请稍后...");
+                        progressDialog.onStart();
                     }
-                    if (photo == null) {
-                        Toast.makeText(this,"请选择图片！",Toast.LENGTH_SHORT).show();
-                        break;
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                }, 500);
+                if (message == null || message.equals("")) {
+                    Toast.makeText(this,"分享内容不能为空！",Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                if (photo == null) {
+                    Toast.makeText(this,"请选择图片！",Toast.LENGTH_SHORT).show();
+                    break;
                 }
                 progressDialog.show();
                 send();
                 break;
             case R.id.imageButton:
+                InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                im.hideSoftInputFromWindow(getCurrentFocus().getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 selectPhoto();
                 break;
         }
@@ -187,10 +194,10 @@ public class ShareLifeActivity extends BaseActivity {
             if (intent.getAction().equals(MyStatic.LIFE_SHARE_DO)) {
                 progressDialog.dismiss();
                 if (intent.getBooleanExtra("reResult", true)){
-                        //TODO 显示分享成功，跳转页面
+                    //TODO 显示分享成功，跳转页面
                     onBackPressed();
                 }else{
-                        //TODO 显示分享失败
+                    //TODO 显示分享失败
                     Toast.makeText(ShareLifeActivity.this,"分享失败，请检查网络连接~",Toast.LENGTH_SHORT).show();
                 }
             }

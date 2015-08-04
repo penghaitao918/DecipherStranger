@@ -235,7 +235,6 @@ public class MainActivity extends BaseActivity {
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message message) {
-            System.out.println("### 我执行了~~~");
             simpleAdapter.notifyDataSetChanged();
             listView.setAdapter(simpleAdapter);
             fixListViewHeight(listView);

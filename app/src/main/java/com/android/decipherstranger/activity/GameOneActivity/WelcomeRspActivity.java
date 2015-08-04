@@ -144,7 +144,6 @@ public class WelcomeRspActivity extends BaseActivity {
             String gameUser = "type"+":"+Integer.toString(GlobalMsgUtils.msgGameOneReceive)+":"+
                     "account"+":"+application.getAccount()+":"+
                     "friend"+":"+MyStatic.friendAccount;
-            Log.v("aaaaa", gameUser);
             NetworkService.getInstance().sendUpload(gameUser);
         }
         else {

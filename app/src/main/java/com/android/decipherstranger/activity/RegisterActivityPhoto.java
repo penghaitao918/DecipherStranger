@@ -189,7 +189,6 @@ public class RegisterActivityPhoto extends BaseActivity {
                         "birth"+":"+userInfo.getBirth()+":"+
                         "photo"+":"+portraitUrl+":"+
                         "sphoto"+":"+sPortaitUrl;
-                Log.v("aaaaa", sendInfo);
                 NetworkService.getInstance().sendUpload(sendInfo);
             }
             else {

@@ -196,7 +196,6 @@ public class LoginActivity extends BaseActivity {
         NetworkService.getInstance().setupConnection();
         if(NetworkService.getInstance().getIsConnected()) {
             String userInfo = "type"+":"+Integer.toString(GlobalMsgUtils.msgLogin)+":"+"account"+":"+account+":"+"password"+":"+password;
-            Log.v("aaaaa",userInfo);
             NetworkService.getInstance().sendUpload(userInfo);
         }
         else {

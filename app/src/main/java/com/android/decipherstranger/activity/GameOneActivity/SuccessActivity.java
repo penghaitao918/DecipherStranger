@@ -62,7 +62,6 @@ public class SuccessActivity extends BaseActivity {
             String addUser = "type"+":"+Integer.toString(GlobalMsgUtils.msgAddFriend)+":"+
                     "account"+":"+application.getAccount()+":"+
                     "friend"+":"+MyStatic.friendAccount;
-            Log.v("aaaaa", addUser);
             NetworkService.getInstance().sendUpload(addUser);
         }
         else {

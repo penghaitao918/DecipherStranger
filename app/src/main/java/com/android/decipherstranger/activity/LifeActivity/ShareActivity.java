@@ -63,6 +63,7 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
     private ArrayList<Map<String, Object>> dataList = null;
 
     private int minId = 0;
+    private boolean refreshFlag = false;
 
     private LifeShareBroadcastReceiver receiver = null;
 
@@ -102,6 +103,7 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
     }
 
     private void refresh() {
+        refreshFlag = true;
         System.out.println("### 刷新");
         //  TODO 向服务器发送刷新请求,获取最新的20条数据（这是一个ID为逆序的数组）
         if (NetworkService.getInstance().getIsConnected()){
@@ -192,6 +194,7 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
             return;
         }
         for (int index = 0, len = listAdapter.getCount(); index < len; ++index) {
+            System.out.println("### " + index);
             View listViewItem = listAdapter.getView(index, null, listView);
             // 计算子项View 的宽高
             listViewItem.measure(0, 0);
@@ -221,6 +224,7 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             ArrayList<Map<String, Object>> result = (ArrayList<Map<String, Object>>) msg.obj;
+            System.out.println("### " + result);
             switch (msg.what) {
                 case AutoListView.REFRESH:
                     listView.onRefreshComplete();
@@ -232,10 +236,12 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
                     dataList.addAll(result);
                     break;
             }
-            listView.setResultSize(result.size());
+            System.out.println("### count = " + listView.getCount());
+         //   listView.setResultSize(result.size());
             simpleAdapter.notifyDataSetChanged();
+            listView.setAdapter(simpleAdapter);
             /*动态计算ListView的高度*/
-            fixListViewHeight(listView);
+        //    fixListViewHeight(listView);
         };
     };
 
@@ -278,8 +284,11 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
                     int number = intent.getIntExtra("reZan",0);
                     switch (type) {
                         case MyStatic.REFRESH:
-                            shareList = new LifeShare(helper.getWritableDatabase());
-                            shareList.clear();
+                            if (refreshFlag) {
+                                refreshFlag = false;
+                                shareList = new LifeShare(helper.getWritableDatabase());
+                                shareList.clear();
+                            }
                             shareList = new LifeShare(helper.getWritableDatabase());
                             shareList.insert(id, account, portrait, name, message, photo, time, number);
                             break;

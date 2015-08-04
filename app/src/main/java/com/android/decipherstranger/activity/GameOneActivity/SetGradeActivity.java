@@ -55,7 +55,6 @@ public class SetGradeActivity extends BaseActivity {
                 String gameUser = "type"+":"+Integer.toString(GlobalMsgUtils.msgGameOneGrade)+
                         ":"+"account"+":"+ application.getAccount()+":"+"grade"+":"+grade+":"+
                         "sum"+":"+sum;
-                Log.v("aaaaa", gameUser);
                 NetworkService.getInstance().sendUpload(gameUser);
             }
             else {
