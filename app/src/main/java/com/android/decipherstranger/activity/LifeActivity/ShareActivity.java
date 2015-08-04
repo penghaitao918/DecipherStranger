@@ -15,11 +15,14 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
+import com.android.decipherstranger.Network.NetworkService;
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
 import com.android.decipherstranger.db.DATABASE;
 import com.android.decipherstranger.db.LifeShare;
+import com.android.decipherstranger.util.ChangeUtils;
 import com.android.decipherstranger.util.MyStatic;
 import com.android.decipherstranger.view.AutoListView;
 
@@ -100,12 +103,18 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
     private void refresh() {
         System.out.println("### 刷新");
         //  TODO 向服务器发送刷新请求,获取最新的20条数据（这是一个ID为逆序的数组）
+        if (NetworkService.getInstance().getIsConnected()){
+            String Msg = "type"+":"+"24"+":"+"requestType"+":"+"1";
+        }
     }
 
     private void load() {
       //send  minId;
         System.out.println("### 加载");
         //  TODO 向服务器发送加载数据,获取ID<count的10条数据（从count-1到count-10）
+        if (NetworkService.getInstance().getIsConnected()){
+            String Msg = "type"+":"+"24"+":"+"requestType"+":"+"0"+":"+"minId"+":"+minId;
+        }
     }
 
     private void init() {
@@ -247,15 +256,15 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
                 // TODO 将获取的数据赋值到本地
                 if (intent.getBooleanExtra("reResult", true)){
                     //  获取返回类型为 刷新 还是 加载, 刷新为1，加载为0
-                    int type = 0;
-                    int id = 0;
-                    String account = null;
-                    Bitmap portrait = null;
-                    String name = null;
-                    String message = null;
-                    Bitmap photo = null;
-                    String time = null;
-                    int number = 0;
+                    int type = intent.getIntExtra("reRequestType", 1);
+                    int id = intent.getIntExtra("reId",0);
+                    String account = intent.getStringExtra("reAccount");
+                    Bitmap portrait = ChangeUtils.toBitmap(intent.getStringExtra("reUserPhoto"));
+                    String name = intent.getStringExtra("reUserName");
+                    String message = intent.getStringExtra("reSpeech");
+                    Bitmap photo = ChangeUtils.toBitmap(intent.getStringExtra("reSharePhoto"));
+                    String time = intent.getStringExtra("reTime");
+                    int number = intent.getIntExtra("reZan",0);
                     switch (type) {
                         case MyStatic.REFRESH:
                             shareList = new LifeShare(helper.getWritableDatabase());
@@ -271,7 +280,7 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
                             break;
                     }
                 }else{
-
+                    Toast.makeText(ShareActivity.this,"数据获取失败,请检查网络!!!",Toast.LENGTH_SHORT).show();
                 }
             }
         }
