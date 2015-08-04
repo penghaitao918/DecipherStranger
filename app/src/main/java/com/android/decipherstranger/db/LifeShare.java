@@ -46,7 +46,6 @@ public class LifeShare {
     // 存储数据
     public void insert(int id, String account, Bitmap portrait, String name, String message, Bitmap photo, String time, int number) {
         ByteArrayOutputStream osPortrait = new ByteArrayOutputStream();
-        System.out.println("### refresh ");
         portrait.compress(Bitmap.CompressFormat.PNG, 100, osPortrait);
 
         ByteArrayOutputStream osPhoto = new ByteArrayOutputStream();
@@ -123,7 +122,6 @@ public class LifeShare {
 
     // 清空
     public void clear() {
-        System.out.println("### clear ");
         String clear = "DELETE FROM life_share";
         this.db.execSQL(clear);
         this.db.close();

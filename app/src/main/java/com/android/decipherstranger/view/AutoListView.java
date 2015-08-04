@@ -186,8 +186,9 @@ public class AutoListView extends ListView implements OnScrollListener {
 	}
 
 	// 用于加载更多结束后的回调
-	public void onLoadComplete() {
+	public void onLoadComplete(int resultSize) {
 		isLoading = false;
+		setResultSize(resultSize);
 	}
 
 	@Override
@@ -302,20 +303,23 @@ public class AutoListView extends ListView implements OnScrollListener {
 	 *
 	 * @param resultSize
 	 */
-	public void setResultSize(int resultSize) {
+	private void setResultSize(int resultSize) {
 		if (resultSize == 0) {
+			//	暂无数据
 			isLoadFull = true;
 			loadFull.setVisibility(View.GONE);
 			loading.setVisibility(View.GONE);
 			more.setVisibility(View.GONE);
 			noData.setVisibility(View.VISIBLE);
 		} else if (resultSize > 0 && resultSize < pageSize) {
+			//	已加载全部数据
 			isLoadFull = true;
 			loadFull.setVisibility(View.VISIBLE);
 			loading.setVisibility(View.GONE);
 			more.setVisibility(View.GONE);
 			noData.setVisibility(View.GONE);
 		} else if (resultSize == pageSize) {
+            //  继续读取
 			isLoadFull = false;
 			loadFull.setVisibility(View.GONE);
 			loading.setVisibility(View.VISIBLE);

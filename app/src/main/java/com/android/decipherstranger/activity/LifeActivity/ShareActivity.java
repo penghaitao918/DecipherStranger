@@ -224,7 +224,7 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             ArrayList<Map<String, Object>> result = (ArrayList<Map<String, Object>>) msg.obj;
-            System.out.println("### " + result);
+            System.out.println("### " + result.size());
             switch (msg.what) {
                 case AutoListView.REFRESH:
                     listView.onRefreshComplete();
@@ -232,11 +232,10 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
                     dataList.addAll(result);
                     break;
                 case AutoListView.LOAD:
-                    listView.onLoadComplete();
+                    listView.onLoadComplete(result.size());
                     dataList.addAll(result);
                     break;
             }
-            System.out.println("### count = " + listView.getCount());
          //   listView.setResultSize(result.size());
             simpleAdapter.notifyDataSetChanged();
             listView.setAdapter(simpleAdapter);
@@ -306,6 +305,8 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
                 } else{
                     if(intent.getIntExtra("reRequestType",0) == 0){
                         //TODO 加载完毕处理
+                        System.out.println("### 没有数据了");
+                        listView.onLoadComplete(0);
                     }
                 }
             }
