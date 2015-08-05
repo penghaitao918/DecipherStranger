@@ -173,13 +173,12 @@ public class ContactsPageActivity extends BaseActivity {
         ArrayList<User> mSortList = new ArrayList<User>();
         for (int i = 0; i < contact.size(); i++) {
             User sortModel = new User();
-            String sortString = null;
             sortModel.setUsername(contact.get(i).getUsername());
             sortModel.setAccount(contact.get(i).getAccount());
             sortModel.setPortrait(contact.get(i).getPortrait());
             sortModel.setUserSex(contact.get(i).getUserSex());
             String pinyin = characterParser.getSelling(contact.get(i).getUsername());
-            sortString = pinyin.substring(0, 1).toUpperCase();
+            String sortString = pinyin.substring(0, 1).toUpperCase();
             if (sortString.matches("[A-Z]")) {
                 sortModel.setSortLetters(sortString.toUpperCase());
             } else {
@@ -220,7 +219,8 @@ public class ContactsPageActivity extends BaseActivity {
 
     private void networkRequest(){
         if(NetworkService.getInstance().getIsConnected()) {
-            MyApplication application = (MyApplication) getApplication();
+        //    MyApplication application = (MyApplication) getApplication();
+            MyApplication application = MyApplication.getInstance();
             String msg = "type"+":"+Integer.toString(GlobalMsgUtils.msgFriendList)+":"+"account"+":"+application.getAccount();
             Log.v("aaaaa", msg);
             NetworkService.getInstance().sendUpload(msg);

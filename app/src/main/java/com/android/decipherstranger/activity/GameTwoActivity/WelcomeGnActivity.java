@@ -27,7 +27,8 @@ public class WelcomeGnActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game2_welcome);
-        application = (MyApplication) getApplication();
+        //  application = (MyApplication) getApplication();
+        application = MyApplication.getInstance();
         this.init();
     }
 
@@ -42,7 +43,7 @@ public class WelcomeGnActivity extends BaseActivity {
     }
 
     private void setBackgroundMusic(){
-        Drawable drawable = null;
+        Drawable drawable ;
         if (MyStatic.gameBackgroundMusicFlag) {
             this.backgroundMusic.setLooping(true);
             drawable = getResources().getDrawable(R.drawable.selector_music);

@@ -76,7 +76,8 @@ public class ShareLifeActivity extends BaseActivity {
 
     private void init() {
         this.progressDialog = new ProgressDialog(this);
-        application = (MyApplication) getApplication();
+        //  application = (MyApplication) getApplication();
+        application = MyApplication.getInstance();
         this.editText = (EditText) super.findViewById(R.id.editText);
         this.imageButton = (ImageButton) super.findViewById(R.id.imageButton);
     }

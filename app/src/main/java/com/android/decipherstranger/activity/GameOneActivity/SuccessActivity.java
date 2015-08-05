@@ -20,7 +20,24 @@ import com.android.decipherstranger.util.GlobalMsgUtils;
 import com.android.decipherstranger.util.MyStatic;
 
 /**
- * Created by acmer on 2015/3/20.
+ * へ　　　　　／|
+ * 　　/＼7　　　 ∠＿/
+ * 　 /　│　　 ／　／
+ * 　│　Z ＿,＜　／　　 /`ヽ
+ * 　│　　　　　ヽ　　 /　　〉
+ * 　 Y　　　　　`　 /　　/
+ * 　ｲ●　､　●　　⊂⊃〈　　/
+ * 　()　 へ　　　　|　＼〈
+ * 　　>ｰ ､_　 ィ　 │ ／／      去吧！
+ * 　 / へ　　 /　ﾉ＜| ＼＼        比卡丘~
+ * 　 ヽ_ﾉ　　(_／　 │／／           消灭代码BUG
+ * 　　7　　　　　　　|／
+ * 　　＞―r￣￣`ｰ―＿
+ *
+ * @author penghaitao
+ * @version V1.0
+ * @Date 2015/3/20.
+ * @e-mail 785351408@qq.com
  */
 public class SuccessActivity extends BaseActivity {
 
@@ -53,7 +70,8 @@ public class SuccessActivity extends BaseActivity {
     }
 
     private void SendToWeb() {
-        MyApplication application = (MyApplication) getApplication();
+    //    MyApplication application = (MyApplication) getApplication();
+        MyApplication application = MyApplication.getInstance();
         if(NetworkService.getInstance().getIsConnected()){
             String addUser = "type"+":"+Integer.toString(GlobalMsgUtils.msgAddFriend)+":"+
                     "account"+":"+application.getAccount()+":"+

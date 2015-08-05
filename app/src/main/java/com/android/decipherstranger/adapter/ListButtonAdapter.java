@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.decipherstranger.R;
+import com.android.decipherstranger.activity.Base.MyApplication;
 import com.android.decipherstranger.util.MyStatic;
 
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class ListButtonAdapter extends BaseAdapter {
     private int mResource;
     private LayoutInflater mInflater;
 
-    ViewHolder holder;
+    private ViewHolder holder;
     private ArrayList<Map<String, Object>> mData;
 
     public ListButtonAdapter(Context context, ArrayList<Map<String, Object>> data, int resource, String[] from, int[] to) {
@@ -123,7 +124,7 @@ public class ListButtonAdapter extends BaseAdapter {
                 holder.shareNum.setText(String.valueOf(num));
             }
 
-            holder.numButton.setOnClickListener(new AddNumOnClickListenerImpl(position, num));
+            holder.numButton.setOnClickListener(new AddNumOnClickListenerImpl(position));
             holder.friendButton.setOnClickListener(new AddNumOnClickListenerImpl(position));
         }
     }
@@ -140,34 +141,48 @@ public class ListButtonAdapter extends BaseAdapter {
         ImageButton friendButton;
     }
 
-    private class AddNumOnClickListenerImpl implements View.OnClickListener {
+    // TODO 测试application.getAccount() 是否生效
+    public void itemDo(int position){
+        int count = (Integer) mData.get(position).get(MyStatic.SHARE_NUM);
+        addNum(position);
+        mData.get(position).put(MyStatic.SHARE_NUM, count + 1);
+        this.notifyDataSetChanged();
+    }
 
+    private class AddNumOnClickListenerImpl implements View.OnClickListener {
         private int position;
-        private int count;
 
         AddNumOnClickListenerImpl(int pos) {
             position = pos;
-        }
-
-        AddNumOnClickListenerImpl(int pos, int c) {
-            position = pos;
-            count = c;
         }
 
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.numButton:
-                    itemDo(position, count);
+                    addNum(position);
                     break;
                 case R.id.friendButton:
+                    addFriends(position);
                     break;
             }
         }
     }
 
-    public void itemDo(int position, int count){
-        mData.get(position).put(MyStatic.SHARE_NUM, count + 1);
-        this.notifyDataSetChanged();
+    private void addNum(int position){
+        /**
+         * TODO 测试application.getAccount() 是否生效
+         * TODO 点赞 若账号为account的用户为ID为id的点过赞了，返回false，否则返回True
+         */
+        MyApplication application = new MyApplication();
+        int Id =(Integer) mData.get(position).get(MyStatic.SHARE_ID);
+        String account = MyApplication.getInstance().getAccount();
+        System.out.println("### ABCD = " + account);
+    }
+
+    private void addFriends(int position){
+        //  TODO 加好友 返回账号昵称头像性别
+        int Id =(Integer) mData.get(position).get(MyStatic.SHARE_ID);
+        String account =(String) mData.get(position).get(MyStatic.SHARE_ACCOUNT);
     }
 }

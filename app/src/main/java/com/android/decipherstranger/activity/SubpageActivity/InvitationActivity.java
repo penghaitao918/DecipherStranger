@@ -104,7 +104,8 @@ public class InvitationActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_invitation);
         this.imageView = (ImageView) super.findViewById(R.id.invitationImage);
-        application = (MyApplication) getApplication();
+        //  application = (MyApplication) getApplication();
+        application = MyApplication.getInstance();
         this.registerBroadcas();
         this.start();
     }

@@ -134,7 +134,7 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
         topLayout.setFocusableInTouchMode(true);
         topLayout.requestFocus();
 
-        this.dataList = new ArrayList<Map<String, Object>>();
+        this.dataList = new ArrayList< Map<String, Object> >();
         this.listView = (AutoListView) findViewById(R.id.lifeShare);
         this.adapter = new ListButtonAdapter(this,
                 this.dataList,
@@ -191,7 +191,6 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
             return;
         }
         for (int index = 0, len = listAdapter.getCount(); index < len; ++index) {
-            System.out.println("### " + index);
             View listViewItem = listAdapter.getView(index, null, listView);
             // 计算子项View 的宽高
             listViewItem.measure(0, 0);
@@ -220,7 +219,7 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
 
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
-            ArrayList<Map<String, Object>> result = (ArrayList<Map<String, Object>>) msg.obj;
+            ArrayList<Map<String, Object>> result = (ArrayList< Map<String, Object> >) msg.obj;
             System.out.println("### " + result.size());
             switch (msg.what) {
                 case AutoListView.REFRESH:
@@ -238,7 +237,7 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
             listView.setAdapter(adapter);
             /*动态计算ListView的高度*/
         //    fixListViewHeight(listView);
-        };
+        }
     };
 
 /*    private class ViewBinderImpl implements SimpleAdapter.ViewBinder {

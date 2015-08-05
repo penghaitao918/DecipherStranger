@@ -6,7 +6,6 @@
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/android/decipherstranger/activity/LifeActivity/PasswordActivity.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/android/decipherstranger/activity/LifeActivity/SendActivity.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/android/decipherstranger/activity/LifeActivity/ShareActivity.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/android/decipherstranger/adapter/ListViewAdapter.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/android/decipherstranger/util/TimeUtils.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/android/decipherstranger/view/AutoListView.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/android/decipherstranger/view/MyScrollView.java" charset="UTF-8" />

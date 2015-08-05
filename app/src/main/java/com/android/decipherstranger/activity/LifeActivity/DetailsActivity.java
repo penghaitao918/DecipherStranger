@@ -45,6 +45,10 @@ public class DetailsActivity extends BaseActivity {
 
     private String myAccount = null;
     private String sendAccount = null;
+    private String sendName = null;
+    private Bitmap sendPortrait = null;
+    private String sendSex = null;
+
     private String password = null;
     private int lifeId = 0;
     private int lifeClass = 0;
@@ -68,7 +72,8 @@ public class DetailsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_life_details);
-        application = (MyApplication) getApplication();
+        //  application = (MyApplication) getApplication();
+        application = MyApplication.getInstance();
         this.init();
         this.LifeDetailsBroadcast();
         this.getData();
@@ -144,9 +149,9 @@ public class DetailsActivity extends BaseActivity {
                 Intent intent = new Intent(DetailsActivity.this,WelcomeRspActivity.class);
                 intent.putExtra("Type","AddFriend");
                 intent.putExtra("Account", sendAccount);
-/*                intent.putExtra("Name", FriendName);
-                intent.putExtra("Photo", bitmap);
-                intent.putExtra("Sex",FriendSex);*/
+                intent.putExtra("Name", sendName);
+                intent.putExtra("Photo", sendPortrait);
+                intent.putExtra("Sex",sendSex);
                 startActivity(intent);
                 finish();
                 break;
@@ -194,9 +199,9 @@ public class DetailsActivity extends BaseActivity {
                         String setPlace = intent.getStringExtra("re_set_place");
                         String setTime = intent.getStringExtra("re_set_time");
                         String activityTypeName = intent.getStringExtra("activity_type_name");
-                        String userName = intent.getStringExtra("re_userName");
-                        Bitmap userPhoto = ChangeUtils.toBitmap(intent.getStringExtra("re_userPhoto"));
-                        int gender = intent.getIntExtra("re_gender",0);
+                        sendName = intent.getStringExtra("re_userName");
+                        sendPortrait = ChangeUtils.toBitmap(intent.getStringExtra("re_userPhoto"));
+                        sendSex = intent.getIntExtra("re_gender",0) + "";
                         number = intent.getIntExtra("re_current_number", 0);
                         sendAccount = intent.getStringExtra("re_send_account");
                         password = intent.getStringExtra("re_activity_password");
@@ -214,6 +219,7 @@ public class DetailsActivity extends BaseActivity {
                 }else{
                     if (intent.getStringExtra("re_matter").equals("details")){
                         //活动详情数据获取失败
+                        Toast.makeText(DetailsActivity.this, "服务器连接失败~(≧▽≦)~啦啦啦", Toast.LENGTH_SHORT).show();
                     }else{
                         //弹窗显示已参加过此活动
                         Toast.makeText(DetailsActivity.this,"您已报名，无需重复报名", Toast.LENGTH_SHORT).show();

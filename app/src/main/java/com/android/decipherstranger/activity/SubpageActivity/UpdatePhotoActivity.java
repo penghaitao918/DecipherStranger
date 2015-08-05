@@ -58,8 +58,9 @@ public class UpdatePhotoActivity extends BaseActivity{
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.update_photo_activity);
+        //  application = (MyApplication) getApplication();
+        application = MyApplication.getInstance();
         initView();
-        this.application = (MyApplication) getApplication();
         updateBroadcas();
     }
 

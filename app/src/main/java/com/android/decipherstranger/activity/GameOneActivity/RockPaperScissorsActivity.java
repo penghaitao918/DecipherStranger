@@ -28,27 +28,25 @@ import com.android.decipherstranger.util.GameUtils;
 import com.android.decipherstranger.util.MyStatic;
 
 /**
- *             へ　　　　　／|
- *        　　/＼7　　　 ∠＿/
- *        　 /　│　　 ／　／
- *        　│　Z ＿,＜　／　　 /`ヽ
- *        　│　　　　　ヽ　　 /　　〉
- *        　 Y　　　　　`　 /　　/
- *        　ｲ●　､　●　　⊂⊃〈　　/
- *        　()　 へ　　　　|　＼〈
- *        　　>ｰ ､_　 ィ　 │ ／／      去吧！
- *        　 / へ　　 /　ﾉ＜| ＼＼        比卡丘~
- *        　 ヽ_ﾉ　　(_／　 │／／           消灭代码BUG
- *        　　7　　　　　　　|／
- *        　　＞―r￣￣`ｰ―＿
+ * へ　　　　　／|
+ * 　　/＼7　　　 ∠＿/
+ * 　 /　│　　 ／　／
+ * 　│　Z ＿,＜　／　　 /`ヽ
+ * 　│　　　　　ヽ　　 /　　〉
+ * 　 Y　　　　　`　 /　　/
+ * 　ｲ●　､　●　　⊂⊃〈　　/
+ * 　()　 へ　　　　|　＼〈
+ * 　　>ｰ ､_　 ィ　 │ ／／      去吧！
+ * 　 / へ　　 /　ﾉ＜| ＼＼        比卡丘~
+ * 　 ヽ_ﾉ　　(_／　 │／／           消灭代码BUG
+ * 　　7　　　　　　　|／
+ * 　　＞―r￣￣`ｰ―＿
  *
- *       @ClassName        ShakeListener
- *       @author            penghaitao
- *       @version           1.0
- *       @Date              2015/4/10.
- *       @e-mail           785351408@qq.com
- **/
-
+ * @author penghaitao
+ * @version V1.0
+ * @Date 2015/4/10.
+ * @e-mail 785351408@qq.com
+ */
 public class RockPaperScissorsActivity extends BaseActivity {
 
     private MyApplication application = null;
@@ -88,7 +86,8 @@ public class RockPaperScissorsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_game_main);
-        application = (MyApplication) getApplication();
+        //  application = (MyApplication) getApplication();
+        application = MyApplication.getInstance();
         this.init();
         this.gameStart();
     }

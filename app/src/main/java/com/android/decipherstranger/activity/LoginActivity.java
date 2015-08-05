@@ -35,7 +35,24 @@ import com.android.decipherstranger.util.SharedPreferencesUtils;
 import com.android.decipherstranger.util.StringUtils;
 
 /**
- * Created by PengHaitao on 2015/2/10.
+ * へ　　　　　／|
+ * 　　/＼7　　　 ∠＿/
+ * 　 /　│　　 ／　／
+ * 　│　Z ＿,＜　／　　 /`ヽ
+ * 　│　　　　　ヽ　　 /　　〉
+ * 　 Y　　　　　`　 /　　/
+ * 　ｲ●　､　●　　⊂⊃〈　　/
+ * 　()　 へ　　　　|　＼〈
+ * 　　>ｰ ､_　 ィ　 │ ／／      去吧！
+ * 　 / へ　　 /　ﾉ＜| ＼＼        比卡丘~
+ * 　 ヽ_ﾉ　　(_／　 │／／           消灭代码BUG
+ * 　　7　　　　　　　|／
+ * 　　＞―r￣￣`ｰ―＿
+ *
+ * @author penghaitao
+ * @version V1.0
+ * @Date 2015/2/10.
+ * @e-mail 785351408@qq.com
  */
 public class LoginActivity extends BaseActivity {
 
@@ -64,7 +81,8 @@ public class LoginActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        application = (MyApplication) getApplication();
+    //    application = (MyApplication) getApplication();
+        application = MyApplication.getInstance();
         this.helper = new DATABASE(this);
         this.sharedPreferencesUtils = new SharedPreferencesUtils(this, MyStatic.FILENAME_USER);
         initView();

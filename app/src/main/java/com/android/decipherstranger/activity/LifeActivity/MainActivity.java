@@ -65,7 +65,8 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_life_main);
-        application = (MyApplication) getApplication();
+        //  application = (MyApplication) getApplication();
+        application = MyApplication.getInstance();
         this.init();
         this.initData();
         this.getData();
@@ -78,7 +79,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void init() {
-        this.dataList = new ArrayList<Map<String, Object>>();
+        this.dataList = new ArrayList< Map<String, Object> >();
         this.listView = (ListView) super.findViewById(R.id.listView);
         this.listView.setOnItemClickListener(new OnItemClickListenerImpl());
 

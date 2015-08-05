@@ -37,6 +37,8 @@ public class MyApplication extends Application {
     private List<Activity> activityList = new LinkedList<Activity>();
     private static MyApplication instance;
 
+//    private MyApplication(){}
+
     // 单例模式中获取唯一的MyApplication实例  
     public static MyApplication getInstance() {
         if (null == instance) {

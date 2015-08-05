@@ -26,7 +26,24 @@ import com.android.decipherstranger.util.MyStatic;
 import com.android.decipherstranger.util.SharedPreferencesUtils;
 
 /**
- * Created by PengHaitao on 2015/2/12.
+ * へ　　　　　／|
+ * 　　/＼7　　　 ∠＿/
+ * 　 /　│　　 ／　／
+ * 　│　Z ＿,＜　／　　 /`ヽ
+ * 　│　　　　　ヽ　　 /　　〉
+ * 　 Y　　　　　`　 /　　/
+ * 　ｲ●　､　●　　⊂⊃〈　　/
+ * 　()　 へ　　　　|　＼〈
+ * 　　>ｰ ､_　 ィ　 │ ／／      去吧！
+ * 　 / へ　　 /　ﾉ＜| ＼＼        比卡丘~
+ * 　 ヽ_ﾉ　　(_／　 │／／           消灭代码BUG
+ * 　　7　　　　　　　|／
+ * 　　＞―r￣￣`ｰ―＿
+ *
+ * @author penghaitao
+ * @version V1.0
+ * @Date 2015/2/12.
+ * @e-mail 785351408@qq.com
  */
 public class WelcomeRspActivity extends BaseActivity {
 
@@ -44,7 +61,8 @@ public class WelcomeRspActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game1_welcome);
-        application = (MyApplication) getApplication();
+        //  application = (MyApplication) getApplication();
+        application = MyApplication.getInstance();
         this.init();
     }
 
@@ -107,7 +125,10 @@ public class WelcomeRspActivity extends BaseActivity {
                 MyStatic.friendSex = application.getSex();
                 break;
         }
-
+        System.out.println("### friendAccount = " + MyStatic.friendAccount);
+        System.out.println("### friendName = " + MyStatic.friendName);
+        System.out.println("### friendPhoto = " + MyStatic.friendPhoto);
+        System.out.println("### friendSex = " + MyStatic.friendSex);
         this.gameBroadcas();
         //  设置用户游戏数据
         this.setGameInfo();
@@ -170,7 +191,7 @@ public class WelcomeRspActivity extends BaseActivity {
     }
 
     private void setBackgroundMusic(){
-        Drawable drawable = null;
+        Drawable drawable ;
         if (MyStatic.gameBackgroundMusicFlag) {
             this.backgroundMusic.setLooping(true);
             drawable = getResources().getDrawable(R.drawable.selector_music);

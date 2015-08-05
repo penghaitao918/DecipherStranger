@@ -73,7 +73,8 @@ public class MainPageActivity extends BaseActivity implements OnPageChangeListen
         setContentView(R.layout.activity_main);
         initData(savedInstanceState);
         this.helper = new DATABASE(this);
-        application = (MyApplication) getApplication();
+        //application = (MyApplication) getApplication();
+        application = MyApplication.getInstance();
         initView();
         initViewPage();
         setUnReadMessage(application.getUnReadMessage());
@@ -338,15 +339,11 @@ public class MainPageActivity extends BaseActivity implements OnPageChangeListen
     private String getDate() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         dateFormat.format(new java.util.Date());
-        String time = dateFormat.format(new java.util.Date());
-        return time;
+        return dateFormat.format(new java.util.Date());
     }
 
     public String getDir(){
-        String dir = null;
-        if (Tools.hasSdcard()){}
-        dir = Environment.getExternalStorageDirectory()+"/JMMSH/voiceMsg";
-        return dir;
+        return Environment.getExternalStorageDirectory()+"/JMMSH/voiceMsg";
     }
 
     public String getFileName(){

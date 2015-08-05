@@ -113,7 +113,8 @@ public class ChatMsgActivity extends BaseActivity implements OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-        application = (MyApplication) getApplication();
+        //  application = (MyApplication) getApplication();
+        application = MyApplication.getInstance();
         // 启动activity时不自动弹出软键盘
         getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -398,14 +399,10 @@ public class ChatMsgActivity extends BaseActivity implements OnClickListener {
     private String getDate() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         dateFormat.format(new java.util.Date());
-        String time = dateFormat.format(new java.util.Date());
-        return time;
+        return dateFormat.format(new java.util.Date());
     }
     public String getDir(){
-        String dir = null;
-        if (Tools.hasSdcard()){}
-            dir = Environment.getExternalStorageDirectory()+"/JMMSH/voiceMsg";
-        return dir;
+        return Environment.getExternalStorageDirectory()+"/JMMSH/voiceMsg";
     }
 
     public String getFileName(){

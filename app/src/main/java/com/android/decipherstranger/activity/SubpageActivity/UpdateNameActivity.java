@@ -60,8 +60,9 @@ public class UpdateNameActivity extends BaseActivity {
     }
     
     private void init() {
+        //  application = (MyApplication) getApplication();
+        application = MyApplication.getInstance();
         this.editText = (EditText) super.findViewById(R.id.nameText);
-        this.application = (MyApplication) getApplication();
 
         this.sharedPreferencesUtils = new SharedPreferencesUtils(this, MyStatic.FILENAME_USER);
     }

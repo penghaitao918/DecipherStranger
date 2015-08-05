@@ -55,7 +55,6 @@ public class ClientListenThread extends Thread {
                 }
                 if (reMsg != null) {
                     Log.v("AAA", reMsg);
-                    System.out.println(reMsg);
                     JSONObject jsonObj = new JSONObject(reMsg);
                     Log.v(" ### 能不能接到", reMsg);
                     int msgType = jsonObj.getInt("re_type");            // type of message received

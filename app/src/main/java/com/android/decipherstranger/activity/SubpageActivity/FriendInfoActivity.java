@@ -72,7 +72,8 @@ public class FriendInfoActivity extends BaseActivity {
         showBroadcas();
         initData();
         SendInf();
-        application = (MyApplication) getApplication();
+        //  application = (MyApplication) getApplication();
+        application = MyApplication.getInstance();
         initView();
         initListener();
     }

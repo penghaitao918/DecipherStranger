@@ -82,7 +82,8 @@ public class UserPageActivity extends BaseActivity {
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void init() {
-        this.application = (MyApplication) getApplication();
+        //  application = (MyApplication) getApplication();
+        application = MyApplication.getInstance();
         this.portraitImage = (ImageView) super.findViewById(R.id.portraitImage);
         this.nameText = (TextView) super.findViewById(R.id.nameText);
         this.accountText = (TextView) super.findViewById(R.id.accountText);

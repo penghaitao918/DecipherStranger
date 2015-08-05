@@ -34,28 +34,24 @@ import com.android.decipherstranger.util.GlobalMsgUtils;
 import com.android.decipherstranger.util.ShakeListener;
 
 /**
- *                 ┏┓　　　┏┓+ + 
- * 　　　　　 　┏┛┻━━━┛┻┓ + + 
- * 　　　　 　　┃　　　　　　　┃ 　 
- *　　　　　　　┃　　　━　　　┃ ++ + + +      
- *　　　　　　 ████━████ ┃+            
- *　　　　　　　┃　　　　　　　┃ +             
- *　　　　　　　┃　　　┻　　　┃               
- *　　　　　　　┃　　　　　　　┃ + + 
- *　　　　　　　┗━┓　　　┏━┛ 
- *　　　　　　　　　┃　　　┃　　　　　　　　　　　 
- *　　　　　　　　　┃　　　┃ + + + + 
- *　　　　　　　　　┃　　　┃　　　　　　　神兽保佑　　　　 
- *　　　　　　　　　┃　　　┃ + 　　　　　　 
- *　　　　　　　　　┃　　　┃                    代码无BUG　
- *　　　　　　　　　┃　　　┃　　+　　　　　　　　　 
- *　　　　　　　　　┃　 　　┗━━━┓ + + 
- *　　　　　　　　　┃ 　　　　　　　┣┓ 
- *　　　　　　　　　┃ 　　　　　　　┏┛ 
- *　　　　　　　　　┗┓┓┏━┳┓┏┛ + + + + 
- *　　　　　　　　　　┃┫┫　┃┫┫ 
- *　　　　　　　　　　┗┻┛　┗┻┛+ + + + 
- *          @Created by peng on 2015/3/23.
+ * へ　　　　　／|
+ * 　　/＼7　　　 ∠＿/
+ * 　 /　│　　 ／　／
+ * 　│　Z ＿,＜　／　　 /`ヽ
+ * 　│　　　　　ヽ　　 /　　〉
+ * 　 Y　　　　　`　 /　　/
+ * 　ｲ●　､　●　　⊂⊃〈　　/
+ * 　()　 へ　　　　|　＼〈
+ * 　　>ｰ ､_　 ィ　 │ ／／      去吧！
+ * 　 / へ　　 /　ﾉ＜| ＼＼        比卡丘~
+ * 　 ヽ_ﾉ　　(_／　 │／／           消灭代码BUG
+ * 　　7　　　　　　　|／
+ * 　　＞―r￣￣`ｰ―＿
+ *
+ * @author penghaitao
+ * @version V1.0
+ * @Date 2015/3/23.
+ * @e-mail 785351408@qq.com
  */
 public class ShakeActivity extends BaseActivity {
 
@@ -82,7 +78,8 @@ public class ShakeActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shake);
-        application = (MyApplication) getApplication();
+        //  application = (MyApplication) getApplication();
+        application = MyApplication.getInstance();
         intiView();
     }
 
@@ -243,7 +240,7 @@ public class ShakeActivity extends BaseActivity {
     }
 
     private void popInitView(Intent intent) {
-        Drawable sexDrawable = null;
+        Drawable sexDrawable ;
         this.bitmap = ChangeUtils.toBitmap(intent.getStringExtra("rePhoto"));
         this.portrait.setImageBitmap(bitmap);
         this.userName.setText(intent.getStringExtra("reName"));
