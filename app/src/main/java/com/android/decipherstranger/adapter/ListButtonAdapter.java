@@ -141,10 +141,9 @@ public class ListButtonAdapter extends BaseAdapter {
         ImageButton friendButton;
     }
 
-    // TODO 测试application.getAccount() 是否生效
+    //  点赞成功回执调用
     public void itemDo(int position){
         int count = (Integer) mData.get(position).get(MyStatic.SHARE_NUM);
-        addNum(position);
         mData.get(position).put(MyStatic.SHARE_NUM, count + 1);
         this.notifyDataSetChanged();
     }
@@ -169,15 +168,14 @@ public class ListButtonAdapter extends BaseAdapter {
         }
     }
 
+    //  接受均在ShareLife中进行
     private void addNum(int position){
         /**
          * TODO 测试application.getAccount() 是否生效
          * TODO 点赞 若账号为account的用户为ID为id的点过赞了，返回false，否则返回True
          */
-        MyApplication application = new MyApplication();
         int Id =(Integer) mData.get(position).get(MyStatic.SHARE_ID);
         String account = MyApplication.getInstance().getAccount();
-        System.out.println("### ABCD = " + account);
     }
 
     private void addFriends(int position){

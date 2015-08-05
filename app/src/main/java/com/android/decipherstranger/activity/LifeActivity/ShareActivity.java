@@ -265,7 +265,8 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(MyStatic.LIFE_SHARE)) {
-                // TODO 将获取的数据赋值到本地
+                //  TODO 将获取的数据赋值到本地
+                //  判断是点赞还是加好友
                 int type = intent.getIntExtra("reRequestType", 1);
                 if (intent.getStringExtra("reResult").equals("true")){
                     //  获取返回类型为 刷新 还是 加载, 刷新为1，加载为0
