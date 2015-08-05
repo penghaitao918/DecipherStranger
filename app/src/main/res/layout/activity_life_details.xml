@@ -324,8 +324,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginTop="15dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_gravity="center_horizontal">
 
                 <RelativeLayout
@@ -339,11 +341,7 @@
                         android:id="@+id/partake"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:background="@drawable/login_button_bg"
-                        android:text="@string/partake"
-                        android:textColor="@color/btn_text"
-                        android:textSize="26dp"
+                        android:background="@drawable/life_details_partaker"
                         android:onClick="LifeDetailsOnClick"
                         android:layout_centerVertical="true"
                         android:layout_centerHorizontal="true" />
@@ -361,11 +359,7 @@
                         android:id="@+id/addFriend"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:background="@drawable/login_button_bg"
-                        android:text="@string/addFriend"
-                        android:textColor="@color/btn_text"
-                        android:textSize="26dp"
+                        android:background="@drawable/life_details_friends"
                         android:onClick="LifeDetailsOnClick"
                         android:layout_centerVertical="true"
                         android:layout_centerHorizontal="true"  />
