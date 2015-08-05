@@ -72,7 +72,7 @@ public class SendActivity extends BaseActivity {
     private LocationClient mLocationClient;
     private MyLocationListener mLocationListener;
 
-    private int classRadInt = -1;
+    private int classRadInt = 3;
     private String timeBtnString = "";
     private int timeBtnInt = 0;
     private String endTimeString = "";
