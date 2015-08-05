@@ -267,6 +267,8 @@ public class ClientListenThread extends Thread {
                             Intent itSendActivity = new Intent(MyStatic.LIFE_SEND);
                             if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)){
                                 itSendActivity.putExtra("reResult",true);
+                            }else {
+                                itSendActivity.putExtra("reResult",false);
                             }
                             clContext.sendBroadcast(itSendActivity);
                             break;
