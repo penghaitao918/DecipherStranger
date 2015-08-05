@@ -1,6 +1,7 @@
 package com.android.decipherstranger.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.MyApplication;
+import com.android.decipherstranger.activity.GameOneActivity.WelcomeRspActivity;
 import com.android.decipherstranger.util.MyStatic;
 
 import java.util.ArrayList;
@@ -43,6 +45,7 @@ public class ListButtonAdapter extends BaseAdapter {
     private int[] mTo;
     private String[] mFrom;
 
+    private Context mContext;
     private int mResource;
     private LayoutInflater mInflater;
 
@@ -54,6 +57,7 @@ public class ListButtonAdapter extends BaseAdapter {
         mResource = resource;
         mFrom = from;
         mTo = to;
+        mContext = context;
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -104,8 +108,6 @@ public class ListButtonAdapter extends BaseAdapter {
     private void bindView(int position) {
         Map<String, Object> itemData = mData.get(position);
         if (itemData != null) {
-            int id = (Integer)itemData.get(MyStatic.SHARE_ID);
-            String account = (String) itemData.get(MyStatic.SHARE_ACCOUNT);
             Bitmap portrait = (Bitmap)itemData.get(MyStatic.SHARE_PORTRAIT);
             String name = (String) itemData.get(MyStatic.SHARE_NAME);
             String message = (String) itemData.get(MyStatic.SHARE_MESSAGE);
@@ -171,7 +173,6 @@ public class ListButtonAdapter extends BaseAdapter {
     //  接受均在ShareLife中进行
     private void addNum(int position){
         /**
-         * TODO 测试application.getAccount() 是否生效
          * TODO 点赞 若账号为account的用户为ID为id的点过赞了，返回false，否则返回True
          */
         int Id =(Integer) mData.get(position).get(MyStatic.SHARE_ID);
@@ -179,8 +180,18 @@ public class ListButtonAdapter extends BaseAdapter {
     }
 
     private void addFriends(int position){
-        //  TODO 加好友 返回账号昵称头像性别
-        int Id =(Integer) mData.get(position).get(MyStatic.SHARE_ID);
-        String account =(String) mData.get(position).get(MyStatic.SHARE_ACCOUNT);
+        Map<String, Object> itemData = mData.get(position);
+        String account =(String) itemData.get(MyStatic.SHARE_ACCOUNT);
+        Bitmap portrait = (Bitmap) itemData.get(MyStatic.SHARE_PORTRAIT);
+        String name = (String) itemData.get(MyStatic.SHARE_NAME);
+        String sex = (String) itemData.get(MyStatic.SHARE_SEX);
+
+        Intent intent = new Intent(mContext,WelcomeRspActivity.class);
+        intent.putExtra("Type", "AddFriend");
+        intent.putExtra("Account", account);
+        intent.putExtra("Photo", portrait);
+        intent.putExtra("Name", name);
+        intent.putExtra("Sex", sex);
+        mContext.startActivity(intent);
     }
 }

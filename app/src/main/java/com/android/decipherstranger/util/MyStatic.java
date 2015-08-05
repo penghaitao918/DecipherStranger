@@ -89,6 +89,7 @@ public class MyStatic {
     public static final String SHARE_PHOTO = "sharePhoto";
     public static final String SHARE_TIME = "shareTime";
     public static final String SHARE_NUM = "shareNum";
+    public static final String SHARE_SEX = "shareSex";
     public static final String SHARE_NUM_BTN = "numButton";
     public static final String SHARE_FRI_BTN = "friButton";
 

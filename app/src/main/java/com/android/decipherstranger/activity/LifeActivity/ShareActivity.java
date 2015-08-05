@@ -287,11 +287,11 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
                                 shareList.clear();
                             }
                             shareList = new LifeShare(helper.getWritableDatabase());
-                            shareList.insert(id, account, portrait, name, message, photo, time, number);
+                            shareList.insert(id, account, portrait, name, message, photo, time, number, gender);
                             break;
                         case MyStatic.LOAD:
                             shareList = new LifeShare(helper.getWritableDatabase());
-                            shareList.insert(id, account, portrait, name, message, photo, time, number);
+                            shareList.insert(id, account, portrait, name, message, photo, time, number, gender);
                             break;
                     }
                 }else if (intent.getStringExtra("reResult").equals("finish")){

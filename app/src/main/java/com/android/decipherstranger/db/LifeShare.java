@@ -41,15 +41,15 @@ public class LifeShare {
     }
 
     // 存储数据
-    public void insert(int id, String account, Bitmap portrait, String name, String message, Bitmap photo, String time, int number) {
+    public void insert(int id, String account, Bitmap portrait, String name, String message, Bitmap photo, String time, int number, int sex) {
         ByteArrayOutputStream osPortrait = new ByteArrayOutputStream();
         portrait.compress(Bitmap.CompressFormat.PNG, 100, osPortrait);
 
         ByteArrayOutputStream osPhoto = new ByteArrayOutputStream();
         photo.compress(Bitmap.CompressFormat.PNG, 100, osPhoto);
 
-        String sql = "insert  into `life_share` values (?, ?, ?, ?, ?, ?, ?, ?)";
-        Object args[] = new Object[]{id, account, osPortrait.toByteArray(), name, message, osPhoto.toByteArray(), time, number};
+        String sql = "insert  into `life_share` values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        Object args[] = new Object[]{id, account, osPortrait.toByteArray(), name, message, osPhoto.toByteArray(), time, number, String.valueOf(sex)};
         this.db.execSQL(sql, args);
         this.db.close();
     }
@@ -74,6 +74,7 @@ public class LifeShare {
             map.put(MyStatic.SHARE_PHOTO, photo);
             map.put(MyStatic.SHARE_TIME, result.getString(6));
             map.put(MyStatic.SHARE_NUM, result.getInt(7));
+            map.put(MyStatic.SHARE_SEX, result.getString(8));
             all.add(map);
         }
         this.db.close();

@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class DATABASE extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "ds_chat.db";
+    private static final String DATABASE_NAME = "decipher_stranger.db";
     private static final int DATABASE_VERSION = 1;
     
     public DATABASE(Context context){
@@ -95,6 +95,7 @@ public class DATABASE extends SQLiteOpenHelper {
                 "  `photo` mediumblob," +
                 "  `time` varchar(20) DEFAULT NULL," +
                 "  `number` int(4) DEFAULT NULL," +
+                "  `sex` varchar(2) DEFAULT NULL," +
                 "  PRIMARY KEY (`id`)" +
                 ")";
         db.execSQL(sql);

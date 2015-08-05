@@ -89,80 +89,101 @@
 
             <LinearLayout
                 android:orientation="horizontal"
+                android:layout_margin="8dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingTop="5dp"
-                android:paddingBottom="10dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
                     android:layout_weight="1">
 
                     <ImageButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/sendLife"
-                        android:src="@drawable/ds_icon"
+                        android:src="@drawable/life_send_btn"
                         android:background="@null"
                         android:onClick="LifeMainOnClick"
-                        android:layout_centerVertical="true"
-                        android:layout_centerHorizontal="true"/>
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/send"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/text_hint"
+                        android:layout_below="@+id/sendLife"
+                        android:layout_centerHorizontal="true" />
 
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
                     android:layout_weight="1">
 
                     <ImageButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/partakeLife"
-                        android:src="@drawable/ds_icon"
+                        android:src="@drawable/life_partaker_btn"
                         android:background="@null"
                         android:onClick="LifeMainOnClick"
-                        android:layout_centerVertical="true"
-                        android:layout_centerHorizontal="true"/>
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/partake"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/text_hint"
+                        android:layout_below="@+id/partakeLife"
+                        android:layout_centerHorizontal="true" />
 
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
                     android:layout_weight="1">
 
                     <ImageButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/share"
-                        android:src="@drawable/ds_icon"
+                        android:src="@drawable/life_share_btn"
                         android:background="@null"
                         android:onClick="LifeMainOnClick"
-                        android:layout_centerVertical="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lifeShare"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/text_hint"
+                        android:layout_below="@+id/share"
                         android:layout_centerHorizontal="true" />
 
                 </RelativeLayout>
 
             </LinearLayout>
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/blue">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/hobby"
-                    android:id="@+id/textView2"
-                    android:textSize="20dp"
-                    android:padding="10dp"
-                    android:layout_marginLeft="10dp" />
-
-            </RelativeLayout>
+                android:background="@drawable/life_main_tab"/>
 
             <ListView
                 android:layout_width="wrap_content"
