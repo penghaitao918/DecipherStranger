@@ -287,6 +287,9 @@ public class ClientListenThread extends Thread {
                                     itDetials.putExtra("re_current_number",jsonObj.getInt("re_current_number"));
                                     itDetials.putExtra("re_send_account",jsonObj.getString("re_send_account"));
                                     itDetials.putExtra("re_activity_password",jsonObj.getString("activity_password"));
+                                    itDetials.putExtra("re_userName",jsonObj.getString("re_user_name"));
+                                    itDetials.putExtra("re_userPhoto",jsonObj.getString("re_small_photo"));
+                                    itDetials.putExtra("re_gender",jsonObj.getInt("re_gender"));
                                 }
                             }else {
                                 itDetials.putExtra("reResult", false);
@@ -335,6 +338,7 @@ public class ClientListenThread extends Thread {
                                 itShowShare.putExtra("reSpeech",jsonObj.getString("reSpeech"));
                                 itShowShare.putExtra("reTime",jsonObj.getString("reTime"));
                                 itShowShare.putExtra("reZan",jsonObj.getInt("reZan"));
+                                itShowShare.putExtra("re_gender",jsonObj.getInt("re_gender"));
                             }else if (jsonObj.getString("re_message").equals("finish")){
                                 itShowShare.putExtra("reResult","finish");
                             }else {

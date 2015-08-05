@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
 import com.android.decipherstranger.activity.Base.MyApplication;
 import com.android.decipherstranger.activity.GameOneActivity.WelcomeRspActivity;
+import com.android.decipherstranger.util.ChangeUtils;
 import com.android.decipherstranger.util.GlobalMsgUtils;
 import com.android.decipherstranger.util.MyStatic;
 
@@ -192,6 +194,9 @@ public class DetailsActivity extends BaseActivity {
                         String setPlace = intent.getStringExtra("re_set_place");
                         String setTime = intent.getStringExtra("re_set_time");
                         String activityTypeName = intent.getStringExtra("activity_type_name");
+                        String userName = intent.getStringExtra("re_userName");
+                        Bitmap userPhoto = ChangeUtils.toBitmap(intent.getStringExtra("re_userPhoto"));
+                        int gender = intent.getIntExtra("re_gender",0);
                         number = intent.getIntExtra("re_current_number", 0);
                         sendAccount = intent.getStringExtra("re_send_account");
                         password = intent.getStringExtra("re_activity_password");

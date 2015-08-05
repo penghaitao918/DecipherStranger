@@ -278,6 +278,7 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
                     Bitmap photo = ChangeUtils.toBitmap(intent.getStringExtra("reSharePhoto"));
                     String time = intent.getStringExtra("reTime");
                     int number = intent.getIntExtra("reZan",0);
+                    int gender = intent.getIntExtra("re_gender",0);
                     switch (type) {
                         case MyStatic.REFRESH:
                             if (refreshFlag) {
