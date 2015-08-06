@@ -213,13 +213,13 @@ public class MainActivity extends BaseActivity {
         Bitmap bitmap = null;
         switch (type) {
             // 美食
-            case 1:bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.ds_icon);
+            case 1:bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.life_class_food);
                 break;
             // 旅游
-            case 2:bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.ds_icon);
+            case 2:bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.life_class_travel);
                 break;
             // 休闲娱乐
-            case 3:bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.ds_icon);
+            case 3:bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.life_class_other);
                 break;
         }
         Map<String, Object> map = new HashMap<String, Object>();

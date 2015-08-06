@@ -50,6 +50,7 @@ public class MyStatic {
     public static final String LIFE_DETAILS = "com.android.life.details";
     public static final String LIFE_SHARE = "com.android.life.share";
     public static final String LIFE_SHARE_DO = "com.android.life.share.do";
+    public static final String LIFE_MY_LIFE = "com.android.life.myLife";
     
     public static final String CONVERSATION_TYPE = "Type";
     public static final String CONVERSATION_ACCOUNT = "conversationAccount";

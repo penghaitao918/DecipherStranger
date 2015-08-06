@@ -18,7 +18,7 @@
             android:onClick="LifeSendOnClick"
             android:background="@null"
             android:layout_marginLeft="10dp"
-            android:src="@drawable/home_btn"
+            android:src="@drawable/life_back_btn"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />

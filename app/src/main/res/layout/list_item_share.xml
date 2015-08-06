@@ -116,8 +116,9 @@
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="New Button"
                 android:id="@+id/friendButton"
+                android:background="@null"
+                android:src="@drawable/share_friends_btn"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
@@ -125,8 +126,10 @@
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
                 android:id="@+id/numButton"
-                android:background="@drawable/ok_icon"
+                android:background="@null"
+                android:src="@drawable/share_good_btn"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/friendButton"
                 android:layout_toStartOf="@+id/friendButton"/>
