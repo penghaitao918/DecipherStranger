@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/main_bg">
+    android:background="@drawable/background">
 
     <RelativeLayout
         android:id="@+id/top"
@@ -37,53 +37,37 @@
 
     </RelativeLayout>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/sendLife"
-                android:text="@string/send"
-                android:onClick="MyLifeOnClick"
-                android:textColor="@color/text_hint"
-                android:textSize="18dp"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/partake"
-                android:onClick="MyLifeOnClick"
-                android:textColor="@color/text_hint"
-                android:textSize="18dp"
-                android:id="@+id/partakeLife"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true" />
-
-        </RelativeLayout>
-
-    </LinearLayout>
-
-    <ListView
-        android:layout_width="match_parent"
+    <view
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/listView"
-        android:layout_gravity="center_horizontal" />
+        class="com.android.decipherstranger.view.MyScrollView"
+        android:id="@+id/view"
+        android:layout_gravity="center_horizontal" >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include
+                android:id="@+id/sort"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/winpop_life_my"
+                android:layout_gravity="center_horizontal" />
+
+            <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/listView"
+                android:layout_marginTop="3dp"
+                android:layout_gravity="center_horizontal"
+                android:divider="@null"
+                android:listSelector="#00000000" />
+
+        </LinearLayout>
+
+    </view>
 
 </LinearLayout>

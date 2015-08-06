@@ -77,6 +77,8 @@
     <string name="lifeShare">晒 图</string>
     <string name="doShare">分 享</string>
     <string name="shareTip">来晒晒图分享一下现在的心情吧~</string>
+    <string name="mySend">我的发起</string>
+    <string name="myPartake">我的参团</string>
 
     <!-- 自定义组件 -->
     <string name="pull_to_refresh">下拉可以刷新</string>

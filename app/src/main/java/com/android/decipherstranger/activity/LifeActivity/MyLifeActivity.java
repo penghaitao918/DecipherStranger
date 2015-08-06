@@ -10,8 +10,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
@@ -86,6 +88,8 @@ public class MyLifeActivity extends BaseActivity {
         this.listView.setAdapter(simpleAdapter);
         /*动态跟新ListView*/
         simpleAdapter.notifyDataSetChanged();
+        /*动态计算ListView的高度*/
+        this.fixListViewHeight(listView);
     }
 
     private class ViewBinderImpl implements SimpleAdapter.ViewBinder {
@@ -101,19 +105,27 @@ public class MyLifeActivity extends BaseActivity {
         }
     }
 
-/*    private ArrayList<Map<String, Object>> selectAll (){
-        Bitmap  bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.life_class_food);
-        ArrayList<Map<String, Object>> all = new ArrayList<Map<String, Object>>();
-        for (int i = 0; i < 10; ++ i) {
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put(MyStatic.LIFE_CLASS, bitmap);
-            map.put(MyStatic.LIFE_NAME, "一起去吃饭啊");
-            map.put(MyStatic.LIFE_TIME, "2015/07/28 9:16");
-            map.put(MyStatic.LIFE_SPACE, "长春工业大学");
-            all.add(map);
+    private void fixListViewHeight(ListView listView) {
+        // 如果没有设置数据适配器，则ListView没有子项，返回。
+        ListAdapter listAdapter = listView.getAdapter();
+        int totalHeight = 0;
+        if (listAdapter == null) {
+            return;
         }
-        return all;
-    }*/
+        for (int index = 0, len = listAdapter.getCount(); index < len; ++index) {
+            View listViewItem = listAdapter.getView(index, null, listView);
+            // 计算子项View 的宽高
+            listViewItem.measure(0, 0);
+            // 计算所有子项的高度和
+            totalHeight += listViewItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        // listView.getDividerHeight()获取子项间分隔符的高度
+        // params.height设置ListView完全显示需要的高度
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+    }
 
     private void setData (int lifeId, int type, String name, String time, String place){
         Bitmap bitmap = null;
@@ -143,6 +155,7 @@ public class MyLifeActivity extends BaseActivity {
         public void handleMessage(Message message) {
             simpleAdapter.notifyDataSetChanged();
             listView.setAdapter(simpleAdapter);
+            fixListViewHeight(listView);
         }
     };
 
@@ -161,10 +174,10 @@ public class MyLifeActivity extends BaseActivity {
                 onBackPressed();
                 break;
             /*发起*/
-            case R.id.sendLife:
+            case R.id.mySend:
                 break;
             /*参团*/
-            case R.id.partakeLife:
+            case R.id.myPartake:
                 break;
             /*分享*/
             case R.id.share:
