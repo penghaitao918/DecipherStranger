@@ -17,6 +17,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
@@ -175,14 +176,20 @@ public class MyLifeActivity extends BaseActivity {
                 break;
             /*发起*/
             case R.id.mySend:
+                getData("Send");
                 break;
             /*参团*/
             case R.id.myPartake:
+                getData("Attend");
                 break;
             /*分享*/
             case R.id.share:
                 break;
         }
+    }
+
+    private void getData(String  flag) {
+
     }
 
     private void MyLifeBroadcas() {
@@ -204,26 +211,28 @@ public class MyLifeActivity extends BaseActivity {
                     String name = intent.getStringExtra("reName");
                     String time = intent.getStringExtra("reTime");
                     String place = intent.getStringExtra("rePlace");
-                    if (intent.getStringExtra("reMatter").equals("send")){
+                    setData(lifeId, type, name, time, place);
+/*                    if (intent.getStringExtra("reMatter").equals("send")){
                         //TODO 发起活动赋值
                     }else {
                         //TODO 参加活动赋值
-                    }
-//                    setData(lifeId, type, name, time, place);
+                    }*/
                 }else if (intent.getStringExtra("reResult").equals("finish")){
-                    if (intent.getStringExtra("reMatter").equals("send")){
+                    System.out.println("### 哎哟我去");
+                    Message message = new Message();
+                    handler.sendMessage(message);
+/*                    if (intent.getStringExtra("reMatter").equals("send")){
                         //TODO 显示发起活动
                     }else {
                         //TODO 显示参加活动
-                    }
-//                    System.out.println("### 哎哟我去");
-//                    Message message = new Message();
-//                    handler.sendMessage(message);
+                    }*/
                 }else {
                     if (intent.getStringExtra("reMatter").equals("send")){
                         //TODO 提示还未发起活动
+                        Toast.makeText(MyLifeActivity.this,"您当前没有发布的活动",Toast.LENGTH_SHORT).show();
                     }else {
                         //TODO 提示还未参加活动
+                        Toast.makeText(MyLifeActivity.this,"您当前没有参与的活动",Toast.LENGTH_SHORT).show();
                     }
                 }
             }
