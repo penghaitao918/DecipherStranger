@@ -37,37 +37,78 @@
 
     </RelativeLayout>
 
-    <view
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@color/white"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        class="com.android.decipherstranger.view.MyScrollView"
-        android:id="@+id/view"
-        android:layout_gravity="center_horizontal" >
+        android:layout_weight="1"
+        android:layout_gravity="center_horizontal">
 
-        <LinearLayout
-            android:orientation="vertical"
+        <RelativeLayout
+            android:padding="5dp"
+            android:id="@+id/mySend"
+            android:onClick="MyLifeOnClick"
+            android:background="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
 
-            <include
-                android:id="@+id/sort"
-                android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                layout="@layout/winpop_life_my"
-                android:layout_gravity="center_horizontal" />
-
-            <ListView
+            <TextView
+                android:id="@+id/sendText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/listView"
-                android:layout_marginTop="3dp"
-                android:layout_gravity="center_horizontal"
-                android:divider="@null"
-                android:listSelector="#00000000" />
+                android:textSize="16dp"
+                android:text="@string/mySend"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical|left"
+                android:drawableRight="@drawable/group_unfold_arrow"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
-    </view>
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/grey"/>
+
+        <RelativeLayout
+            android:padding="5dp"
+            android:id="@+id/myPartake"
+            android:onClick="MyLifeOnClick"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/partakeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:text="@string/myPartake"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical|left"
+                android:drawableRight="@drawable/group_unfold_arrow"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView"
+        android:layout_marginTop="3dp"
+        android:layout_gravity="center_horizontal"
+        android:divider="@null"
+        android:listSelector="#00000000" />
 
 </LinearLayout>

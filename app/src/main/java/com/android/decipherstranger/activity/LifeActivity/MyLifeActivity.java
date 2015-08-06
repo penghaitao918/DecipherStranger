@@ -14,10 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.decipherstranger.Network.NetworkService;
@@ -52,6 +54,8 @@ import java.util.Map;
  */
 public class MyLifeActivity extends BaseActivity {
 
+    private TextView textView0 = null;
+    private TextView textView1 = null;
     private RelativeLayout topLayout = null;
     private ListView listView = null;
     private SimpleAdapter simpleAdapter = null;
@@ -64,10 +68,13 @@ public class MyLifeActivity extends BaseActivity {
         super.setContentView(R.layout.activity_life_my);
         this.init();
         this.initData();
+        this.getData("send");
         this.MyLifeBroadcas();
     }
 
     private void init() {
+        this.textView0 = (TextView) super.findViewById(R.id.sendText);
+        this.textView1 = (TextView) super.findViewById(R.id.partakeText);
         this.dataList = new ArrayList<Map<String, Object>>();
         this.listView = (ListView) super.findViewById(R.id.listView);
         this.listView.setOnItemClickListener(new OnItemClickListenerImpl());
@@ -92,8 +99,6 @@ public class MyLifeActivity extends BaseActivity {
         this.listView.setAdapter(simpleAdapter);
         /*动态跟新ListView*/
         simpleAdapter.notifyDataSetChanged();
-        /*动态计算ListView的高度*/
-        this.fixListViewHeight(listView);
     }
 
     private class ViewBinderImpl implements SimpleAdapter.ViewBinder {
@@ -109,7 +114,7 @@ public class MyLifeActivity extends BaseActivity {
         }
     }
 
-    private void fixListViewHeight(ListView listView) {
+/*    private void fixListViewHeight(ListView listView) {
         // 如果没有设置数据适配器，则ListView没有子项，返回。
         ListAdapter listAdapter = listView.getAdapter();
         int totalHeight = 0;
@@ -129,7 +134,7 @@ public class MyLifeActivity extends BaseActivity {
         // params.height设置ListView完全显示需要的高度
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
-    }
+    }*/
 
     private void setData (int lifeId, int type, String name, String time, String place){
         Bitmap bitmap = null;
@@ -159,7 +164,6 @@ public class MyLifeActivity extends BaseActivity {
         public void handleMessage(Message message) {
             simpleAdapter.notifyDataSetChanged();
             listView.setAdapter(simpleAdapter);
-            fixListViewHeight(listView);
         }
     };
 
@@ -183,11 +187,15 @@ public class MyLifeActivity extends BaseActivity {
                 break;
             /*发起*/
             case R.id.mySend:
-                getData("Send");
+                getData("send");
+                textView0.setTextColor(getResources().getColor(R.color.red));
+                textView1.setTextColor(getResources().getColor(R.color.black_grey));
                 break;
             /*参团*/
             case R.id.myPartake:
-                getData("Attend");
+                getData("attend");
+                textView0.setTextColor(getResources().getColor(R.color.black_grey));
+                textView1.setTextColor(getResources().getColor(R.color.red));
                 break;
             /*分享*/
             case R.id.share:
@@ -197,7 +205,7 @@ public class MyLifeActivity extends BaseActivity {
 
     private void getData(String  flag) {
         if (NetworkService.getInstance().getIsConnected()){
-            String Msg = "re_type"+":"+"26"+":"+"re_matter"+":"+flag+":"
+            String Msg = "type"+":"+"26"+":"+"re_matter"+":"+flag+":"
                     +"account"+":"+ MyApplication.getInstance().getAccount();
             Log.v("aaaaa", Msg);
             NetworkService.getInstance().sendUpload(Msg);

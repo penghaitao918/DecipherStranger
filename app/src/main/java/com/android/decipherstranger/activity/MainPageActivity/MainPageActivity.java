@@ -36,7 +36,6 @@ import com.android.decipherstranger.entity.User;
 import com.android.decipherstranger.util.ChangeUtils;
 import com.android.decipherstranger.util.GlobalMsgUtils;
 import com.android.decipherstranger.util.MyStatic;
-import com.android.decipherstranger.util.Tools;
 import com.android.decipherstranger.view.BadgeView;
 
 import java.io.File;

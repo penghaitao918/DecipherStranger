@@ -246,9 +246,9 @@ public class ShakeActivity extends BaseActivity {
         this.userName.setText(intent.getStringExtra("reName"));
         this.FriendSex = intent.getIntExtra("reGender", 1)+"";
         if (intent.getIntExtra("reGender", 1) == 1) {
-            sexDrawable = getResources().getDrawable(R.drawable.man);
+            sexDrawable = getResources().getDrawable(R.drawable.ic_sex_male);
         } else {
-            sexDrawable = getResources().getDrawable(R.drawable.women);
+            sexDrawable = getResources().getDrawable(R.drawable.ic_sex_female);
         }
         this.sex.setImageDrawable(sexDrawable);
     }
