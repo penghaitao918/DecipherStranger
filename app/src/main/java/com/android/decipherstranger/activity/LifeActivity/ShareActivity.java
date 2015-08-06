@@ -267,44 +267,52 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
             if (intent.getAction().equals(MyStatic.LIFE_SHARE)) {
                 //  TODO 将获取的数据赋值到本地
                 //  判断是点赞还是加好友
-                int type = intent.getIntExtra("reRequestType", 1);
-                if (intent.getStringExtra("reResult").equals("true")){
-                    //  获取返回类型为 刷新 还是 加载, 刷新为1，加载为0
-                    int id = intent.getIntExtra("reId",0);
-                    String account = intent.getStringExtra("reAccount");
-                    Bitmap portrait = ChangeUtils.toBitmap(intent.getStringExtra("reUserPhoto"));
-                    String name = intent.getStringExtra("reUserName");
-                    String message = intent.getStringExtra("reSpeech");
-                    Bitmap photo = ChangeUtils.toBitmap(intent.getStringExtra("reSharePhoto"));
-                    String time = intent.getStringExtra("reTime");
-                    int number = intent.getIntExtra("reZan",0);
-                    int gender = intent.getIntExtra("re_gender",0);
-                    switch (type) {
-                        case MyStatic.REFRESH:
-                            if (refreshFlag) {
-                                refreshFlag = false;
+                if(intent.getStringExtra("reMatter").equals("showShare")) {
+                    int type = intent.getIntExtra("reRequestType", 1);
+                    if (intent.getStringExtra("reResult").equals("true")) {
+                        //  获取返回类型为 刷新 还是 加载, 刷新为1，加载为0
+                        int id = intent.getIntExtra("reId", 0);
+                        String account = intent.getStringExtra("reAccount");
+                        Bitmap portrait = ChangeUtils.toBitmap(intent.getStringExtra("reUserPhoto"));
+                        String name = intent.getStringExtra("reUserName");
+                        String message = intent.getStringExtra("reSpeech");
+                        Bitmap photo = ChangeUtils.toBitmap(intent.getStringExtra("reSharePhoto"));
+                        String time = intent.getStringExtra("reTime");
+                        int number = intent.getIntExtra("reZan", 0);
+                        int gender = intent.getIntExtra("re_gender", 0);
+                        switch (type) {
+                            case MyStatic.REFRESH:
+                                if (refreshFlag) {
+                                    refreshFlag = false;
+                                    shareList = new LifeShare(helper.getWritableDatabase());
+                                    shareList.clear();
+                                }
                                 shareList = new LifeShare(helper.getWritableDatabase());
-                                shareList.clear();
-                            }
-                            shareList = new LifeShare(helper.getWritableDatabase());
-                            shareList.insert(id, account, portrait, name, message, photo, time, number, gender);
-                            break;
-                        case MyStatic.LOAD:
-                            shareList = new LifeShare(helper.getWritableDatabase());
-                            shareList.insert(id, account, portrait, name, message, photo, time, number, gender);
-                            break;
+                                shareList.insert(id, account, portrait, name, message, photo, time, number, gender);
+                                break;
+                            case MyStatic.LOAD:
+                                shareList = new LifeShare(helper.getWritableDatabase());
+                                shareList.insert(id, account, portrait, name, message, photo, time, number, gender);
+                                break;
+                        }
+                    } else if (intent.getStringExtra("reResult").equals("finish")) {
+                        if (intent.getIntExtra("reRequestType", 0) == 1) {
+                            initData();
+                        } else {
+                            loadData();
+                        }
+                    } else {
+                        if (intent.getIntExtra("reRequestType", 0) == 0) {
+                            //TODO 加载完毕处理
+                            System.out.println("### 没有数据了");
+                            listView.onLoadComplete(0);
+                        }
                     }
-                }else if (intent.getStringExtra("reResult").equals("finish")){
-                    if (intent.getIntExtra("reRequestType",0) == 1){
-                        initData();
+                }else {
+                    if (intent.getStringExtra("reResult").equals("true")){
+                        //TODO 点赞成功处理
                     }else {
-                        loadData();
-                    }
-                } else{
-                    if(intent.getIntExtra("reRequestType",0) == 0){
-                        //TODO 加载完毕处理
-                        System.out.println("### 没有数据了");
-                        listView.onLoadComplete(0);
+                        //TODO 已经赞过处理
                     }
                 }
             }

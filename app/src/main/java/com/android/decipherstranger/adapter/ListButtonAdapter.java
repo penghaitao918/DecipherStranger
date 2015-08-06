@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.decipherstranger.Network.NetworkService;
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.MyApplication;
 import com.android.decipherstranger.activity.GameOneActivity.WelcomeRspActivity;
@@ -177,6 +179,14 @@ public class ListButtonAdapter extends BaseAdapter {
          */
         int Id =(Integer) mData.get(position).get(MyStatic.SHARE_ID);
         String account = MyApplication.getInstance().getAccount();
+        if (NetworkService.getInstance().getIsConnected()){
+            String Msg = "type"+":"+"25"+":"+"disId"+":"+Id+":"+"account"+":"+account;
+            Log.v("aaaaa", Msg);
+            NetworkService.getInstance().sendUpload(Msg);
+        }else {
+            NetworkService.getInstance().closeConnection();
+            Log.v("点赞", "服务器连接失败");
+        }
     }
 
     private void addFriends(int position){

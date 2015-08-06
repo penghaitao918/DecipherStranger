@@ -29,4 +29,5 @@ public class GlobalMsgUtils {
     public static final int msgAttendActivity = 22;
     public static final int msgShareActivity = 23;
     public static final int msgShowShare = 24;
+    public static final int msgClickZan = 25;
 }

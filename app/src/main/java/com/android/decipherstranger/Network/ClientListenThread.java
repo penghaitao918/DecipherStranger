@@ -329,6 +329,7 @@ public class ClientListenThread extends Thread {
                         case GlobalMsgUtils.msgShowShare :
                             Intent itShowShare = new Intent(MyStatic.LIFE_SHARE);
                             itShowShare.putExtra("reRequestType",jsonObj.getInt("re_requestType"));
+                            itShowShare.putExtra("reMatter","showShare");
                             if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)){
                                 itShowShare.putExtra("reResult","true");
                                 itShowShare.putExtra("reId",jsonObj.getInt("reId"));
@@ -346,6 +347,16 @@ public class ClientListenThread extends Thread {
                                 itShowShare.putExtra("reResult","false");
                             }
                             clContext.sendBroadcast(itShowShare);
+                            break;
+                        case GlobalMsgUtils.msgClickZan:
+                                Intent itClickZan = new Intent(MyStatic.LIFE_SHARE);
+                                itClickZan.putExtra("reMatter","Zan");
+                                if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)){
+                                    itClickZan.putExtra("reResult","true");
+                                }else {
+                                    itClickZan.putExtra("reResult","false");
+                                }
+                            clContext.sendBroadcast(itClickZan);
                             break;
                         default:
                             if(NetworkService.getInstance().getIsConnected()) {
