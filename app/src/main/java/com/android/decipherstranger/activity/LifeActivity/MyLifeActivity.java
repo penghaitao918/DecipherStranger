@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -19,8 +20,10 @@ import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.android.decipherstranger.Network.NetworkService;
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
+import com.android.decipherstranger.activity.Base.MyApplication;
 import com.android.decipherstranger.util.MyStatic;
 
 import java.util.ArrayList;
@@ -193,7 +196,15 @@ public class MyLifeActivity extends BaseActivity {
     }
 
     private void getData(String  flag) {
-
+        if (NetworkService.getInstance().getIsConnected()){
+            String Msg = "re_type"+":"+"26"+":"+"re_matter"+":"+flag+":"
+                    +"account"+":"+ MyApplication.getInstance().getAccount();
+            Log.v("aaaaa", Msg);
+            NetworkService.getInstance().sendUpload(Msg);
+        }else {
+            NetworkService.getInstance().closeConnection();
+            Log.v("晒图", "服务器连接失败");
+        }
     }
 
     private void MyLifeBroadcas() {
