@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.android.decipherstranger.Network.NetworkService;
 import com.android.decipherstranger.R;
@@ -311,8 +312,10 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
                 }else {
                     if (intent.getStringExtra("reResult").equals("true")){
                         //TODO 点赞成功处理
+                        adapter.itemDo(MyStatic.sharePosition);
                     }else {
                         //TODO 已经赞过处理
+                        Toast.makeText(ShareActivity.this,"您已赞过了该分享~",Toast.LENGTH_SHORT).show();
                     }
                 }
             }

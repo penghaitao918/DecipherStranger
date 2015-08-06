@@ -124,18 +124,12 @@ public class MyLifeActivity extends BaseActivity {
                 break;
             /*发起*/
             case R.id.sendLife:
-                Intent intent2 = new Intent(this,SendActivity.class);
-                startActivity(intent2);
                 break;
             /*参团*/
             case R.id.partakeLife:
-                Intent intent3 = new Intent(this,PartakeActivity.class);
-                startActivity(intent3);
                 break;
             /*分享*/
             case R.id.share:
-                Intent intent4 = new Intent(this,ShareActivity.class);
-                startActivity(intent4);
                 break;
         }
     }
