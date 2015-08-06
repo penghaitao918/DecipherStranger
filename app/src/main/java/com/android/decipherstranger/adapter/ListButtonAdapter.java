@@ -163,7 +163,7 @@ public class ListButtonAdapter extends BaseAdapter {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.numButton:
-                //    MyStatic.sharePosition = position;
+                    MyStatic.sharePosition = position;
                     addNum(position);
                     break;
                 case R.id.friendButton:

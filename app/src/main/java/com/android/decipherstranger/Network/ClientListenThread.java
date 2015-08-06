@@ -358,6 +358,20 @@ public class ClientListenThread extends Thread {
                                 }
                             clContext.sendBroadcast(itClickZan);
                             break;
+                        case GlobalMsgUtils.msgPersonalCenter:
+                            Intent itPersonal = new Intent(MyStatic.LIFE_MY_LIFE);
+                            itPersonal.putExtra("reMatter",jsonObj.getString("reMatter"));
+                            itPersonal.putExtra("reResult",jsonObj.getString("re_message"));
+                            if (jsonObj.getString("re_message").equals("true")){
+                                itPersonal.putExtra("reId",jsonObj.getString("reId"));
+                                itPersonal.putExtra("reType",jsonObj.getInt("reType"));
+                                itPersonal.putExtra("reName",jsonObj.getString("reName"));
+                                itPersonal.putExtra("reTime",jsonObj.getString("reTime"));
+                                itPersonal.putExtra("rePlace",jsonObj.getString("rePlace"));
+                                itPersonal.putExtra("reNumber",jsonObj.getString("reNumber"));
+                            }
+                            clContext.sendBroadcast(itPersonal);
+                            break;
                         default:
                             if(NetworkService.getInstance().getIsConnected()) {
                                 String testNet = "type"+":"+"ping";

@@ -196,7 +196,7 @@ public class MyLifeActivity extends BaseActivity {
     public class MyLifeBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(MyStatic.LIFE_MAIN)) {
+            if (intent.getAction().equals(MyStatic.LIFE_MY_LIFE)) {
                 // TODO 将获取的数据赋值到本地
                 if (intent.getBooleanExtra("reResult", true)){
                     int lifeId = intent.getIntExtra("reId", 0);
@@ -204,11 +204,27 @@ public class MyLifeActivity extends BaseActivity {
                     String name = intent.getStringExtra("reName");
                     String time = intent.getStringExtra("reTime");
                     String place = intent.getStringExtra("rePlace");
-                    setData(lifeId, type, name, time, place);
-                }else{
-                    System.out.println("### 哎哟我去");
-                    Message message = new Message();
-                    handler.sendMessage(message);
+                    if (intent.getStringExtra("reMatter").equals("send")){
+                        //TODO 发起活动赋值
+                    }else {
+                        //TODO 参加活动赋值
+                    }
+//                    setData(lifeId, type, name, time, place);
+                }else if (intent.getStringExtra("reResult").equals("finish")){
+                    if (intent.getStringExtra("reMatter").equals("send")){
+                        //TODO 显示发起活动
+                    }else {
+                        //TODO 显示参加活动
+                    }
+//                    System.out.println("### 哎哟我去");
+//                    Message message = new Message();
+//                    handler.sendMessage(message);
+                }else {
+                    if (intent.getStringExtra("reMatter").equals("send")){
+                        //TODO 提示还未发起活动
+                    }else {
+                        //TODO 提示还未参加活动
+                    }
                 }
             }
         }
