@@ -37,78 +37,64 @@
 
     </RelativeLayout>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:background="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_gravity="center_horizontal">
-
-        <RelativeLayout
-            android:padding="5dp"
-            android:id="@+id/mySend"
-            android:onClick="MyLifeOnClick"
-            android:background="@color/white"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/sendText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16dp"
-                android:text="@string/mySend"
-                android:drawablePadding="10dp"
-                android:gravity="center_vertical|left"
-                android:drawableRight="@drawable/group_unfold_arrow"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true" />
-
-        </RelativeLayout>
-
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/grey"/>
-
-        <RelativeLayout
-            android:padding="5dp"
-            android:id="@+id/myPartake"
-            android:onClick="MyLifeOnClick"
-            android:background="@color/white"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/partakeText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16dp"
-                android:text="@string/myPartake"
-                android:drawablePadding="10dp"
-                android:gravity="center_vertical|left"
-                android:drawableRight="@drawable/group_unfold_arrow"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true" />
-
-        </RelativeLayout>
-
-    </LinearLayout>
-
-    <ListView
+    <view
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/listView"
-        android:layout_marginTop="3dp"
-        android:layout_gravity="center_horizontal"
-        android:divider="@null"
-        android:listSelector="#00000000" />
+        class="com.android.decipherstranger.view.MyScrollView"
+        android:id="@+id/view"
+        android:layout_gravity="center_horizontal" >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/lifeLogo_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/life_logo"
+                    android:background="@drawable/life_logo"
+                    android:onClick="LifePartakeOnClick"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true" />
+
+                <ImageButton
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:id="@+id/myPortrait"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="-25dp"
+                    android:layout_alignBottom="@+id/life_logo"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/life_logo"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"/>
+
+            </RelativeLayout>
+
+
+            <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/listView"
+                android:layout_marginTop="3dp"
+                android:layout_gravity="center_horizontal"
+                android:divider="@null"
+                android:listSelector="#00000000" />
+
+        </LinearLayout>
+
+    </view>
 
 </LinearLayout>

@@ -332,7 +332,7 @@ public class RockPaperScissorsActivity extends BaseActivity {
         }
     }
 
-    public void MenuOnClick(View v) {
+    public void GameMenuOnClick(View v) {
         switch (v.getId()) {
             case R.id.game_setUp:
                 if (popupWindow.isShowing()) {

@@ -6,17 +6,25 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -53,10 +61,12 @@ import java.util.Map;
  * @e-mail penghaitao918@163.com
  */
 public class MyLifeActivity extends BaseActivity {
-    
+
+    private ImageButton imagePortrait = null;
     private RelativeLayout topLayout = null;
     private ListView listView = null;
     private SimpleAdapter simpleAdapter = null;
+    private PopupWindow popupWindow = null;
     private ArrayList<Map<String, Object>> dataList = null;
     private MyLifeBroadcastReceiver receiver = null;
 
@@ -70,7 +80,38 @@ public class MyLifeActivity extends BaseActivity {
         this.MyLifeBroadcas();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+            if (popupWindow.isShowing()) {
+                popupWindow.dismiss();
+            } else {
+                popupWindow.showAsDropDown(findViewById(R.id.top)/*, Gravity.BOTTOM|Gravity.RIGHT, 0, 0*/);
+            }
+        return false;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {// 防止连续两次返回键
+            //返回处理
+             if (popupWindow.isShowing()) {
+                popupWindow.dismiss();
+                return true;
+            } else {
+                if (getApplicationInfo().targetSdkVersion >= Build.VERSION_CODES.ECLAIR) {
+                    event.startTracking();
+                } else {
+                    onBackPressed();
+                }
+                MyLifeActivity.this.finish();
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
     private void init() {
+        this.imagePortrait = (ImageButton) super.findViewById(R.id.myPortrait);
         this.dataList = new ArrayList<Map<String, Object>>();
         this.listView = (ListView) super.findViewById(R.id.listView);
         this.listView.setOnItemClickListener(new OnItemClickListenerImpl());
@@ -80,9 +121,17 @@ public class MyLifeActivity extends BaseActivity {
         topLayout.setFocusable(true);
         topLayout.setFocusableInTouchMode(true);
         topLayout.requestFocus();
+
+        //  获取Menu控件
+        LayoutInflater inflater = LayoutInflater.from(MyLifeActivity.this);
+        View view = inflater.inflate(R.layout.winpop_life_my, null);
+        this.popupWindow = new PopupWindow(view, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        //  设置样式
+        this.popupWindow.setAnimationStyle(R.style.AnimTools);
     }
 
     private void initData() {
+        this.imagePortrait.setBackground(new BitmapDrawable(MyApplication.getInstance().getPortrait()));
     //    this.dataList.addAll(this.selectAll());
         this.simpleAdapter = new SimpleAdapter(this,
                 this.dataList,
@@ -184,16 +233,28 @@ public class MyLifeActivity extends BaseActivity {
             case R.id.life_back_button:
                 onBackPressed();
                 break;
-            /*发起*/
+            /*功能*/
+        }
+    }
+
+    public void LifeMenuOnClick(View v) {
+        switch (v.getId()) {
             case R.id.mySend:
-                getData("Send");
+                if (popupWindow.isShowing()) {
+                    popupWindow.dismiss();
+                }
+                getData("send");
                 break;
-            /*参团*/
             case R.id.myPartake:
-                getData("Attend");
+                if (popupWindow.isShowing()) {
+                    popupWindow.dismiss();
+                }
+                getData("attend");
                 break;
-            /*分享*/
-            case R.id.share:
+            default:
+                if (popupWindow.isShowing()) {
+                    popupWindow.dismiss();
+                }
                 break;
         }
     }

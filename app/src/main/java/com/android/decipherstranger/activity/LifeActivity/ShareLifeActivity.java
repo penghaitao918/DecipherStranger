@@ -159,7 +159,7 @@ public class ShareLifeActivity extends BaseActivity {
             photo = ChangeUtils.toBinary(selectPhoto);
             smallPhoto = ChangeUtils.toBinary(ImageCompression.compressSimplify(selectPhoto, 0.3f));
             Drawable drawable = new BitmapDrawable(this.getResources(), selectPhoto);
-            imageButton.setImageDrawable(drawable);
+            imageButton.setBackground(drawable);
         }
 
     }

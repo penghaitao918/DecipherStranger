@@ -9,7 +9,13 @@
     <style name="AppBaseTheme" parent="android:Theme.Light"/>
     <style name="NoTheme" parent="Theme.AppCompat.Light.NoActionBar" />
 
-    <!-- pup_up 弹窗样式 -->
+    <!-- menu_pop_up 弹窗样式 -->
+    <style name="AnimTools" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/push_menu_in</item>
+        <item name="android:windowExitAnimation">@anim/push_menu_out</item>
+    </style>
+
+    <!-- pop_up 弹窗样式 -->
     <style name="MyDialogStyleBottom" parent="android:style/Theme.Dialog">
         <item name="android:windowEnterAnimation">@anim/push_bottom_in</item>
         <item name="android:windowExitAnimation">@anim/push_bottom_out</item>
