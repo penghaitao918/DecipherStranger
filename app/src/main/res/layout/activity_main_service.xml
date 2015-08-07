@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/friends_trends"
         android:onClick="morePageOnClick"
-        android:background="@drawable/friends_trends"
+        android:background="@drawable/life_trends_btn"
         android:layout_gravity="center_horizontal" />
 
     <Button

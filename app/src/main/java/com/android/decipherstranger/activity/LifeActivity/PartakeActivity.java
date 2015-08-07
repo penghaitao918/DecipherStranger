@@ -169,9 +169,9 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
     private void initData() {
         this.simpleAdapter = new SimpleAdapter(this,
                 this.dataList,
-                R.layout.list_item_life,
-                new String[]{MyStatic.LIFE_CLASS, MyStatic.LIFE_NAME, MyStatic.LIFE_TIME, MyStatic.LIFE_SPACE},
-                new int[]{R.id.life_class, R.id.life_name, R.id.life_time, R.id.life_space}
+                R.layout.list_item_sort,
+                new String[]{MyStatic.LIFE_CLASS, MyStatic.LIFE_NAME, MyStatic.LIFE_TIME, MyStatic.LIFE_SPACE, MyStatic.LIFE_DISTANCE},
+                new int[]{R.id.life_class, R.id.life_name, R.id.life_time, R.id.life_space, R.id.life_distance}
         );
         /*实现ViewBinder()这个接口*/
         simpleAdapter.setViewBinder(new ViewBinderImpl());
@@ -336,10 +336,9 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
         Map<String, Object> map = new HashMap<String, Object>();
         map.put(MyStatic.LIFE_ID, lifeId);
         map.put(MyStatic.LIFE_CLASSINT, type);
-        map.put(MyStatic.LIFE_DISTANCE, distance);
+        map.put(MyStatic.LIFE_DISTANCE, (int)distance + "米");
         map.put(MyStatic.LIFE_FAVORITE, favorite);
         map.put(MyStatic.LIFE_TIME, date);
-
         map.put(MyStatic.LIFE_CLASS, bitmap);
         map.put(MyStatic.LIFE_NAME, name);
         map.put(MyStatic.LIFE_SPACE, space);
@@ -347,11 +346,9 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
     }
 
     private void sort(int flag) {
-        System.out.println("### 产生了onclick");
         MyComparator comp = new MyComparator(flag);
         Collections.sort(dataList, comp);
         simpleAdapter.notifyDataSetChanged();
-        System.out.println("### sort " + dataList);
     }
 
     public void LifePartakeOnClick(View view) {

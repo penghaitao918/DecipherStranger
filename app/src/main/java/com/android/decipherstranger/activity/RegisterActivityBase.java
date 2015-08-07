@@ -98,36 +98,29 @@ public class RegisterActivityBase extends BaseActivity {
                 break;
             case R.id.register_account_input:
                 accountEdit.setText("");
-                accountEdit.setTextColor(Color.parseColor("#ffa89d87"));
                 break;
             case R.id.register_password_input:
                 passwordEdit.setText("");
-                passwordEdit.setTextColor(Color.parseColor("#ffa89d87"));
                 passwordEdit.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 break;
             case R.id.register_re_paw_input:
                 rePawEdit.setText("");
-                rePawEdit.setTextColor(Color.parseColor("#ffa89d87"));
                 rePawEdit.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 break;
             case R.id.register_username_input:
                 nameEdit.setText("");
-                nameEdit.setTextColor(Color.parseColor("#ffa89d87"));
                 break;
             case R.id.register_email_input:
                 emailEdit.setText("");
-                emailEdit.setTextColor(Color.parseColor("#ffa89d87"));
                 break;
             case R.id.register_phone_input:
                 phoneEdit.setText("");
-                phoneEdit.setTextColor(Color.parseColor("#ffa89d87"));
                 break;
             case R.id.register_birth_input:
                 Dialog dialog = new DatePickerDialog(this,
                         new DatePickerDialog.OnDateSetListener(){
                             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                                 month += 1;
-                                birthButton.setTextColor(Color.parseColor("#ffa89d87"));
                                 birthButton.setText(year + "-" + month + "-" + day);
                                 birthBool = true;
                             }
@@ -165,7 +158,6 @@ public class RegisterActivityBase extends BaseActivity {
             if (view.getId() == accountEdit.getId()){
                 if (!focus){
                     accountBool = false;
-                    accountEdit.setTextColor(Color.parseColor("#FF0000"));
                     if (accountEdit.getText().length() == 0){
                         accountEdit.setCompoundDrawables(null, null, ErrorIcon, null);//画在右边
                         accountEdit.setText("用户名不能为空");
@@ -177,14 +169,13 @@ public class RegisterActivityBase extends BaseActivity {
                         accountEdit.setText("用户名须以字母开头");
                     }else if (!checkAccount(accountEdit.getText().toString())) {
                         accountEdit.setCompoundDrawables(null, null, ErrorIcon, null);//画在右边
-                        accountEdit.setText("不能包含特许符号");
+                        accountEdit.setText("不能包含特殊符号");
                     }else if (!checkAccountUse(accountEdit.getText().toString())){
                         accountEdit.setCompoundDrawables(null, null, ErrorIcon, null);//画在右边
                         accountEdit.setText("该用户名已经占用");
                     }else{
                         accountBool = true;
                         accountEdit.setCompoundDrawables(null, null, OkIcon, null);//画在右边
-                        accountEdit.setTextColor(Color.parseColor("#ffa89d87"));
                     }
                 }
             }
@@ -198,7 +189,6 @@ public class RegisterActivityBase extends BaseActivity {
                 if (!focus){
                     passwordBool = false;
                     passwordEdit.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                    passwordEdit.setTextColor(Color.parseColor("#FF0000"));
                     if ( passwordEdit.getText().length() == 0){
                         passwordEdit.setCompoundDrawables(null, null, ErrorIcon, null);//画在右边
                         passwordEdit.setText("密码不能为空");
@@ -212,7 +202,6 @@ public class RegisterActivityBase extends BaseActivity {
                         passwordBool = true;
                         passwordEdit.setCompoundDrawables(null, null, OkIcon, null);//画在右边
                         passwordEdit.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                        passwordEdit.setTextColor(Color.parseColor("#ffa89d87"));
                     }
                 }
             }
@@ -230,7 +219,6 @@ public class RegisterActivityBase extends BaseActivity {
                     if (!rePawC.equals(passwordC)) {
                         rePawEdit.setCompoundDrawables(null, null, ErrorIcon, null);//画在右边
                         rePawEdit.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                        rePawEdit.setTextColor(Color.parseColor("#FF0000"));
                         rePawEdit.setText("两次密码不一致");
                     }else{
                         rePawBool = true;
@@ -249,7 +237,6 @@ public class RegisterActivityBase extends BaseActivity {
                     nameBool = false;
                     if ( nameEdit.getText().length() == 0){
                         nameEdit.setCompoundDrawables(null, null, ErrorIcon, null);//画在右边
-                        nameEdit.setTextColor(Color.parseColor("#FF0000"));
                         nameEdit.setText("昵称不能为空");
                     }else{
                         nameBool = true;
@@ -277,7 +264,6 @@ public class RegisterActivityBase extends BaseActivity {
             if (view.getId() ==  emailEdit.getId()){
                 if (!focus){
                     emailBool = false;
-                    emailEdit.setTextColor(Color.parseColor("#FF0000"));
                     if ( emailEdit.getText().length() == 0){
                         emailEdit.setCompoundDrawables(null, null, ErrorIcon, null);//画在右边
                         emailEdit.setText("邮箱不能为空");
@@ -287,7 +273,6 @@ public class RegisterActivityBase extends BaseActivity {
                     }else{
                         emailBool = true;
                         emailEdit.setCompoundDrawables(null, null, OkIcon, null);//画在右边
-                        emailEdit.setTextColor(Color.parseColor("#ffa89d87"));
                     }
                 }
             }
@@ -300,7 +285,6 @@ public class RegisterActivityBase extends BaseActivity {
             if (view.getId() == RegisterActivityBase.this.phoneEdit.getId()){
                 if (!focus){
                     phoneBool = false;
-                    RegisterActivityBase.this.phoneEdit.setTextColor(Color.parseColor("#FF0000"));
                     if (RegisterActivityBase.this.phoneEdit.getText().length() == 0){
                         phoneEdit.setCompoundDrawables(null, null, ErrorIcon, null);//画在右边
                         RegisterActivityBase.this.phoneEdit.setText("手机号不能为空");
@@ -310,7 +294,6 @@ public class RegisterActivityBase extends BaseActivity {
                     }else{
                         phoneBool = true;
                         phoneEdit.setCompoundDrawables(null, null, OkIcon, null);//画在右边
-                        phoneEdit.setTextColor(Color.parseColor("#ffa89d87"));
                     }
                 }
             }
@@ -338,6 +321,8 @@ public class RegisterActivityBase extends BaseActivity {
     }
 
     private boolean checkPhone(String s) {
-        return s.matches("^((13[0-9])|(14[5,7])|(15[^4,//D])|(17[0,5-7,9])|(18[^4,//D]]))[0-9]{8}$");     //手机号码
+        System.out.println("### phone = #" + s + "#");
+        return s.matches("^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,5-7,9])|(18[0-3,5-9]))[0-9]{8}$");     //手机号码
+    //    return s.matches("^1[3|4|5|7|8][0-9]{9}$");     //手机号码
     }
 }

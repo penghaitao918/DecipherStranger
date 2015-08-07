@@ -76,8 +76,14 @@ public class MyLifeActivity extends BaseActivity {
         super.setContentView(R.layout.activity_life_my);
         this.init();
         this.initData();
-        this.getData("send");
         this.MyLifeBroadcas();
+        this.getData("send");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        super.unregisterReceiver(MyLifeActivity.this.receiver);
     }
 
     @Override
@@ -233,7 +239,20 @@ public class MyLifeActivity extends BaseActivity {
             case R.id.life_back_button:
                 onBackPressed();
                 break;
-            /*功能*/
+            /*menu*/
+            case R.id.menu:
+                if (popupWindow.isShowing()) {
+                    popupWindow.dismiss();
+                } else {
+                    popupWindow.showAsDropDown(findViewById(R.id.top)/*, Gravity.BOTTOM|Gravity.RIGHT, 0, 0*/);
+                }
+                break;
+            /*background*/
+            case R.id.life_logo:
+                break;
+            /*头像*/
+            case R.id.myPortrait:
+                break;
         }
     }
 
@@ -260,10 +279,11 @@ public class MyLifeActivity extends BaseActivity {
     }
 
     private void getData(String  flag) {
+        dataList.clear();
         if (NetworkService.getInstance().getIsConnected()){
             String Msg = "type"+":"+"26"+":"+"re_matter"+":"+flag+":"
                     +"account"+":"+ MyApplication.getInstance().getAccount();
-            Log.v("aaaaa", Msg);
+            Log.v("### aaaaa", Msg);
             NetworkService.getInstance().sendUpload(Msg);
         }else {
             NetworkService.getInstance().closeConnection();
@@ -275,7 +295,7 @@ public class MyLifeActivity extends BaseActivity {
         //动态方式注册广播接收者
         this.receiver = new MyLifeBroadcastReceiver();
         IntentFilter filter = new IntentFilter();
-        filter.addAction(MyStatic.LIFE_MAIN);
+        filter.addAction(MyStatic.LIFE_MY_LIFE);
         this.registerReceiver(receiver, filter);
     }
 
@@ -284,27 +304,17 @@ public class MyLifeActivity extends BaseActivity {
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(MyStatic.LIFE_MY_LIFE)) {
                 // TODO 将获取的数据赋值到本地
-                if (intent.getBooleanExtra("reResult", true)){
+                if (intent.getStringExtra("reResult").equals("true")){
                     int lifeId = intent.getIntExtra("reId", 0);
                     int type = intent.getIntExtra("reType", 3);
                     String name = intent.getStringExtra("reName");
                     String time = intent.getStringExtra("reTime");
                     String place = intent.getStringExtra("rePlace");
                     setData(lifeId, type, name, time, place);
-/*                    if (intent.getStringExtra("reMatter").equals("send")){
-                        //TODO 发起活动赋值
-                    }else {
-                        //TODO 参加活动赋值
-                    }*/
                 }else if (intent.getStringExtra("reResult").equals("finish")){
                     System.out.println("### 哎哟我去");
                     Message message = new Message();
                     handler.sendMessage(message);
-/*                    if (intent.getStringExtra("reMatter").equals("send")){
-                        //TODO 显示发起活动
-                    }else {
-                        //TODO 显示参加活动
-                    }*/
                 }else {
                     if (intent.getStringExtra("reMatter").equals("send")){
                         //TODO 提示还未发起活动

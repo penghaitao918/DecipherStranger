@@ -76,6 +76,7 @@ public class ShareLifeActivity extends BaseActivity {
 
     private void init() {
         this.progressDialog = new ProgressDialog(this);
+        this.progressDialog.setMessage("正在提交数据,请稍后...");
         //  application = (MyApplication) getApplication();
         application = MyApplication.getInstance();
         this.editText = (EditText) super.findViewById(R.id.editText);
@@ -101,24 +102,18 @@ public class ShareLifeActivity extends BaseActivity {
                 onBackPressed();
                 break;
             case R.id.send_share:
-                message = editText.getText().toString();
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    public void run() {
-                        progressDialog.setMessage("正在提交数据,请稍后...");
-                        progressDialog.onStart();
-                    }
-                }, 500);
-                if (message == null || message.equals("")) {
-                    Toast.makeText(this,"分享内容不能为空！",Toast.LENGTH_SHORT).show();
-                    break;
-                }
-                if (photo == null) {
-                    Toast.makeText(this,"请选择图片！",Toast.LENGTH_SHORT).show();
-                    break;
-                }
+                progressDialog.onStart();
                 progressDialog.show();
-                send();
+                message = editText.getText().toString();
+                if (message == null || message.equals("")) {
+                    progressDialog.dismiss();
+                    Toast.makeText(this,"分享内容不能为空！",Toast.LENGTH_SHORT).show();
+                }else if (photo == null) {
+                    progressDialog.dismiss();
+                    Toast.makeText(this,"请选择图片！",Toast.LENGTH_SHORT).show();
+                } else {
+                    send();
+                }
                 break;
             case R.id.imageButton:
                 InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
