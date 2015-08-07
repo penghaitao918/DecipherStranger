@@ -227,6 +227,7 @@ public class MyLifeActivity extends BaseActivity {
             int lifeId = (int) dataList.get(position).get(MyStatic.LIFE_ID);
             int lifeType = (int) dataList.get(position).get(MyStatic.LIFE_CLASSINT);
             Intent intent = new Intent(MyLifeActivity.this, DetailsActivity.class);
+            intent.putExtra(MyStatic.DETAILS_FLAG, true);
             intent.putExtra(MyStatic.LIFE_ID, lifeId);
             intent.putExtra(MyStatic.LIFE_CLASSINT, lifeType);
             startActivity(intent);

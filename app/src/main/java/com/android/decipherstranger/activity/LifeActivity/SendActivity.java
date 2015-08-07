@@ -205,10 +205,6 @@ public class SendActivity extends BaseActivity {
             Toast.makeText(this,"请输入活动口令",Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (endTimeInt < timeBtnInt) {
-            endTime.setText("截止日期不能小于活动日期！");
-            return false;
-        }
         return true;
     }
 

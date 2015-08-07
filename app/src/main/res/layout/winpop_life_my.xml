@@ -35,14 +35,16 @@
                     android:layout_height="wrap_content"
                     android:textSize="16dp"
                     android:text="@string/mySend"
+                    android:paddingLeft="24dp"
+                    android:paddingRight="24dp"
                     android:layout_centerVertical="true"
                     android:layout_centerHorizontal="true" />
 
             </RelativeLayout>
 
             <LinearLayout
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/grey"/>
@@ -62,6 +64,8 @@
                     android:layout_height="wrap_content"
                     android:textSize="16dp"
                     android:text="@string/myPartake"
+                    android:paddingLeft="24dp"
+                    android:paddingRight="24dp"
                     android:layout_centerVertical="true"
                     android:layout_centerHorizontal="true" />
 

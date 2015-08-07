@@ -42,6 +42,7 @@ public class ClientListenThread extends Thread {
             String reMsg = new String();
             String test = new String();
             while (true) {
+                System.out.println("### 服务器线程");
                 while(true){
                     test = bufferedReader.readLine();
                     if(test.contains("+++++")){

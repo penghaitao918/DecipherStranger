@@ -37,10 +37,10 @@ public class MyComparator implements Comparator {
         switch (flag) {
             case 1:
                 //  升序排序
-                return  ( (int) map1.get(MyStatic.LIFE_CLASSINT) - (int) map2.get(MyStatic.LIFE_CLASSINT));
+                return  ( (int) map1.get(MyStatic.LIFE_CLASSINT) - (int) map2.get(MyStatic.LIFE_CLASSINT) );
             case 2:
                 //  升序排序
-                return  ( (int)((double) map1.get(MyStatic.LIFE_DISTANCE)) - (int)((double) map2.get(MyStatic.LIFE_DISTANCE)) );
+                return  ( (int) map1.get(MyStatic.LIFE_DISTANCE) - (int) map2.get(MyStatic.LIFE_DISTANCE) );
             case 3:
                 //  升序排序
                 return ((String) map1.get(MyStatic.LIFE_TIME)).compareTo((String) map2.get(MyStatic.LIFE_TIME));

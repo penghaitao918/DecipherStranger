@@ -129,6 +129,12 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        removeSuspend();
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
         mLocationClient.stop();
@@ -336,7 +342,7 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
         Map<String, Object> map = new HashMap<String, Object>();
         map.put(MyStatic.LIFE_ID, lifeId);
         map.put(MyStatic.LIFE_CLASSINT, type);
-        map.put(MyStatic.LIFE_DISTANCE, (int)distance + "米");
+        map.put(MyStatic.LIFE_DISTANCE, (int)distance);
         map.put(MyStatic.LIFE_FAVORITE, favorite);
         map.put(MyStatic.LIFE_TIME, date);
         map.put(MyStatic.LIFE_CLASS, bitmap);

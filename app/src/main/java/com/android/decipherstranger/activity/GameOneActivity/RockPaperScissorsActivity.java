@@ -303,7 +303,7 @@ public class RockPaperScissorsActivity extends BaseActivity {
     }
 
     private void IfGameOver(){
-        int type = 0;
+        int type = -1;
         boolean flag = false;
         if (this.gameGradeInt >= this.Grade && this.sum <= this.MaxSum) {
             flag = true;
@@ -327,7 +327,9 @@ public class RockPaperScissorsActivity extends BaseActivity {
                     Intent intent2 = new Intent(this, FailActivity.class);
                     startActivity(intent2);
                     finish();
-                    break; 
+                    break;
+                default:
+                    break;
             }
         }
     }

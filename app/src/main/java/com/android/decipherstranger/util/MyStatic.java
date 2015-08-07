@@ -93,6 +93,7 @@ public class MyStatic {
     public static final String SHARE_SEX = "shareSex";
     public static final String SHARE_NUM_BTN = "numButton";
     public static final String SHARE_FRI_BTN = "friButton";
+    public static final String DETAILS_FLAG = "detailsFlag";
 
     //  设置全局静态变量
     public static String friendAccount = null;          //  所添加好友account

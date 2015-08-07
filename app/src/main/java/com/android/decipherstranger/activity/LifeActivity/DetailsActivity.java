@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,7 +58,8 @@ public class DetailsActivity extends BaseActivity {
     private MyApplication application = null;
     private LifeDetailsBroadcastReceiver receiver = null;
 
-    private LinearLayout layout = null;
+    private RelativeLayout passwordLayout = null;
+    private LinearLayout buttonLayout = null;
     private TextView textView1 = null;
     private TextView textView2 = null;
     private TextView textView3 = null;
@@ -67,6 +69,7 @@ public class DetailsActivity extends BaseActivity {
     private TextView textView7 = null;
     private TextView textView8 = null;
     private TextView textView9 = null;
+    private TextView textView0 = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +90,8 @@ public class DetailsActivity extends BaseActivity {
 
     private void init() {
         this.intent = getIntent();
-        this.layout = (LinearLayout) super.findViewById(R.id.flag);
+        this.passwordLayout = (RelativeLayout) super.findViewById(R.id.passwordFlag);
+        this.buttonLayout = (LinearLayout) super.findViewById(R.id.buttonFlag);
         this.textView1 = (TextView) super.findViewById(R.id.textView11);
         this.textView2 = (TextView) super.findViewById(R.id.textView22);
         this.textView3 = (TextView) super.findViewById(R.id.textView33);
@@ -97,6 +101,29 @@ public class DetailsActivity extends BaseActivity {
         this.textView7 = (TextView) super.findViewById(R.id.textView77);
         this.textView8 = (TextView) super.findViewById(R.id.textView88);
         this.textView9 = (TextView) super.findViewById(R.id.textView99);
+    }
+
+    /*
+    * 判断该活动的发起人与当前账号是否一致，如果一致，则隐藏最下方的两个按钮
+    */
+    private void initButtonLayout() {
+        if (myAccount.equals(sendAccount)) {
+            buttonLayout.setVisibility(View.GONE);
+        } else {
+            buttonLayout.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void initPasswordLayout() {
+        Intent intent = getIntent();
+        boolean flag = intent.getBooleanExtra(MyStatic.DETAILS_FLAG, false);
+        if (flag) {
+            passwordLayout.setVisibility(View.VISIBLE);
+            textView0 = (TextView) super.findViewById(R.id.textView00);
+            textView0.setText(password);
+        } else {
+            this.passwordLayout.setVisibility(View.GONE);
+        }
     }
 
     private void getData() {
@@ -158,7 +185,7 @@ public class DetailsActivity extends BaseActivity {
         }
     }
 
-    public void setData(String name, String typeName, String date, String place, int people, String endTime, String setPlace, String setTime){
+    private void setData(String name, String typeName, String date, String place, int people, String endTime, String setPlace, String setTime){
         textView1.setText(name);
         textView2.setText(typeName);
         textView3.setText(date);
@@ -168,13 +195,10 @@ public class DetailsActivity extends BaseActivity {
         textView7.setText(setPlace);
         textView8.setText(setTime);
         textView9.setText(number+"");
-          /*
-         * 判断该活动的发起人与当前账号是否一致，如果一致，则隐藏最下方的两个按钮
-         */
-        if (myAccount.equals(sendAccount)) {
-            layout.setVisibility(View.GONE);
-        }
+        initButtonLayout();
+        initPasswordLayout();
     }
+
 
     private void LifeDetailsBroadcast() {
         //动态方式注册广播接收者

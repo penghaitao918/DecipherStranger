@@ -32,7 +32,8 @@
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"/>
 
-            <RelativeLayout
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -77,40 +78,6 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/relativeLayout"
-                    android:layout_centerHorizontal="true"
-                    android:id="@+id/relativeLayout3">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="时间："
-                        android:textSize="16dp"
-                        android:textColor="@color/text_hint"
-                        android:layout_marginLeft="6dp"
-                        android:paddingRight="4dp"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:id="@+id/textView2" />
-
-                    <TextView
-                        android:id="@+id/life_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="New Text"
-                        android:textSize="16dp"
-                        android:layout_marginLeft="2dp"
-                        android:textColor="@color/text_hint"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@+id/textView2"
-                        android:layout_toEndOf="@+id/textView2" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:layout_below="@+id/relativeLayout3"
                     android:layout_centerHorizontal="true">
 
@@ -140,20 +107,65 @@
                         android:layout_toRightOf="@+id/textView3"
                         android:layout_toEndOf="@+id/textView3" />
 
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/relativeLayout"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/relativeLayout3">
+
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="时间："
+                        android:textSize="16dp"
+                        android:textColor="@color/text_hint"
+                        android:layout_marginLeft="6dp"
+                        android:paddingRight="4dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:id="@+id/textView2" />
+
+                    <TextView
+                        android:id="@+id/life_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="New Text"
+                        android:textSize="16dp"
+                        android:layout_marginLeft="2dp"
+                        android:textColor="@color/text_hint"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/textView2"
+                        android:layout_toEndOf="@+id/textView2" />
+
+                    <TextView
+                        android:id="@+id/textView10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="米"
+                        android:textSize="16dp"
+                        android:textColor="@color/text_hint"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true" />
+
+                    <TextView
+                        android:id="@+id/life_distance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="New Text"
                         android:textSize="16dp"
                         android:textColor="@color/text_hint"
-                        android:id="@+id/life_distance"
                         android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                        android:layout_toLeftOf="@+id/textView10"
+                        android:layout_toStartOf="@+id/textView10" />
 
                 </RelativeLayout>
 
-            </RelativeLayout>
+            </LinearLayout>
 
         </RelativeLayout>
 

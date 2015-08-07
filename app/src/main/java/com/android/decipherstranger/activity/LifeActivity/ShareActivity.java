@@ -115,7 +115,7 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
     }
 
     private void load() {
-      //send  minId;
+        //send  minId;
         System.out.println("### 加载");
         //  TODO 向服务器发送加载数据,获取ID<count的10条数据（从count-1到count-10）
         if (NetworkService.getInstance().getIsConnected()){
@@ -145,7 +145,7 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
                 new int[] {R.id.sharePortrait, R.id.shareName, R.id.shareMessage, R.id.sharePhoto, R.id.shareTime, R.id.shareNum, R.id.numButton, R.id.friendButton}
         );
         /*实现ViewBinder()这个接口*/
-    //    this.adapter.setViewBinder(new ViewBinderImpl());
+        //    this.adapter.setViewBinder(new ViewBinderImpl());
         this.listView.setAdapter(adapter);
 
         this.listView.setOnRefreshListener(this);
@@ -184,28 +184,6 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
         this.minId = shareList.getMinId();
     }
 
-    private void fixListViewHeight(AutoListView listView) {
-        // 如果没有设置数据适配器，则ListView没有子项，返回。
-        ListAdapter listAdapter = listView.getAdapter();
-        int totalHeight = 0;
-        if (listAdapter == null) {
-            return;
-        }
-        for (int index = 0, len = listAdapter.getCount(); index < len; ++index) {
-            View listViewItem = listAdapter.getView(index, null, listView);
-            // 计算子项View 的宽高
-            listViewItem.measure(0, 0);
-            // 计算所有子项的高度和
-            totalHeight += listViewItem.getMeasuredHeight();
-        }
-
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        // listView.getDividerHeight()获取子项间分隔符的高度
-        // params.height设置ListView完全显示需要的高度
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        listView.setLayoutParams(params);
-    }
-
     public void LifeShareOnclick(View view) {
         switch (view.getId()) {
             case R.id.life_back_button:
@@ -233,11 +211,9 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
                     dataList.addAll(result);
                     break;
             }
-         //   listView.setResultSize(result.size());
+            //   listView.setResultSize(result.size());
             adapter.notifyDataSetChanged();
             listView.setAdapter(adapter);
-            /*动态计算ListView的高度*/
-        //    fixListViewHeight(listView);
         }
     };
 
@@ -267,7 +243,7 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(MyStatic.LIFE_SHARE)) {
                 //  TODO 将获取的数据赋值到本地
-                //  判断是点赞还是加好友
+                System.out.println("### 晒图广播启用");
                 if(intent.getStringExtra("reMatter").equals("showShare")) {
                     int type = intent.getIntExtra("reRequestType", 1);
                     if (intent.getStringExtra("reResult").equals("true")) {
@@ -309,15 +285,14 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
                             listView.onLoadComplete(0);
                         }
                     }
+                }else if (intent.getStringExtra("reResult").equals("true")){
+                    //TODO 点赞成功处理
+                    adapter.itemDo(MyStatic.sharePosition);
                 }else {
-                    if (intent.getStringExtra("reResult").equals("true")){
-                        //TODO 点赞成功处理
-                        adapter.itemDo(MyStatic.sharePosition);
-                    }else {
-                        //TODO 已经赞过处理
-                        Toast.makeText(ShareActivity.this,"您已赞过了该分享~",Toast.LENGTH_SHORT).show();
-                    }
+                    //TODO 已经赞过处理
+                    Toast.makeText(ShareActivity.this,"您已赞过了该分享~",Toast.LENGTH_SHORT).show();
                 }
+
             }
         }
     }

@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/menu"
             android:onClick="MyLifeOnClick"
-            android:background="@null"
+            android:background="@drawable/small_btn_bg"
             android:src="@drawable/menu_about"
             android:layout_marginRight="10dp"
             android:layout_centerVertical="true"

@@ -62,7 +62,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="活动名称："
-                    android:textSize="19dp"
+                    android:textSize="18dp"
                     android:layout_marginLeft="20dp"
                     android:layout_centerVertical="true"/>
 
@@ -72,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/text_hint"
                     android:layout_centerVertical="true"
-                    android:textSize="19dp"
+                    android:textSize="18dp"
                     android:layout_margin="5dp"
                     android:layout_toRightOf="@+id/textView1"/>
 
@@ -93,7 +93,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="活动类别："
-                    android:textSize="19dp"
+                    android:textSize="18dp"
                     android:layout_marginLeft="20dp"
                     android:layout_centerVertical="true"/>
 
@@ -103,7 +103,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/text_hint"
                     android:layout_centerVertical="true"
-                    android:textSize="19dp"
+                    android:textSize="18dp"
                     android:layout_toRightOf="@+id/textView2"/>
 
             </RelativeLayout>
@@ -123,7 +123,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="活动日期："
-                    android:textSize="19dp"
+                    android:textSize="18dp"
                     android:layout_marginLeft="20dp"
                     android:layout_centerVertical="true"/>
 
@@ -133,7 +133,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/text_hint"
                     android:layout_centerVertical="true"
-                    android:textSize="19dp"
+                    android:textSize="18dp"
                     android:layout_toRightOf="@+id/textView3"/>
 
             </RelativeLayout>
@@ -153,7 +153,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="活动地点："
-                    android:textSize="19dp"
+                    android:textSize="18dp"
                     android:layout_marginLeft="20dp"
                     android:layout_centerVertical="true"/>
 
@@ -163,7 +163,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/text_hint"
                     android:layout_centerVertical="true"
-                    android:textSize="19dp"
+                    android:textSize="18dp"
                     android:layout_toRightOf="@+id/textView4"/>
 
             </RelativeLayout>
@@ -183,7 +183,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="活动人数："
-                    android:textSize="19dp"
+                    android:textSize="18dp"
                     android:layout_marginLeft="20dp"
                     android:layout_centerVertical="true"/>
 
@@ -193,7 +193,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/text_hint"
                     android:layout_centerVertical="true"
-                    android:textSize="19dp"
+                    android:textSize="18dp"
                     android:layout_toRightOf="@+id/textView5"/>
 
             </RelativeLayout>
@@ -213,7 +213,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="截止日期："
-                    android:textSize="19dp"
+                    android:textSize="18dp"
                     android:layout_marginLeft="20dp"
                     android:layout_centerVertical="true"/>
 
@@ -223,7 +223,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/text_hint"
                     android:layout_centerVertical="true"
-                    android:textSize="19dp"
+                    android:textSize="18dp"
                     android:layout_toRightOf="@+id/textView6"/>
 
             </RelativeLayout>
@@ -243,7 +243,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="集合地点："
-                    android:textSize="19dp"
+                    android:textSize="18dp"
                     android:layout_marginLeft="20dp"
                     android:layout_centerVertical="true"/>
 
@@ -253,7 +253,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/text_hint"
                     android:layout_centerVertical="true"
-                    android:textSize="19dp"
+                    android:textSize="18dp"
                     android:layout_toRightOf="@+id/textView7"/>
 
             </RelativeLayout>
@@ -273,7 +273,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="集合时间："
-                    android:textSize="19dp"
+                    android:textSize="18dp"
                     android:layout_marginLeft="20dp"
                     android:layout_centerVertical="true"/>
 
@@ -283,7 +283,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/text_hint"
                     android:layout_centerVertical="true"
-                    android:textSize="19dp"
+                    android:textSize="18dp"
                     android:layout_toRightOf="@+id/textView8"/>
 
             </RelativeLayout>
@@ -303,7 +303,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="报名人数："
-                    android:textSize="19dp"
+                    android:textSize="18dp"
                     android:layout_marginLeft="20dp"
                     android:layout_centerVertical="true"/>
 
@@ -313,13 +313,46 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/text_hint"
                     android:layout_centerVertical="true"
-                    android:textSize="19dp"
+                    android:textSize="18dp"
                     android:layout_toRightOf="@+id/textView9"/>
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:visibility="gone"
+                android:id="@+id/passwordFlag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/login_input_bg"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:id="@+id/textView0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="活动口令："
+                    android:textSize="18dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_centerVertical="true"/>
+
+                <TextView
+                    android:id="@+id/textView00"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_hint"
+                    android:layout_centerVertical="true"
+                    android:textSize="18dp"
+                    android:layout_toRightOf="@+id/textView0"/>
+
+            </RelativeLayout>
+
             <LinearLayout
-                android:id="@+id/flag"
+                android:visibility="gone"
+                android:id="@+id/buttonFlag"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

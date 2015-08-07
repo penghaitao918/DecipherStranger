@@ -86,6 +86,7 @@
                     android:layout_height="match_parent"
                     android:id="@+id/sharePhoto"
                     android:layout_margin="5dp"
+                    android:scaleType="fitXY"
                     android:layout_centerVertical="true"
                     android:layout_centerHorizontal="true" />
 
