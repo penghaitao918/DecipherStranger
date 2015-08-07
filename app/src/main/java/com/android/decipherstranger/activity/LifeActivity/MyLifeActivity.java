@@ -183,11 +183,11 @@ public class MyLifeActivity extends BaseActivity {
                 break;
             /*发起*/
             case R.id.mySend:
-                getData("Send");
+                getData("send");
                 break;
             /*参团*/
             case R.id.myPartake:
-                getData("Attend");
+                getData("attend");
                 break;
             /*分享*/
             case R.id.share:
@@ -197,7 +197,7 @@ public class MyLifeActivity extends BaseActivity {
 
     private void getData(String  flag) {
         if (NetworkService.getInstance().getIsConnected()){
-            String Msg = "re_type"+":"+"26"+":"+"re_matter"+":"+flag+":"
+            String Msg = "type"+":"+"26"+":"+"re_matter"+":"+flag+":"
                     +"account"+":"+ MyApplication.getInstance().getAccount();
             Log.v("aaaaa", Msg);
             NetworkService.getInstance().sendUpload(Msg);
