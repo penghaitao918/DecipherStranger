@@ -55,7 +55,7 @@ public class ClientListenThread extends Thread {
                     }
                 }
                 if (reMsg != null) {
-                    Log.v("AAA", reMsg);
+                    Log.v("### AAA", reMsg);
                     JSONObject jsonObj = new JSONObject(reMsg);
                     Log.v(" ### 能不能接到", reMsg);
                     int msgType = jsonObj.getInt("re_type");            // type of message received
@@ -364,7 +364,7 @@ public class ClientListenThread extends Thread {
                             itPersonal.putExtra("reMatter",jsonObj.getString("reMatter"));
                             itPersonal.putExtra("reResult",jsonObj.getString("re_message"));
                             if (jsonObj.getString("re_message").equals("true")){
-                                itPersonal.putExtra("reId",jsonObj.getString("reId"));
+                                itPersonal.putExtra("reId",jsonObj.getInt("reId"));
                                 itPersonal.putExtra("reType",jsonObj.getInt("reType"));
                                 itPersonal.putExtra("reName",jsonObj.getString("reName"));
                                 itPersonal.putExtra("reTime",jsonObj.getString("reTime"));
@@ -380,12 +380,13 @@ public class ClientListenThread extends Thread {
                                     itAttendPeople.putExtra("reAccount",jsonObj.getString("reAccount"));
                                     itAttendPeople.putExtra("reName",jsonObj.getString("reName"));
                                     itAttendPeople.putExtra("rePhoto",jsonObj.getString("rePhoto"));
-                                    itAttendPeople.putExtra("reGender",jsonObj.getString("reGender"));
+                                    itAttendPeople.putExtra("reGender",jsonObj.getInt("reGender"));
                                 }else if (jsonObj.getString("re_message").equals("finish")){
                                     itAttendPeople.putExtra("reResult","finish");
                                 }else {
                                     itAttendPeople.putExtra("reResult","false");
                                 }
+                            clContext.sendBroadcast(itAttendPeople);
                             break;
                         default:
                             if(NetworkService.getInstance().getIsConnected()) {

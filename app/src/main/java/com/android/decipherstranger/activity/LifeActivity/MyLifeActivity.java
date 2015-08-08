@@ -34,7 +34,6 @@ import com.android.decipherstranger.Network.NetworkService;
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
 import com.android.decipherstranger.activity.Base.MyApplication;
-import com.android.decipherstranger.util.DensityUtil;
 import com.android.decipherstranger.util.ImageCompression;
 import com.android.decipherstranger.util.MyStatic;
 
@@ -142,7 +141,7 @@ public class MyLifeActivity extends BaseActivity {
     }
 
     private void initData() {
-        this.bitmap = ImageCompression.comp(MyApplication.getInstance().getPortrait(), DensityUtil.dip2px(this,50));
+        this.bitmap = ImageCompression.comp(MyApplication.getInstance().getPortrait());
         this.imagePortrait.setImageDrawable(new BitmapDrawable(bitmap));
     //    this.dataList.addAll(this.selectAll());
         this.simpleAdapter = new SimpleAdapter(this,
@@ -294,7 +293,7 @@ public class MyLifeActivity extends BaseActivity {
             NetworkService.getInstance().sendUpload(Msg);
         }else {
             NetworkService.getInstance().closeConnection();
-            Log.v("晒图", "服务器连接失败");
+            Log.v("### 晒图", "服务器连接失败");
         }
     }
 
@@ -312,6 +311,7 @@ public class MyLifeActivity extends BaseActivity {
             if (intent.getAction().equals(MyStatic.LIFE_MY_LIFE)) {
                 // TODO 将获取的数据赋值到本地
                 if (intent.getStringExtra("reResult").equals("true")){
+                    System.out.println("### 个人中心数据接收成功");
                     int lifeId = intent.getIntExtra("reId", 0);
                     int type = intent.getIntExtra("reType", 3);
                     String name = intent.getStringExtra("reName");

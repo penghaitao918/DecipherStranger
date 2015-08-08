@@ -152,6 +152,7 @@ public class DetailsActivity extends BaseActivity {
                 Intent intent0 = new Intent(DetailsActivity.this,LifeFriendsActivity.class);
                 intent0.putExtra(MyStatic.LIFE_ID,lifeId);
                 startActivity(intent0);
+                break;
             /*参团*/
             case R.id.partake:
                 if (NetworkService.getInstance().getIsConnected()){

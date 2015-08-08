@@ -59,7 +59,7 @@ public class ImageCompression {
         return compressImage(bitmap);//压缩好比例大小后再进行质量压缩
     }
 
-    public static Bitmap comp(Bitmap image, float px) {
+    public static Bitmap comp(Bitmap image) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         if( baos.toByteArray().length / 1024>1024) {//判断如果图片大于1M,进行压缩避免在生成图片（BitmapFactory.decodeStream）时溢出
@@ -77,8 +77,8 @@ public class ImageCompression {
 /*        //现在主流手机比较多是800*480分辨率，所以高和宽我们设置为
         float hh = 800f;//这里设置高度为800f
         float ww = 480f;//这里设置宽度为480f*/
-        float ww = px;
-        float hh = px;
+        float ww = 250;
+        float hh = 250;
         //缩放比。由于是固定比例缩放，只用高或者宽其中一个数据进行计算即可
         int be = 1;//be=1表示不缩放
         if (w > h && w > ww) {//如果宽度大的话根据宽度固定大小缩放

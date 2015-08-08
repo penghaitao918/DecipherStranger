@@ -86,12 +86,12 @@ public class SuccessActivity extends BaseActivity {
     }
 
     private void SendToLocal() {
-        contactsList = new ContactsList(this.helper.getWritableDatabase());
         User user = new User();
         user.setUsername(MyStatic.friendName);
         user.setAccount(MyStatic.friendAccount);
         user.setPortrait(MyStatic.friendPhoto);
         user.setUserSex(MyStatic.friendSex);
+        contactsList = new ContactsList(this.helper.getWritableDatabase());
         contactsList.insert(user);
         Intent intent = new Intent("com.android.decipherstranger.FRIEND");
         intent.putExtra("reFresh","reFresh");

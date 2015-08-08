@@ -165,9 +165,11 @@ public class ListButtonAdapter extends BaseAdapter {
                 case R.id.numButton:
                     MyStatic.sharePosition = position;
                     addNum(position);
+                    System.out.println("### 执行点赞");
                     break;
                 case R.id.friendButton:
                     addFriends(position);
+                    System.out.println("### 执行加友");
                     break;
             }
         }
@@ -182,11 +184,11 @@ public class ListButtonAdapter extends BaseAdapter {
         String account = MyApplication.getInstance().getAccount();
         if (NetworkService.getInstance().getIsConnected()){
             String Msg = "type"+":"+"25"+":"+"disId"+":"+Id+":"+"account"+":"+account;
-            Log.v("aaaaa", Msg);
+            Log.v("### aaaaa", Msg);
             NetworkService.getInstance().sendUpload(Msg);
         }else {
             NetworkService.getInstance().closeConnection();
-            Log.v("点赞", "服务器连接失败");
+            Log.v("### 点赞", "服务器连接失败");
         }
     }
 

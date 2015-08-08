@@ -120,11 +120,11 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
         //  TODO 向服务器发送加载数据,获取ID<count的10条数据（从count-1到count-10）
         if (NetworkService.getInstance().getIsConnected()){
             String Msg = "type"+":"+"24"+":"+"requestType"+":"+"0"+":"+"minId"+":"+minId;
-            Log.v("aaaaa", Msg);
+            Log.v("### aaaaa", Msg);
             NetworkService.getInstance().sendUpload(Msg);
         }else{
             NetworkService.getInstance().closeConnection();
-            Log.v("ShowShare", "已执行T()方法");
+            Log.v("### ShowShare", "已执行T()方法");
         }
     }
 
@@ -243,8 +243,8 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(MyStatic.LIFE_SHARE)) {
                 //  TODO 将获取的数据赋值到本地
-                System.out.println("### 晒图广播启用");
                 if(intent.getStringExtra("reMatter").equals("showShare")) {
+                    System.out.println("### 晒图数据接收成功");
                     int type = intent.getIntExtra("reRequestType", 1);
                     if (intent.getStringExtra("reResult").equals("true")) {
                         //  获取返回类型为 刷新 还是 加载, 刷新为1，加载为0

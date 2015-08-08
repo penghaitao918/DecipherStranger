@@ -65,7 +65,6 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_life_main);
-        //  application = (MyApplication) getApplication();
         application = MyApplication.getInstance();
         this.init();
         this.initData();

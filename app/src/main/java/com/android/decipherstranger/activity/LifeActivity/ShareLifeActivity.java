@@ -23,7 +23,6 @@ import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
 import com.android.decipherstranger.activity.Base.MyApplication;
 import com.android.decipherstranger.util.ChangeUtils;
-import com.android.decipherstranger.util.DensityUtil;
 import com.android.decipherstranger.util.ImageCompression;
 import com.android.decipherstranger.util.MyStatic;
 
@@ -78,7 +77,6 @@ public class ShareLifeActivity extends BaseActivity {
     private void init() {
         this.progressDialog = new ProgressDialog(this);
         this.progressDialog.setMessage("正在提交数据,请稍后...");
-        //  application = (MyApplication) getApplication();
         application = MyApplication.getInstance();
         this.editText = (EditText) super.findViewById(R.id.editText);
         this.imageButton = (ImageButton) super.findViewById(R.id.imageButton);
@@ -89,11 +87,11 @@ public class ShareLifeActivity extends BaseActivity {
         if(NetworkService.getInstance().getIsConnected()){
             String Msg = "type"+":"+"23"+":"+"account"+":"+account+":"+"activitySpeech"+":"+message+":"+
                     "photo"+":"+photo+":"+"smallPhoto"+":"+smallPhoto;
-            Log.v("aaaaa", Msg);
+            Log.v("### aaaaa", Msg);
             NetworkService.getInstance().sendUpload(Msg);
         }else {
             NetworkService.getInstance().closeConnection();
-            Log.v("晒图", "服务器连接失败");
+            Log.v("### 晒图", "服务器连接失败");
         }
     }
 
@@ -153,10 +151,10 @@ public class ShareLifeActivity extends BaseActivity {
         if (extras != null){
             Bitmap selectPhoto = extras.getParcelable("data");
             photo = ChangeUtils.toBinary(selectPhoto);
-            Bitmap photo = ImageCompression.comp(selectPhoto, DensityUtil.dip2px(this,72));
+            Bitmap photo = ImageCompression.comp(selectPhoto);
             smallPhoto = ChangeUtils.toBinary(photo);
             Drawable drawable = new BitmapDrawable(this.getResources(), photo);
-            selectPhoto.recycle();
+        //    selectPhoto.recycle();
         //    photo.recycle();
             imageButton.setImageDrawable(drawable);
         }
@@ -193,6 +191,7 @@ public class ShareLifeActivity extends BaseActivity {
                 progressDialog.dismiss();
                 if (intent.getBooleanExtra("reResult", true)){
                     //TODO 显示分享成功，跳转页面
+                    System.out.println("### 晒图返回接收成功");
                     onBackPressed();
                 }else{
                     //TODO 显示分享失败

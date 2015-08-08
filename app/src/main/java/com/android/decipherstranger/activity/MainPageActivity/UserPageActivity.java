@@ -27,7 +27,6 @@ import com.android.decipherstranger.db.ContactsList;
 import com.android.decipherstranger.db.ConversationList;
 import com.android.decipherstranger.db.DATABASE;
 import com.android.decipherstranger.util.ChangeUtils;
-import com.android.decipherstranger.util.DensityUtil;
 import com.android.decipherstranger.util.ImageCompression;
 import com.android.decipherstranger.util.MyStatic;
 import com.android.decipherstranger.util.SharedPreferencesUtils;
@@ -97,7 +96,7 @@ public class UserPageActivity extends BaseActivity {
         this.moveSwitch = (Switch) super.findViewById(R.id.switch2);
 
 
-        Bitmap photo = ImageCompression.comp(application.getPortrait(), DensityUtil.dip2px(this, 72));
+        Bitmap photo = ImageCompression.comp(application.getPortrait());
         Drawable drawable = new BitmapDrawable(this.getResources(), photo);
         portraitImage.setImageDrawable(drawable);
     //    photo.recycle();

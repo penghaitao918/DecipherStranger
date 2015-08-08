@@ -22,6 +22,7 @@ import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
 import com.android.decipherstranger.activity.Base.MyApplication;
 import com.android.decipherstranger.activity.SubpageActivity.NearbyInfoActivity;
+import com.android.decipherstranger.util.ChangeUtils;
 import com.android.decipherstranger.util.MyStatic;
 
 import java.util.ArrayList;
@@ -59,9 +60,10 @@ public class LifeFriendsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_life_main);
+        setContentView(R.layout.activity_life_friends);
         this.init();
         this.initData();
+        this.LifeFriendsBroadcas();
         this.getData();
     }
 
@@ -136,7 +138,7 @@ public class LifeFriendsActivity extends BaseActivity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Intent intent = new Intent(LifeFriendsActivity.this, NearbyInfoActivity.class);
             intent.putExtra("account", (String) dataList.get(position).get(MyStatic.USER_ACCOUNT));
-            intent.putExtra("photo", (String) dataList.get(position).get(MyStatic.USER_PORTRAIT));
+            intent.putExtra("photo", (Bitmap) dataList.get(position).get(MyStatic.USER_PORTRAIT));
             intent.putExtra("name", (String) dataList.get(position).get(MyStatic.USER_NAME));
             intent.putExtra("sex", (int) dataList.get(position).get(MyStatic.USER_SEX));
             startActivity(intent);
@@ -163,9 +165,10 @@ public class LifeFriendsActivity extends BaseActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(MyStatic.LIFE_LIFE_FRIENDS)) {
+                System.out.println("### 参团成员列表接收成功");
                 if (intent.getStringExtra("reResult").equals(MyStatic.resultTrue)){
                     String account = intent.getStringExtra("reAccount");
-                    Bitmap portrait = intent.getParcelableExtra("rePhoto");
+                    Bitmap portrait = ChangeUtils.toBitmap(intent.getStringExtra("rePhoto"));
                     String name = intent.getStringExtra("reName");
                     int sex = intent.getIntExtra("reGender", 0);
                     setData(account, portrait, name, sex);
