@@ -61,15 +61,17 @@
 
             <RelativeLayout
                 android:id="@+id/advertLayout"
+                android:onClick="LifeMainOnClick"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageButton
+                <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/advertisement"
-                    android:background="@drawable/advertisement"
-                    android:onClick="LifeMainOnClick"
+                    android:background="@null"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/animation_advertisement"
                     android:layout_centerVertical="true"
                     android:layout_centerHorizontal="true" />
 

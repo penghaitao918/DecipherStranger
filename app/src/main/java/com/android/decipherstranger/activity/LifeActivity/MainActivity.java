@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -57,8 +58,11 @@ public class MainActivity extends BaseActivity {
     private ListView listView = null;
     private SimpleAdapter simpleAdapter = null;
     private ArrayList<Map<String, Object>> dataList = null;
-    private MyApplication application = null;
 
+    private ImageView advertisementImage = null;
+    private AnimationDrawable animationAdvertisement = null;
+
+    private MyApplication application = null;
     private LifeMainBroadcastReceiver receiver = null;
 
     @Override
@@ -72,6 +76,12 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        animationAdvertisement.stop();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         super.unregisterReceiver(MainActivity.this.receiver);
@@ -81,6 +91,11 @@ public class MainActivity extends BaseActivity {
         this.dataList = new ArrayList< Map<String, Object> >();
         this.listView = (ListView) super.findViewById(R.id.listView);
         this.listView.setOnItemClickListener(new OnItemClickListenerImpl());
+
+        this.animationAdvertisement = new AnimationDrawable();
+        this.animationAdvertisement = (AnimationDrawable)getResources().getDrawable(R.drawable.animation_advertisement);
+        this.advertisementImage = (ImageView) super.findViewById(R.id.advertisement);
+        this.advertisementImage.setImageDrawable(this.animationAdvertisement);
 
         /*锁定聚焦到顶部*/
         topLayout = (RelativeLayout) super.findViewById(R.id.top);
@@ -105,6 +120,8 @@ public class MainActivity extends BaseActivity {
         simpleAdapter.notifyDataSetChanged();
         /*动态计算ListView的高度*/
         this.fixListViewHeight(listView);
+
+        this.animationAdvertisement.start();
     }
 
     private void getData() {
@@ -175,7 +192,7 @@ public class MainActivity extends BaseActivity {
                 onBackPressed();
                 break;
             /*广告*/
-            case R.id.advertisement:
+            case R.id.advertLayout:
                 Uri uri = Uri.parse(MyStatic.ADVERTISEMENT);
                 Intent intent0 = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent0);

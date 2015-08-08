@@ -21,8 +21,10 @@ import com.android.decipherstranger.Network.NetworkService;
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
 import com.android.decipherstranger.activity.Base.MyApplication;
+import com.android.decipherstranger.activity.GameOneActivity.WelcomeRspActivity;
 import com.android.decipherstranger.activity.SubpageActivity.NearbyInfoActivity;
 import com.android.decipherstranger.util.ChangeUtils;
+import com.android.decipherstranger.util.GlobalMsgUtils;
 import com.android.decipherstranger.util.MyStatic;
 
 import java.util.ArrayList;
@@ -144,6 +146,16 @@ public class LifeFriendsActivity extends BaseActivity {
             startActivity(intent);
         }
     }
+
+    public void LifeFriendsOnClick(View view) {
+        switch (view.getId()) {
+            /*返回*/
+            case R.id.life_back_button:
+                onBackPressed();
+                break;
+        }
+    }
+
 
     private Handler handler = new Handler() {
         @Override

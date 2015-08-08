@@ -73,7 +73,8 @@ public class MyStatic {
     public static final String resultTrue = "true";
     public static final String resultFalse = "false";
 
-    public static final String ADVERTISEMENT = "http://www.cnsoftbei.com/";
+    public static final String ADVERTISEMENT = "http://baike.baidu.com/link?url=n4iB9Al0XQ5gnugKpgKXL8DlWrQq1-lwCcq3XokHZPcGf6C_jaCQK9VUpbUQ9oHA8Zohw8xM6Jl9M8zWo4_JtVwz13ReJzgoErjjtxw_ehq";
+
     public static final String LIFE_ID = "lifeId";
     public static final String LIFE_CLASSINT = "lifeType";
     public static final String LIFE_DISTANCE = "distance";

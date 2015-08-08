@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
+import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -70,6 +71,9 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
     private double mLongtitude;
     private LocationClient mLocationClient;
     private MyLocationListener mLocationListener;
+
+    private ImageView advertisementImage = null;
+    private AnimationDrawable animationAdvertisement = null;
 
     private RelativeLayout topLayout = null;
     private TextView textView1 = null;
@@ -138,6 +142,7 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
     protected void onStop() {
         super.onStop();
         mLocationClient.stop();
+        animationAdvertisement.stop();
     }
 
     @Override
@@ -148,6 +153,11 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
 
     private void init() {
         initLocation();
+
+        this.animationAdvertisement = new AnimationDrawable();
+        this.animationAdvertisement = (AnimationDrawable)getResources().getDrawable(R.drawable.animation_advertisement);
+        this.advertisementImage = (ImageView) super.findViewById(R.id.advertisement);
+        this.advertisementImage.setImageDrawable(this.animationAdvertisement);
 
         myScrollView = (MyScrollView) findViewById(R.id.view);
         mBuyLayout = (LinearLayout) findViewById(R.id.sort);
@@ -186,6 +196,8 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
         simpleAdapter.notifyDataSetChanged();
         /*动态计算ListView的高度*/
         this.fixListViewHeight(listView);
+
+        this.animationAdvertisement.start();
     }
 
     private class ViewBinderImpl implements SimpleAdapter.ViewBinder {
@@ -364,7 +376,7 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
                 onBackPressed();
                 break;
             /*广告*/
-            case R.id.advertisement:
+            case R.id.advertLayout:
                 Uri uri = Uri.parse(MyStatic.ADVERTISEMENT);
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);

@@ -310,6 +310,7 @@ public class MyLifeActivity extends BaseActivity {
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(MyStatic.LIFE_MY_LIFE)) {
                 // TODO 将获取的数据赋值到本地
+                Message message = new Message();
                 if (intent.getStringExtra("reResult").equals("true")){
                     System.out.println("### 个人中心数据接收成功");
                     int lifeId = intent.getIntExtra("reId", 0);
@@ -320,9 +321,9 @@ public class MyLifeActivity extends BaseActivity {
                     setData(lifeId, type, name, time, place);
                 }else if (intent.getStringExtra("reResult").equals("finish")){
                     System.out.println("### 哎哟我去");
-                    Message message = new Message();
                     handler.sendMessage(message);
                 }else {
+                    handler.sendMessage(message);
                     if (intent.getStringExtra("reMatter").equals("send")){
                         //TODO 提示还未发起活动
                         Toast.makeText(MyLifeActivity.this,"您当前没有发布的活动",Toast.LENGTH_SHORT).show();

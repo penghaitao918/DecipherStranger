@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/life_back_button"
-            android:onClick=""
+            android:onClick="LifeFriendsOnClick"
             android:background="@null"
             android:layout_marginLeft="10dp"
             android:src="@drawable/life_back_btn"
