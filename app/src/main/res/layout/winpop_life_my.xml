@@ -20,6 +20,13 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true">
 
+            <LinearLayout
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey"/>
+
             <RelativeLayout
                 android:padding="5dp"
                 android:id="@+id/mySend"

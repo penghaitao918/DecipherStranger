@@ -129,6 +129,7 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
     }
 
     private void init() {
+        this.helper = new DATABASE(this);
         /*锁定聚焦到顶部*/
         topLayout = (RelativeLayout) super.findViewById(R.id.top);
         topLayout.setFocusable(true);
@@ -153,7 +154,6 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
     }
 
     private void initData() {
-        this.helper = new DATABASE(this);
         this.shareList = new LifeShare(helper.getReadableDatabase());
         new Thread(new Runnable() {
             @Override
@@ -199,7 +199,6 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             ArrayList<Map<String, Object>> result = (ArrayList< Map<String, Object> >) msg.obj;
-            System.out.println("### " + result.size());
             switch (msg.what) {
                 case AutoListView.REFRESH:
                     listView.onRefreshComplete();

@@ -151,7 +151,7 @@ public class ShareLifeActivity extends BaseActivity {
         if (extras != null){
             Bitmap selectPhoto = extras.getParcelable("data");
             photo = ChangeUtils.toBinary(selectPhoto);
-            Bitmap photo = ImageCompression.comp(selectPhoto);
+            Bitmap photo = ImageCompression.compressSimplify(selectPhoto, 2f);
             smallPhoto = ChangeUtils.toBinary(photo);
             Drawable drawable = new BitmapDrawable(this.getResources(), photo);
         //    selectPhoto.recycle();

@@ -328,6 +328,7 @@ public class ClientListenThread extends Thread {
                             Intent itShowShare = new Intent(MyStatic.LIFE_SHARE);
                             itShowShare.putExtra("reRequestType",jsonObj.getInt("re_requestType"));
                             itShowShare.putExtra("reMatter","showShare");
+                            System.out.println("### 数据广播接收 " + jsonObj.getString("re_message"));
                             if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)){
                                 itShowShare.putExtra("reResult","true");
                                 itShowShare.putExtra("reId",jsonObj.getInt("reId"));
@@ -338,13 +339,18 @@ public class ClientListenThread extends Thread {
                                 itShowShare.putExtra("reSpeech",jsonObj.getString("reSpeech"));
                                 itShowShare.putExtra("reTime",jsonObj.getString("reTime"));
                                 itShowShare.putExtra("reZan",jsonObj.getInt("reZan"));
-                                itShowShare.putExtra("re_gender",jsonObj.getInt("re_gender"));
+                                itShowShare.putExtra("re_gender", jsonObj.getInt("re_gender"));
+                                System.out.println("### 数据广播 成功接收数据 ");
                             }else if (jsonObj.getString("re_message").equals("finish")){
                                 itShowShare.putExtra("reResult","finish");
+                                System.out.println("### 数据广播 接收完毕 ");
                             }else {
                                 itShowShare.putExtra("reResult","false");
                             }
+                            System.out.println("### 数据广播 开始发送 ");
                             clContext.sendBroadcast(itShowShare);
+                            System.out.println("### data = " + itShowShare);
+                            System.out.println("### 数据广播 发送完成 ");
                             break;
                         case GlobalMsgUtils.msgClickZan:
                                 Intent itClickZan = new Intent(MyStatic.LIFE_SHARE);

@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -87,6 +89,18 @@ public class DetailsActivity extends BaseActivity {
         super.unregisterReceiver(DetailsActivity.this.receiver);
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {// 防止连续两次返回键
+            //返回处理
+            sendPortrait.recycle();
+            onBackPressed();
+            DetailsActivity.this.finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
     private void init() {
         this.intent = getIntent();
         this.passwordLayout = (RelativeLayout) super.findViewById(R.id.passwordFlag);
@@ -114,14 +128,15 @@ public class DetailsActivity extends BaseActivity {
     }
 
     private void initPasswordLayout() {
-        Intent intent = getIntent();
         boolean flag = intent.getBooleanExtra(MyStatic.DETAILS_FLAG, false);
         if (flag) {
             passwordLayout.setVisibility(View.VISIBLE);
+            buttonLayout.setVisibility(View.GONE);
             textView0 = (TextView) super.findViewById(R.id.textView00);
             textView0.setText(password);
         } else {
             this.passwordLayout.setVisibility(View.GONE);
+            buttonLayout.setVisibility(View.VISIBLE);
         }
     }
 
