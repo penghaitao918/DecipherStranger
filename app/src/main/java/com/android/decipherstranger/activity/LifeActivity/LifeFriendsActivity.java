@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
@@ -152,17 +153,18 @@ public class LifeFriendsActivity extends BaseActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(MyStatic.LIFE_LIFE_FRIENDS)) {
-                // TODO 将获取的数据赋值到本地
-                if (intent.getBooleanExtra("reResult", true)){
-                    String account = intent.getStringExtra("");
-                    Bitmap portrait = intent.getParcelableExtra("");
-                    String name = intent.getStringExtra("");
-                    int sex = intent.getIntExtra("", 0);
+                if (intent.getStringExtra("reResult").equals(MyStatic.resultTrue)){
+                    String account = intent.getStringExtra("reAccount");
+                    Bitmap portrait = intent.getParcelableExtra("rePhoto");
+                    String name = intent.getStringExtra("reName");
+                    int sex = intent.getIntExtra("reGender", 0);
                     setData(account, portrait, name, sex);
-                }else{
+                }else if (intent.getStringExtra("reResult").equals("finish")){
                     System.out.println("### 哎哟我去");
                     Message message = new Message();
                     handler.sendMessage(message);
+                }else{
+                    Toast.makeText(LifeFriendsActivity.this,"暂无人员参与此活动",Toast.LENGTH_SHORT).show();
                 }
             }
         }

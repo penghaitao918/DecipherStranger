@@ -373,6 +373,20 @@ public class ClientListenThread extends Thread {
                             }
                             clContext.sendBroadcast(itPersonal);
                             break;
+                        case GlobalMsgUtils.msgActivityPeople:
+                                Intent itAttendPeople = new Intent(MyStatic.LIFE_LIFE_FRIENDS);
+                                if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)){
+                                    itAttendPeople.putExtra("reResult","true");
+                                    itAttendPeople.putExtra("reAccount",jsonObj.getString("reAccount"));
+                                    itAttendPeople.putExtra("reName",jsonObj.getString("reName"));
+                                    itAttendPeople.putExtra("rePhoto",jsonObj.getString("rePhoto"));
+                                    itAttendPeople.putExtra("reGender",jsonObj.getString("reGender"));
+                                }else if (jsonObj.getString("re_message").equals("finish")){
+                                    itAttendPeople.putExtra("reResult","finish");
+                                }else {
+                                    itAttendPeople.putExtra("reResult","false");
+                                }
+                            break;
                         default:
                             if(NetworkService.getInstance().getIsConnected()) {
                                 String testNet = "type"+":"+"ping";

@@ -31,4 +31,5 @@ public class GlobalMsgUtils {
     public static final int msgShowShare = 24;
     public static final int msgClickZan = 25;
     public static final int msgPersonalCenter = 26;
+    public static final int msgActivityPeople = 27;
 }
