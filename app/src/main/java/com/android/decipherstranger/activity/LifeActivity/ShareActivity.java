@@ -243,7 +243,7 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(MyStatic.LIFE_SHARE)) {
                 //  TODO 将获取的数据赋值到本地
-                if(intent.getStringExtra("reMatter").equals("showShare")) {
+                if (intent.getStringExtra("reMatter").equals("showShare")) {
                     System.out.println("### 晒图数据接收成功");
                     int type = intent.getIntExtra("reRequestType", 1);
                     if (intent.getStringExtra("reResult").equals("true")) {
@@ -283,18 +283,20 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
                             //TODO 加载完毕处理
                             System.out.println("### 没有数据了");
                             listView.onLoadComplete(0);
+                        }else {
+                            //TODO 刷新完毕处理
                         }
                     }
-                }else if (intent.getStringExtra("reResult").equals("true")){
-                    //TODO 点赞成功处理
-                    adapter.itemDo(MyStatic.sharePosition);
-                }else {
-                    //TODO 已经赞过处理
-                    Toast.makeText(ShareActivity.this,"您已赞过了该分享~",Toast.LENGTH_SHORT).show();
+                } else {
+                    if (intent.getStringExtra("reResult").equals("true")) {
+                        //TODO 点赞成功处理
+                        adapter.itemDo(MyStatic.sharePosition);
+                    } else {
+                        //TODO 已经赞过处理
+                        Toast.makeText(ShareActivity.this, "您已赞过了该分享~", Toast.LENGTH_SHORT).show();
+                    }
                 }
-
             }
         }
     }
-
 }
