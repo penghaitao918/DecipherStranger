@@ -274,9 +274,9 @@ public class ClientListenThread extends Thread {
                             break;
                         case GlobalMsgUtils.msgDetialsActivity:
                             Intent itDetials = new Intent(MyStatic.LIFE_DETAILS);
+                            itDetials.putExtra("reResult",jsonObj.getString("re_message"));
+                            itDetials.putExtra("re_matter",jsonObj.getString("re_matter"));
                             if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)){
-                                itDetials.putExtra("reResult",true);
-                                itDetials.putExtra("re_matter",jsonObj.getString("re_matter"));
                                 if (jsonObj.getString("re_matter").equals("details")){
                                     itDetials.putExtra("re_name",jsonObj.getString("re_name"));
                                     itDetials.putExtra("re_time",jsonObj.getString("re_time"));
@@ -293,9 +293,6 @@ public class ClientListenThread extends Thread {
                                     itDetials.putExtra("re_userPhoto",jsonObj.getString("re_small_photo"));
                                     itDetials.putExtra("re_gender",jsonObj.getInt("re_gender"));
                                 }
-                            }else {
-                                itDetials.putExtra("reResult", false);
-                                itDetials.putExtra("re_matter",jsonObj.getString("re_matter"));
                             }
                             clContext.sendBroadcast(itDetials);
                             break;

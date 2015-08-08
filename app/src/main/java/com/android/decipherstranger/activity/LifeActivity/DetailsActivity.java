@@ -207,7 +207,7 @@ public class DetailsActivity extends BaseActivity {
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(MyStatic.LIFE_DETAILS)) {
                 // TODO 将获取的数据赋值到本地
-                if (intent.getBooleanExtra("reResult", true)){
+                if (intent.getStringExtra("reResult").equals("true")){
                     if (intent.getStringExtra("re_matter").equals("details")){
                         String name = intent.getStringExtra("re_name");
                         String time = intent.getStringExtra("re_time");
@@ -234,7 +234,9 @@ public class DetailsActivity extends BaseActivity {
                         System.out.println("### password " + password);
                         startActivity(intent0);
                     }
-                }else{
+                }else if (intent.getStringExtra("reResult").equals("full")){
+                    Toast.makeText(DetailsActivity.this,"该活动报名人数已达到上限，请选择其他活动", Toast.LENGTH_SHORT).show();
+                }else {
                     if (intent.getStringExtra("re_matter").equals("details")){
                         //活动详情数据获取失败
                         Toast.makeText(DetailsActivity.this, "服务器连接失败~(≧▽≦)~啦啦啦", Toast.LENGTH_SHORT).show();
