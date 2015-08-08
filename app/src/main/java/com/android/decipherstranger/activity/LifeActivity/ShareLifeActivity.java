@@ -23,6 +23,7 @@ import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
 import com.android.decipherstranger.activity.Base.MyApplication;
 import com.android.decipherstranger.util.ChangeUtils;
+import com.android.decipherstranger.util.DensityUtil;
 import com.android.decipherstranger.util.ImageCompression;
 import com.android.decipherstranger.util.MyStatic;
 
@@ -152,9 +153,12 @@ public class ShareLifeActivity extends BaseActivity {
         if (extras != null){
             Bitmap selectPhoto = extras.getParcelable("data");
             photo = ChangeUtils.toBinary(selectPhoto);
-            smallPhoto = ChangeUtils.toBinary(ImageCompression.compressSimplify(selectPhoto, 0.3f));
-            Drawable drawable = new BitmapDrawable(this.getResources(), selectPhoto);
-            imageButton.setBackground(drawable);
+            Bitmap photo = ImageCompression.comp(selectPhoto, DensityUtil.dip2px(this,72));
+            smallPhoto = ChangeUtils.toBinary(photo);
+            Drawable drawable = new BitmapDrawable(this.getResources(), photo);
+            selectPhoto.recycle();
+        //    photo.recycle();
+            imageButton.setImageDrawable(drawable);
         }
 
     }

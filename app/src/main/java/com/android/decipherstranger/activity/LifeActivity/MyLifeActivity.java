@@ -34,6 +34,8 @@ import com.android.decipherstranger.Network.NetworkService;
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
 import com.android.decipherstranger.activity.Base.MyApplication;
+import com.android.decipherstranger.util.DensityUtil;
+import com.android.decipherstranger.util.ImageCompression;
 import com.android.decipherstranger.util.MyStatic;
 
 import java.util.ArrayList;
@@ -62,6 +64,7 @@ import java.util.Map;
  */
 public class MyLifeActivity extends BaseActivity {
 
+    private Bitmap bitmap = null;
     private ImageButton imagePortrait = null;
     private RelativeLayout topLayout = null;
     private ListView listView = null;
@@ -78,6 +81,13 @@ public class MyLifeActivity extends BaseActivity {
         this.initData();
         this.MyLifeBroadcas();
         this.getData("send");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        bitmap.recycle();
+        dataList.clear();
     }
 
     @Override
@@ -104,11 +114,6 @@ public class MyLifeActivity extends BaseActivity {
                 popupWindow.dismiss();
                 return true;
             } else {
-                if (getApplicationInfo().targetSdkVersion >= Build.VERSION_CODES.ECLAIR) {
-                    event.startTracking();
-                } else {
-                    onBackPressed();
-                }
                 MyLifeActivity.this.finish();
                 return true;
             }
@@ -137,7 +142,8 @@ public class MyLifeActivity extends BaseActivity {
     }
 
     private void initData() {
-        this.imagePortrait.setBackground(new BitmapDrawable(MyApplication.getInstance().getPortrait()));
+        this.bitmap = ImageCompression.comp(MyApplication.getInstance().getPortrait(), DensityUtil.dip2px(this,50));
+        this.imagePortrait.setImageDrawable(new BitmapDrawable(bitmap));
     //    this.dataList.addAll(this.selectAll());
         this.simpleAdapter = new SimpleAdapter(this,
                 this.dataList,

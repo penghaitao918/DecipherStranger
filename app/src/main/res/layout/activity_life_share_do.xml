@@ -84,7 +84,9 @@
             android:layout_height="72dp"
             android:id="@+id/imageButton"
             android:onClick="SendShareOnclick"
-            android:background="@drawable/roominfo_add_icon"
+            android:scaleType="fitXY"
+            android:background="@null"
+            android:src="@drawable/roominfo_add_icon"
             android:layout_marginLeft="20dp"
             android:layout_marginBottom="20dp" />
 

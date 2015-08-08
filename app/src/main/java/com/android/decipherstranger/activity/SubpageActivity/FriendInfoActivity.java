@@ -48,7 +48,7 @@ public class FriendInfoActivity extends BaseActivity {
 
     private Bundle friendInfo;
 
-    private final static String MALE = "0";
+    private final static String MALE = "1";
 
     /*
     *  Created by penghaitao 2015/05/13

@@ -57,6 +57,8 @@
         <activity android:name=".activity.LifeActivity.ShareLifeActivity"/>
         <!--生活-个人中心-->
         <activity android:name=".activity.LifeActivity.MyLifeActivity"/>
+        <!--生活-参团成员-->
+        <activity android:name=".activity.LifeActivity.LifeFriendsActivity"/>
 
         <!-- 摇一摇 -->
         <activity android:name=".activity.SubpageActivity.ShakeActivity" />

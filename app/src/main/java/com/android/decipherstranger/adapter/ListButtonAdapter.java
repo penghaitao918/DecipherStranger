@@ -117,10 +117,10 @@ public class ListButtonAdapter extends BaseAdapter {
             String time = (String) itemData.get(MyStatic.SHARE_TIME);
             int num = (Integer)itemData.get(MyStatic.SHARE_NUM);
 
-            holder.sharePortrait.setBackground(new BitmapDrawable(portrait));
+            holder.sharePortrait.setImageDrawable(new BitmapDrawable(portrait));
             holder.shareName.setText(name);
             holder.shareMessage.setText(message);
-            holder.sharePhoto.setBackground(new BitmapDrawable(photo));
+            holder.sharePhoto.setImageDrawable(new BitmapDrawable(photo));
             holder.shareTime.setText(time);
             if(num == 0) {
                 holder.shareNum.setText("");

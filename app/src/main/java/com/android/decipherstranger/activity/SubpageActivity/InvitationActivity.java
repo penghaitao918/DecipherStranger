@@ -4,6 +4,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -45,7 +48,9 @@ public class InvitationActivity extends BaseActivity {
 
     private MyApplication application = null;
     private InvitationBroadcastReceiver receiver = null;
-    
+
+    private Bitmap bitmap = null;
+    private Resources resources = null;
     private ImageView imageView = null;
     
     private boolean click = false;
@@ -103,7 +108,10 @@ public class InvitationActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_invitation);
+        this.resources = this.getResources();
         this.imageView = (ImageView) super.findViewById(R.id.invitationImage);
+        this.bitmap = BitmapFactory.decodeResource(resources, startAnimationFile[0]);
+        this.imageView.setImageBitmap(bitmap);
         //  application = (MyApplication) getApplication();
         application = MyApplication.getInstance();
         this.registerBroadcas();
@@ -273,17 +281,18 @@ public class InvitationActivity extends BaseActivity {
             switch (message.what) {
                 case MyStatic.INVITATION_START:
                     int count_start = message.arg1;
-                    imageView.setBackgroundResource(startAnimationFile[count_start]);
+                    bitmap = BitmapFactory.decodeResource(resources, (startAnimationFile[count_start]));
                     break;
                 case MyStatic.INVITATION_SUCCESS:
                     int count_success = message.arg1;
-                    imageView.setBackgroundResource(successAnimationFile[count_success]);
+                    bitmap = BitmapFactory.decodeResource(resources, (successAnimationFile[count_success]));
                     break;
                 case MyStatic.INVITATION_FAIL:
                     int count_fail = message.arg1;
-                    imageView.setBackgroundResource(failAnimationFile[count_fail]);
+                    bitmap = BitmapFactory.decodeResource(resources, (failAnimationFile[count_fail]));
                     break;
             }
+            imageView.setImageBitmap(bitmap);
         }
     };
 

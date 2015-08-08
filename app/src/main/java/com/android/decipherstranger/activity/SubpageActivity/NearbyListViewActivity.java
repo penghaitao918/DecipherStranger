@@ -64,7 +64,6 @@ public class NearbyListViewActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         SDKInitializer.initialize(getApplicationContext());
-        //  application = (MyApplication) getApplication();
         application = MyApplication.getInstance();
         setContentView(R.layout.activity_nearby_listview);
         initLocation();

@@ -62,7 +62,7 @@
                 android:id="@+id/panel_add_im"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/app_panel_add_icon"
+                android:src="@drawable/app_panel_add_icon"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
                 android:layout_alignBottom="@+id/ivPopUp"

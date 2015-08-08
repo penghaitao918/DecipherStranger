@@ -53,8 +53,9 @@
             android:id="@+id/reg_photo_iv_userphoto"
             android:layout_width="120dip"
             android:layout_height="120dip"
-            android:background="@drawable/register_portrait"
-            android:src="@drawable/ic_userpro_bind_press" />
+            android:scaleType="fitXY"
+            android:background="@null"
+            android:src="@drawable/register_portrait" />
 
         <LinearLayout
             android:layout_width="fill_parent"

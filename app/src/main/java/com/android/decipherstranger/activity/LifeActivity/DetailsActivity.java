@@ -75,7 +75,6 @@ public class DetailsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_life_details);
-        //  application = (MyApplication) getApplication();
         application = MyApplication.getInstance();
         this.init();
         this.LifeDetailsBroadcast();
@@ -149,14 +148,12 @@ public class DetailsActivity extends BaseActivity {
             case R.id.life_back_button:
                 onBackPressed();
                 break;
+            case R.id.lifeFriends:
+                Intent intent0 = new Intent(DetailsActivity.this,LifeFriendsActivity.class);
+                intent0.putExtra(MyStatic.LIFE_ID,lifeId);
+                startActivity(intent0);
             /*参团*/
             case R.id.partake:
-                /*
-                 * 检查是否已经报名
-                 * 若未报名，则将申请人信息加入团队并跳入口令界面
-                 * 否则跳出已报名提示
-                 */
-                //  发送请求，在广播执行跳转
                 if (NetworkService.getInstance().getIsConnected()){
                     String Msg = "type"+":"+GlobalMsgUtils.msgAttendActivity+":"+"activityId"+":"+
                             lifeId+":"+"account"+":"+myAccount;
@@ -166,10 +163,6 @@ public class DetailsActivity extends BaseActivity {
                     NetworkService.getInstance().closeConnection();
                     Log.v("Attend","已执行T()方法");
                 }
-/*                Intent intent = new Intent(this,PasswordActivity.class);
-                intent.putExtra(MyStatic.LIFE_PASSWORD, password);
-                startActivity(intent);*/
-                //    Toast.makeText(this,"您已报名，无需重复报名",Toast.LENGTH_SHORT).show();
                 break;
             /*加为好友*/
             case R.id.addFriend:

@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -24,6 +26,9 @@ import com.android.decipherstranger.db.ChatRecord;
 import com.android.decipherstranger.db.ContactsList;
 import com.android.decipherstranger.db.ConversationList;
 import com.android.decipherstranger.db.DATABASE;
+import com.android.decipherstranger.util.ChangeUtils;
+import com.android.decipherstranger.util.DensityUtil;
+import com.android.decipherstranger.util.ImageCompression;
 import com.android.decipherstranger.util.MyStatic;
 import com.android.decipherstranger.util.SharedPreferencesUtils;
 
@@ -91,7 +96,11 @@ public class UserPageActivity extends BaseActivity {
         this.musicSwitch = (Switch) super.findViewById(R.id.switch1);
         this.moveSwitch = (Switch) super.findViewById(R.id.switch2);
 
-        portraitImage.setBackground(new BitmapDrawable(application.getPortrait()));
+
+        Bitmap photo = ImageCompression.comp(application.getPortrait(), DensityUtil.dip2px(this, 72));
+        Drawable drawable = new BitmapDrawable(this.getResources(), photo);
+        portraitImage.setImageDrawable(drawable);
+    //    photo.recycle();
         this.nameText.setText(application.getName());
         this.accountText.setText(application.getAccount());
         this.sexText.setText(application.getSex());
