@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -16,6 +17,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.android.decipherstranger.Network.NetworkService;
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
 import com.android.decipherstranger.activity.Base.MyApplication;
@@ -105,6 +107,14 @@ public class LifeFriendsActivity extends BaseActivity {
 
     private void getData() {
         //  send Id
+        if (NetworkService.getInstance().getIsConnected()){
+            String Msg = "type"+":"+"27"+":"+"activityId"+":"+ Id;
+            Log.v("aaaaa", Msg);
+            NetworkService.getInstance().sendUpload(Msg);
+        }else {
+            NetworkService.getInstance().closeConnection();
+            Log.v("晒图", "服务器连接失败");
+        }
     }
 
     private void setData(String account, Bitmap portrait, String name, int sex) {
