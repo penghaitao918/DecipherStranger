@@ -1,5 +1,6 @@
 package com.android.decipherstranger.activity;
 
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -40,6 +41,7 @@ import com.android.decipherstranger.util.SharedPreferencesUtils;
  */
 public class WelcomeActivity extends BaseActivity {
 
+    private Handler handler = null;
     private String password = "";
     private Boolean isLogin = false;
     private MyApplication application = null;
@@ -49,7 +51,7 @@ public class WelcomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         this.getLoginFlag();
-        Handler handler = new Handler();
+        handler = new Handler();
         handler.postDelayed( new Runnable() {
             public void run() {
                 if (isLogin && !password.equals("")) {
@@ -62,11 +64,18 @@ public class WelcomeActivity extends BaseActivity {
                 }
                 WelcomeActivity.this.finish();//结束本Activity
             }
-        }, 3000);
+        }, 2000);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        handler.removeCallbacksAndMessages(null);
+        handler = null;
+        application = null;
     }
 
     private void getLoginFlag() {
-        //  application = (MyApplication) getApplication();
         application = MyApplication.getInstance();
         this.application.setInvSum(5);
         SharedPreferencesUtils sharedPreferencesUtils = new SharedPreferencesUtils(this, MyStatic.FILENAME_USER);
@@ -84,6 +93,7 @@ public class WelcomeActivity extends BaseActivity {
             this.application.setPhone((String) sharedPreferencesUtils.get(MyStatic.USER_PHONE, ""));
             this.application.setSignature((String) sharedPreferencesUtils.get(MyStatic.USER_SIGNATURE, ""));
         }
+        sharedPreferencesUtils.recycle();
     }
 
     private void tellWebLogin(String account, String password){
@@ -103,24 +113,4 @@ public class WelcomeActivity extends BaseActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_welcome, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }

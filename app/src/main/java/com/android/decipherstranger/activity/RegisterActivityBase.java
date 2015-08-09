@@ -53,6 +53,15 @@ public class RegisterActivityBase extends BaseActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        OkIcon.setCallback(null);
+        OkIcon = null;
+        ErrorIcon.setCallback(null);
+        ErrorIcon = null;
+    }
+
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {// 防止连续两次返回键
             //这你写你的返回处理

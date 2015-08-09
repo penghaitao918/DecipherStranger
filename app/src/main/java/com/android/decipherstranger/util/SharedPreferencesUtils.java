@@ -99,4 +99,9 @@ public class SharedPreferencesUtils {
         SharedPreferences sp = context.getSharedPreferences(FILENAME,Context.MODE_PRIVATE);
         return sp.getAll();
     }
+
+    public void recycle(){
+        context = null;
+        FILENAME = null;
+    }
 }

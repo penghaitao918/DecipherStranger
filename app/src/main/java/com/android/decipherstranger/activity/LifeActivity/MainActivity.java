@@ -118,7 +118,7 @@ public class MainActivity extends BaseActivity {
         simpleAdapter.setViewBinder(new ViewBinderImpl());
         this.listView.setAdapter(simpleAdapter);
         /*动态跟新ListView*/
-        simpleAdapter.notifyDataSetChanged();
+//        simpleAdapter.notifyDataSetChanged();
         /*动态计算ListView的高度*/
         this.fixListViewHeight(listView);
 
@@ -256,8 +256,8 @@ public class MainActivity extends BaseActivity {
         @Override
         public void handleMessage(Message message) {
             fixListViewHeight(listView);
-            simpleAdapter.notifyDataSetChanged();
             listView.setAdapter(simpleAdapter);
+            simpleAdapter.notifyDataSetChanged();
             System.out.println("### 活动列表刷新成功");
         }
     };
@@ -284,8 +284,8 @@ public class MainActivity extends BaseActivity {
                     setData(lifeId, type, name, time, place);
                     System.out.println("### 接收了一条活动数据");
                 } else {
-                    System.out.println("### 哎哟我去");
                     handler.sendMessage(new Message());
+                    System.out.println("### 哎哟我去");
                 }
             }
         }

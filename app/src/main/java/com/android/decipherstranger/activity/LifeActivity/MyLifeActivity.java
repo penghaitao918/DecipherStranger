@@ -83,16 +83,13 @@ public class MyLifeActivity extends BaseActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        bitmap.recycle();
-        dataList.clear();
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         super.unregisterReceiver(MyLifeActivity.this.receiver);
+        bitmap.recycle();
+        dataList.clear();
+        bitmap = null;
+        dataList = null;
     }
 
     @Override
@@ -220,9 +217,9 @@ public class MyLifeActivity extends BaseActivity {
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message message) {
-            simpleAdapter.notifyDataSetChanged();
-            listView.setAdapter(simpleAdapter);
             fixListViewHeight(listView);
+            listView.setAdapter(simpleAdapter);
+            simpleAdapter.notifyDataSetChanged();
         }
     };
 

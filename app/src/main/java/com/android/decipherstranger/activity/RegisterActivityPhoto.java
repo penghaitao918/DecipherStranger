@@ -39,6 +39,7 @@ import java.io.File;
  */
 public class RegisterActivityPhoto extends BaseActivity {
 
+    private Bitmap photo = null;
     private LinearLayout selectPhoto;
     private LinearLayout takePicture;
     private ImageView userPhoto;
@@ -68,6 +69,15 @@ public class RegisterActivityPhoto extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         super.unregisterReceiver(RegisterActivityPhoto.this.receiver);
+        photo.recycle();
+        photo = null;
+        selectPhoto.removeAllViews();
+        takePicture.removeAllViews();
+        userPhoto.removeCallbacks(null);
+        userPhoto = null;
+        userInfo = null;
+        backButton.removeCallbacks(null);
+        backButton = null;
     }
 
     @Override
@@ -249,7 +259,7 @@ public class RegisterActivityPhoto extends BaseActivity {
     private void getImageToView(Intent data) {
         Bundle extras = data.getExtras();
         if (extras != null) {
-            Bitmap photo = extras.getParcelable("data");
+            photo = extras.getParcelable("data");
             portraitUrl = ChangeUtils.toBinary(photo);
             sPortaitUrl = ChangeUtils.toBinary(ImageCompression.compressSimplify(photo, 0.3f));
             Drawable drawable = new BitmapDrawable(this.getResources(), photo);

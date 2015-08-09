@@ -89,6 +89,7 @@ public class ShareLifeActivity extends BaseActivity {
         super.unregisterReceiver(ShareLifeActivity.this.receiver);
         photoBitmap.recycle();
         selectPhoto.recycle();
+        handler.removeCallbacksAndMessages(null);
         progressDialog.dismiss();
         photoBitmap = null;
         selectPhoto = null;
@@ -151,19 +152,18 @@ public class ShareLifeActivity extends BaseActivity {
                 onBackPressed();
                 break;
             case R.id.send_share:
-                message = editText.getText().toString();
                 Message m = new Message();
                 m.what = 0;
                 handler.sendMessage(m);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
+                        Message m = new Message();
+                        message = editText.getText().toString();
                         if (message == null || message.equals("")) {
-                            Message m = new Message();
                             m.what = 1;
                             handler.sendMessage(m);
                         }else if (photo == null) {
-                            Message m = new Message();
                             m.what = 2;
                             handler.sendMessage(m);
                         } else {

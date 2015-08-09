@@ -424,8 +424,8 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message message) {
-            simpleAdapter.notifyDataSetChanged();
             listView.setAdapter(simpleAdapter);
+            simpleAdapter.notifyDataSetChanged();
             fixListViewHeight(listView);
         }
     };

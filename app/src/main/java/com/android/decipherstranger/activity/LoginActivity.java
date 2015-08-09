@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -81,7 +82,11 @@ public class LoginActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-    //    application = (MyApplication) getApplication();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         application = MyApplication.getInstance();
         this.helper = new DATABASE(this);
         this.sharedPreferencesUtils = new SharedPreferencesUtils(this, MyStatic.FILENAME_USER);
@@ -89,20 +94,33 @@ public class LoginActivity extends BaseActivity {
         getCheckBox();
         loginBroadcas();
     }
-    
-/*    @Override
-    protected void onResume() {
-        super.onResume();
-    }*/
-    
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         super.unregisterReceiver(LoginActivity.this.receiver);
+        application = null;
+        it = null;
+        adapter.clear();
+        stringUtils = null;
+        helper = null;
+        userInfo = null;
+        if (progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+        sharedPreferencesUtils.recycle();
+        accountEdit = null;
+        pawEdit = null;
+        loginButton = null;
+        checkBox = null;
+        registerButton = null;
+        account = null;
+        passwordMD5 = null;
     }
 
     private void initView(){
         this.progressDialog = new ProgressDialog(LoginActivity.this);
+        progressDialog.setMessage("Login...");
 
         LoginActivity.this.userInfo = new UserTabOperate(LoginActivity.this.helper.getReadableDatabase());
         this.adapter =
@@ -149,50 +167,56 @@ public class LoginActivity extends BaseActivity {
     private class loginOnClickListenerImpl implements View.OnClickListener {
         @Override
         public void onClick(View view){
-            InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            im.hideSoftInputFromWindow(getCurrentFocus().getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-            
-            account = LoginActivity.this.accountEdit.getText().toString();
-            String password = LoginActivity.this.pawEdit.getText().toString();
-            passwordMD5 = stringUtils.MD5(password);
 
 /*            Intent it = new Intent(LoginActivity.this, MainPageActivity.class);
             startActivity(it);
             finish();*/
 
-            if (account.equals("")){
-                Toast.makeText(LoginActivity.this, "请输入用户名", Toast.LENGTH_SHORT).show();
-            }else if (password.equals("")){
-                Toast.makeText(LoginActivity.this, "请输入密码", Toast.LENGTH_SHORT).show();
-            }else {
-                progressDialog.setMessage("Login...");
-                progressDialog.onStart();
-                progressDialog.show();
-                LoginActivity.this.userInfo = new UserTabOperate(LoginActivity.this.helper.getReadableDatabase());
-                User user = LoginActivity.this.userInfo.userTabInfo(account);
-
-                LoginActivity.this.userInfo = new UserTabOperate(LoginActivity.this.helper.getWritableDatabase());
-                SharedPreferences share = getSharedPreferences(FILENAME, LoginActivity.MODE_PRIVATE);
-                SharedPreferences.Editor editor = share.edit();
-
-                if (LoginActivity.this.checkBox.isChecked()) {
-                    editor.putBoolean("Checked",true);
-                    if (!user.getAccount().equals("")) {
-                        LoginActivity.this.userInfo.update(account, password);
+            Message m = new Message();
+            m.what = 0;
+            handler.sendMessage(m);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Message m = new Message();
+                    account = LoginActivity.this.accountEdit.getText().toString();
+                    String password = LoginActivity.this.pawEdit.getText().toString();
+                    passwordMD5 = stringUtils.MD5(password);
+                    if (account.equals("")){
+                        m.what = 1;
+                        handler.sendMessage(m);
+                    }else if (password.equals("")){
+                        m.what = 2;
+                        handler.sendMessage(m);
                     }else {
-                        LoginActivity.this.userInfo.insert(account, password);
-                    }
-                }else {
-                    editor.putBoolean("Checked",false);
-                    if (!user.getAccount().equals("")) {
-                        LoginActivity.this.userInfo.update(account, "");
-                    }else {
-                        LoginActivity.this.userInfo.insert(account, "");
+                        LoginActivity.this.userInfo = new UserTabOperate(LoginActivity.this.helper.getReadableDatabase());
+                        User user = LoginActivity.this.userInfo.userTabInfo(account);
+
+                        LoginActivity.this.userInfo = new UserTabOperate(LoginActivity.this.helper.getWritableDatabase());
+                        SharedPreferences share = getSharedPreferences(FILENAME, LoginActivity.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = share.edit();
+
+                        if (LoginActivity.this.checkBox.isChecked()) {
+                            editor.putBoolean("Checked",true);
+                            if (!user.getAccount().equals("")) {
+                                LoginActivity.this.userInfo.update(account, password);
+                            }else {
+                                LoginActivity.this.userInfo.insert(account, password);
+                            }
+                        }else {
+                            editor.putBoolean("Checked",false);
+                            if (!user.getAccount().equals("")) {
+                                LoginActivity.this.userInfo.update(account, "");
+                            }else {
+                                LoginActivity.this.userInfo.insert(account, "");
+                            }
+                        }
+                        editor.commit();
+                        accountCheckByWeb(account, passwordMD5);
                     }
                 }
-                editor.commit();
-                accountCheckByWeb(account, passwordMD5);
-            }
+            }).start();
+
         }
     }
 
@@ -203,6 +227,36 @@ public class LoginActivity extends BaseActivity {
             startActivity(it);
         }
     }
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message message) {
+            switch (message.what) {
+                case 0:
+                    InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    im.hideSoftInputFromWindow(getCurrentFocus().getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    progressDialog.onStart();
+                    progressDialog.show();
+                    break;
+                case 1:
+                    if (progressDialog.isShowing()) {
+                        progressDialog.dismiss();
+                    } Toast.makeText(LoginActivity.this, "请输入用户名", Toast.LENGTH_SHORT).show();
+                    break;
+                case 2:
+                    if (progressDialog.isShowing()) {
+                        progressDialog.dismiss();
+                    } Toast.makeText(LoginActivity.this, "请输入密码", Toast.LENGTH_SHORT).show();
+                    break;
+                case 3:
+                    if (progressDialog.isShowing()) {
+                        progressDialog.dismiss();
+                    } Toast.makeText(LoginActivity.this, "服务器连接失败~(≧▽≦)~啦啦啦", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    };
+
     /**
      * Created by Feng on 2015/3/24.
      */
@@ -217,14 +271,15 @@ public class LoginActivity extends BaseActivity {
         }
         else {
             NetworkService.getInstance().closeConnection();
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
+            Handler mhandler = new Handler();
+            mhandler.postDelayed(new Runnable() {
                 public void run() {
-                    progressDialog.dismiss();
-                    Toast.makeText(LoginActivity.this, "服务器连接失败~(≧▽≦)~啦啦啦", Toast.LENGTH_SHORT).show();
+                    Message m = new Message();
+                    m.what = 3;
+                    handler.sendMessage(m);
                     Log.v("Login", "已经执行T（）方法");
                 }
-            }, 3000);
+            }, 2000);
         }
     }
 
