@@ -82,11 +82,13 @@
                 android:layout_centerHorizontal="true">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
                     android:id="@+id/sharePhoto"
                     android:layout_margin="5dp"
                     android:scaleType="fitXY"
+                    android:background="@null"
+                    android:src="@null"
                     android:layout_centerVertical="true"
                     android:layout_centerHorizontal="true" />
 

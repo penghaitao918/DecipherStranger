@@ -298,6 +298,17 @@ public class AutoListView extends ListView implements OnScrollListener {
 	}
 
 	/**
+	 * 初始化底部控件
+	 */
+	public void initFooter() {
+		isLoadFull = false;
+		loadFull.setVisibility(View.GONE);
+		loading.setVisibility(View.GONE);
+		more.setVisibility(View.GONE);
+		noData.setVisibility(View.GONE);
+	}
+
+	/**
 	 * 这个方法是根据结果的大小来决定footer显示的。
 	 * <p>
 	 * 这里假定每次请求的条数为10。如果请求到了10条。则认为还有数据。如过结果不足10条，则认为数据已经全部加载，这时footer显示已经全部加载
@@ -328,7 +339,6 @@ public class AutoListView extends ListView implements OnScrollListener {
 			more.setVisibility(View.VISIBLE);
 			noData.setVisibility(View.GONE);
 		}
-
 	}
 
 	// 根据当前状态，调整header

@@ -149,6 +149,8 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
         //    this.adapter.setViewBinder(new ViewBinderImpl());
         this.listView.setAdapter(adapter);
 
+        listView.initFooter();
+
         this.listView.setOnRefreshListener(this);
         this.listView.setOnLoadListener(this);
     }
@@ -204,10 +206,12 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
                     listView.onRefreshComplete();
                     dataList.clear();
                     dataList.addAll(result);
+                    System.out.println("### 数据刷新成功");
                     break;
                 case AutoListView.LOAD:
                     listView.onLoadComplete(result.size());
                     dataList.addAll(result);
+                    System.out.println("### 数据加载成功");
                     break;
             }
             //   listView.setResultSize(result.size());

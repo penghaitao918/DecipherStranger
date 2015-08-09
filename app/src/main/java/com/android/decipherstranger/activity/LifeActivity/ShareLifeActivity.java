@@ -6,11 +6,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -52,7 +54,9 @@ public class ShareLifeActivity extends BaseActivity {
     private ImageButton imageButton = null;
     private MyApplication application = null;
     private ShareLifeBroadcastReceiver receiver = null;
+    private Bitmap photoBitmap = null;
     private String photo = null;
+    private Bitmap selectPhoto = null;
     private String smallPhoto = null;
     private String message = null;
     private ProgressDialog progressDialog = null;
@@ -64,14 +68,37 @@ public class ShareLifeActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_life_share_do);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         this.init();
         this.ShareLifeBroadcas();
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
+        System.out.println("### 内存释放开始 %");
         super.unregisterReceiver(ShareLifeActivity.this.receiver);
+        photoBitmap.recycle();
+        selectPhoto.recycle();
+        progressDialog.dismiss();
+        photoBitmap = null;
+        selectPhoto = null;
+        progressDialog = null;
+        editText = null;
+        imageButton = null;
+        application = null;
+        message = smallPhoto = photo = null;
+        receiver = null;
+        System.out.println("### 内存释放完毕 %");
     }
 
     private void init() {
@@ -94,6 +121,29 @@ public class ShareLifeActivity extends BaseActivity {
             Log.v("### 晒图", "服务器连接失败");
         }
     }
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message message) {
+            switch (message.what) {
+                case 0:
+                    progressDialog.onStart();
+                    progressDialog.show();
+                    break;
+                case 1:
+                    if (progressDialog.isShowing()) {
+                        progressDialog.dismiss();
+                    }
+                    Toast.makeText(ShareLifeActivity.this,"分享内容不能为空！",Toast.LENGTH_SHORT).show();
+                    break;
+                case 2:
+                    if (progressDialog.isShowing()) {
+                        progressDialog.dismiss();
+                    }
+                    Toast.makeText(ShareLifeActivity.this,"请选择图片！",Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    };
 
     public void SendShareOnclick(View view) {
         switch (view.getId()) {
@@ -101,18 +151,26 @@ public class ShareLifeActivity extends BaseActivity {
                 onBackPressed();
                 break;
             case R.id.send_share:
-                progressDialog.onStart();
-                progressDialog.show();
                 message = editText.getText().toString();
-                if (message == null || message.equals("")) {
-                    progressDialog.dismiss();
-                    Toast.makeText(this,"分享内容不能为空！",Toast.LENGTH_SHORT).show();
-                }else if (photo == null) {
-                    progressDialog.dismiss();
-                    Toast.makeText(this,"请选择图片！",Toast.LENGTH_SHORT).show();
-                } else {
-                    send();
-                }
+                Message m = new Message();
+                m.what = 0;
+                handler.sendMessage(m);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (message == null || message.equals("")) {
+                            Message m = new Message();
+                            m.what = 1;
+                            handler.sendMessage(m);
+                        }else if (photo == null) {
+                            Message m = new Message();
+                            m.what = 2;
+                            handler.sendMessage(m);
+                        } else {
+                            send();
+                        }
+                    }
+                }).start();
                 break;
             case R.id.imageButton:
                 InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -149,19 +207,16 @@ public class ShareLifeActivity extends BaseActivity {
     public void getImageToView(Intent data){
         Bundle extras = data.getExtras();
         if (extras != null){
-            Bitmap selectPhoto = extras.getParcelable("data");
+            selectPhoto = extras.getParcelable("data");
             photo = ChangeUtils.toBinary(selectPhoto);
-            Bitmap photo = ImageCompression.compressSimplify(selectPhoto, 0.6f);
-            smallPhoto = ChangeUtils.toBinary(photo);
-            Drawable drawable = new BitmapDrawable(this.getResources(), photo);
-        //    selectPhoto.recycle();
-        //    photo.recycle();
+            photoBitmap = ImageCompression.compressSimplify(selectPhoto, 0.6f);
+            smallPhoto = ChangeUtils.toBinary(photoBitmap);
+            Drawable drawable = new BitmapDrawable(this.getResources(), photoBitmap);
             imageButton.setImageDrawable(drawable);
         }
 
     }
-    public void startPhotoZoom(Uri uri) {
-
+    private void startPhotoZoom(Uri uri) {
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image/*");
         // 设置裁剪

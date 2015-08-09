@@ -182,7 +182,7 @@
                     android:id="@+id/textView5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="活动人数："
+                    android:text="限定人数："
                     android:textSize="18dp"
                     android:layout_marginLeft="20dp"
                     android:layout_centerVertical="true"/>
@@ -317,6 +317,16 @@
                     android:layout_centerVertical="true"
                     android:textSize="18dp"
                     android:layout_toRightOf="@+id/textView9"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageView4"
+                    android:src="@drawable/go_icon"
+                    android:layout_marginRight="10dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
 
             </RelativeLayout>
 

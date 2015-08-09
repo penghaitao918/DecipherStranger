@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -88,12 +89,12 @@ public class MainActivity extends BaseActivity {
     }
 
     private void init() {
-        this.dataList = new ArrayList< Map<String, Object> >();
+        this.dataList = new ArrayList<Map<String, Object>>();
         this.listView = (ListView) super.findViewById(R.id.listView);
         this.listView.setOnItemClickListener(new OnItemClickListenerImpl());
 
         this.animationAdvertisement = new AnimationDrawable();
-        this.animationAdvertisement = (AnimationDrawable)getResources().getDrawable(R.drawable.animation_advertisement);
+        this.animationAdvertisement = (AnimationDrawable) getResources().getDrawable(R.drawable.animation_advertisement);
         this.advertisementImage = (ImageView) super.findViewById(R.id.advertisement);
         this.advertisementImage.setImageDrawable(this.animationAdvertisement);
 
@@ -110,8 +111,8 @@ public class MainActivity extends BaseActivity {
         this.simpleAdapter = new SimpleAdapter(this,
                 this.dataList,
                 R.layout.list_item_life,
-                new String[] {MyStatic.LIFE_CLASS, MyStatic.LIFE_NAME, MyStatic.LIFE_TIME, MyStatic.LIFE_SPACE},
-                new int[] {R.id.life_class, R.id.life_name, R.id.life_time, R.id.life_space}
+                new String[]{MyStatic.LIFE_CLASS, MyStatic.LIFE_NAME, MyStatic.LIFE_TIME, MyStatic.LIFE_SPACE},
+                new int[]{R.id.life_class, R.id.life_name, R.id.life_time, R.id.life_space}
         );
         /*实现ViewBinder()这个接口*/
         simpleAdapter.setViewBinder(new ViewBinderImpl());
@@ -143,8 +144,8 @@ public class MainActivity extends BaseActivity {
         @Override
         public boolean setViewValue(View view, Object data, String textRepresentation) {
             // TODO Auto-generated method stub
-            if(view instanceof ImageView && data instanceof Bitmap){
-                ImageView i = (ImageView)view;
+            if (view instanceof ImageView && data instanceof Bitmap) {
+                ImageView i = (ImageView) view;
                 i.setImageBitmap((Bitmap) data);
                 return true;
             }
@@ -159,8 +160,8 @@ public class MainActivity extends BaseActivity {
         if (listAdapter == null) {
             return;
         }
-        for (int index = 0, len = listAdapter.getCount(); index < len; ++ index) {
-            View listViewItem = listAdapter.getView(index , null, listView);
+        for (int index = 0, len = listAdapter.getCount(); index < len; ++index) {
+            View listViewItem = listAdapter.getView(index, null, listView);
             // 计算子项View 的宽高
             listViewItem.measure(0, 0);
             // 计算所有子项的高度和
@@ -180,7 +181,7 @@ public class MainActivity extends BaseActivity {
             int lifeType = (int) dataList.get(position).get(MyStatic.LIFE_CLASSINT);
             Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
             intent.putExtra(MyStatic.LIFE_ID, lifeId);
-            intent.putExtra(MyStatic.LIFE_CLASSINT,lifeType);
+            intent.putExtra(MyStatic.LIFE_CLASSINT, lifeType);
             startActivity(intent);
         }
     }
@@ -204,38 +205,41 @@ public class MainActivity extends BaseActivity {
                 break;*/
             /*我的活动*/
             case R.id.mylife:
-                Intent intent1 = new Intent(this,MyLifeActivity.class);
+                Intent intent1 = new Intent(this, MyLifeActivity.class);
                 startActivity(intent1);
                 break;
             /*发起*/
             case R.id.sendLife:
-                Intent intent2 = new Intent(this,SendActivity.class);
+                Intent intent2 = new Intent(this, SendActivity.class);
                 startActivity(intent2);
                 break;
             /*参团*/
             case R.id.partakeLife:
-                Intent intent3 = new Intent(this,PartakeActivity.class);
+                Intent intent3 = new Intent(this, PartakeActivity.class);
                 startActivity(intent3);
                 break;
             /*分享*/
             case R.id.share:
-                Intent intent4 = new Intent(this,ShareActivity.class);
+                Intent intent4 = new Intent(this, ShareActivity.class);
                 startActivity(intent4);
                 break;
         }
     }
 
-    private void setData (int lifeId, int type, String name, String time, String place){
+    private void setData(int lifeId, int type, String name, String time, String place) {
         Bitmap bitmap = null;
         switch (type) {
             // 美食
-            case 1:bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.life_class_food);
+            case 1:
+                bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.life_class_food);
                 break;
             // 旅游
-            case 2:bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.life_class_travel);
+            case 2:
+                bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.life_class_travel);
                 break;
             // 休闲娱乐
-            case 3:bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.life_class_other);
+            case 3:
+                bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.life_class_other);
                 break;
         }
         Map<String, Object> map = new HashMap<String, Object>();
@@ -251,12 +255,12 @@ public class MainActivity extends BaseActivity {
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message message) {
+            fixListViewHeight(listView);
             simpleAdapter.notifyDataSetChanged();
             listView.setAdapter(simpleAdapter);
-            fixListViewHeight(listView);
+            System.out.println("### 活动列表刷新成功");
         }
     };
-
 
     private void LifeMainBroadcas() {
         //动态方式注册广播接收者
@@ -271,17 +275,17 @@ public class MainActivity extends BaseActivity {
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(MyStatic.LIFE_MAIN)) {
                 // TODO 将获取的数据赋值到本地
-                if (intent.getBooleanExtra("reResult", true)){
+                if (intent.getBooleanExtra("reResult", true)) {
                     int lifeId = intent.getIntExtra("reId", 0);
                     int type = intent.getIntExtra("reType", 3);
                     String name = intent.getStringExtra("reName");
                     String time = intent.getStringExtra("reTime");
                     String place = intent.getStringExtra("rePlace");
                     setData(lifeId, type, name, time, place);
-                }else{
+                    System.out.println("### 接收了一条活动数据");
+                } else {
                     System.out.println("### 哎哟我去");
-                    Message message = new Message();
-                    handler.sendMessage(message);
+                    handler.sendMessage(new Message());
                 }
             }
         }
