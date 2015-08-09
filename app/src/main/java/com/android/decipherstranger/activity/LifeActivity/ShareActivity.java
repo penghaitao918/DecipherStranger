@@ -279,11 +279,10 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
                         }
                     } else {
                         if (intent.getIntExtra("reRequestType", 0) == 0) {
-                            //TODO 加载完毕处理
                             System.out.println("### 没有数据了");
                             listView.onLoadComplete(0);
                         }else {
-                            //TODO 刷新完毕处理
+                            //TODO 无数据
                         }
                     }
                 } else {

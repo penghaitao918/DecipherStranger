@@ -12,7 +12,7 @@ public class NetConnect extends Thread {
 
     /*  information about Server, ip address and portal number  */
     //private String HostIp = "192.168.32.128";
-    private String HostIp = "10.33.1.28";
+    private String HostIp = "10.163.16.65";
 
     private int HostPort = 8283;
 
