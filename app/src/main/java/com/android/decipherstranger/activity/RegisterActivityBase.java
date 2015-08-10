@@ -39,7 +39,7 @@ public class RegisterActivityBase extends BaseActivity {
     private RadioButton male = null;
     private RadioButton female = null;
     private EditText emailEdit = null;
-    ;
+
     private EditText phoneEdit = null;
     private Button birthButton = null;
 
@@ -167,16 +167,12 @@ public class RegisterActivityBase extends BaseActivity {
         return s.matches("^[a-zA-Z][a-zA-Z0-9_]{5,19}");    //字母开头，允许6-20字节，允许字母数字下划线
     }
 
-    private boolean checkAccountUse(String s) {
-        return true;                           //  检测用户名是否被使用
-    }
-
     private boolean checkPassword(String s) {
         return s.matches("^[a-zA-Z0-9]{6,20}");       //数字和字母
     }
 
     private boolean checkEmail(String s) {
-        return s.matches("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*");     //test@email.com
+        return s.matches("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*");     //address@email.com
     }
 
     private boolean checkPhone(String s) {
@@ -203,9 +199,6 @@ public class RegisterActivityBase extends BaseActivity {
                     } else if (!checkAccount(accountEdit.getText().toString())) {
                         accountEdit.setCompoundDrawables(null, null, ErrorIcon, null);//画在右边
                         accountEdit.setText("不能包含特殊符号");
-                    } else if (!checkAccountUse(accountEdit.getText().toString())) {
-                        accountEdit.setCompoundDrawables(null, null, ErrorIcon, null);//画在右边
-                        accountEdit.setText("该用户名已经占用");
                     } else {
                         accountBool = true;
                         accountEdit.setCompoundDrawables(null, null, OkIcon, null);//画在右边
