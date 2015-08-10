@@ -40,6 +40,7 @@ public class MyStatic {
     public static final String USER_EMAIL = "Email";
     public static final String USER_PHONE = "Phone";
     public static final String USER_BIRTH = "Birth";
+    public static final String USER_DISTANCE = "Distance";
     public static final String USER_SIGNATURE = "signature";
 
     public static final String CONVERSATION_BOARD = "com.android.conversation.board";

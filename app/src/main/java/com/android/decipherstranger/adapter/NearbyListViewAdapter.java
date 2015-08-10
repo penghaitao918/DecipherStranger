@@ -33,8 +33,6 @@ import java.util.ArrayList;
  * Created by WangXin on 2015/4/6 0006.
  */
 public class NearbyListViewAdapter extends BaseAdapter {
-    final String MAN = "男";
-    final String WOMAN = "女";
     private ArrayList<NearbyUserInfo> nearbyUserData;
     private LayoutInflater inflater;
 
@@ -77,9 +75,9 @@ public class NearbyListViewAdapter extends BaseAdapter {
             holder.nearbyUserPhoto.setImageDrawable(drawable);
             holder.nearbyUserName.setText(nearbyUserInfo.getUserName());
             holder.nearbyUserDistance.setText(Math.round(Double.parseDouble(nearbyUserInfo.getDistance())) + "米");
-            if (nearbyUserInfo.getSex() == MAN) {
+            if (nearbyUserInfo.getSex() == 1) {
                 holder.nearbyUserSex.setImageResource(R.drawable.ic_sex_male);
-            } else if (nearbyUserInfo.getSex() == WOMAN) {
+            } else {
                 holder.nearbyUserSex.setImageResource(R.drawable.ic_sex_female);
             }
         } catch (Exception e) {

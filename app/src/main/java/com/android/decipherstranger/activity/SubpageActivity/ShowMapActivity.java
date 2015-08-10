@@ -134,7 +134,7 @@ public class ShowMapActivity extends BaseActivity {
 
                 nearByUserPhoto.setImageBitmap(nearByUserInfo.getImgId());
                 nearByUserName.setText(nearByUserInfo.getUserName());
-                if (nearByUserInfo.getSex().equals("1")) {
+                if (nearByUserInfo.getSex() == 1) {
                     nearByUserSex.setImageResource(R.drawable.ic_sex_male);
                 } else {
                     nearByUserSex.setImageResource(R.drawable.ic_sex_female);
@@ -293,7 +293,7 @@ public class ShowMapActivity extends BaseActivity {
                     info.setUserAccount(intent.getStringExtra("reAccount"));
                     info.setUserName(intent.getStringExtra("reName"));
                     info.setImgId(ChangeUtils.toBitmap(intent.getStringExtra("rePhoto")));
-                    info.setSex(intent.getIntExtra("reGender", 1) + "");
+                    info.setSex(intent.getIntExtra("reGender", 1));
                     info.setLatitude(Double.parseDouble(intent.getStringExtra("reLatitude")));
                     info.setLongtitude(Double.parseDouble(intent.getStringExtra("reLongtitude")));
                     info.setDistance(intent.getStringExtra("reDistance"));

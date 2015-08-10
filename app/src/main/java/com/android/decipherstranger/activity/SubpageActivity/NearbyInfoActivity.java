@@ -41,7 +41,7 @@ public class NearbyInfoActivity extends BaseActivity {
         bitmap = getIntent().getParcelableExtra("photo");
         photo.setImageBitmap(bitmap);
         name.setText(getIntent().getStringExtra("name"));
-        if (getIntent().getStringExtra("sex").equals("0")) {
+        if (getIntent().getIntExtra("sex",0) == 0) {
             sex.setText("女");
         } else {
             sex.setText("男");
@@ -61,7 +61,7 @@ public class NearbyInfoActivity extends BaseActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                back();
+                onBackPressed();
             }
         });
     }
@@ -69,17 +69,10 @@ public class NearbyInfoActivity extends BaseActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            back();
+            onBackPressed();
             return true;
         }
         return super.onKeyDown(keyCode, event);
-    }
-
-    private void back() {
-        Intent intent = new Intent(NearbyInfoActivity.this, NearbyListViewActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        NearbyInfoActivity.this.finish();
     }
 }
 

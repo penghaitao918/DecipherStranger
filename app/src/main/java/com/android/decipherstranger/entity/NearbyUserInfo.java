@@ -14,14 +14,14 @@ public class NearbyUserInfo implements Serializable {
     private double longtitude;
     private Bitmap imgId;
     private String userName;
-    private String sex;
+    private int sex;
     private String distance;
 
     public NearbyUserInfo() {
     }
 
 
-    public NearbyUserInfo(double latitude, double longtitude, Bitmap imgId, String userName, String userAccount, String sex, String distance) {
+    public NearbyUserInfo(double latitude, double longtitude, Bitmap imgId, String userName, String userAccount, int sex, String distance) {
         this.latitude = latitude;
         this.longtitude = longtitude;
         this.imgId = imgId;
@@ -70,11 +70,11 @@ public class NearbyUserInfo implements Serializable {
         this.userName = userName;
     }
 
-    public String getSex() {
+    public int getSex() {
         return sex;
     }
 
-    public void setSex(String sex) {
+    public void setSex(int sex) {
         this.sex = sex;
     }
 
