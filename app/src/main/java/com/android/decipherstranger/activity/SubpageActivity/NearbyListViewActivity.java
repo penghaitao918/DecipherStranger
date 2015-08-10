@@ -58,8 +58,6 @@ import java.util.Map;
  */
 public class NearbyListViewActivity extends BaseActivity {
 
- //   private ArrayList<NearbyUserInfo> nearbyUserInfos = null;
-
     private ListView listView = null;
     private SimpleAdapter simpleAdapter = null;
     private ArrayList<Map<String, Object>> dataList = null;
@@ -86,15 +84,13 @@ public class NearbyListViewActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nearby_listview);
         SDKInitializer.initialize(getApplicationContext());
+        setContentView(R.layout.activity_nearby_listview);
         this.application = MyApplication.getInstance();
+        this.initLocation();
         this.init();
         this.initData();
         this.nearbyBroadcas();
-        this.getData();
-        System.out.println("### mLatitude = " + mLatitude);
-        System.out.println("### mLongtitude = " + mLongtitude);
         System.out.println("### 啦啦啦我进来了。。。");
     }
 
@@ -119,7 +115,6 @@ public class NearbyListViewActivity extends BaseActivity {
     }
 
     private void init() {
-        this.initLocation();
         this.progressDialog = new ProgressDialog(NearbyListViewActivity.this);
 
         this.dataList = new ArrayList<Map<String, Object>>();
@@ -174,7 +169,7 @@ public class NearbyListViewActivity extends BaseActivity {
         map.put(MyStatic.USER_PORTRAIT, portrait);
         map.put(MyStatic.USER_NAME, name);
         map.put(MyStatic.USER_SEX, sex);
-        map.put(MyStatic.USER_DISTANCE, distance);
+        map.put(MyStatic.USER_DISTANCE, Math.round(Double.parseDouble(distance)) + "米");
         if (sex == 0) {
             map.put(MyStatic.SHARE_SEX, BitmapFactory.decodeResource(NearbyListViewActivity.this.getResources(), R.drawable.ic_sex_female));
         } else {
@@ -213,6 +208,8 @@ public class NearbyListViewActivity extends BaseActivity {
         public void onReceiveLocation(BDLocation location) {
             mLatitude = location.getLatitude();
             mLongtitude = location.getLongitude();
+            NearbyListViewActivity.this.getData();
+            System.out.println("### 获取完毕");
         }
     }
 
