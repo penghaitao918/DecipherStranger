@@ -33,12 +33,12 @@ import java.util.ArrayList;
  * Created by WangXin on 2015/4/6 0006.
  */
 public class NearbyListViewAdapter extends BaseAdapter {
+    final String MAN = "男";
+    final String WOMAN = "女";
     private ArrayList<NearbyUserInfo> nearbyUserData;
     private LayoutInflater inflater;
-    final String MAN = "男";
-    final  String WOMAN = "女";
 
-    public NearbyListViewAdapter(ArrayList<NearbyUserInfo> nearbyUserData,Context context) {
+    public NearbyListViewAdapter(ArrayList<NearbyUserInfo> nearbyUserData, Context context) {
         this.nearbyUserData = nearbyUserData;
         this.inflater = LayoutInflater.from(context);
     }
@@ -60,26 +60,26 @@ public class NearbyListViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        NearbyUserInfo  nearbyUserInfo = nearbyUserData.get(position);
+        NearbyUserInfo nearbyUserInfo = nearbyUserData.get(position);
         viewHolder holder;
-        if (convertView == null){
+        if (convertView == null) {
             holder = new viewHolder();
-            convertView = inflater.inflate(R.layout.nearby_view_item,null);
+            convertView = inflater.inflate(R.layout.nearby_view_item, null);
             holder.nearbyUserPhoto = (ImageView) convertView.findViewById(R.id.nearby_list_view_user_photo);
             holder.nearbyUserName = (TextView) convertView.findViewById(R.id.nearby_list_view_user_name);
             holder.nearbyUserSex = (ImageView) convertView.findViewById(R.id.nearby_list_view_sex);
             holder.nearbyUserDistance = (TextView) convertView.findViewById(R.id.nearby_list_view_distance);
-        }else{
+        } else {
             holder = (viewHolder) convertView.getTag();
         }
         try {
-            Drawable drawable = new BitmapDrawable(convertView.getResources(),nearbyUserInfo.getImgId());
+            Drawable drawable = new BitmapDrawable(convertView.getResources(), nearbyUserInfo.getImgId());
             holder.nearbyUserPhoto.setImageDrawable(drawable);
             holder.nearbyUserName.setText(nearbyUserInfo.getUserName());
-            holder.nearbyUserDistance.setText(Math.round(Double.parseDouble(nearbyUserInfo.getDistance()))+"米");
-            if (nearbyUserInfo.getSex() == MAN){
+            holder.nearbyUserDistance.setText(Math.round(Double.parseDouble(nearbyUserInfo.getDistance())) + "米");
+            if (nearbyUserInfo.getSex() == MAN) {
                 holder.nearbyUserSex.setImageResource(R.drawable.ic_sex_male);
-            }else if(nearbyUserInfo.getSex() == WOMAN){
+            } else if (nearbyUserInfo.getSex() == WOMAN) {
                 holder.nearbyUserSex.setImageResource(R.drawable.ic_sex_female);
             }
         } catch (Exception e) {
@@ -87,7 +87,8 @@ public class NearbyListViewAdapter extends BaseAdapter {
         }
         return convertView;
     }
-    class viewHolder{
+
+    class viewHolder {
         ImageView nearbyUserPhoto;
         TextView nearbyUserName;
         TextView nearbyUserDistance;

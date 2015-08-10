@@ -14,21 +14,21 @@ import com.android.decipherstranger.activity.SubpageActivity.ShakeActivity;
 import com.android.decipherstranger.activity.SubpageActivity.ShowMapActivity;
 
 public class ServicePageActivity extends BaseActivity {
-    
+
     private Intent intent = null;
-	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_main_service);
-	}
-    
+    }
+
     public void morePageOnClick(View view) {
         switch (view.getId()) {
             case R.id.friends_trends:
                 this.intent = new Intent(this, MainActivity.class);
                 this.startActivity(intent);
-            //    Toast.makeText(this,"该扩展功能暂未实现，敬请期待~",Toast.LENGTH_SHORT).show();
+                //    Toast.makeText(this,"该扩展功能暂未实现，敬请期待~",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.friends_invitation:
                 this.intent = new Intent(this, InvitationActivity.class);

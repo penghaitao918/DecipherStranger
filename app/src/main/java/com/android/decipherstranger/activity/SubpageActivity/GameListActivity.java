@@ -11,7 +11,7 @@ import com.android.decipherstranger.activity.GameOneActivity.SetGradeActivity;
 import com.android.decipherstranger.activity.GameOneActivity.WelcomeRspActivity;
 
 /**
- *       へ　　　　　／|
+ * へ　　　　　／|
  * 　　/＼7　　　 ∠＿/
  * 　 /　│　　 ／　／
  * 　│　Z ＿,＜　／　　 /`ヽ
@@ -31,15 +31,15 @@ import com.android.decipherstranger.activity.GameOneActivity.WelcomeRspActivity;
  * @e-mail 785351408@qq.com
  */
 public class GameListActivity extends BaseActivity {
-    
+
     private Intent intent = null;
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_game_list);
     }
-    
+
     public void GameListOnClick(View view) {
         switch (view.getId()) {
             case R.id.gamelist_back_button:
@@ -47,7 +47,7 @@ public class GameListActivity extends BaseActivity {
                 break;
             case R.id.game_rsp:
                 this.intent = new Intent(this, WelcomeRspActivity.class);
-                this.intent.putExtra("Type","Practice");
+                this.intent.putExtra("Type", "Practice");
                 this.startActivity(intent);
                 break;
             case R.id.button1:
@@ -58,7 +58,7 @@ public class GameListActivity extends BaseActivity {
                 Toast.makeText(this, "该游戏暂未开放，敬请期待~", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.button2:
-                Toast.makeText(this,"该功能暂未开放，敬请期待~",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "该功能暂未开放，敬请期待~", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

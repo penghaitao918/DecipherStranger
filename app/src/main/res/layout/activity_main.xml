@@ -2,154 +2,154 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
-    android:background="@drawable/main_bg">
+    android:background="@drawable/main_bg"
+    android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/relativeLayout4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/tab"
         android:layout_gravity="center_horizontal"
-        android:id="@+id/relativeLayout4">
+        android:background="@color/tab">
 
         <TextView
+            android:id="@+id/textTab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="通 讯 录"
-            android:id="@+id/textTab"
-            android:textSize="20dp"
-            android:layout_margin="10dp"
-            android:textColor="@color/text_hint"
+            android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_margin="10dp"
+            android:text="通 讯 录"
+            android:textColor="@color/text_hint"
+            android:textSize="20dp" />
     </RelativeLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager_user_main"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_weight="1"
-        android:layout_below="@+id/relativeLayout4"
+        android:layout_above="@+id/linearLayout2"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/linearLayout2" />
-    
+        android:layout_below="@+id/relativeLayout4"
+        android:layout_weight="1" />
+
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:background="@color/tab"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/linearLayout2">
+        android:background="@color/tab"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/conversationPage"
-            android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:paddingTop="5dp"
             android:layout_gravity="center_horizontal"
-            android:onClick="PageOnClick">
+            android:layout_weight="1"
+            android:onClick="PageOnClick"
+            android:orientation="vertical"
+            android:paddingTop="5dp">
 
             <ImageView
                 android:id="@+id/conversationImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/conversation_normal"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/conversation_normal" />
 
             <TextView
                 android:id="@+id/conversationText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_gravity="center_horizontal"
                 android:text="会话"
-                android:textColor="@color/text_hint"
-                android:layout_gravity="center_horizontal" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/text_hint" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/contactsPage"
-            android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:onClick="PageOnClick">
+            android:onClick="PageOnClick"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/contactsImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/contacts_normal"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/contacts_normal" />
 
             <TextView
                 android:id="@+id/contactsText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_gravity="center_horizontal"
                 android:text="通讯录"
-                android:textColor="@color/text_hint"
-                android:layout_gravity="center_horizontal" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/text_hint" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/morePage"
-            android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:onClick="PageOnClick">
+            android:onClick="PageOnClick"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/moreImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/service_normal"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/service_normal" />
 
             <TextView
                 android:id="@+id/moreText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_gravity="center_horizontal"
                 android:text="服务"
-                android:textColor="@color/text_hint"
-                android:layout_gravity="center_horizontal" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/text_hint" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/userPage"
-            android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:onClick="PageOnClick">
+            android:onClick="PageOnClick"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/userImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/user_normal"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/user_normal" />
 
             <TextView
                 android:id="@+id/userText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_gravity="center_horizontal"
                 android:text="我"
-                android:textColor="@color/text_hint"
-                android:layout_gravity="center_horizontal" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/text_hint" />
         </LinearLayout>
-        
+
     </LinearLayout>
 
 </RelativeLayout>

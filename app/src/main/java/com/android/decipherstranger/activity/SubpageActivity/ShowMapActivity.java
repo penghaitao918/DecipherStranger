@@ -58,7 +58,7 @@ public class ShowMapActivity extends BaseActivity {
     private ProgressDialog progressDialog = null;
     private double mLatitude;
     private double mLongtitude;
-    private ArrayList<NearbyUserInfo>nearbyInfo = new ArrayList<>();
+    private ArrayList<NearbyUserInfo> nearbyInfo = new ArrayList<>();
     private ShowMapBroadcastReceiver receiver = null;
 
     private Context context;
@@ -83,8 +83,8 @@ public class ShowMapActivity extends BaseActivity {
     }
 
     private void initMarker() {
-         addOverlays(nearbyInfo);
-         mMarkerlayout = (RelativeLayout) findViewById(R.id.nearby_info);
+        addOverlays(nearbyInfo);
+        mMarkerlayout = (RelativeLayout) findViewById(R.id.nearby_info);
     }
 
     //添加覆盖物
@@ -93,22 +93,22 @@ public class ShowMapActivity extends BaseActivity {
         LatLng latLng = null;
         Marker marker = null;
         OverlayOptions options;
-        if (!infos.isEmpty()){
-            for(NearbyUserInfo nearByUserInfo:infos){
+        if (!infos.isEmpty()) {
+            for (NearbyUserInfo nearByUserInfo : infos) {
                 //经纬度
-                latLng = new LatLng(nearByUserInfo.getLatitude(),nearByUserInfo.getLongtitude());
+                latLng = new LatLng(nearByUserInfo.getLatitude(), nearByUserInfo.getLongtitude());
                 //图标
                 mMarker = BitmapDescriptorFactory.fromBitmap(nearByUserInfo.getImgId());
                 options = new MarkerOptions().position(latLng).icon(mMarker).zIndex(5);
                 marker = (Marker) mBaiduMap.addOverlay(options);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("nearByUserInfo", nearByUserInfo) ;
+                bundle.putSerializable("nearByUserInfo", nearByUserInfo);
                 marker.setExtraInfo(bundle);
             }
         }
     }
 
-    private void markerOnclick(){
+    private void markerOnclick() {
         mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
@@ -123,11 +123,11 @@ public class ShowMapActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         Intent it = new Intent(ShowMapActivity.this, WelcomeRspActivity.class);
-                        it.putExtra("Type","AddFriend");
-                        it.putExtra("Account",nearByUserInfo.getUserAccount());
-                        it.putExtra("Name",nearByUserInfo.getUserName());
-                        it.putExtra("Photo",nearByUserInfo.getImgId());
-                        it.putExtra("Sex",nearByUserInfo.getSex());
+                        it.putExtra("Type", "AddFriend");
+                        it.putExtra("Account", nearByUserInfo.getUserAccount());
+                        it.putExtra("Name", nearByUserInfo.getUserName());
+                        it.putExtra("Photo", nearByUserInfo.getImgId());
+                        it.putExtra("Sex", nearByUserInfo.getSex());
                         startActivity(it);
                     }
                 });
@@ -139,7 +139,7 @@ public class ShowMapActivity extends BaseActivity {
                 } else {
                     nearByUserSex.setImageResource(R.drawable.ic_sex_female);
                 }
-                distance.setText(Math.round(Double.parseDouble(nearByUserInfo.getDistance()))+"米");
+                distance.setText(Math.round(Double.parseDouble(nearByUserInfo.getDistance())) + "米");
                 mMarkerlayout.setVisibility(View.VISIBLE);
                 return true;
             }
@@ -163,6 +163,7 @@ public class ShowMapActivity extends BaseActivity {
             }
         });
     }
+
     private void initLocation() {
         mLocationClient = new LocationClient(this);
         mLocationListener = new MyLocationListener();
@@ -177,8 +178,8 @@ public class ShowMapActivity extends BaseActivity {
 
     }
 
-    private void initView(){
-        mMapView = (MapView)findViewById(R.id.user_map_view);
+    private void initView() {
+        mMapView = (MapView) findViewById(R.id.user_map_view);
         mBaiduMap = mMapView.getMap();
         MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(15.0f);
         mBaiduMap.setMapStatus(msu);
@@ -204,7 +205,7 @@ public class ShowMapActivity extends BaseActivity {
         super.onStart();
         //开启定位
         mBaiduMap.setMyLocationEnabled(true);
-        if(!mLocationClient.isStarted()){
+        if (!mLocationClient.isStarted()) {
             mLocationClient.start();
         }
     }
@@ -223,35 +224,12 @@ public class ShowMapActivity extends BaseActivity {
         mBaiduMap.setMyLocationEnabled(false);
         mLocationClient.stop();
     }
+
     //定位到我的位置
-    private void CenterToMyLocation(){
-        LatLng latLng = new LatLng(mLatitude,mLongtitude);
+    private void CenterToMyLocation() {
+        LatLng latLng = new LatLng(mLatitude, mLongtitude);
         MapStatusUpdate msu = MapStatusUpdateFactory.newLatLng(latLng);
         mBaiduMap.animateMapStatus(msu);
-    }
-
-    public class MyLocationListener implements BDLocationListener{
-
-        @Override
-        public void onReceiveLocation(BDLocation location){
-            MyLocationData data = new MyLocationData.Builder()//
-                    .accuracy(location.getRadius())//
-                    .latitude(location.getLatitude())//
-                    .longitude(location.getLongitude()).//
-                            build();
-            mBaiduMap.setMyLocationData(data);
-//            MyLocationConfiguration config = new MyLocationConfiguration(NORMAL,arg1,arg2);
-            mLatitude = location.getLatitude();
-            mLongtitude = location.getLongitude();
-            if(isFristIn){
-                LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
-                MapStatusUpdate msu = MapStatusUpdateFactory.newLatLng(latLng);
-                mBaiduMap.animateMapStatus(msu);
-                isFristIn = false;
-                sendMsg();
-                Toast.makeText(context,location.getAddrStr(),Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 
     private void sendMsg() {
@@ -280,11 +258,35 @@ public class ShowMapActivity extends BaseActivity {
         this.registerReceiver(receiver, filter);
     }
 
+    public class MyLocationListener implements BDLocationListener {
+
+        @Override
+        public void onReceiveLocation(BDLocation location) {
+            MyLocationData data = new MyLocationData.Builder()//
+                    .accuracy(location.getRadius())//
+                    .latitude(location.getLatitude())//
+                    .longitude(location.getLongitude()).//
+                            build();
+            mBaiduMap.setMyLocationData(data);
+//            MyLocationConfiguration config = new MyLocationConfiguration(NORMAL,arg1,arg2);
+            mLatitude = location.getLatitude();
+            mLongtitude = location.getLongitude();
+            if (isFristIn) {
+                LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                MapStatusUpdate msu = MapStatusUpdateFactory.newLatLng(latLng);
+                mBaiduMap.animateMapStatus(msu);
+                isFristIn = false;
+                sendMsg();
+                Toast.makeText(context, location.getAddrStr(), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
     public class ShowMapBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals("com.android.decipherstranger.NEARBY")) {
-                if(intent.getBooleanExtra("reResult", false)) {
+                if (intent.getBooleanExtra("reResult", false)) {
                     //Todo 数据接收
                     System.out.println("+++++++++++++++++++++++AAAAAAAA");
                     NearbyUserInfo info = new NearbyUserInfo();
@@ -296,8 +298,8 @@ public class ShowMapActivity extends BaseActivity {
                     info.setLongtitude(Double.parseDouble(intent.getStringExtra("reLongtitude")));
                     info.setDistance(intent.getStringExtra("reDistance"));
                     nearbyInfo.add(info);
-                    System.out.println("账号"+info.getUserAccount()+"姓名"+info.getUserName()+"距离"+info.getDistance());
-                }else if(intent.getBooleanExtra("isfinish", false)){
+                    System.out.println("账号" + info.getUserAccount() + "姓名" + info.getUserName() + "距离" + info.getDistance());
+                } else if (intent.getBooleanExtra("isfinish", false)) {
                     System.out.println("aaaaaaaaaaaaa!");
                     //Todo 数据处理
                     //覆盖物相关
@@ -306,7 +308,7 @@ public class ShowMapActivity extends BaseActivity {
                     markerOnclick();
                     System.out.println("+++++++++++++!");
                     progressDialog.dismiss();
-                }else{
+                } else {
                     //Todo 没有人
                     Toast.makeText(context, "竟然没有人:)", Toast.LENGTH_SHORT).show();
                     System.out.println("-------------!");

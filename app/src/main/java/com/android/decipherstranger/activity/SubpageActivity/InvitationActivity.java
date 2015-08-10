@@ -46,20 +46,6 @@ import com.android.decipherstranger.util.MyStatic;
  */
 public class InvitationActivity extends BaseActivity {
 
-    private MyApplication application = null;
-    private InvitationBroadcastReceiver receiver = null;
-
-    private Bitmap bitmap = null;
-    private Resources resources = null;
-    private ImageView imageView = null;
-    
-    private boolean click = false;
-    
-    private String account = null;
-    private String name = null;
-    private int sex = 0;
-    private String portrait = null;
-
     int startAnimationFile[] = {
             R.drawable.invitation_start_01, R.drawable.invitation_start_02, R.drawable.invitation_start_03, R.drawable.invitation_start_04, R.drawable.invitation_start_05,
             R.drawable.invitation_start_06, R.drawable.invitation_start_07, R.drawable.invitation_start_08, R.drawable.invitation_start_09, R.drawable.invitation_start_10,
@@ -70,7 +56,6 @@ public class InvitationActivity extends BaseActivity {
             R.drawable.invitation_start_31, R.drawable.invitation_start_32, R.drawable.invitation_start_33, R.drawable.invitation_start_34, R.drawable.invitation_start_35,
             R.drawable.invitation_start_36, R.drawable.invitation_start_37, R.drawable.invitation_start_38, R.drawable.invitation_start_39, R.drawable.invitation_start_40
     };
-
     int successAnimationFile[] = {
             R.drawable.invitation_move_01, R.drawable.invitation_move_02, R.drawable.invitation_move_03, R.drawable.invitation_move_04, R.drawable.invitation_move_05,
             R.drawable.invitation_move_06, R.drawable.invitation_move_07, R.drawable.invitation_move_08, R.drawable.invitation_move_09, R.drawable.invitation_move_10,
@@ -83,7 +68,6 @@ public class InvitationActivity extends BaseActivity {
             R.drawable.invitation_success_26, R.drawable.invitation_success_27, R.drawable.invitation_success_28, R.drawable.invitation_success_29, R.drawable.invitation_success_30,
             R.drawable.invitation_success_31, R.drawable.invitation_success_32, R.drawable.invitation_success_33, R.drawable.invitation_success_34, R.drawable.invitation_success_35
     };
-
     int failAnimationFile[] = {
             R.drawable.invitation_move_01, R.drawable.invitation_move_02, R.drawable.invitation_move_03, R.drawable.invitation_move_04, R.drawable.invitation_move_05,
             R.drawable.invitation_move_06, R.drawable.invitation_move_07, R.drawable.invitation_move_08, R.drawable.invitation_move_09, R.drawable.invitation_move_10,
@@ -97,11 +81,41 @@ public class InvitationActivity extends BaseActivity {
             R.drawable.invitation_fail_31, R.drawable.invitation_fail_32, R.drawable.invitation_fail_33, R.drawable.invitation_fail_34, R.drawable.invitation_fail_35,
             R.drawable.invitation_fail_36, R.drawable.invitation_fail_37, R.drawable.invitation_fail_38, R.drawable.invitation_fail_39, R.drawable.invitation_fail_40,
             R.drawable.invitation_fail_41, R.drawable.invitation_fail_42, R.drawable.invitation_fail_43, R.drawable.invitation_fail_44, R.drawable.invitation_fail_45,
-            R.drawable.invitation_fail_46, R.drawable.invitation_fail_47, R.drawable.invitation_fail_48, R.drawable.invitation_fail_49, R.drawable.invitation_fail_50, 
+            R.drawable.invitation_fail_46, R.drawable.invitation_fail_47, R.drawable.invitation_fail_48, R.drawable.invitation_fail_49, R.drawable.invitation_fail_50,
             R.drawable.invitation_fail_51, R.drawable.invitation_fail_52, R.drawable.invitation_fail_53, R.drawable.invitation_fail_54, R.drawable.invitation_fail_55,
             R.drawable.invitation_fail_56, R.drawable.invitation_fail_57, R.drawable.invitation_fail_58, R.drawable.invitation_fail_59, R.drawable.invitation_fail_60,
             R.drawable.invitation_fail_61, R.drawable.invitation_fail_62, R.drawable.invitation_fail_63, R.drawable.invitation_fail_64, R.drawable.invitation_fail_65,
-            R.drawable.invitation_fail_66 
+            R.drawable.invitation_fail_66
+    };
+    private MyApplication application = null;
+    private InvitationBroadcastReceiver receiver = null;
+    private Bitmap bitmap = null;
+    private Resources resources = null;
+    private ImageView imageView = null;
+    private boolean click = false;
+    private String account = null;
+    private String name = null;
+    private int sex = 0;
+    private String portrait = null;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message message) {
+            switch (message.what) {
+                case MyStatic.INVITATION_START:
+                    int count_start = message.arg1;
+                    bitmap = BitmapFactory.decodeResource(resources, (startAnimationFile[count_start]));
+                    break;
+                case MyStatic.INVITATION_SUCCESS:
+                    int count_success = message.arg1;
+                    bitmap = BitmapFactory.decodeResource(resources, (successAnimationFile[count_success]));
+                    break;
+                case MyStatic.INVITATION_FAIL:
+                    int count_fail = message.arg1;
+                    bitmap = BitmapFactory.decodeResource(resources, (failAnimationFile[count_fail]));
+                    break;
+            }
+            imageView.setImageBitmap(bitmap);
+        }
     };
 
     @Override
@@ -161,11 +175,11 @@ public class InvitationActivity extends BaseActivity {
         }
     }
 
-    private void start(){
+    private void start() {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                for (int i = 0; i < 40; ++ i) {
+                for (int i = 0; i < 40; ++i) {
                     try {
                         Thread.sleep(55);
                         Message message = new Message();
@@ -180,16 +194,15 @@ public class InvitationActivity extends BaseActivity {
             }
         }).start();
     }
-    
+
     private void info() {
-        Intent intent = new Intent(this,InvitationInfoActivity.class);
+        Intent intent = new Intent(this, InvitationInfoActivity.class);
         intent.putExtra("Account", account);
         intent.putExtra("Name", name);
         intent.putExtra("Sex", sex);
         intent.putExtra("Portrait", portrait);
         startActivity(intent);
     }
-
 
     private void success() {
         if (application.getAccount().equals(account)) {
@@ -198,7 +211,7 @@ public class InvitationActivity extends BaseActivity {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    for (int i = 0; i < 13 + 35; ++ i) {
+                    for (int i = 0; i < 13 + 35; ++i) {
                         try {
                             if (i < 13) {
                                 Thread.sleep(100);
@@ -224,7 +237,7 @@ public class InvitationActivity extends BaseActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                for (int i = 0; i < 13 + 66; ++ i) {
+                for (int i = 0; i < 13 + 66; ++i) {
                     try {
                         if (i < 13) {
                             Thread.sleep(100);
@@ -244,11 +257,11 @@ public class InvitationActivity extends BaseActivity {
         }).start();
     }
 
-    private void sendInvitation(){
+    private void sendInvitation() {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                for (int i = 13 + 35 - 1; i >= 0; i --) {
+                for (int i = 13 + 35 - 1; i >= 0; i--) {
                     try {
                         Thread.sleep(60);
                         Message message = new Message();
@@ -259,7 +272,7 @@ public class InvitationActivity extends BaseActivity {
                         e.printStackTrace();
                     }
                 }
-                for (int i = 39; i >= 0; i --) {
+                for (int i = 39; i >= 0; i--) {
                     try {
                         Thread.sleep(55);
                         Message message = new Message();
@@ -274,49 +287,26 @@ public class InvitationActivity extends BaseActivity {
             }
         }).start();
     }
-    
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message message) {
-            switch (message.what) {
-                case MyStatic.INVITATION_START:
-                    int count_start = message.arg1;
-                    bitmap = BitmapFactory.decodeResource(resources, (startAnimationFile[count_start]));
-                    break;
-                case MyStatic.INVITATION_SUCCESS:
-                    int count_success = message.arg1;
-                    bitmap = BitmapFactory.decodeResource(resources, (successAnimationFile[count_success]));
-                    break;
-                case MyStatic.INVITATION_FAIL:
-                    int count_fail = message.arg1;
-                    bitmap = BitmapFactory.decodeResource(resources, (failAnimationFile[count_fail]));
-                    break;
-            }
-            imageView.setImageBitmap(bitmap);
-        }
-    };
 
     private void send() {
-        if(NetworkService.getInstance().getIsConnected()) {
-            String sendInv = "type"+":"+Integer.toString(GlobalMsgUtils.msgSendInv)+":"+
-                    "account"+":"+application.getAccount();
+        if (NetworkService.getInstance().getIsConnected()) {
+            String sendInv = "type" + ":" + Integer.toString(GlobalMsgUtils.msgSendInv) + ":" +
+                    "account" + ":" + application.getAccount();
             Log.v("aaaaa", sendInv);
             NetworkService.getInstance().sendUpload(sendInv);
-        }
-        else {
+        } else {
             NetworkService.getInstance().closeConnection();
             Toast.makeText(InvitationActivity.this, "服务器连接失败~(≧▽≦)~啦啦啦", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void receive() {
-        if(NetworkService.getInstance().getIsConnected()) {
-            String reInv = "type"+":"+Integer.toString(GlobalMsgUtils.msgReceiveInv)+":"+
-                           "account"+":"+application.getAccount();
+        if (NetworkService.getInstance().getIsConnected()) {
+            String reInv = "type" + ":" + Integer.toString(GlobalMsgUtils.msgReceiveInv) + ":" +
+                    "account" + ":" + application.getAccount();
             Log.v("aaaaa", reInv);
             NetworkService.getInstance().sendUpload(reInv);
-        }
-        else {
+        } else {
             NetworkService.getInstance().closeConnection();
             Toast.makeText(InvitationActivity.this, "服务器连接失败~(≧▽≦)~啦啦啦", Toast.LENGTH_SHORT).show();
         }
@@ -334,10 +324,10 @@ public class InvitationActivity extends BaseActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals("com.android.decipherstranger.INVITATION")) {
-                if(intent.getBooleanExtra("reResult", true)){
+                if (intent.getBooleanExtra("reResult", true)) {
                     account = intent.getStringExtra("reAccount");
                     name = intent.getStringExtra("reName");
-                    sex = intent.getIntExtra("reGender",0);
+                    sex = intent.getIntExtra("reGender", 0);
                     portrait = intent.getStringExtra("rePhoto");
                     success();
                 } else {

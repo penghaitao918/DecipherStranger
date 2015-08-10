@@ -52,20 +52,20 @@ public class SwingAnimation extends Animation {
         } else {
             degrees = -4 * mMoveDegrees + 4 * mMoveDegrees * interpolatedTime;
         }*/
-        if (interpolatedTime >= 0 && interpolatedTime < 0.5 ){
+        if (interpolatedTime >= 0 && interpolatedTime < 0.5) {
             degrees = 2 * mMoveDegrees * interpolatedTime;
         } else {
             degrees = 2 * mMoveDegrees - 2 * mMoveDegrees * interpolatedTime;
         }
         float scale = getScaleFactor();
-        
+
         if (mPivotX == 0.0f && mPivotY == 0.0f) {
             t.getMatrix().setRotate(degrees);
         } else {
             t.getMatrix().setRotate(degrees, mPivotX * scale, mPivotY * scale);
         }
     }
-    
+
     @Override
     public void initialize(int width, int height, int parentWidth, int parentHeight) {
         super.initialize(width, height, parentWidth, parentHeight);

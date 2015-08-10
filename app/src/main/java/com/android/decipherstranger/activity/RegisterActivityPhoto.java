@@ -39,6 +39,10 @@ import java.io.File;
  */
 public class RegisterActivityPhoto extends BaseActivity {
 
+    private static final int IMAGE_REQUEST_CODE = 0;
+    private static final int CAMERA_REQUEST_CODE = 1;
+    private static final int RESULT_REQUEST_CODE = 2;
+    private static final String IMAGE_FILE_NAME = "faceImage.jpg";
     private Bitmap photo = null;
     private LinearLayout selectPhoto;
     private LinearLayout takePicture;
@@ -47,15 +51,9 @@ public class RegisterActivityPhoto extends BaseActivity {
     private String portraitUrl;
     private String sPortaitUrl;
     private RegisterBroadcastReceiver receiver = null;
-
     private ImageButton backButton = null;
     private Button previousStepButton;
     private Button registerButton;
-    private static final int IMAGE_REQUEST_CODE = 0;
-    private static final int CAMERA_REQUEST_CODE = 1;
-    private static final int RESULT_REQUEST_CODE = 2;
-
-    private static final String IMAGE_FILE_NAME = "faceImage.jpg";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -91,7 +89,7 @@ public class RegisterActivityPhoto extends BaseActivity {
 
 
     private void initData() {
-        Intent  intent = getIntent();
+        Intent intent = getIntent();
         userInfo = new User();
         userInfo.setAccount(intent.getStringExtra("account"));
         userInfo.setPassword(intent.getStringExtra("possword"));
@@ -102,104 +100,19 @@ public class RegisterActivityPhoto extends BaseActivity {
         userInfo.setBirth(intent.getStringExtra("birth"));
     }
 
-    private void initView(){
-        this.selectPhoto = (LinearLayout)super.findViewById(R.id.reg_photo_layout_selectphoto);
-        this.takePicture = (LinearLayout)super.findViewById(R.id.reg_photo_layout_takepicture);
-        this.userPhoto = (ImageView)super.findViewById(R.id.reg_photo_iv_userphoto);
+    private void initView() {
+        this.selectPhoto = (LinearLayout) super.findViewById(R.id.reg_photo_layout_selectphoto);
+        this.takePicture = (LinearLayout) super.findViewById(R.id.reg_photo_layout_takepicture);
+        this.userPhoto = (ImageView) super.findViewById(R.id.reg_photo_iv_userphoto);
         this.backButton = (ImageButton) super.findViewById(R.id.register_back_button);
-        this.previousStepButton = (Button)super.findViewById(R.id.previous_step);
-        this.registerButton = (Button)super.findViewById(R.id.register_btn);
+        this.previousStepButton = (Button) super.findViewById(R.id.previous_step);
+        this.registerButton = (Button) super.findViewById(R.id.register_btn);
 
         this.selectPhoto.setOnClickListener(new selectPhotoOnClickListenerImpl());
         this.takePicture.setOnClickListener(new takePictureOnClickListenerImpl());
         this.backButton.setOnClickListener(new backOnClickListenerImpl());
         this.previousStepButton.setOnClickListener(new previousStepButtonOnClickListenerImpl());
         this.registerButton.setOnClickListener(new registerButtonOnClickListenerImpl());
-    }
-
-    public class selectPhotoOnClickListenerImpl implements View.OnClickListener{
-        @Override
-        public void onClick(View view){
-            Intent intentFromGallery = new Intent();
-            intentFromGallery.setType("image/*"); // 设置文件类型
-            intentFromGallery
-                    .setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(intentFromGallery,
-                    IMAGE_REQUEST_CODE);
-        }
-    }
-
-    public class takePictureOnClickListenerImpl implements View.OnClickListener {
-        @Override
-        public void onClick(View view) {
-            Intent intentFromCapture = new Intent(
-                        MediaStore.ACTION_IMAGE_CAPTURE);
-                // 判断存储卡是否可以用，可用进行存储
-                if (Tools.hasSdcard()) {
-                    File path = Environment
-                            .getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
-                    File file = new File(path, IMAGE_FILE_NAME);
-                    intentFromCapture.putExtra(
-                            MediaStore.EXTRA_OUTPUT,
-                            Uri.fromFile(file));
-                startActivityForResult(intentFromCapture,
-                        CAMERA_REQUEST_CODE);
-            }
-        }
-    }
-    
-    public class backOnClickListenerImpl implements View.OnClickListener{
-        @Override
-        public void onClick(View view){
-            Intent intent = new Intent(RegisterActivityPhoto.this, LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            RegisterActivityPhoto.this.finish();
-        }
-    }
-    
-    public class previousStepButtonOnClickListenerImpl implements View.OnClickListener{
-        @Override
-        public void onClick(View view){
-            onBackPressed();
-        }
-    }
-    
-    public class registerButtonOnClickListenerImpl implements View.OnClickListener{
-        @Override
-        public void onClick(View view){
-            initData();
-
-            NetworkService.getInstance().closeConnection();
-            NetworkService.getInstance().onInit(RegisterActivityPhoto.this);
-            NetworkService.getInstance().setupConnection();
-            int userGender = 1;
-            if(NetworkService.getInstance().getIsConnected()) {
-                if (userInfo.getUserSex().equals("男")){
-                    userGender = 1;
-                }
-                else
-                    userGender = 0;
-                StringUtils stringUtils = null;
-                String sendInfo= "type"+":"+Integer.toString(GlobalMsgUtils.msgRegister)+":"+
-                        "account"+":"+userInfo.getAccount()+":"+
-                        "password"+":"+stringUtils.MD5(userInfo.getPassword())+":"+
-                        "name"+":"+userInfo.getUsername()+":"+
-                        "sex"+":"+userGender+":"+
-                        "email"+":"+userInfo.getEmail()+":"+
-                        "phone"+":"+userInfo.getPhone()+":"+
-                        "birth"+":"+userInfo.getBirth()+":"+
-                        "photo"+":"+portraitUrl+":"+
-                        "sphoto"+":"+sPortaitUrl;
-                NetworkService.getInstance().sendUpload(sendInfo);
-            }
-            else {
-                NetworkService.getInstance().closeConnection();
-                Toast.makeText(RegisterActivityPhoto.this, "服务器连接失败~(≧▽≦)~啦啦啦", Toast.LENGTH_SHORT).show();
-                Log.v("Login", "已经执行T（）方法");
-            }
-
-        }
     }
 
     @Override
@@ -231,6 +144,7 @@ public class RegisterActivityPhoto extends BaseActivity {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
     /**
      * 裁剪图片方法实现
      *
@@ -254,7 +168,6 @@ public class RegisterActivityPhoto extends BaseActivity {
 
     /**
      * 保存裁剪之后的图片数据
-     *
      */
     private void getImageToView(Intent data) {
         Bundle extras = data.getExtras();
@@ -275,19 +188,101 @@ public class RegisterActivityPhoto extends BaseActivity {
         this.registerReceiver(receiver, filter);
     }
 
+    public class selectPhotoOnClickListenerImpl implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            Intent intentFromGallery = new Intent();
+            intentFromGallery.setType("image/*"); // 设置文件类型
+            intentFromGallery
+                    .setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(intentFromGallery,
+                    IMAGE_REQUEST_CODE);
+        }
+    }
+
+    public class takePictureOnClickListenerImpl implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            Intent intentFromCapture = new Intent(
+                    MediaStore.ACTION_IMAGE_CAPTURE);
+            // 判断存储卡是否可以用，可用进行存储
+            if (Tools.hasSdcard()) {
+                File path = Environment
+                        .getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+                File file = new File(path, IMAGE_FILE_NAME);
+                intentFromCapture.putExtra(
+                        MediaStore.EXTRA_OUTPUT,
+                        Uri.fromFile(file));
+                startActivityForResult(intentFromCapture,
+                        CAMERA_REQUEST_CODE);
+            }
+        }
+    }
+
+    public class backOnClickListenerImpl implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(RegisterActivityPhoto.this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            RegisterActivityPhoto.this.finish();
+        }
+    }
+
+    public class previousStepButtonOnClickListenerImpl implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            onBackPressed();
+        }
+    }
+
+    public class registerButtonOnClickListenerImpl implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            initData();
+
+            NetworkService.getInstance().closeConnection();
+            NetworkService.getInstance().onInit(RegisterActivityPhoto.this);
+            NetworkService.getInstance().setupConnection();
+            int userGender = 1;
+            if (NetworkService.getInstance().getIsConnected()) {
+                if (userInfo.getUserSex().equals("男")) {
+                    userGender = 1;
+                } else
+                    userGender = 0;
+                StringUtils stringUtils = null;
+                String sendInfo = "type" + ":" + Integer.toString(GlobalMsgUtils.msgRegister) + ":" +
+                        "account" + ":" + userInfo.getAccount() + ":" +
+                        "password" + ":" + stringUtils.MD5(userInfo.getPassword()) + ":" +
+                        "name" + ":" + userInfo.getUsername() + ":" +
+                        "sex" + ":" + userGender + ":" +
+                        "email" + ":" + userInfo.getEmail() + ":" +
+                        "phone" + ":" + userInfo.getPhone() + ":" +
+                        "birth" + ":" + userInfo.getBirth() + ":" +
+                        "photo" + ":" + portraitUrl + ":" +
+                        "sphoto" + ":" + sPortaitUrl;
+                NetworkService.getInstance().sendUpload(sendInfo);
+            } else {
+                NetworkService.getInstance().closeConnection();
+                Toast.makeText(RegisterActivityPhoto.this, "服务器连接失败~(≧▽≦)~啦啦啦", Toast.LENGTH_SHORT).show();
+                Log.v("Login", "已经执行T（）方法");
+            }
+
+        }
+    }
+
     public class RegisterBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals("com.android.decipherstranger.REGISTER")) {
-                if(intent.getStringExtra("result").equals(MyStatic.resultTrue)) {
+                if (intent.getStringExtra("result").equals(MyStatic.resultTrue)) {
                     System.out.println("### 注册成功");
                     Toast.makeText(context, "欢迎加入:)小伙伴", Toast.LENGTH_SHORT).show();
                     Intent it = new Intent(RegisterActivityPhoto.this, LoginActivity.class);
                     it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(it);
                     finish();
-                }
-                else{
+                } else {
                     Toast.makeText(context, "账号相同啦=_=", Toast.LENGTH_SHORT).show();
                 }
             }

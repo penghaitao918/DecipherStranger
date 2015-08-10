@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 /**
- *      へ　　　　　／|
+ * へ　　　　　／|
  * 　　/＼7　　　 ∠＿/
  * 　 /　│　　 ／　／
  * 　│　Z ＿,＜　／　　 /`ヽ
@@ -50,7 +50,7 @@ public class ConversationPageActivity extends BaseActivity {
     private SQLiteOpenHelper helper = null;
     private SimpleAdapter simpleAdapter = null;
     private ArrayList<Map<String, Object>> list = null;
-    private ConversationBroadcastReceiver receiver= null;
+    private ConversationBroadcastReceiver receiver = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -86,8 +86,8 @@ public class ConversationPageActivity extends BaseActivity {
         this.simpleAdapter = new SimpleAdapter(this,
                 this.list,
                 R.layout.data_conversation_list,
-                new String[] {MyStatic.CONVERSATION_PORTRAIT, MyStatic.CONVERSATION_NAME, MyStatic.CONVERSATION_MESSAGE, MyStatic.CONVERSATION_TIME, MyStatic.CONVERSATION_COUNT, MyStatic.CONVERSATION_IMAGE},
-                new int[] {R.id.conversationPortrait, R.id.conversationName, R.id.conversationMessage, R.id.conversationTime, R.id.count, R.id.countImage}
+                new String[]{MyStatic.CONVERSATION_PORTRAIT, MyStatic.CONVERSATION_NAME, MyStatic.CONVERSATION_MESSAGE, MyStatic.CONVERSATION_TIME, MyStatic.CONVERSATION_COUNT, MyStatic.CONVERSATION_IMAGE},
+                new int[]{R.id.conversationPortrait, R.id.conversationName, R.id.conversationMessage, R.id.conversationTime, R.id.count, R.id.countImage}
         );
         /*实现ViewBinder()这个接口*/
         simpleAdapter.setViewBinder(new ViewBinderImpl());
@@ -96,12 +96,27 @@ public class ConversationPageActivity extends BaseActivity {
         simpleAdapter.notifyDataSetChanged();
     }
 
+    private void sendDecreaseToMainTab(int number) {
+        Intent intent = new Intent("com.android.decipherstranger.MESSAGE");
+        intent.putExtra("Decrease", "Decrease");
+        intent.putExtra("DecreaseCount", number);
+        sendBroadcast(intent);
+    }
+
+    private void registerBroadcas() {
+        //动态方式注册广播接收者
+        IntentFilter filter = new IntentFilter();
+        this.receiver = new ConversationBroadcastReceiver();
+        filter.addAction(MyStatic.CONVERSATION_BOARD);
+        this.registerReceiver(receiver, filter);
+    }
+
     private class ViewBinderImpl implements SimpleAdapter.ViewBinder {
         @Override
         public boolean setViewValue(View view, Object data, String textRepresentation) {
             // TODO Auto-generated method stub
-            if(view instanceof ImageView && data instanceof Bitmap){
-                ImageView i = (ImageView)view;
+            if (view instanceof ImageView && data instanceof Bitmap) {
+                ImageView i = (ImageView) view;
                 i.setImageBitmap((Bitmap) data);
                 return true;
             }
@@ -119,35 +134,20 @@ public class ConversationPageActivity extends BaseActivity {
             String messageCount = (String) list.get(position).get(MyStatic.CONVERSATION_COUNT);
 
             Bundle bundle = new Bundle();
-            bundle.putString("userName",userName);
+            bundle.putString("userName", userName);
             bundle.putString("userAccount", userAccount);
             bundle.putParcelable("userPhoto", userPhoto);
-            
+
             if (messageCount == null) {
                 sendDecreaseToMainTab(0);
             } else {
                 sendDecreaseToMainTab(Integer.parseInt(messageCount));
             }
-            
+
             Intent intent = new Intent(ConversationPageActivity.this, ChatMsgActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
         }
-    }
-    
-    private void sendDecreaseToMainTab(int number) {
-        Intent intent = new Intent("com.android.decipherstranger.MESSAGE");
-        intent.putExtra("Decrease", "Decrease");
-        intent.putExtra("DecreaseCount", number);
-        sendBroadcast(intent);
-    }
-
-    private void registerBroadcas() {
-        //动态方式注册广播接收者
-        IntentFilter filter = new IntentFilter();
-        this.receiver = new ConversationBroadcastReceiver();
-        filter.addAction(MyStatic.CONVERSATION_BOARD);
-        this.registerReceiver(receiver, filter);
     }
 
     public class ConversationBroadcastReceiver extends BroadcastReceiver {
@@ -159,8 +159,8 @@ public class ConversationPageActivity extends BaseActivity {
             String account = intent.getStringExtra(MyStatic.CONVERSATION_ACCOUNT);
             String message = intent.getStringExtra(MyStatic.CONVERSATION_MESSAGE);
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            for(int i = 0;i < list.size(); ++ i){
-                if (list.get(i).get(MyStatic.CONVERSATION_ACCOUNT).equals(account)){
+            for (int i = 0; i < list.size(); ++i) {
+                if (list.get(i).get(MyStatic.CONVERSATION_ACCOUNT).equals(account)) {
                     map = list.get(i);
                     list.remove(i);
                     flag = true;
@@ -176,7 +176,7 @@ public class ConversationPageActivity extends BaseActivity {
                 String time = dateFormat.format(new java.util.Date());
                 ConversationList saveConversationList = new ConversationList(helper.getWritableDatabase());
                 saveConversationList.setMessage(account, message, time);
-                map.put(MyStatic.CONVERSATION_MESSAGE,  message);
+                map.put(MyStatic.CONVERSATION_MESSAGE, message);
                 map.put(MyStatic.CONVERSATION_TIME, time);
             }
             switch (type) {
@@ -195,9 +195,9 @@ public class ConversationPageActivity extends BaseActivity {
                     map.put(MyStatic.CONVERSATION_COUNT, null);
                     map.put(MyStatic.CONVERSATION_IMAGE, null);
                     break;
-                    
+
             }
-            list.add(0,map);
+            list.add(0, map);
             simpleAdapter.notifyDataSetChanged();
             dataList.setAdapter(simpleAdapter);
         }

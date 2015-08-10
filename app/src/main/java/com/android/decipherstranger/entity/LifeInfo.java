@@ -35,7 +35,9 @@ public class LifeInfo {
     private double latitude = 0;
     private double longtitude = 0;
 
-    public LifeInfo() { }
+    public LifeInfo() {
+    }
+
     public LifeInfo(LifeInfo info) {
         this.account = info.account;
         this.lifeName = info.lifeName;

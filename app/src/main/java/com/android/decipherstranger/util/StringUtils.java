@@ -11,15 +11,14 @@ public class StringUtils {
             "0", "1", "2", "3", "4", "5", "6", "7",
             "8", "9", "a", "b", "c", "d", "e", "f"
     };
-    
-    public static String MD5 (String transcoding) {
+
+    public static String MD5(String transcoding) {
         String resultString = null;
         try {
             resultString = new String(transcoding);
             MessageDigest md5 = MessageDigest.getInstance("MD5");
             resultString = byteArrayToHexString(md5.digest(resultString.getBytes()));
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.toString());
             e.printStackTrace();
         }

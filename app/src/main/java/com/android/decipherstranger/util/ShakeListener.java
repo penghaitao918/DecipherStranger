@@ -7,27 +7,27 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
 /**
- *             へ　　　　　／|
- *        　　/＼7　　　 ∠＿/
- *        　 /　│　　 ／　／
- *        　│　Z ＿,＜　／　　 /`ヽ
- *        　│　　　　　ヽ　　 /　　〉
- *        　 Y　　　　　`　 /　　/
- *        　ｲ●　､　●　　⊂⊃〈　　/
- *        　()　 へ　　　　|　＼〈
- *        　　>ｰ ､_　 ィ　 │ ／／      去吧！
- *        　 / へ　　 /　ﾉ＜| ＼＼        比卡丘~
- *        　 ヽ_ﾉ　　(_／　 │／／           消灭代码BUG
- *        　　7　　　　　　　|／
- *        　　＞―r￣￣`ｰ―＿
+ * へ　　　　　／|
+ * 　　/＼7　　　 ∠＿/
+ * 　 /　│　　 ／　／
+ * 　│　Z ＿,＜　／　　 /`ヽ
+ * 　│　　　　　ヽ　　 /　　〉
+ * 　 Y　　　　　`　 /　　/
+ * 　ｲ●　､　●　　⊂⊃〈　　/
+ * 　()　 へ　　　　|　＼〈
+ * 　　>ｰ ､_　 ィ　 │ ／／      去吧！
+ * 　 / へ　　 /　ﾉ＜| ＼＼        比卡丘~
+ * 　 ヽ_ﾉ　　(_／　 │／／           消灭代码BUG
+ * 　　7　　　　　　　|／
+ * 　　＞―r￣￣`ｰ―＿
  *
- *       @ClassName        ShakeListener
- *       @author            penghaitao
- *       @Deprecated       摇晃监听
- *       @version           1.0
- *       @Date              2015/4/2.
- *       @e-mail           785351408@qq.com
- **/
+ * @author penghaitao
+ * @version 1.0
+ * @ClassName ShakeListener
+ * @Deprecated 摇晃监听
+ * @Date 2015/4/2.
+ * @e-mail 785351408@qq.com
+ */
 
 public class ShakeListener implements SensorEventListener {
     // 两次检测的时间间隔
@@ -42,6 +42,7 @@ public class ShakeListener implements SensorEventListener {
     private Context context;
     // 上次检测时间
     private long lastUpdateTime = 0;
+
     // 构造器
     public ShakeListener(Context context) {
         // 获得监听对象
@@ -69,11 +70,6 @@ public class ShakeListener implements SensorEventListener {
         sensorManager.unregisterListener(this);
     }
 
-    // 摇晃监听接口
-    public interface OnShakeListener {
-        public void onShake();
-    }
-
     // 设置重力感应监听器
     public void setOnShakeListener(OnShakeListener listener) {
         onShakeListener = listener;
@@ -95,7 +91,7 @@ public class ShakeListener implements SensorEventListener {
         float z = values[2]; // z轴方向的重力加速度，向上为正
         // 一般在这三个方向的重力加速度达到40就达到了摇晃手机的状态。
         int value = 19;// 三星 i9250怎么晃都不会超过20，没办法，只设置19了
-        if (Math.abs(x) > value || Math.abs(y) > value || Math.abs(z) > value ) {
+        if (Math.abs(x) > value || Math.abs(y) > value || Math.abs(z) > value) {
             // 现在的时间变成last时间
             lastUpdateTime = currentUpdateTime;
             onShakeListener.onShake();
@@ -104,6 +100,11 @@ public class ShakeListener implements SensorEventListener {
 
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
+    }
+
+    // 摇晃监听接口
+    public interface OnShakeListener {
+        public void onShake();
     }
 
 }

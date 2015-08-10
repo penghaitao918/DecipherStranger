@@ -1,96 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@null">
+    android:background="@null"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="5dp">
 
         <RelativeLayout
+            android:id="@+id/relativeLayout4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginRight="5dp"
-            android:id="@+id/relativeLayout4">
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp">
 
             <ImageView
+                android:id="@+id/sharePortrait"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:id="@+id/sharePortrait"
-                android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp" />
 
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/relativeLayout5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/relativeLayout4"
             android:layout_toEndOf="@+id/relativeLayout4"
-            android:id="@+id/relativeLayout5">
+            android:layout_toRightOf="@+id/relativeLayout4">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="New Text"
                 android:id="@+id/shareName"
-                android:textSize="20dp"
-                android:textColor="@color/text_checked"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_marginRight="5dp"
-                android:layout_alignParentStart="true" />
-
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="New Text"
-                android:id="@+id/shareMessage"
-                android:textSize="16dp"
-                android:textColor="@color/text_hint"
-                android:layout_marginRight="5dp"
-                android:layout_below="@+id/shareName"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="5dp"
+                android:text="New Text"
+                android:textColor="@color/text_checked"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/shareMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/shareName"
+                android:layout_marginRight="5dp"
+                android:text="New Text"
+                android:textColor="@color/text_hint"
+                android:textSize="16dp" />
 
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/relativeLayout6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/relativeLayout5"
             android:layout_alignLeft="@+id/relativeLayout5"
             android:layout_alignStart="@+id/relativeLayout5"
-            android:id="@+id/relativeLayout6">
+            android:layout_below="@+id/relativeLayout5">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true">
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true">
 
                 <ImageView
+                    android:id="@+id/sharePhoto"
                     android:layout_width="160dp"
                     android:layout_height="160dp"
-                    android:id="@+id/sharePhoto"
-                    android:layout_margin="5dp"
-                    android:scaleType="fitXY"
-                    android:background="@null"
-                    android:src="@null"
+                    android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true" />
+                    android:layout_margin="5dp"
+                    android:background="@null"
+                    android:scaleType="fitXY"
+                    android:src="@null" />
 
             </RelativeLayout>
 
@@ -99,55 +100,55 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/relativeLayout6"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_below="@+id/relativeLayout6"
-            android:layout_toRightOf="@+id/relativeLayout4"
-            android:layout_toEndOf="@+id/relativeLayout4">
+            android:layout_toEndOf="@+id/relativeLayout4"
+            android:layout_toRightOf="@+id/relativeLayout4">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="New Text"
                 android:id="@+id/shareTime"
-                android:textSize="16dp"
-                android:textColor="@color/text_hint"
-                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:text="New Text"
+                android:textColor="@color/text_hint"
+                android:textSize="16dp" />
 
             <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/friendButton"
-                android:background="@null"
-                android:src="@drawable/share_friends_btn"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
-
-            <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:id="@+id/numButton"
-                android:background="@null"
-                android:src="@drawable/share_good_btn"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:background="@null"
+                android:src="@drawable/share_friends_btn" />
+
+            <ImageButton
+                android:id="@+id/numButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
                 android:layout_toLeftOf="@+id/friendButton"
-                android:layout_toStartOf="@+id/friendButton"/>
+                android:layout_toStartOf="@+id/friendButton"
+                android:background="@null"
+                android:src="@drawable/share_good_btn" />
 
             <TextView
+                android:id="@+id/shareNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="10086"
-                android:id="@+id/shareNum"
-                android:textSize="16dp"
-                android:layout_marginRight="5dp"
-                android:textColor="@color/text_hint"
                 android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
                 android:layout_toLeftOf="@+id/numButton"
-                android:layout_toStartOf="@+id/numButton" />
+                android:layout_toStartOf="@+id/numButton"
+                android:text="10086"
+                android:textColor="@color/text_hint"
+                android:textSize="16dp" />
 
         </RelativeLayout>
 

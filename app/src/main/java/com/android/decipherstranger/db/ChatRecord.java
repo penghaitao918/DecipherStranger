@@ -8,7 +8,7 @@ import com.android.decipherstranger.entity.Contacts;
 import java.util.ArrayList;
 
 /**
- *      へ　　　　　／|
+ * へ　　　　　／|
  * 　　/＼7　　　 ∠＿/
  * 　 /　│　　 ／　／
  * 　│　Z ＿,＜　／　　 /`ヽ
@@ -28,9 +28,9 @@ import java.util.ArrayList;
  * @e-mail 785351408@qq.com
  */
 public class ChatRecord {
-    
+
     private SQLiteDatabase db = null;
-    
+
     public ChatRecord(SQLiteDatabase db) {
         this.db = db;
     }
@@ -38,13 +38,13 @@ public class ChatRecord {
     /*
      * 添加聊天记录
      */
-    public void insert(String account, int who, String message, String timeLen, String time, int type){
+    public void insert(String account, int who, String message, String timeLen, String time, int type) {
         String insert = "INSERT INTO chatrecord VALUES ( ? , ? , ? , ? , ? , ? )";
-        Object args[] = new Object[]{account,who,message,timeLen, time, type};
-        this.db.execSQL(insert,args);
+        Object args[] = new Object[]{account, who, message, timeLen, time, type};
+        this.db.execSQL(insert, args);
         this.db.close();
     }
-    
+
     /*
      * 获取聊天记录
      * @param String account
@@ -63,10 +63,11 @@ public class ChatRecord {
             contacts.setTimeLen(result.getString(3));
             contacts.setType(result.getInt(4));
             all.add(contacts);
-        } this.db.close();
+        }
+        this.db.close();
         return all;
     }
-    
+
     /*
      * 删除指定联系人聊天记录
      * @param String account
@@ -74,10 +75,10 @@ public class ChatRecord {
     public void delete(String account) {
         String delete = "delete from chatrecord where contacts=?";
         String args[] = new String[]{account};
-        this.db.execSQL(delete,args);
+        this.db.execSQL(delete, args);
         this.db.close();
     }
-    
+
     /*
      * 清空所有聊天记录
      */

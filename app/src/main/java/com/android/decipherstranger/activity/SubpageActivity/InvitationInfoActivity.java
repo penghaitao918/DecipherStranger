@@ -68,12 +68,12 @@ public class InvitationInfoActivity extends BaseActivity {
         nameText.setText(name);
     }
 
-    public void InfoOnClick(View view){
+    public void InfoOnClick(View view) {
         Intent intent = new Intent(this, WelcomeRspActivity.class);
         intent.putExtra("Type", "AddFriend");
         intent.putExtra("Account", account);
         intent.putExtra("Name", name);
-        intent.putExtra("Sex", sex+"");
+        intent.putExtra("Sex", sex + "");
         intent.putExtra("Photo", bitmap);
         System.out.println("### Account" + account);
         System.out.println("### name " + name);

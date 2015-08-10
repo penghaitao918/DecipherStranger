@@ -24,36 +24,21 @@ import java.util.UUID;
  * Created by WangXin on 2015/5/10 0010.
  */
 public class AudioManager {
+    private static AudioManager mInstance;
+    public boolean isPrepared;
+    public AudioStateListener mAudioStateListener;
     private MediaRecorder mMediaRecorder;
     private String mDir;
     private String mCurrentFilePath;
 
-    private static AudioManager mInstance;
-
-    public boolean isPrepared;
-
-    public AudioManager(String dir){
+    public AudioManager(String dir) {
         mDir = dir;
     }
 
-    public String getCurrentFilePath() {
-        return mCurrentFilePath;
-    }
-
-    public interface AudioStateListener{
-        void wellPrepared();
-    }
-
-    public AudioStateListener mAudioStateListener;
-
-    public void setOnAudioStateListener(AudioStateListener Listener){
-        mAudioStateListener = Listener;
-    }
-
-    public static AudioManager getmInstance(String dir){
-        if (mInstance == null){
-            synchronized (AudioManager.class){
-                if (mInstance == null){
+    public static AudioManager getmInstance(String dir) {
+        if (mInstance == null) {
+            synchronized (AudioManager.class) {
+                if (mInstance == null) {
                     mInstance = new AudioManager(dir);
                 }
             }
@@ -61,15 +46,23 @@ public class AudioManager {
         return mInstance;
     }
 
-    public void prepareAudio(){
+    public String getCurrentFilePath() {
+        return mCurrentFilePath;
+    }
+
+    public void setOnAudioStateListener(AudioStateListener Listener) {
+        mAudioStateListener = Listener;
+    }
+
+    public void prepareAudio() {
         try {
             isPrepared = false;
             File dir = new File(mDir);
-            if (!dir.exists()){
+            if (!dir.exists()) {
                 dir.mkdirs();
             }
             String fileName = generateFileName();
-            File file = new File(dir,fileName);
+            File file = new File(dir, fileName);
 
             mCurrentFilePath = file.getAbsolutePath();
             mMediaRecorder = new MediaRecorder();
@@ -84,9 +77,9 @@ public class AudioManager {
             mMediaRecorder.prepare();
             mMediaRecorder.start();
             //准备结束
-            isPrepared =true;
+            isPrepared = true;
 
-            if (mAudioStateListener != null){
+            if (mAudioStateListener != null) {
                 mAudioStateListener.wellPrepared();
             }
         } catch (IOException e) {
@@ -94,28 +87,29 @@ public class AudioManager {
         }
     }
 
-    private String generateFileName(){
-        return UUID.randomUUID().toString()+".amr";
+    private String generateFileName() {
+        return UUID.randomUUID().toString() + ".amr";
     }
-    public int  getVoiceLevel(int maxLevel){
+
+    public int getVoiceLevel(int maxLevel) {
         try {
-            if (isPrepared){
+            if (isPrepared) {
                 //mMediaRecorder.getMaxAmplitude()1-32767
-                return maxLevel*mMediaRecorder.getMaxAmplitude()/32768 + 1;
+                return maxLevel * mMediaRecorder.getMaxAmplitude() / 32768 + 1;
             }
-        } catch ( Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return 1;
     }
 
-    public void release(){
+    public void release() {
         mMediaRecorder.stop();
         mMediaRecorder.release();
         mMediaRecorder = null;
     }
 
-    public void cancel(){
+    public void cancel() {
         release();
         if (mCurrentFilePath != null) {
             File file = new File(mCurrentFilePath);
@@ -123,6 +117,10 @@ public class AudioManager {
             mCurrentFilePath = null;
         }
 
+    }
+
+    public interface AudioStateListener {
+        void wellPrepared();
     }
 
 }

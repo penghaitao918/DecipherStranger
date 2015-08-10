@@ -39,13 +39,13 @@ import com.android.decipherstranger.util.SharedPreferencesUtils;
  * @e-mail 785351408@qq.com
  */
 public class UpdateNameActivity extends BaseActivity {
-    
+
     private EditText editText = null;
     private MyApplication application = null;
 
     private UpdateBroadcastReceiver receiver = null;
     private SharedPreferencesUtils sharedPreferencesUtils = null;
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +58,7 @@ public class UpdateNameActivity extends BaseActivity {
         super.onDestroy();
         super.unregisterReceiver(receiver);
     }
-    
+
     private void init() {
         //  application = (MyApplication) getApplication();
         application = MyApplication.getInstance();
@@ -66,29 +66,28 @@ public class UpdateNameActivity extends BaseActivity {
 
         this.sharedPreferencesUtils = new SharedPreferencesUtils(this, MyStatic.FILENAME_USER);
     }
-    
+
     private void updateName() {
         // 上传至服务器
-        if(NetworkService.getInstance().getIsConnected()) {
-            String changeInfo = "type"+":"+Integer.toString(GlobalMsgUtils.msgChangeInf)+":"+
-                                "account"+":"+application.getAccount()+":"+
-                                "cname"+":"+this.editText.getText().toString()+":"+
-                                "kind"+":"+"name";
+        if (NetworkService.getInstance().getIsConnected()) {
+            String changeInfo = "type" + ":" + Integer.toString(GlobalMsgUtils.msgChangeInf) + ":" +
+                    "account" + ":" + application.getAccount() + ":" +
+                    "cname" + ":" + this.editText.getText().toString() + ":" +
+                    "kind" + ":" + "name";
             Log.v("aaaaa", changeInfo);
             NetworkService.getInstance().sendUpload(changeInfo);
-        }
-        else {
+        } else {
             NetworkService.getInstance().closeConnection();
             Toast.makeText(UpdateNameActivity.this, "服务器连接失败~(≧▽≦)~啦啦啦", Toast.LENGTH_SHORT).show();
         }
     }
-    
+
     public void UpdateNameOnClick(View view) {
         switch (view.getId()) {
             case R.id.save_btn:
-                if(this.editText.getText().toString().isEmpty()){
+                if (this.editText.getText().toString().isEmpty()) {
                     Toast.makeText(UpdateNameActivity.this, "名字不能为空呀", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     updateName();
                     onBackPressed();
                 }
@@ -115,7 +114,7 @@ public class UpdateNameActivity extends BaseActivity {
                 sharedPreferencesUtils.set(MyStatic.USER_NAME, application.getName());
                 Intent it = new Intent(MyStatic.USER_BOARD);
                 sendBroadcast(it);
-            }else{
+            } else {
                 Toast.makeText(context, "竟然没成功", Toast.LENGTH_SHORT).show();
             }
         }

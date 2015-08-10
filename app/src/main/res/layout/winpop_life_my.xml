@@ -1,80 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/blank"
-        android:onClick="LifeMenuOnClick"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:onClick="LifeMenuOnClick">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:layout_gravity="center_horizontal"
-            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true">
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/white"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/grey"/>
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:background="@color/grey" />
 
             <RelativeLayout
-                android:padding="5dp"
                 android:id="@+id/mySend"
-                android:onClick="LifeMenuOnClick"
-                android:background="@drawable/small_btn_bg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:background="@drawable/small_btn_bg"
+                android:onClick="LifeMenuOnClick"
+                android:padding="5dp">
 
                 <TextView
                     android:id="@+id/sendText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16dp"
-                    android:text="@string/mySend"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
                     android:paddingLeft="24dp"
                     android:paddingRight="24dp"
-                    android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true" />
+                    android:text="@string/mySend"
+                    android:textSize="16dp" />
 
             </RelativeLayout>
 
             <LinearLayout
-                android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/grey"/>
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:background="@color/grey" />
 
             <RelativeLayout
-                android:padding="5dp"
                 android:id="@+id/myPartake"
-                android:onClick="LifeMenuOnClick"
-                android:background="@drawable/small_btn_bg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:background="@drawable/small_btn_bg"
+                android:onClick="LifeMenuOnClick"
+                android:padding="5dp">
 
                 <TextView
                     android:id="@+id/partakeText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16dp"
-                    android:text="@string/myPartake"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
                     android:paddingLeft="24dp"
                     android:paddingRight="24dp"
-                    android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true" />
+                    android:text="@string/myPartake"
+                    android:textSize="16dp" />
 
             </RelativeLayout>
 

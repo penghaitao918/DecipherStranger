@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.android.decipherstranger"
     android:versionCode="2"
-    android:versionName="2.0.1" >
+    android:versionName="2.0.1">
 
     <uses-sdk android:minSdkVersion="16" />
 
@@ -11,10 +11,10 @@
         android:allowBackup="true"
         android:icon="@drawable/ds_icon"
         android:label="@string/app_name_ch"
-        android:theme="@style/NoTheme" >
+        android:theme="@style/NoTheme">
         <activity
             android:name=".activity.WelcomeActivity"
-            android:label="@string/app_name_ch" >
+            android:label="@string/app_name_ch">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -41,32 +41,34 @@
         <activity android:name=".activity.SubpageActivity.UpdateNameActivity" />
 
         <!--生活-->
-        <activity android:name=".activity.LifeActivity.MainActivity"/>
+        <activity android:name=".activity.LifeActivity.MainActivity" />
         <!--生活-发起-->
-        <activity android:name=".activity.LifeActivity.SendActivity"/>
+        <activity android:name=".activity.LifeActivity.SendActivity" />
         <!--生活-参团-->
-        <activity android:name=".activity.LifeActivity.PartakeActivity"/>
+        <activity android:name=".activity.LifeActivity.PartakeActivity" />
         <!--生活-详情-->
-        <activity android:name=".activity.LifeActivity.DetailsActivity"/>
+        <activity android:name=".activity.LifeActivity.DetailsActivity" />
         <!--生活-口令-->
-        <activity android:name=".activity.LifeActivity.PasswordActivity"
-            android:theme="@style/MyDialogStyleBottom"/>
+        <activity
+            android:name=".activity.LifeActivity.PasswordActivity"
+            android:theme="@style/MyDialogStyleBottom" />
         <!--生活-分享-->
-        <activity android:name=".activity.LifeActivity.ShareActivity"/>
+        <activity android:name=".activity.LifeActivity.ShareActivity" />
         <!--生活-发送分享-->
-        <activity android:name=".activity.LifeActivity.ShareLifeActivity"/>
+        <activity android:name=".activity.LifeActivity.ShareLifeActivity" />
         <!--生活-个人中心-->
-        <activity android:name=".activity.LifeActivity.MyLifeActivity"/>
+        <activity android:name=".activity.LifeActivity.MyLifeActivity" />
         <!--生活-参团成员-->
-        <activity android:name=".activity.LifeActivity.LifeFriendsActivity"/>
+        <activity android:name=".activity.LifeActivity.LifeFriendsActivity" />
 
         <!-- 摇一摇 -->
         <activity android:name=".activity.SubpageActivity.ShakeActivity" />
 
         <!-- 邀请券 -->
         <activity android:name=".activity.SubpageActivity.InvitationActivity" />
-        <activity android:name=".activity.SubpageActivity.InvitationInfoActivity"
-            android:theme="@style/MyDialogStyleBottom"/>
+        <activity
+            android:name=".activity.SubpageActivity.InvitationInfoActivity"
+            android:theme="@style/MyDialogStyleBottom" />
 
         <!-- 游戏 -->
         <activity android:name=".activity.SubpageActivity.GameListActivity" />
@@ -74,10 +76,12 @@
         <activity android:name=".activity.GameOneActivity.WelcomeRspActivity" />
         <activity android:name=".activity.GameOneActivity.SetGradeActivity" />
         <activity android:name=".activity.GameOneActivity.RockPaperScissorsActivity" />
-        <activity android:name=".activity.GameOneActivity.SuccessActivity"
-            android:theme="@style/MyDialogStyleBottom"/>
-        <activity android:name=".activity.GameOneActivity.FailActivity"
-            android:theme="@style/MyDialogStyleBottom"/>
+        <activity
+            android:name=".activity.GameOneActivity.SuccessActivity"
+            android:theme="@style/MyDialogStyleBottom" />
+        <activity
+            android:name=".activity.GameOneActivity.FailActivity"
+            android:theme="@style/MyDialogStyleBottom" />
 
         <!-- 地图 -->
         <activity android:name=".activity.SubpageActivity.ShowMapActivity" />
@@ -85,7 +89,7 @@
             android:name=".activity.SubpageActivity.NearbyListViewActivity"
             android:label="解密陌生人"
             android:theme="@style/AppBaseTheme" />
-        <activity android:name=".activity.SubpageActivity.NearbyInfoActivity"/>
+        <activity android:name=".activity.SubpageActivity.NearbyInfoActivity" />
         <activity
             android:name=".activity.SubpageActivity.ChatMsgActivity"
             android:label="解密陌生人"
@@ -96,7 +100,7 @@
             android:theme="@style/AppBaseTheme" />
 
         <!--修改头像-->
-        <activity android:name=".activity.SubpageActivity.UpdatePhotoActivity"/>
+        <activity android:name=".activity.SubpageActivity.UpdatePhotoActivity" />
 
         <!--百度地图Key-->
         <meta-data
@@ -111,7 +115,7 @@
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote" >
+            android:process=":remote">
             <intent-filter>
                 <action android:name="com.baidu.location.service_v2.2" />
             </intent-filter>

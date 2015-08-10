@@ -47,6 +47,7 @@ import com.android.decipherstranger.util.SharedPreferencesUtils;
  */
 public class WelcomeRspActivity extends BaseActivity {
 
+    public static MediaPlayer backgroundMusic = null;
     private MyApplication application = null;
     private String type = null;
     private int grade = 6;  //  设置等级 默认为3
@@ -55,7 +56,6 @@ public class WelcomeRspActivity extends BaseActivity {
     private PopupWindow helpPopWin = null;
     private ImageButton musicImage = null;
     private SharedPreferencesUtils sharedPreferencesUtils = null;
-    public static MediaPlayer backgroundMusic = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,7 +85,7 @@ public class WelcomeRspActivity extends BaseActivity {
         super.onDestroy();
         super.unregisterReceiver(WelcomeRspActivity.this.receiver);
     }
-    
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {// 防止连续两次返回键
@@ -93,7 +93,7 @@ public class WelcomeRspActivity extends BaseActivity {
             if (helpPopWin.isShowing()) {
                 helpPopWin.dismiss();
                 return true;
-            }else {
+            } else {
                 onBackPressed();
                 return true;
             }
@@ -103,7 +103,7 @@ public class WelcomeRspActivity extends BaseActivity {
 
     private void init() {
         this.musicImage = (ImageButton) super.findViewById(R.id.gameSound);
-        this.sharedPreferencesUtils = new SharedPreferencesUtils(WelcomeRspActivity.this,MyStatic.FILENAME_SETTINGS);
+        this.sharedPreferencesUtils = new SharedPreferencesUtils(WelcomeRspActivity.this, MyStatic.FILENAME_SETTINGS);
         this.backgroundMusic = MediaPlayer.create(this, R.raw.background_music); //  获取背景音乐资源
         LayoutInflater inflater = LayoutInflater.from(WelcomeRspActivity.this);
         View view = inflater.inflate(R.layout.game_help_popup, null);
@@ -135,12 +135,15 @@ public class WelcomeRspActivity extends BaseActivity {
     }
 
     public void GameWelcomeOnClick(View view) {
-        switch (view.getId()){
-            case R.id.gameStart:gameStart();
+        switch (view.getId()) {
+            case R.id.gameStart:
+                gameStart();
                 break;
-            case R.id.gameTips:helpPopWin.showAtLocation(findViewById(R.id.top), Gravity.BOTTOM, 0, 0);
+            case R.id.gameTips:
+                helpPopWin.showAtLocation(findViewById(R.id.top), Gravity.BOTTOM, 0, 0);
                 break;
-            case R.id.closeRule:helpPopWin.dismiss();
+            case R.id.closeRule:
+                helpPopWin.dismiss();
                 break;
             case R.id.gameSound:
                 if (MyStatic.gameBackgroundMusicFlag) {
@@ -155,18 +158,17 @@ public class WelcomeRspActivity extends BaseActivity {
 
     private void setGameInfo() {
         //  从缓存获取用户游戏设置
-        MyStatic.gameEffectMusicFlag = (Boolean) sharedPreferencesUtils.get(MyStatic.KEY_EFFECT,true);
-        MyStatic.gameBackgroundMusicFlag = (Boolean) sharedPreferencesUtils.get(MyStatic.KEY_BG,true);
+        MyStatic.gameEffectMusicFlag = (Boolean) sharedPreferencesUtils.get(MyStatic.KEY_EFFECT, true);
+        MyStatic.gameBackgroundMusicFlag = (Boolean) sharedPreferencesUtils.get(MyStatic.KEY_BG, true);
         //  从服务器获取好友游戏等级
 
         //  TODO 此处写与服务器的通信函数
-        if(NetworkService.getInstance().getIsConnected()){
-            String gameUser = "type"+":"+Integer.toString(GlobalMsgUtils.msgGameOneReceive)+":"+
-                    "account"+":"+application.getAccount()+":"+
-                    "friend"+":"+MyStatic.friendAccount;
+        if (NetworkService.getInstance().getIsConnected()) {
+            String gameUser = "type" + ":" + Integer.toString(GlobalMsgUtils.msgGameOneReceive) + ":" +
+                    "account" + ":" + application.getAccount() + ":" +
+                    "friend" + ":" + MyStatic.friendAccount;
             NetworkService.getInstance().sendUpload(gameUser);
-        }
-        else {
+        } else {
             NetworkService.getInstance().closeConnection();
             Toast.makeText(WelcomeRspActivity.this, "服务器连接失败~(≧▽≦)~啦啦啦", Toast.LENGTH_SHORT).show();
             Log.v("Login", "已经执行T（）方法");
@@ -181,17 +183,17 @@ public class WelcomeRspActivity extends BaseActivity {
         this.registerReceiver(receiver, filter);
     }
 
-    private void gameStart(){
+    private void gameStart() {
         Intent it = new Intent(WelcomeRspActivity.this, RockPaperScissorsActivity.class);
-        it.putExtra("Type",type);
+        it.putExtra("Type", type);
         it.putExtra("Grade", grade);        //  游戏等级
         it.putExtra("Sum", sum);
         startActivity(it);
         WelcomeRspActivity.this.finish();
     }
 
-    private void setBackgroundMusic(){
-        Drawable drawable ;
+    private void setBackgroundMusic() {
+        Drawable drawable;
         if (MyStatic.gameBackgroundMusicFlag) {
             this.backgroundMusic.setLooping(true);
             drawable = getResources().getDrawable(R.drawable.selector_music);
@@ -201,7 +203,8 @@ public class WelcomeRspActivity extends BaseActivity {
             if (this.backgroundMusic.isPlaying()) {
                 this.backgroundMusic.pause();
             }
-        } this.musicImage.setImageDrawable(drawable);
+        }
+        this.musicImage.setImageDrawable(drawable);
         sharedPreferencesUtils.set(MyStatic.KEY_BG, MyStatic.gameBackgroundMusicFlag);
     }
 

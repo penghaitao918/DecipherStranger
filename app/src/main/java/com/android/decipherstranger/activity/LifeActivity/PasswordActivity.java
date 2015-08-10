@@ -41,7 +41,7 @@ public class PasswordActivity extends BaseActivity {
         this.init();
     }
 
-    private void init(){
+    private void init() {
         Intent intent = getIntent();
         this.lifePassword = intent.getStringExtra(MyStatic.LIFE_PASSWORD);
         System.out.println("### password 222 " + lifePassword);

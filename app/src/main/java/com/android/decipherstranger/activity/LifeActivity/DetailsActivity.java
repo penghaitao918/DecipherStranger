@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -145,13 +144,13 @@ public class DetailsActivity extends BaseActivity {
         this.lifeId = intent.getIntExtra(MyStatic.LIFE_ID, 0);
         this.lifeClass = intent.getIntExtra(MyStatic.LIFE_CLASSINT, 0);
         System.out.println("### " + lifeId);
-        if (NetworkService.getInstance().getIsConnected()){
-            String Msg = "type" +  ":" + GlobalMsgUtils.msgDetialsActivity + ":" +
+        if (NetworkService.getInstance().getIsConnected()) {
+            String Msg = "type" + ":" + GlobalMsgUtils.msgDetialsActivity + ":" +
                     "activityId" + ":" + lifeId + ":" + "activityType" + ":" + lifeClass +
                     ":" + "currentAccount" + ":" + myAccount;
             Log.v("aaaaa", Msg);
             NetworkService.getInstance().sendUpload(Msg);
-        }else {
+        } else {
             NetworkService.getInstance().closeConnection();
             Log.v("Login", "已经执行T（）方法");
         }
@@ -164,46 +163,46 @@ public class DetailsActivity extends BaseActivity {
                 onBackPressed();
                 break;
             case R.id.lifeFriends:
-                Intent intent0 = new Intent(DetailsActivity.this,LifeFriendsActivity.class);
-                intent0.putExtra(MyStatic.LIFE_ID,lifeId);
+                Intent intent0 = new Intent(DetailsActivity.this, LifeFriendsActivity.class);
+                intent0.putExtra(MyStatic.LIFE_ID, lifeId);
                 startActivity(intent0);
                 break;
             /*参团*/
             case R.id.partake:
-                if (NetworkService.getInstance().getIsConnected()){
-                    String Msg = "type"+":"+GlobalMsgUtils.msgAttendActivity+":"+"activityId"+":"+
-                            lifeId+":"+"account"+":"+myAccount;
-                    Log.v("aaaaa",Msg);
+                if (NetworkService.getInstance().getIsConnected()) {
+                    String Msg = "type" + ":" + GlobalMsgUtils.msgAttendActivity + ":" + "activityId" + ":" +
+                            lifeId + ":" + "account" + ":" + myAccount;
+                    Log.v("aaaaa", Msg);
                     NetworkService.getInstance().sendUpload(Msg);
-                }else{
+                } else {
                     NetworkService.getInstance().closeConnection();
-                    Log.v("Attend","已执行T()方法");
+                    Log.v("Attend", "已执行T()方法");
                 }
                 break;
             /*加为好友*/
             case R.id.addFriend:
-                Intent intent = new Intent(DetailsActivity.this,WelcomeRspActivity.class);
-                intent.putExtra("Type","AddFriend");
+                Intent intent = new Intent(DetailsActivity.this, WelcomeRspActivity.class);
+                intent.putExtra("Type", "AddFriend");
                 intent.putExtra("Account", sendAccount);
                 intent.putExtra("Name", sendName);
                 intent.putExtra("Photo", sendPortrait);
-                intent.putExtra("Sex",sendSex);
+                intent.putExtra("Sex", sendSex);
                 startActivity(intent);
                 finish();
                 break;
         }
     }
 
-    private void setData(String name, String typeName, String date, String place, int people, String endTime, String setPlace, String setTime){
+    private void setData(String name, String typeName, String date, String place, int people, String endTime, String setPlace, String setTime) {
         textView1.setText(name);
         textView2.setText(typeName);
         textView3.setText(date);
         textView4.setText(place);
-        textView5.setText(people+"");
+        textView5.setText(people + "");
         textView6.setText(endTime);
         textView7.setText(setPlace);
         textView8.setText(setTime);
-        textView9.setText(number+"");
+        textView9.setText(number + "");
         initButtonLayout();
         initPasswordLayout();
     }
@@ -222,8 +221,8 @@ public class DetailsActivity extends BaseActivity {
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(MyStatic.LIFE_DETAILS)) {
                 // TODO 将获取的数据赋值到本地
-                if (intent.getStringExtra("reResult").equals("true")){
-                    if (intent.getStringExtra("re_matter").equals("details")){
+                if (intent.getStringExtra("reResult").equals("true")) {
+                    if (intent.getStringExtra("re_matter").equals("details")) {
                         String name = intent.getStringExtra("re_name");
                         String time = intent.getStringExtra("re_time");
                         String place = intent.getStringExtra("re_place");
@@ -234,30 +233,30 @@ public class DetailsActivity extends BaseActivity {
                         String activityTypeName = intent.getStringExtra("activity_type_name");
                         sendName = intent.getStringExtra("re_userName");
                         sendPortrait = ChangeUtils.toBitmap(intent.getStringExtra("re_userPhoto"));
-                        sendSex = intent.getIntExtra("re_gender",0) + "";
+                        sendSex = intent.getIntExtra("re_gender", 0) + "";
                         number = intent.getIntExtra("re_current_number", 0);
                         sendAccount = intent.getStringExtra("re_send_account");
                         password = intent.getStringExtra("re_activity_password");
-                        setData(name,activityTypeName,time,place,people,endTime,setPlace,setTime);
-                    }else{
+                        setData(name, activityTypeName, time, place, people, endTime, setPlace, setTime);
+                    } else {
                         //弹窗显示活动口令
                         //  报名人数+1
-                        number ++;
-                        textView9.setText(number+"");
-                        Intent intent0 = new Intent(DetailsActivity.this,PasswordActivity.class);
+                        number++;
+                        textView9.setText(number + "");
+                        Intent intent0 = new Intent(DetailsActivity.this, PasswordActivity.class);
                         intent0.putExtra(MyStatic.LIFE_PASSWORD, password);
                         System.out.println("### password " + password);
                         startActivity(intent0);
                     }
-                }else if (intent.getStringExtra("reResult").equals("full")){
-                    Toast.makeText(DetailsActivity.this,"该活动报名人数已达到上限，请选择其他活动", Toast.LENGTH_SHORT).show();
-                }else {
-                    if (intent.getStringExtra("re_matter").equals("details")){
+                } else if (intent.getStringExtra("reResult").equals("full")) {
+                    Toast.makeText(DetailsActivity.this, "该活动报名人数已达到上限，请选择其他活动", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (intent.getStringExtra("re_matter").equals("details")) {
                         //活动详情数据获取失败
                         Toast.makeText(DetailsActivity.this, "服务器连接失败~(≧▽≦)~啦啦啦", Toast.LENGTH_SHORT).show();
-                    }else{
+                    } else {
                         //弹窗显示已参加过此活动
-                        Toast.makeText(DetailsActivity.this,"您已报名，无需重复报名", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DetailsActivity.this, "您已报名，无需重复报名", Toast.LENGTH_SHORT).show();
                     }
                 }
             }

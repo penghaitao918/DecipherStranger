@@ -34,14 +34,14 @@ public class DialogManager {
 
     private Context mContext;
 
-    public DialogManager(Context context){
+    public DialogManager(Context context) {
         mContext = context;
     }
 
-    public void showRecordingDialog(){
+    public void showRecordingDialog() {
         mDialog = new Dialog(mContext, R.style.Theme_AudioDialog);
-        LayoutInflater  inflater = LayoutInflater.from(mContext);
-        View view = inflater.inflate(R.layout.dialog_recorder,null);
+        LayoutInflater inflater = LayoutInflater.from(mContext);
+        View view = inflater.inflate(R.layout.dialog_recorder, null);
         mDialog.setContentView(view);
 
         mIcon = (ImageView) mDialog.findViewById(R.id.recorder_dialog_icon);
@@ -51,8 +51,8 @@ public class DialogManager {
         mDialog.show();
     }
 
-    public  void recording(){
-        if(mDialog != null && mDialog.isShowing()){
+    public void recording() {
+        if (mDialog != null && mDialog.isShowing()) {
             mIcon.setVisibility(View.VISIBLE);
             mVoice.setVisibility(View.VISIBLE);
             mLable.setVisibility(View.VISIBLE);
@@ -62,8 +62,8 @@ public class DialogManager {
         }
     }
 
-    public void wantToCancel(){
-        if(mDialog != null && mDialog.isShowing()){
+    public void wantToCancel() {
+        if (mDialog != null && mDialog.isShowing()) {
             mIcon.setVisibility(View.VISIBLE);
             mVoice.setVisibility(View.GONE);
             mLable.setVisibility(View.VISIBLE);
@@ -72,8 +72,9 @@ public class DialogManager {
             mLable.setText("松开手指,取消发送");
         }
     }
-    public void tooShort(){
-        if(mDialog != null && mDialog.isShowing()){
+
+    public void tooShort() {
+        if (mDialog != null && mDialog.isShowing()) {
             mIcon.setVisibility(View.VISIBLE);
             mVoice.setVisibility(View.GONE);
             mLable.setVisibility(View.VISIBLE);
@@ -82,18 +83,19 @@ public class DialogManager {
             mLable.setText("录音时间过短");
         }
     }
-    public void dimissDialog(){
-        if(mDialog != null && mDialog.isShowing()){
+
+    public void dimissDialog() {
+        if (mDialog != null && mDialog.isShowing()) {
             mDialog.dismiss();
             mDialog = null;
         }
     }
 
     //通过level去更新voice上的图片1-7
-    public void updateVoiceLevel(int level){
-        if(mDialog != null && mDialog.isShowing()){
-            int resId = mContext.getResources().getIdentifier("v"+level,
-                    "drawable",mContext.getPackageName());
+    public void updateVoiceLevel(int level) {
+        if (mDialog != null && mDialog.isShowing()) {
+            int resId = mContext.getResources().getIdentifier("v" + level,
+                    "drawable", mContext.getPackageName());
             mVoice.setImageResource(resId);
         }
     }

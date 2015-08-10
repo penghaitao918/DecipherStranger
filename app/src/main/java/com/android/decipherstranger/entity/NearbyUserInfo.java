@@ -21,7 +21,7 @@ public class NearbyUserInfo implements Serializable {
     }
 
 
-    public NearbyUserInfo(double latitude, double longtitude, Bitmap imgId, String userName,String userAccount, String sex, String distance) {
+    public NearbyUserInfo(double latitude, double longtitude, Bitmap imgId, String userName, String userAccount, String sex, String distance) {
         this.latitude = latitude;
         this.longtitude = longtitude;
         this.imgId = imgId;

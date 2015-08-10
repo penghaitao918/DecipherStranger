@@ -33,14 +33,17 @@ import java.io.File;
 /**
  * Created by WangXin on 2015/5/26 0026.
  */
-public class UpdatePhotoActivity extends BaseActivity{
+public class UpdatePhotoActivity extends BaseActivity {
 
+    private static final int IMAGE_REQUEST_CODE = 0;
+    private static final int CAMERA_REQUEST_CODE = 1;
+    private static final int RESULT_REQUEST_CODE = 2;
+    private static final String IMAGE_FILE_NAME = "faceImage.jpg";
     private ImageView updatePhoto;
     private LinearLayout selectPhoto;
     private LinearLayout takePicture;
     private Button upLoade;
     private ImageButton updateBack;
-
     private String imageData;
     private String smallImageData;
     private MyApplication application = null;
@@ -48,14 +51,8 @@ public class UpdatePhotoActivity extends BaseActivity{
     private UpdateBroadcastReceiver receiver = null;
     private SharedPreferencesUtils sharedPreferencesUtils = null;
 
-    private static final int IMAGE_REQUEST_CODE = 0;
-    private static final int CAMERA_REQUEST_CODE = 1;
-    private static final int RESULT_REQUEST_CODE = 2;
-
-    private static final String IMAGE_FILE_NAME = "faceImage.jpg";
-
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.update_photo_activity);
         //  application = (MyApplication) getApplication();
@@ -122,12 +119,13 @@ public class UpdatePhotoActivity extends BaseActivity{
             public void onClick(View v) {
                 if (imageData != null && smallImageData != null) {
                     updatePhoto();
-                }else{
+                } else {
                     Toast.makeText(UpdatePhotoActivity.this, "图片不能为空呀", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
@@ -184,22 +182,23 @@ public class UpdatePhotoActivity extends BaseActivity{
             smallImageData = ChangeUtils.toBinary(ImageCompression.compressSimplify(bitmap, 0.3f));
         }
     }
+
     private void updatePhoto() {
         // 上传至服务器
-        if(NetworkService.getInstance().getIsConnected()) {
-            String changeInfo = "type"+":"+Integer.toString(GlobalMsgUtils.msgChangeInf)+":"+
-                    "account"+":"+application.getAccount()+":"+
-                    "cphoto"+":"+imageData+":"+
-                    "csphoto"+":"+smallImageData+":"+
-                    "kind"+":"+"photo";
+        if (NetworkService.getInstance().getIsConnected()) {
+            String changeInfo = "type" + ":" + Integer.toString(GlobalMsgUtils.msgChangeInf) + ":" +
+                    "account" + ":" + application.getAccount() + ":" +
+                    "cphoto" + ":" + imageData + ":" +
+                    "csphoto" + ":" + smallImageData + ":" +
+                    "kind" + ":" + "photo";
             Log.v("aaaaa", changeInfo);
             NetworkService.getInstance().sendUpload(changeInfo);
-        }
-        else {
+        } else {
             NetworkService.getInstance().closeConnection();
             Toast.makeText(UpdatePhotoActivity.this, "服务器连接失败~(≧▽≦)~啦啦啦", Toast.LENGTH_SHORT).show();
         }
     }
+
     private void updateBroadcas() {
         //动态方式注册广播接收者
         IntentFilter filter = new IntentFilter();
@@ -218,7 +217,7 @@ public class UpdatePhotoActivity extends BaseActivity{
                 Intent it = new Intent(MyStatic.USER_BOARD);
                 sendBroadcast(it);
                 onBackPressed();
-            }else{
+            } else {
                 Toast.makeText(context, "竟然没成功", Toast.LENGTH_SHORT).show();
             }
         }

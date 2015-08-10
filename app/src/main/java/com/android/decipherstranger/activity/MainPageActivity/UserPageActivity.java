@@ -26,7 +26,6 @@ import com.android.decipherstranger.db.ChatRecord;
 import com.android.decipherstranger.db.ContactsList;
 import com.android.decipherstranger.db.ConversationList;
 import com.android.decipherstranger.db.DATABASE;
-import com.android.decipherstranger.util.ChangeUtils;
 import com.android.decipherstranger.util.ImageCompression;
 import com.android.decipherstranger.util.MyStatic;
 import com.android.decipherstranger.util.SharedPreferencesUtils;
@@ -99,7 +98,7 @@ public class UserPageActivity extends BaseActivity {
         Bitmap photo = ImageCompression.comp(application.getPortrait());
         Drawable drawable = new BitmapDrawable(this.getResources(), photo);
         portraitImage.setImageDrawable(drawable);
-    //    photo.recycle();
+        //    photo.recycle();
         this.nameText.setText(application.getName());
         this.accountText.setText(application.getAccount());
         this.sexText.setText(application.getSex());
@@ -114,7 +113,7 @@ public class UserPageActivity extends BaseActivity {
     public void MePageOnClick(View view) {
         switch (view.getId()) {
             case R.id.myPortrait:
-                Intent intent1 = new Intent (this, UpdatePhotoActivity.class);
+                Intent intent1 = new Intent(this, UpdatePhotoActivity.class);
                 startActivity(intent1);
                 break;
             case R.id.portraitImage:
@@ -125,7 +124,7 @@ public class UserPageActivity extends BaseActivity {
                 startActivity(intent);
                 break;
             case R.id.button:
-                SharedPreferencesUtils sharedPreferencesUtils = new SharedPreferencesUtils(this,MyStatic.FILENAME_USER);
+                SharedPreferencesUtils sharedPreferencesUtils = new SharedPreferencesUtils(this, MyStatic.FILENAME_USER);
                 sharedPreferencesUtils.clear();
                 sharedPreferencesUtils.set(MyStatic.USER_LOGIN, false);
                 chatRecord = new ChatRecord(this.helper.getWritableDatabase());
@@ -135,9 +134,29 @@ public class UserPageActivity extends BaseActivity {
                 conversationList = new ConversationList(this.helper.getWritableDatabase());
                 conversationList.clear();
                 MyApplication.getInstance().exit();
-            //    System.exit(0);
+                //    System.exit(0);
                 break;
         }
+    }
+
+    private void save(int flag) {
+        SharedPreferencesUtils sharedPreferencesUtils = new SharedPreferencesUtils(this, MyStatic.FILENAME_USER);
+        switch (flag) {
+            case 0:
+                sharedPreferencesUtils.set(MyStatic.USER_MOVE, application.isMoveFlag());
+                break;
+            case 1:
+                sharedPreferencesUtils.set(MyStatic.USER_MUSIC, application.isMusicFlag());
+                break;
+        }
+    }
+
+    private void registerBroadcas() {
+        //动态方式注册广播接收者
+        IntentFilter filter = new IntentFilter();
+        this.receiver = new UserBroadcastReceiver();
+        filter.addAction(MyStatic.USER_BOARD);
+        this.registerReceiver(receiver, filter);
     }
 
     private class SwitchOnCheckedChangeListenerImpl1 implements CompoundButton.OnCheckedChangeListener {
@@ -162,26 +181,6 @@ public class UserPageActivity extends BaseActivity {
             }
             save(1);
         }
-    }
-
-    private void save(int flag) {
-        SharedPreferencesUtils sharedPreferencesUtils = new SharedPreferencesUtils(this,MyStatic.FILENAME_USER);
-        switch (flag) {
-            case 0:
-                sharedPreferencesUtils.set(MyStatic.USER_MOVE, application.isMoveFlag());
-                break;
-            case 1:
-                sharedPreferencesUtils.set(MyStatic.USER_MUSIC,application.isMusicFlag());
-                break;
-        }
-    }
-
-    private void registerBroadcas() {
-        //动态方式注册广播接收者
-        IntentFilter filter = new IntentFilter();
-        this.receiver = new UserBroadcastReceiver();
-        filter.addAction(MyStatic.USER_BOARD);
-        this.registerReceiver(receiver, filter);
     }
 
     public class UserBroadcastReceiver extends BroadcastReceiver {

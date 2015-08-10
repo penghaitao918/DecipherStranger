@@ -1,105 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background">
+    android:background="@drawable/background"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/tab"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:background="@color/tab">
 
         <TextView
+            android:id="@+id/shake_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/grade_settings"
-            android:textColor="@color/text_hint"
-            android:textSize="20dp"
-            android:layout_margin="10dp"
-            android:id="@+id/shake_title"
+            android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_margin="10dp"
+            android:text="@string/grade_settings"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/text_hint"
+            android:textSize="20dp" />
 
     </RelativeLayout>
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="50dp"
         android:background="@drawable/login_btn_normal"
-        android:layout_gravity="center_horizontal">
+        android:orientation="vertical">
 
         <EditText
+            android:id="@+id/editText1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="10"
-            android:id="@+id/editText1"
-            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginBottom="10dp"
-            android:textColor="@color/text_checked"
+            android:layout_marginTop="20dp"
             android:background="@drawable/input_bar_bg"
-            android:layout_gravity="center_horizontal" />
+            android:ems="10"
+            android:inputType="number"
+            android:textColor="@color/text_checked" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="预设分值"
-            android:textSize="16dp"
-            android:textColor="@color/text_hint"
+            android:layout_marginBottom="20dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginBottom="20dp"/>
+            android:text="预设分值"
+            android:textColor="@color/text_hint"
+            android:textSize="16dp" />
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/gray"
+            android:layout_gravity="center_horizontal"
             android:layout_marginLeft="24dp"
             android:layout_marginRight="24dp"
-            android:layout_gravity="center_horizontal"/>
+            android:background="@color/gray"
+            android:orientation="vertical" />
 
         <EditText
+            android:id="@+id/editText2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="10"
-            android:id="@+id/editText2"
-            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/input_bar_bg"
-            android:layout_gravity="center_horizontal" />
+            android:ems="10"
+            android:inputType="number" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="最大局数"
-            android:textSize="16dp"
-            android:textColor="@color/text_hint"
+            android:layout_marginBottom="20dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginBottom="20dp"/>
+            android:text="最大局数"
+            android:textColor="@color/text_hint"
+            android:textSize="16dp" />
 
     </LinearLayout>
 
     <Button
+        android:id="@+id/save_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/save"
-        android:id="@+id/save_btn"
-        android:textSize="22dp"
-        android:onClick="GradeSetOnClick"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
-        android:textColor="@color/text_checked"
         android:background="@drawable/login_button_bg"
-        android:layout_gravity="center_horizontal" />
+        android:onClick="GradeSetOnClick"
+        android:text="@string/save"
+        android:textColor="@color/text_checked"
+        android:textSize="22dp" />
 
 </LinearLayout>

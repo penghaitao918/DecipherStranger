@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *      へ　　　　　／|
+ * へ　　　　　／|
  * 　　/＼7　　　 ∠＿/
  * 　 /　│　　 ／　／
  * 　│　Z ＿,＜　／　　 /`ヽ
@@ -36,7 +36,7 @@ public class ConversationList {
 
     private SQLiteDatabase db = null;
 
-    public ConversationList(SQLiteDatabase db){
+    public ConversationList(SQLiteDatabase db) {
         this.db = db;
     }
 
@@ -46,12 +46,12 @@ public class ConversationList {
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, os);
         try {
             String sql = "insert into recent_contacts VALUES(?,?,?,null,null)";
-            Object args[] = new Object[]{account,name,os.toByteArray()};
-            this.db.execSQL(sql,args);
-        }catch (Exception e) {
+            Object args[] = new Object[]{account, name, os.toByteArray()};
+            this.db.execSQL(sql, args);
+        } catch (Exception e) {
             String sql = "UPDATE recent_contacts SET username=?, userphoto=? WHERE account=?";
-            Object args[] = new Object[]{name,os.toByteArray(),account};
-            this.db.execSQL(sql,args);
+            Object args[] = new Object[]{name, os.toByteArray(), account};
+            this.db.execSQL(sql, args);
         }
         this.db.close();
     }
@@ -63,14 +63,14 @@ public class ConversationList {
         this.db.execSQL(sql, args);
         this.db.close();
     }
-    
+
     public Map<String, Object> select(String account) {
         Map<String, Object> map = new HashMap<String, Object>();
         String sql = "SELECT * FROM 'recent_contacts' WHERE account=?";
         String args[] = new String[]{account};
         Cursor result = this.db.rawQuery(sql, args);
-        if (result.moveToNext()){          
-            map.put(MyStatic.CONVERSATION_ACCOUNT,  result.getString(0));
+        if (result.moveToNext()) {
+            map.put(MyStatic.CONVERSATION_ACCOUNT, result.getString(0));
             map.put(MyStatic.CONVERSATION_NAME, result.getString(1));
             byte[] in = result.getBlob(2);
             Bitmap bitmap = BitmapFactory.decodeByteArray(in, 0, in.length);
@@ -83,13 +83,13 @@ public class ConversationList {
         return map;
     }
 
-    public ArrayList<Map<String, Object>> selectAll (){
+    public ArrayList<Map<String, Object>> selectAll() {
         ArrayList<Map<String, Object>> all = new ArrayList<Map<String, Object>>();
         String sql = "SELECT * FROM 'recent_contacts' WHERE contacts_time is not null order BY contacts_time DESC";
         Cursor result = this.db.rawQuery(sql, null);
         for (result.moveToFirst(); !result.isAfterLast(); result.moveToNext()) {
             Map<String, Object> map = new HashMap<String, Object>();
-            map.put(MyStatic.CONVERSATION_ACCOUNT,  result.getString(0));
+            map.put(MyStatic.CONVERSATION_ACCOUNT, result.getString(0));
             map.put(MyStatic.CONVERSATION_NAME, result.getString(1));
             byte[] in = result.getBlob(2);
             Bitmap bitmap = BitmapFactory.decodeByteArray(in, 0, in.length);
@@ -111,7 +111,7 @@ public class ConversationList {
     public void delete(String account) {
         String delete = "delete from recent_contacts where account=?";
         String args[] = new String[]{account};
-        this.db.execSQL(delete,args);
+        this.db.execSQL(delete, args);
         this.db.close();
     }
 

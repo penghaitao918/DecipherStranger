@@ -1,64 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
 
     <LinearLayout
-        android:orientation="horizontal"
         android:id="@+id/shake_friend_info"
-        android:clickable="true"
-        android:background="@drawable/login_input_bg"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:onClick="ShakePopup"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true">
+        android:layout_weight="1"
+        android:background="@drawable/login_input_bg"
+        android:clickable="true"
+        android:onClick="ShakePopup"
+        android:orientation="horizontal">
 
         <ImageButton
+            android:id="@+id/userPhoto"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"
             android:layout_marginBottom="10dp"
-            android:id="@+id/userPhoto"
-            android:onClick="ShakePopup"
-            android:layout_gravity="center_vertical" />
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:onClick="ShakePopup" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_gravity="center_vertical">
+            android:layout_marginTop="10dp">
 
             <TextView
+                android:id="@+id/userName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
-                android:id="@+id/userName"
-                android:textSize="30dp"
-                android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:text=""
+                android:textSize="30dp" />
 
             <ImageView
+                android:id="@+id/sexImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/sexImage"
-                android:layout_marginLeft="10dp"
-                android:background="@null"
                 android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toEndOf="@+id/userName"
                 android:layout_toRightOf="@+id/userName"
-                android:layout_toEndOf="@+id/userName" />
+                android:background="@null" />
         </RelativeLayout>
 
     </LinearLayout>
-    
+
 </RelativeLayout>

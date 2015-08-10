@@ -11,8 +11,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -63,7 +61,27 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
     private boolean refreshFlag = false;
 
     private LifeShareBroadcastReceiver receiver = null;
-
+    private Handler handler = new Handler() {
+        public void handleMessage(Message msg) {
+            ArrayList<Map<String, Object>> result = (ArrayList<Map<String, Object>>) msg.obj;
+            switch (msg.what) {
+                case AutoListView.REFRESH:
+                    listView.onRefreshComplete();
+                    dataList.clear();
+                    dataList.addAll(result);
+                    System.out.println("### 数据刷新成功");
+                    break;
+                case AutoListView.LOAD:
+                    listView.onLoadComplete(result.size());
+                    dataList.addAll(result);
+                    System.out.println("### 数据加载成功");
+                    break;
+            }
+            //   listView.setResultSize(result.size());
+            adapter.notifyDataSetChanged();
+            listView.setAdapter(adapter);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,13 +122,13 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
         refreshFlag = true;
         System.out.println("### 刷新");
         //  TODO 向服务器发送刷新请求,获取最新的20条数据（这是一个ID为逆序的数组）
-        if (NetworkService.getInstance().getIsConnected()){
-            String Msg = "type"+":"+"24"+":"+"requestType"+":"+"1";
+        if (NetworkService.getInstance().getIsConnected()) {
+            String Msg = "type" + ":" + "24" + ":" + "requestType" + ":" + "1";
             Log.v("aaaaa", Msg);
             NetworkService.getInstance().sendUpload(Msg);
-        }else {
+        } else {
             NetworkService.getInstance().closeConnection();
-            Log.v("ShowShare","已执行T()方法");
+            Log.v("ShowShare", "已执行T()方法");
         }
     }
 
@@ -118,11 +136,11 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
         //send  minId;
         System.out.println("### 加载");
         //  TODO 向服务器发送加载数据,获取ID<count的10条数据（从count-1到count-10）
-        if (NetworkService.getInstance().getIsConnected()){
-            String Msg = "type"+":"+"24"+":"+"requestType"+":"+"0"+":"+"minId"+":"+minId;
+        if (NetworkService.getInstance().getIsConnected()) {
+            String Msg = "type" + ":" + "24" + ":" + "requestType" + ":" + "0" + ":" + "minId" + ":" + minId;
             Log.v("### aaaaa", Msg);
             NetworkService.getInstance().sendUpload(Msg);
-        }else{
+        } else {
             NetworkService.getInstance().closeConnection();
             Log.v("### ShowShare", "已执行T()方法");
         }
@@ -136,14 +154,14 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
         topLayout.setFocusableInTouchMode(true);
         topLayout.requestFocus();
 
-        this.dataList = new ArrayList< Map<String, Object> >();
+        this.dataList = new ArrayList<Map<String, Object>>();
         this.listView = (AutoListView) findViewById(R.id.lifeShare);
         this.adapter = new ListButtonAdapter(this,
                 this.dataList,
                 R.layout.list_item_share,
-                new String[] {MyStatic.SHARE_PORTRAIT, MyStatic.SHARE_NAME, MyStatic.SHARE_MESSAGE,
+                new String[]{MyStatic.SHARE_PORTRAIT, MyStatic.SHARE_NAME, MyStatic.SHARE_MESSAGE,
                         MyStatic.SHARE_PHOTO, MyStatic.SHARE_TIME, MyStatic.SHARE_NUM, MyStatic.SHARE_NUM_BTN, MyStatic.SHARE_FRI_BTN},
-                new int[] {R.id.sharePortrait, R.id.shareName, R.id.shareMessage, R.id.sharePhoto, R.id.shareTime, R.id.shareNum, R.id.numButton, R.id.friendButton}
+                new int[]{R.id.sharePortrait, R.id.shareName, R.id.shareMessage, R.id.sharePhoto, R.id.shareTime, R.id.shareNum, R.id.numButton, R.id.friendButton}
         );
         /*实现ViewBinder()这个接口*/
         //    this.adapter.setViewBinder(new ViewBinderImpl());
@@ -192,33 +210,11 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
                 onBackPressed();
                 break;
             case R.id.myShare:
-                Intent intent = new Intent(this,ShareLifeActivity.class);
+                Intent intent = new Intent(this, ShareLifeActivity.class);
                 startActivity(intent);
                 break;
         }
     }
-
-    private Handler handler = new Handler() {
-        public void handleMessage(Message msg) {
-            ArrayList<Map<String, Object>> result = (ArrayList< Map<String, Object> >) msg.obj;
-            switch (msg.what) {
-                case AutoListView.REFRESH:
-                    listView.onRefreshComplete();
-                    dataList.clear();
-                    dataList.addAll(result);
-                    System.out.println("### 数据刷新成功");
-                    break;
-                case AutoListView.LOAD:
-                    listView.onLoadComplete(result.size());
-                    dataList.addAll(result);
-                    System.out.println("### 数据加载成功");
-                    break;
-            }
-            //   listView.setResultSize(result.size());
-            adapter.notifyDataSetChanged();
-            listView.setAdapter(adapter);
-        }
-    };
 
 /*    private class ViewBinderImpl implements SimpleAdapter.ViewBinder {
         @Override
@@ -285,7 +281,7 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
                         if (intent.getIntExtra("reRequestType", 0) == 0) {
                             System.out.println("### 没有数据了");
                             listView.onLoadComplete(0);
-                        }else {
+                        } else {
                             //TODO 无数据
                         }
                     }

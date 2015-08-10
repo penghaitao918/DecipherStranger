@@ -1,35 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/translucent_grey">
+    android:background="@color/translucent_grey"
+    android:orientation="vertical">
 
     <RelativeLayout
-        android:layout_margin="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true">
+        android:layout_margin="5dp">
 
         <ImageView
+            android:id="@+id/gameRule"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/gameRule"
-            android:src="@drawable/game_rule"
+            android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            android:src="@drawable/game_rule" />
 
         <ImageButton
+            android:id="@+id/closeRule"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:id="@+id/closeRule"
-            android:background="@drawable/close_button"
-            android:onClick="GameWelcomeOnClick"
-            android:layout_marginTop="43dp"
-            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="43dp"
+            android:background="@drawable/close_button"
+            android:onClick="GameWelcomeOnClick" />
 
     </RelativeLayout>
 

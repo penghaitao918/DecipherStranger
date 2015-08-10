@@ -31,9 +31,9 @@ import java.util.ArrayList;
  * @e-mail 785351408@qq.com
  */
 public class ContactsList {
-    
+
     private SQLiteDatabase db = null;
-    
+
     public ContactsList(SQLiteDatabase db) {
         this.db = db;
     }
@@ -42,29 +42,29 @@ public class ContactsList {
      * 添加联系人
      * @param User user
      */
-    public void insert(User user){
+    public void insert(User user) {
         Bitmap bitmap = user.getPortrait();
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, os);
         try {
             String insert = "INSERT INTO contacts_list VALUES(?,?,?,?,?,?,?,?)";
-            Object args[] = new Object[]{user.getAccount(),user.getUsername(),user.getRemark(),os.toByteArray(),
-                    user.getUserSex(),user.getEmail(),user.getBirth(),user.getPhone()};
-            this.db.execSQL(insert,args);         
+            Object args[] = new Object[]{user.getAccount(), user.getUsername(), user.getRemark(), os.toByteArray(),
+                    user.getUserSex(), user.getEmail(), user.getBirth(), user.getPhone()};
+            this.db.execSQL(insert, args);
         } catch (Exception e) {
             String sql = "UPDATE contacts_list SET username=?, remark=? , portrait=? , sex=? , email=? , birth=? , phone=? WHERE account=?";
-            Object args[] = new Object[]{user.getUsername(),user.getRemark(),os.toByteArray(),user.getUserSex(),
-                    user.getEmail(),user.getBirth(),user.getPhone(),user.getAccount()};
-            this.db.execSQL(sql,args);
+            Object args[] = new Object[]{user.getUsername(), user.getRemark(), os.toByteArray(), user.getUserSex(),
+                    user.getEmail(), user.getBirth(), user.getPhone(), user.getAccount()};
+            this.db.execSQL(sql, args);
         }
         this.db.close();
     }
-    
+
     /*
      * 获取联系人列表
      * return ArrayList<User>
      */
-    public ArrayList<User> getUserList(){
+    public ArrayList<User> getUserList() {
         String select = "SELECT * FROM contacts_list";
         Cursor result = this.db.rawQuery(select, null);
         ArrayList<User> all = new ArrayList<User>();
@@ -80,10 +80,11 @@ public class ContactsList {
             contacts.setBirth(result.getString(6));
             contacts.setPhone(result.getString(7));
             all.add(contacts);
-        } this.db.close();
+        }
+        this.db.close();
         return all;
     }
-    
+
     /*
      * 获取指定联系人信息
      * @param String account
@@ -104,7 +105,8 @@ public class ContactsList {
             contacts.setEmail(result.getString(5));
             contacts.setBirth(result.getString(6));
             contacts.setPhone(result.getString(7));
-        } this.db.close();
+        }
+        this.db.close();
         return contacts;
     }
 
@@ -115,7 +117,7 @@ public class ContactsList {
     public void delete(String account) {
         String delete = "delete from contacts_list where account=?";
         String args[] = new String[]{account};
-        this.db.execSQL(delete,args);
+        this.db.execSQL(delete, args);
         this.db.close();
     }
 

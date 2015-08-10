@@ -1,40 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="330dp"
-            android:layout_height="330dp"
-            android:id="@+id/imageView3"
-            android:onClick="InfoOnClick"
-            android:src="@drawable/invitation"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="330dp"
+        android:layout_height="330dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:onClick="InfoOnClick"
+        android:src="@drawable/invitation" />
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:layout_alignTop="@+id/imageView3"
         android:layout_alignBottom="@+id/imageView3"
+        android:layout_alignEnd="@+id/imageView3"
         android:layout_alignLeft="@+id/imageView3"
-        android:layout_alignStart="@+id/imageView3"
         android:layout_alignRight="@+id/imageView3"
-        android:layout_alignEnd="@+id/imageView3">
+        android:layout_alignStart="@+id/imageView3"
+        android:layout_alignTop="@+id/imageView3"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_weight="1"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"/>
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" />
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_weight="1"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -42,24 +43,24 @@
                 android:layout_gravity="center_horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="New Text"
-                    android:textColor="@color/btn_text"
-                    android:textSize="26dp"
                     android:id="@+id/accountInvitation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true" />
-                
+                    android:text="New Text"
+                    android:textColor="@color/btn_text"
+                    android:textSize="26dp" />
+
             </RelativeLayout>
-            
+
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_weight="1"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -67,24 +68,24 @@
                 android:layout_gravity="center_horizontal">
 
                 <TextView
+                    android:id="@+id/nameInvitation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
                     android:text="New Text"
                     android:textColor="@color/btn_text"
-                    android:textSize="26dp"
-                    android:id="@+id/nameInvitation"
-                    android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true" />
+                    android:textSize="26dp" />
 
             </RelativeLayout>
-        
+
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_weight="1"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"/>
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" />
     </LinearLayout>
 
 </RelativeLayout>

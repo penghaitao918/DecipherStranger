@@ -33,27 +33,27 @@ import com.android.decipherstranger.util.GlobalMsgUtils;
  * @e-mail 785351408@qq.com
  */
 public class SetGradeActivity extends BaseActivity {
-    
+
     private MyApplication application = null;
     private EditText gradeEdit = null;
     private EditText sumEdit = null;
-    
+
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_rsp_set_grade);
         //  application = (MyApplication) getApplication();
         application = MyApplication.getInstance();
         this.init();
     }
-    
+
     private void init() {
         this.gradeEdit = (EditText) super.findViewById(R.id.editText1);
         this.sumEdit = (EditText) super.findViewById(R.id.editText2);
         this.gradeEdit.setText("6");
         this.sumEdit.setText("20");
     }
-    
+
     public void GradeSetOnClick(View view) {
         switch (view.getId()) {
             case R.id.gamelist_back_button:
@@ -65,20 +65,19 @@ public class SetGradeActivity extends BaseActivity {
                 break;
         }
     }
- 
-    private void setGradeToWeb(){
+
+    private void setGradeToWeb() {
         int grade = Integer.parseInt(this.gradeEdit.getText().toString());
         int sum = Integer.parseInt(this.sumEdit.getText().toString());
-            if(NetworkService.getInstance().getIsConnected()){
-                String gameUser = "type"+":"+Integer.toString(GlobalMsgUtils.msgGameOneGrade)+
-                        ":"+"account"+":"+ application.getAccount()+":"+"grade"+":"+grade+":"+
-                        "sum"+":"+sum;
-                NetworkService.getInstance().sendUpload(gameUser);
-            }
-            else {
-                NetworkService.getInstance().closeConnection();
-                Toast.makeText(SetGradeActivity.this, "服务器连接失败~(≧▽≦)~啦啦啦", Toast.LENGTH_SHORT).show();
-                Log.v("Login", "已经执行T（）方法");
-            }
+        if (NetworkService.getInstance().getIsConnected()) {
+            String gameUser = "type" + ":" + Integer.toString(GlobalMsgUtils.msgGameOneGrade) +
+                    ":" + "account" + ":" + application.getAccount() + ":" + "grade" + ":" + grade + ":" +
+                    "sum" + ":" + sum;
+            NetworkService.getInstance().sendUpload(gameUser);
+        } else {
+            NetworkService.getInstance().closeConnection();
+            Toast.makeText(SetGradeActivity.this, "服务器连接失败~(≧▽≦)~啦啦啦", Toast.LENGTH_SHORT).show();
+            Log.v("Login", "已经执行T（）方法");
+        }
     }
 }

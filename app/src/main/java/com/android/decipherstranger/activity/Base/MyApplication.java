@@ -34,44 +34,13 @@ import java.util.List;
  */
 public class MyApplication extends Application {
 
-    private List<Activity> activityList = new LinkedList<Activity>();
     private static MyApplication instance;
+    private List<Activity> activityList = new LinkedList<Activity>();
 
 //    private MyApplication(){}
-
-    // 单例模式中获取唯一的MyApplication实例  
-    public static MyApplication getInstance() {
-        if (null == instance) {
-            instance = new MyApplication();
-        }
-        return instance;
-    }
-
-    // 添加Activity到容器中  
-    public void addActivity(Activity activity) {
-        activityList.add(activity);
-    }
-
-    // 遍历所有Activity并finish  
-    public void exit() {
-        for (Activity activity : activityList) {
-            System.out.println("tag_activity﹕ Exit" + activity.getClass().getSimpleName());
-            activity.finish();
-        }
-        System.exit(0);
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-    }
-
-    @Override
-    public void onTerminate() {
-        super.onTerminate();
-    }
-
-    /*******全局变量***********************************************************************************************/
+    /**
+     * ****全局变量**********************************************************************************************
+     */
 
     //  用户账号
     private String account = null;
@@ -93,14 +62,43 @@ public class MyApplication extends Application {
     private String signature = null;
     //未读消息
     private int unReadMessage;
-
     private int invSum;
-
     //  震动标志
     private boolean moveFlag = true;
     //  声效标志
     private boolean musicFlag = true;
 
+    // 单例模式中获取唯一的MyApplication实例
+    public static MyApplication getInstance() {
+        if (null == instance) {
+            instance = new MyApplication();
+        }
+        return instance;
+    }
+
+    // 添加Activity到容器中
+    public void addActivity(Activity activity) {
+        activityList.add(activity);
+    }
+
+    // 遍历所有Activity并finish
+    public void exit() {
+        for (Activity activity : activityList) {
+            System.out.println("tag_activity﹕ Exit" + activity.getClass().getSimpleName());
+            activity.finish();
+        }
+        System.exit(0);
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+    }
 
     public int getUnReadMessage() {
         return unReadMessage;
@@ -110,96 +108,100 @@ public class MyApplication extends Application {
         this.unReadMessage = unReadMessage;
     }
 
-    public void setAccount(String account) {
-        this.account = account;
-    }
-
     public String getAccount() {
         return account;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAccount(String account) {
+        this.account = account;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setPortrait(Bitmap portrait) {
-        this.portrait = portrait;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Bitmap getPortrait() {
         return portrait;
     }
 
-    public void setSex(String userSex) {
-        this.sex = userSex;
+    public void setPortrait(Bitmap portrait) {
+        this.portrait = portrait;
     }
 
     public String getSex() {
         return sex;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setSex(String userSex) {
+        this.sex = userSex;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPhone() {
         return phone;
     }
 
-    public void setBirth(String birth) {
-        this.birth = birth;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getBirth() {
         return birth;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setBirth(String birth) {
+        this.birth = birth;
     }
 
     public String getAddress() {
         return address;
     }
 
-    public void setSignature(String signature) {
-        this.signature = signature;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getSignature() {
         return signature;
     }
 
-    public void setInvSum(int invSum) { this.invSum = invSum;}
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
 
-    public int getInvSum() { return invSum; }
+    public int getInvSum() {
+        return invSum;
+    }
 
-    public void setMoveFlag(boolean moveFlag) {
-        this.moveFlag = moveFlag;
+    public void setInvSum(int invSum) {
+        this.invSum = invSum;
     }
 
     public boolean isMoveFlag() {
         return moveFlag;
     }
 
-    public void setMusicFlag(boolean musicFlag) {
-        this.musicFlag = musicFlag;
+    public void setMoveFlag(boolean moveFlag) {
+        this.moveFlag = moveFlag;
     }
 
     public boolean isMusicFlag() {
         return musicFlag;
+    }
+
+    public void setMusicFlag(boolean musicFlag) {
+        this.musicFlag = musicFlag;
     }
 
     public void receiveMessage(final Context context) {
@@ -213,11 +215,11 @@ public class MyApplication extends Application {
         }
         if (musicFlag) {
             new Thread() {
-                public void run(){
+                public void run() {
                     System.out.println("### 音效啊！！！！");
                     MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.dingdong);
                     mediaPlayer.start();
-                //    mediaPlayer.release();
+                    //    mediaPlayer.release();
                 }
             }.start();
         }

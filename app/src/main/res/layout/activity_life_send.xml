@@ -1,287 +1,288 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/main_bg">
+    android:background="@drawable/main_bg"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/tab"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:background="@color/tab">
 
         <ImageButton
+            android:id="@+id/life_back_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/life_back_button"
-            android:onClick="LifeSendOnClick"
-            android:background="@null"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/life_back_btn"
-            android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:onClick="LifeSendOnClick"
+            android:src="@drawable/life_back_btn" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/send"
-            android:textColor="@color/text_hint"
-            android:textSize="20dp"
-            android:layout_margin="10dp"
+            android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_margin="10dp"
+            android:text="@string/send"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/text_hint"
+            android:textSize="20dp" />
 
     </RelativeLayout>
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/scrollView"
-        android:layout_gravity="center_horizontal" >
+        android:layout_gravity="center_horizontal">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <RadioGroup
                 android:id="@+id/classRadio"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
+                android:layout_centerVertical="true"
                 android:layout_margin="15dp"
-                android:layout_centerVertical="true">
+                android:orientation="horizontal">
 
                 <RadioButton
                     android:id="@+id/food"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="25dp"
+                    android:background="@drawable/life_food_rad"
                     android:button="@null"
                     android:onClick="LifeSendOnClick"
-                    android:background="@drawable/life_food_rad"
-                    android:layout_gravity="center_vertical"/>
+                    android:padding="5dp" />
 
                 <LinearLayout
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/grey"/>
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/grey" />
 
                 <RadioButton
                     android:id="@+id/travel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginLeft="25dp"
                     android:layout_marginRight="25dp"
+                    android:background="@drawable/life_travel_rad"
                     android:button="@null"
                     android:onClick="LifeSendOnClick"
-                    android:background="@drawable/life_travel_rad"
-                    android:layout_gravity="center_vertical"/>
+                    android:padding="5dp" />
 
                 <LinearLayout
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/grey"/>
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/grey" />
 
                 <RadioButton
                     android:id="@+id/others"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginLeft="25dp"
                     android:layout_marginRight="20dp"
+                    android:background="@drawable/life_other_rad"
                     android:button="@null"
                     android:onClick="LifeSendOnClick"
-                    android:background="@drawable/life_other_rad"
-                    android:layout_gravity="center_vertical"/>
+                    android:padding="5dp" />
 
             </RadioGroup>
 
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:imeOptions="actionNext"
-                android:singleLine="true"
-                android:paddingLeft="20dp"
-                android:drawableRight="@null"
-                android:background="@drawable/login_input_bg"
-                android:maxLength="20"
-                android:maxLines="1"
-                android:textColor="@color/btn_text"
-                android:textColorHint="@color/text_hint"
-                android:textSize="18dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="5dp"
                 android:id="@+id/lifeName"
-                android:hint="@string/lifeName"/>
-
-            <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
-                android:imeOptions="actionNext"
-                android:singleLine="true"
-                android:paddingLeft="20dp"
-                android:drawableRight="@null"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
                 android:background="@drawable/login_input_bg"
+                android:drawableRight="@null"
+                android:hint="@string/lifeName"
+                android:imeOptions="actionNext"
                 android:maxLength="20"
                 android:maxLines="1"
+                android:paddingLeft="20dp"
+                android:singleLine="true"
                 android:textColor="@color/btn_text"
                 android:textColorHint="@color/text_hint"
-                android:textSize="18dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="5dp"
+                android:textSize="18dp" />
+
+            <EditText
                 android:id="@+id/lifeSpace"
-                android:hint="@string/lifeSpace"/>
-
-            <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:onClick="LifeSendOnClick"
-                android:background="@drawable/login_input_bg"
                 android:layout_centerHorizontal="true"
-                android:paddingLeft="20dp"
-                android:textSize="18dp"
-                android:textColor="@color/text_hint"
-                android:gravity="left|center"
-                android:layout_marginTop="5dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/login_input_bg"
+                android:drawableRight="@null"
+                android:hint="@string/lifeSpace"
+                android:imeOptions="actionNext"
+                android:maxLength="20"
+                android:maxLines="1"
+                android:paddingLeft="20dp"
+                android:singleLine="true"
+                android:textColor="@color/btn_text"
+                android:textColorHint="@color/text_hint"
+                android:textSize="18dp" />
+
+            <Button
                 android:id="@+id/lifeTime"
-                android:text="@string/lifeTime"/>
-
-            <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:imeOptions="actionNext"
-                android:singleLine="true"
-                android:paddingLeft="20dp"
-                android:drawableRight="@null"
-                android:inputType="phone"
-                android:background="@drawable/login_input_bg"
-                android:maxLength="20"
-                android:maxLines="1"
-                android:textColor="@color/text_hint"
-                android:textColorHint="@color/text_hint"
-                android:textSize="18dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/login_input_bg"
+                android:gravity="left|center"
+                android:onClick="LifeSendOnClick"
+                android:paddingLeft="20dp"
+                android:text="@string/lifeTime"
+                android:textColor="@color/text_hint"
+                android:textSize="18dp" />
+
+            <EditText
                 android:id="@+id/lifePeople"
-                android:hint="@string/peopleMax"/>
-
-            <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:onClick="LifeSendOnClick"
-                android:background="@drawable/login_input_bg"
                 android:layout_centerHorizontal="true"
-                android:paddingLeft="20dp"
-                android:textSize="18dp"
-                android:textColor="@color/text_hint"
-                android:gravity="left|center"
-                android:layout_marginTop="5dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginBottom="5dp"
-                android:id="@+id/timeEnd"
-                android:text="@string/timeEnd"/>
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/login_input_bg"
+                android:drawableRight="@null"
+                android:hint="@string/peopleMax"
                 android:imeOptions="actionNext"
-                android:singleLine="true"
-                android:paddingLeft="20dp"
-                android:drawableRight="@null"
-                android:background="@drawable/login_input_bg"
+                android:inputType="phone"
                 android:maxLength="20"
                 android:maxLines="1"
+                android:paddingLeft="20dp"
+                android:singleLine="true"
                 android:textColor="@color/text_hint"
                 android:textColorHint="@color/text_hint"
-                android:textSize="18dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="5dp"
-                android:id="@+id/rallySpace"
-                android:hint="@string/rallySpace"/>
+                android:textSize="18dp" />
 
             <Button
+                android:id="@+id/timeEnd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:onClick="LifeSendOnClick"
-                android:background="@drawable/login_input_bg"
                 android:layout_centerHorizontal="true"
-                android:paddingLeft="20dp"
-                android:textSize="18dp"
-                android:textColor="@color/text_hint"
-                android:gravity="left|center"
-                android:layout_marginTop="5dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginBottom="5dp"
-                android:id="@+id/rallyTime"
-                android:text="@string/rallyTime"/>
+                android:layout_marginTop="5dp"
+                android:background="@drawable/login_input_bg"
+                android:gravity="left|center"
+                android:onClick="LifeSendOnClick"
+                android:paddingLeft="20dp"
+                android:text="@string/timeEnd"
+                android:textColor="@color/text_hint"
+                android:textSize="18dp" />
 
             <EditText
+                android:id="@+id/rallySpace"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:imeOptions="actionDone"
-                android:singleLine="true"
-                android:paddingLeft="20dp"
-                android:drawableRight="@null"
-                android:background="@drawable/login_input_bg"
-                android:maxLength="20"
-                android:maxLines="1"
-                android:textColor="@color/text_hint"
-                android:textColorHint="@color/text_hint"
-                android:textSize="18dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/login_input_bg"
+                android:drawableRight="@null"
+                android:hint="@string/rallySpace"
+                android:imeOptions="actionNext"
+                android:maxLength="20"
+                android:maxLines="1"
+                android:paddingLeft="20dp"
+                android:singleLine="true"
+                android:textColor="@color/text_hint"
+                android:textColorHint="@color/text_hint"
+                android:textSize="18dp" />
+
+            <Button
+                android:id="@+id/rallyTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/login_input_bg"
+                android:gravity="left|center"
+                android:onClick="LifeSendOnClick"
+                android:paddingLeft="20dp"
+                android:text="@string/rallyTime"
+                android:textColor="@color/text_hint"
+                android:textSize="18dp" />
+
+            <EditText
                 android:id="@+id/lifePassword"
-                android:hint="@string/lifePassword"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/login_input_bg"
+                android:drawableRight="@null"
+                android:hint="@string/lifePassword"
+                android:imeOptions="actionDone"
+                android:maxLength="20"
+                android:maxLines="1"
+                android:paddingLeft="20dp"
+                android:singleLine="true"
+                android:textColor="@color/text_hint"
+                android:textColorHint="@color/text_hint"
+                android:textSize="18dp" />
 
             <Button
                 android:id="@+id/publish"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/life_publish_btn"
-                android:onClick="LifeSendOnClick"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="30dp"
+                android:layout_below="@+id/register_birth_input"
                 android:layout_centerHorizontal="true"
-                android:layout_below="@+id/register_birth_input" />
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/life_publish_btn"
+                android:onClick="LifeSendOnClick" />
 
         </LinearLayout>
 

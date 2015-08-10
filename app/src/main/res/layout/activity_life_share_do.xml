@@ -1,94 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background">
+    android:background="@drawable/background"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/tab"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:background="@color/tab">
 
         <ImageButton
+            android:id="@+id/sendShare_back_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/sendShare_back_button"
-            android:onClick="SendShareOnclick"
-            android:background="@null"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/life_back_btn"
-            android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:onClick="SendShareOnclick"
+            android:src="@drawable/life_back_btn" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text=" "
-            android:textColor="@color/text_hint"
-            android:textSize="20dp"
-            android:layout_margin="10dp"
+            android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_margin="10dp"
+            android:text=" "
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/text_hint"
+            android:textSize="20dp" />
 
         <Button
+            android:id="@+id/send_share"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:text="@string/doShare"
-            android:id="@+id/send_share"
-            android:textSize="16dp"
-            android:textColor="@color/text_checked"
-            android:onClick="SendShareOnclick"
-            android:background="@drawable/small_btn_bg"
-            android:layout_marginRight="10dp"
-            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/small_btn_bg"
+            android:onClick="SendShareOnclick"
+            android:text="@string/doShare"
+            android:textColor="@color/text_checked"
+            android:textSize="16dp" />
 
     </RelativeLayout>
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/login_btn_normal"
-        android:layout_gravity="center_horizontal">
+        android:orientation="vertical">
 
         <EditText
             android:id="@+id/editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:minLines="4"
-            android:maxLines="4"
-            android:gravity="left|top"
-            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginBottom="10dp"
-            android:hint="@string/shareTip"
-            android:textSize="18dp"
-            android:textColorHint="@color/text_hint"
-            android:textColor="@color/text_checked"
+            android:layout_marginTop="10dp"
             android:background="@null"
-            android:layout_gravity="center_horizontal" />
+            android:gravity="left|top"
+            android:hint="@string/shareTip"
+            android:inputType="textMultiLine"
+            android:maxLines="4"
+            android:minLines="4"
+            android:textColor="@color/text_checked"
+            android:textColorHint="@color/text_hint"
+            android:textSize="18dp" />
 
         <ImageButton
+            android:id="@+id/imageButton"
             android:layout_width="72dp"
             android:layout_height="72dp"
-            android:id="@+id/imageButton"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:background="@null"
             android:onClick="SendShareOnclick"
             android:scaleType="fitXY"
-            android:background="@null"
-            android:src="@drawable/roominfo_add_icon"
-            android:layout_marginLeft="20dp"
-            android:layout_marginBottom="20dp" />
+            android:src="@drawable/roominfo_add_icon" />
 
     </LinearLayout>
 

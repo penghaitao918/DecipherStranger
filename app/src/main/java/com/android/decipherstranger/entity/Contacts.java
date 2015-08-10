@@ -32,8 +32,10 @@ public class Contacts {
     private String message = null;
     private String timeLen = null;
     private int type = 0;
-    
-    public Contacts(){}
+
+    public Contacts() {
+    }
+
     public Contacts(Contacts contacts) {
         this.account = contacts.account;
         this.username = contacts.username;
@@ -43,53 +45,53 @@ public class Contacts {
         this.message = contacts.message;
         this.timeLen = contacts.timeLen;
     }
-    
-    public void setAccount(String account) {
-        this.account = account;
-    }
 
     public String getAccount() {
         return account;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setAccount(String account) {
+        this.account = account;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setPortrait(Bitmap portrait) {
-        this.portrait = portrait;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Bitmap getPortrait() {
         return portrait;
     }
-    
-    public void setWho(int who) {
-        this.who = who;
+
+    public void setPortrait(Bitmap portrait) {
+        this.portrait = portrait;
     }
-    
+
     public int getWho() {
         return who;
     }
-    
-    public void setDatetime(String datetime) {
-        this.datetime = datetime;
+
+    public void setWho(int who) {
+        this.who = who;
     }
 
     public String getDatetime() {
         return this.datetime;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setDatetime(String datetime) {
+        this.datetime = datetime;
     }
 
     public String getMessage() {
         return this.message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public String getTimeLen() {
@@ -100,11 +102,11 @@ public class Contacts {
         this.timeLen = timeLen;
     }
 
-    public void setType(int type) {
-        this.type = type;
-    }
-
     public int getType() {
         return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }

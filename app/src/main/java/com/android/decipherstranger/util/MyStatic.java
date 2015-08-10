@@ -3,7 +3,7 @@ package com.android.decipherstranger.util;
 import android.graphics.Bitmap;
 
 /**
- *      へ　　　　　／|
+ * へ　　　　　／|
  * 　　/＼7　　　 ∠＿/
  * 　 /　│　　 ／　／
  * 　│　Z ＿,＜　／　　 /`ヽ
@@ -52,7 +52,7 @@ public class MyStatic {
     public static final String LIFE_SHARE_DO = "com.android.life.share.do";
     public static final String LIFE_MY_LIFE = "com.android.life.myLife";
     public static final String LIFE_LIFE_FRIENDS = "com.android.life.friends";
-    
+
     public static final String CONVERSATION_TYPE = "Type";
     public static final String CONVERSATION_ACCOUNT = "conversationAccount";
     public static final String CONVERSATION_PORTRAIT = "conversationPortrait";
@@ -66,7 +66,7 @@ public class MyStatic {
     public static final int INVITATION_SUCCESS = 1;
     public static final int INVITATION_FAIL = 2;
     public static final int INVITATION_SEND = 3;
-    
+
     public static final String FILENAME_SETTINGS = "Settings";
     public static final String KEY_BG = "gameBgMusic";
     public static final String KEY_EFFECT = "gameEffectMusic";

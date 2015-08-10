@@ -12,28 +12,28 @@ import java.util.ArrayList;
  */
 public class UserTabOperate {
 
-    private SQLiteDatabase db = null;
     private static final String TABLE_NAME = "user_tab";
+    private SQLiteDatabase db = null;
 
-    public UserTabOperate(SQLiteDatabase db){
+    public UserTabOperate(SQLiteDatabase db) {
         this.db = db;
     }
 
-    public void insert(String account, String password){
+    public void insert(String account, String password) {
         String sql = "INSERT INTO " + TABLE_NAME + " (account,password) VALUES(?,?)";
-        Object args[] = new Object[]{account,password};
-        this.db.execSQL(sql,args);
+        Object args[] = new Object[]{account, password};
+        this.db.execSQL(sql, args);
         this.db.close();
     }
 
-    public void update(String account, String password){
+    public void update(String account, String password) {
         String sql = "UPDATE " + TABLE_NAME + " SET password=? WHERE account=?";
-        Object args[] = new Object[]{password,account};
-        this.db.execSQL(sql,args);
+        Object args[] = new Object[]{password, account};
+        this.db.execSQL(sql, args);
         this.db.close();
     }
 
-    public User userTabInfo (String account){
+    public User userTabInfo(String account) {
 
         String U_account = "";
         String U_password = "";
@@ -44,7 +44,7 @@ public class UserTabOperate {
         String args[] = new String[]{account};
         Cursor result = this.db.rawQuery(sql, args);
 
-        if (result.moveToNext()){
+        if (result.moveToNext()) {
             U_account = result.getString(0);
             U_password = result.getString(1);
         }
@@ -54,10 +54,10 @@ public class UserTabOperate {
         return user;
     }
 
-    public ArrayList<String> accountInfo (){
+    public ArrayList<String> accountInfo() {
 
         ArrayList<String> all = new ArrayList<String>();
-        
+
         String sql = "SELECT account FROM " + TABLE_NAME;
         Cursor result = this.db.rawQuery(sql, null);
 
@@ -67,14 +67,14 @@ public class UserTabOperate {
         this.db.close();
         return all;
     }
-    
+
     /*
      * 删除指定联系人记录
-     */    
+     */
     public void delete(String account) {
         String delete = "delete from user_tab where contacts=?";
         String args[] = new String[]{account};
-        this.db.execSQL(delete,args);
+        this.db.execSQL(delete, args);
         this.db.close();
     }
 
@@ -86,5 +86,5 @@ public class UserTabOperate {
         this.db.execSQL(clear);
         this.db.close();
     }
-    
+
 }

@@ -6,47 +6,47 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true">
 
         <ImageView
+            android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageView"
-            android:src="@drawable/friend_get_success"
+            android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"/>
+            android:src="@drawable/friend_get_success" />
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_weight="1"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_alignTop="@+id/imageView"
             android:layout_alignBottom="@+id/imageView"
             android:layout_alignLeft="@+id/imageView"
-            android:layout_alignStart="@+id/imageView">
+            android:layout_alignStart="@+id/imageView"
+            android:layout_alignTop="@+id/imageView"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_weight="1"
-                android:orientation="vertical"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"/>
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="vertical" />
 
             <RelativeLayout
-                android:layout_weight="1"
-                android:orientation="vertical"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
                 <Button
+                    android:id="@+id/close"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/close"
-                    android:background="@drawable/success_confirm_btn"
-                    android:onClick="GameSuccessOnClick"
+                    android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true" />
+                    android:background="@drawable/success_confirm_btn"
+                    android:onClick="GameSuccessOnClick" />
 
             </RelativeLayout>
 

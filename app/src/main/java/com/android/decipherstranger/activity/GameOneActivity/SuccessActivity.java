@@ -50,14 +50,14 @@ public class SuccessActivity extends BaseActivity {
         setContentView(R.layout.activity_game_success);
         Intent intent = getIntent();
         String Type = intent.getStringExtra("Type");
-        if(Type.equals("AddFriend")) {
+        if (Type.equals("AddFriend")) {
             //Toast.makeText(this, "已添加" + MyStatic.friendName + "为好友！",Toast.LENGTH_LONG).show();
             this.helper = new DATABASE(this);
             this.SendToWeb();
             this.SendToLocal();
         }
 
-        MediaPlayer mediaPlayer = MediaPlayer.create(this,R.raw.makefriend_success);
+        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.makefriend_success);
         mediaPlayer.start();
     }
 
@@ -70,15 +70,14 @@ public class SuccessActivity extends BaseActivity {
     }
 
     private void SendToWeb() {
-    //    MyApplication application = (MyApplication) getApplication();
+        //    MyApplication application = (MyApplication) getApplication();
         MyApplication application = MyApplication.getInstance();
-        if(NetworkService.getInstance().getIsConnected()){
-            String addUser = "type"+":"+Integer.toString(GlobalMsgUtils.msgAddFriend)+":"+
-                    "account"+":"+application.getAccount()+":"+
-                    "friend"+":"+MyStatic.friendAccount;
+        if (NetworkService.getInstance().getIsConnected()) {
+            String addUser = "type" + ":" + Integer.toString(GlobalMsgUtils.msgAddFriend) + ":" +
+                    "account" + ":" + application.getAccount() + ":" +
+                    "friend" + ":" + MyStatic.friendAccount;
             NetworkService.getInstance().sendUpload(addUser);
-        }
-        else {
+        } else {
             NetworkService.getInstance().closeConnection();
             Toast.makeText(SuccessActivity.this, "服务器连接失败~(≧▽≦)~啦啦啦", Toast.LENGTH_SHORT).show();
             Log.v("Login", "已经执行T（）方法");
@@ -94,7 +93,7 @@ public class SuccessActivity extends BaseActivity {
         contactsList = new ContactsList(this.helper.getWritableDatabase());
         contactsList.insert(user);
         Intent intent = new Intent("com.android.decipherstranger.FRIEND");
-        intent.putExtra("reFresh","reFresh");
+        intent.putExtra("reFresh", "reFresh");
         sendBroadcast(intent);
     }
 

@@ -30,6 +30,7 @@ public class CustomDialogSettings extends Dialog {
         super(context);
         this.context = context;
     }
+
     public CustomDialogSettings(Context context, int theme) {
         super(context, theme);
         this.context = context;
@@ -76,18 +77,18 @@ public class CustomDialogSettings extends Dialog {
 
     private class confirmOnClickImpl implements View.OnClickListener {
         @Override
-        public void onClick(View view){
+        public void onClick(View view) {
             new Thread() {
-                public void run(){
+                public void run() {
                     MyStatic.gameBackgroundMusicFlag = bgMusic;
                     MyStatic.gameEffectMusicFlag = effectMusic;
                     Intent intent = new Intent("com.android.game.SETTINGS");
                     context.sendBroadcast(intent);
                 }
             }.start();
-            SharedPreferencesUtils sharedPreferencesUtils = new SharedPreferencesUtils(context,MyStatic.FILENAME_SETTINGS);
+            SharedPreferencesUtils sharedPreferencesUtils = new SharedPreferencesUtils(context, MyStatic.FILENAME_SETTINGS);
             sharedPreferencesUtils.set(MyStatic.KEY_BG, bgMusic);
-            sharedPreferencesUtils.set(MyStatic.KEY_EFFECT,effectMusic);
+            sharedPreferencesUtils.set(MyStatic.KEY_EFFECT, effectMusic);
             onBackPressed();
         }
     }

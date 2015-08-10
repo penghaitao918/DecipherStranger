@@ -6,7 +6,8 @@
     </style>
 
     <!-- Customize your theme here. -->
-    <style name="AppBaseTheme" parent="android:Theme.Light"/>
+    <style name="AppBaseTheme" parent="android:Theme.Light" />
+
     <style name="NoTheme" parent="Theme.AppCompat.Light.NoActionBar" />
 
     <!-- menu_pop_up 弹窗样式 -->

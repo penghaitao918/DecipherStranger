@@ -50,6 +50,15 @@ import java.util.UUID;
  */
 public class ChatMsgActivity extends BaseActivity implements OnClickListener {
 
+    private static final int IMAGE_REQUEST_CODE = 0;
+    private static final int CAMERA_REQUEST_CODE = 1;
+    private static final int RESULT_REQUEST_CODE = 2;
+    private static final int TEXT_MESSAGE = 0;
+    private static final int VOICE_MESSAGE = 1;
+    private static final int PHOTO_MESSAGE = 2;
+    private static final String IMAGE_FILE_NAME = "faceImage.jpg";
+    private static final int IS_COM_MSG = 1;
+    private static final int SEND_TO_MSG = 0;
     private MyApplication application = null;
     //文本信息发送按钮
     private Button mBtnSend;
@@ -73,7 +82,7 @@ public class ChatMsgActivity extends BaseActivity implements OnClickListener {
     private ChatRecord readerChatLog;
     //写入本地缓存聊天记录
     private ChatRecord writeChatLog;
-//    //写入最近聊天列表缓存
+    //    //写入最近聊天列表缓存
 //    private ConversationList conversationList;
     //图片信息发送按钮
     private ImageView add_panel_im;
@@ -92,23 +101,8 @@ public class ChatMsgActivity extends BaseActivity implements OnClickListener {
     private String currentUserName;
     //当前聊天好友头像
     private Bitmap currentUserPhoto;
-    
     private RelativeLayout blank = null;
-
-    private static final int IMAGE_REQUEST_CODE = 0;
-    private static final int CAMERA_REQUEST_CODE = 1;
-    private static final int RESULT_REQUEST_CODE = 2;
-
-    private static final int TEXT_MESSAGE = 0;
-    private static final int VOICE_MESSAGE = 1;
-    private static final int PHOTO_MESSAGE = 2;
-
-    private static final String IMAGE_FILE_NAME = "faceImage.jpg";
-
     private ChatBroadcastReceiver receiver = null;
-    private static final int IS_COM_MSG = 1;
-    private static final int SEND_TO_MSG = 0;
-
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,7 +117,7 @@ public class ChatMsgActivity extends BaseActivity implements OnClickListener {
         initView();
         initData();
     }
-    
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -139,7 +133,7 @@ public class ChatMsgActivity extends BaseActivity implements OnClickListener {
     public void initView() {
         this.blank = (RelativeLayout) super.findViewById(R.id.blank);
         this.blank.setOnClickListener(this);
-        Bundle bundle =this.getIntent().getExtras();
+        Bundle bundle = this.getIntent().getExtras();
         currentUserAccount = bundle.getString("userAccount");
         currentUserName = bundle.getString("userName");
         currentUserPhoto = bundle.getParcelable("userPhoto");
@@ -164,7 +158,7 @@ public class ChatMsgActivity extends BaseActivity implements OnClickListener {
                 mListView.setSelection(mListView.getCount() - 1);
                 //将聊天记录写入本地
                 writeChatLog = new ChatRecord(helper.getWritableDatabase());
-                writeChatLog.insert(currentUserAccount, SEND_TO_MSG, filePath, Math.round(seconds)+ "", time,VOICE_MESSAGE);
+                writeChatLog.insert(currentUserAccount, SEND_TO_MSG, filePath, Math.round(seconds) + "", time, VOICE_MESSAGE);
                 sendVoice(ChangeUtils.toBinary(file), Math.round(seconds), time);
                 sendToConversation("[语音]");
             }
@@ -187,7 +181,7 @@ public class ChatMsgActivity extends BaseActivity implements OnClickListener {
         add_panel_im.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE); 
+                InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 im.hideSoftInputFromWindow(getCurrentFocus().getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 addPanel();
                 blank.setClickable(true);
@@ -227,11 +221,10 @@ public class ChatMsgActivity extends BaseActivity implements OnClickListener {
         mDataArrays = readerChatLog.getInfo(currentUserAccount);
         int length = mDataArrays.size();
         for (int i = 0; i < length; i++) {
-            if (mDataArrays.get(i).getWho() == IS_COM_MSG){
+            if (mDataArrays.get(i).getWho() == IS_COM_MSG) {
                 mDataArrays.get(i).setUsername(currentUserName);
                 mDataArrays.get(i).setPortrait(currentUserPhoto);
-            }
-            else{
+            } else {
                 mDataArrays.get(i).setUsername(application.getName());
                 mDataArrays.get(i).setPortrait(application.getPortrait());
             }
@@ -300,37 +293,37 @@ public class ChatMsgActivity extends BaseActivity implements OnClickListener {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-            switch (requestCode) {
-                case IMAGE_REQUEST_CODE:
-                    try {
-                        startPhotoZoom(data.getData());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                case CAMERA_REQUEST_CODE:
-                    if (Tools.hasSdcard()) {
-                        File path = Environment
-                                .getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
-                        File tempFile = new File(path, IMAGE_FILE_NAME);
-                        startPhotoZoom(Uri.fromFile(tempFile));
-                    } else {
-                        Toast.makeText(ChatMsgActivity.this, "未找到存储卡，无法存储照片！",
-                                Toast.LENGTH_LONG).show();
-                    }
-                    break;
-                case RESULT_REQUEST_CODE:
-                    if (data!= null){
-                        getImageToView(data);
-                    }
-                    break;
-            }
+        switch (requestCode) {
+            case IMAGE_REQUEST_CODE:
+                try {
+                    startPhotoZoom(data.getData());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            case CAMERA_REQUEST_CODE:
+                if (Tools.hasSdcard()) {
+                    File path = Environment
+                            .getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+                    File tempFile = new File(path, IMAGE_FILE_NAME);
+                    startPhotoZoom(Uri.fromFile(tempFile));
+                } else {
+                    Toast.makeText(ChatMsgActivity.this, "未找到存储卡，无法存储照片！",
+                            Toast.LENGTH_LONG).show();
+                }
+                break;
+            case RESULT_REQUEST_CODE:
+                if (data != null) {
+                    getImageToView(data);
+                }
+                break;
+        }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void getImageToView(Intent data) {
         Bundle extras = data.getExtras();
-        if (extras!=null){
+        if (extras != null) {
             Bitmap photo = extras.getParcelable("data");
             Contacts entity = new Contacts();
             entity.setAccount(application.getAccount());
@@ -343,8 +336,8 @@ public class ChatMsgActivity extends BaseActivity implements OnClickListener {
             mAdapter.notifyDataSetChanged();
             mListView.setSelection(mListView.getCount() - 1);
             this.writeChatLog = new ChatRecord(this.helper.getWritableDatabase());
-            writeChatLog.insert(currentUserAccount,SEND_TO_MSG,entity.getMessage(), "",
-                    getDate(),entity.getType());
+            writeChatLog.insert(currentUserAccount, SEND_TO_MSG, entity.getMessage(), "",
+                    getDate(), entity.getType());
             sendMessage(GlobalMsgUtils.msgImage, entity.getMessage(), getDate());
             sendToConversation("[图片]");
         }
@@ -365,13 +358,13 @@ public class ChatMsgActivity extends BaseActivity implements OnClickListener {
         intent.putExtra("return-data", true);
         startActivityForResult(intent, RESULT_REQUEST_CODE);
     }
-    
+
     private void sendToConversation(String message) {
         Intent intent = new Intent(MyStatic.CONVERSATION_BOARD);
         intent.putExtra(MyStatic.CONVERSATION_TYPE, "Default");
         intent.putExtra(MyStatic.CONVERSATION_ACCOUNT, currentUserAccount);
         intent.putExtra(MyStatic.CONVERSATION_MESSAGE, message);
-        sendBroadcast(intent); 
+        sendBroadcast(intent);
     }
 
     private void send() {
@@ -401,41 +394,40 @@ public class ChatMsgActivity extends BaseActivity implements OnClickListener {
         dateFormat.format(new java.util.Date());
         return dateFormat.format(new java.util.Date());
     }
-    public String getDir(){
-        return Environment.getExternalStorageDirectory()+"/JMMSH/voiceMsg";
+
+    public String getDir() {
+        return Environment.getExternalStorageDirectory() + "/JMMSH/voiceMsg";
     }
 
-    public String getFileName(){
-        return UUID.randomUUID().toString()+".amr";
+    public String getFileName() {
+        return UUID.randomUUID().toString() + ".amr";
     }
 
-    private void sendMessage(int msgType, String message, String time){
+    private void sendMessage(int msgType, String message, String time) {
         //Todo 图片传输调用例子 ChangeUtils.toBinary(ImageCompression.compressSimplify(photo, 0.3f));
-        if(NetworkService.getInstance().getIsConnected()) {
-            String msg = "type"+":"+Integer.toString(msgType)+":"+
-                    "account"+":"+ application.getAccount()+":"+"re_account"+":"+currentUserAccount+
-                    ":"+"message"+":"+message+":"+"date"+":"+time.replace(':', '-');
+        if (NetworkService.getInstance().getIsConnected()) {
+            String msg = "type" + ":" + Integer.toString(msgType) + ":" +
+                    "account" + ":" + application.getAccount() + ":" + "re_account" + ":" + currentUserAccount +
+                    ":" + "message" + ":" + message + ":" + "date" + ":" + time.replace(':', '-');
             Log.v("aaaaa", msg);
             System.out.println(msg);
             NetworkService.getInstance().sendUpload(msg);
-        }
-        else {
+        } else {
             NetworkService.getInstance().closeConnection();
             Toast.makeText(ChatMsgActivity.this, "服务器连接失败~(≧▽≦)~啦啦啦", Toast.LENGTH_SHORT).show();
             Log.v("Login", "已经执行T（）方法");
         }
     }
 
-    private void sendVoice(String message, int time, String dataTime){
-        if(NetworkService.getInstance().getIsConnected()) {
-            String msg = "type"+":"+Integer.toString(GlobalMsgUtils.msgVoice)+":"+
-                    "account"+":"+ application.getAccount()+":"+"re_account"+":"+currentUserAccount+
-                    ":"+"message"+":"+message+":"+"time"+":"+time+":"+"date"+":"+dataTime.replace(':', '-');
+    private void sendVoice(String message, int time, String dataTime) {
+        if (NetworkService.getInstance().getIsConnected()) {
+            String msg = "type" + ":" + Integer.toString(GlobalMsgUtils.msgVoice) + ":" +
+                    "account" + ":" + application.getAccount() + ":" + "re_account" + ":" + currentUserAccount +
+                    ":" + "message" + ":" + message + ":" + "time" + ":" + time + ":" + "date" + ":" + dataTime.replace(':', '-');
             Log.v("aaaaa", msg);
             System.out.println(msg);
             NetworkService.getInstance().sendUpload(msg);
-        }
-        else {
+        } else {
             NetworkService.getInstance().closeConnection();
             Toast.makeText(ChatMsgActivity.this, "服务器连接失败~(≧▽≦)~啦啦啦", Toast.LENGTH_SHORT).show();
             Log.v("Login", "已经执行T（）方法");
@@ -455,7 +447,7 @@ public class ChatMsgActivity extends BaseActivity implements OnClickListener {
         @Override
         public void onReceive(Context context, Intent intent) {
             Contacts receiveMsg = new Contacts();
-            if (intent.getAction().equals("com.android.decipherstranger.MESSAGE")&&
+            if (intent.getAction().equals("com.android.decipherstranger.MESSAGE") &&
                     intent.getStringExtra("reSender").equals(currentUserAccount)) {
 //                sendToConversation(intent.getStringExtra("reMessage"));
                 receiveMsg.setAccount(currentUserAccount);
@@ -463,7 +455,7 @@ public class ChatMsgActivity extends BaseActivity implements OnClickListener {
                 receiveMsg.setPortrait(currentUserPhoto);
                 receiveMsg.setDatetime(getDate());
                 receiveMsg.setWho(IS_COM_MSG);
-                switch (intent.getIntExtra("msgType", 0)){
+                switch (intent.getIntExtra("msgType", 0)) {
                     case TEXT_MESSAGE:
                         receiveMsg.setTimeLen("");
                         receiveMsg.setMessage(intent.getStringExtra("reMessage"));
@@ -471,7 +463,7 @@ public class ChatMsgActivity extends BaseActivity implements OnClickListener {
                         break;
                     case VOICE_MESSAGE:
                         receiveMsg.setTimeLen(intent.getStringExtra("reTime"));
-                        File file = ChangeUtils.toFile(intent.getStringExtra("reMessage"),getDir(),getFileName());
+                        File file = ChangeUtils.toFile(intent.getStringExtra("reMessage"), getDir(), getFileName());
                         receiveMsg.setMessage(file.getAbsolutePath());
                         receiveMsg.setType(VOICE_MESSAGE);
                         break;
@@ -496,10 +488,10 @@ public class ChatMsgActivity extends BaseActivity implements OnClickListener {
                 it.putExtra(MyStatic.CONVERSATION_PORTRAIT, receiveMsg.getPortrait());
                 if (receiveMsg.getType() == TEXT_MESSAGE) {
                     it.putExtra(MyStatic.CONVERSATION_MESSAGE, receiveMsg.getMessage());
-                }else if (receiveMsg.getType() == VOICE_MESSAGE){
+                } else if (receiveMsg.getType() == VOICE_MESSAGE) {
                     it.putExtra(MyStatic.CONVERSATION_MESSAGE, "[语音]");
-                }else {
-                    it.putExtra(MyStatic.CONVERSATION_MESSAGE,"[图片]");
+                } else {
+                    it.putExtra(MyStatic.CONVERSATION_MESSAGE, "[图片]");
                 }
                 sendBroadcast(it);
             }

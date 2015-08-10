@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -65,6 +64,15 @@ public class MainActivity extends BaseActivity {
 
     private MyApplication application = null;
     private LifeMainBroadcastReceiver receiver = null;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message message) {
+            fixListViewHeight(listView);
+            listView.setAdapter(simpleAdapter);
+            simpleAdapter.notifyDataSetChanged();
+            System.out.println("### 活动列表刷新成功");
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,19 +148,6 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    private class ViewBinderImpl implements SimpleAdapter.ViewBinder {
-        @Override
-        public boolean setViewValue(View view, Object data, String textRepresentation) {
-            // TODO Auto-generated method stub
-            if (view instanceof ImageView && data instanceof Bitmap) {
-                ImageView i = (ImageView) view;
-                i.setImageBitmap((Bitmap) data);
-                return true;
-            }
-            return false;
-        }
-    }
-
     public void fixListViewHeight(ListView listView) {
         // 如果没有设置数据适配器，则ListView没有子项，返回。
         ListAdapter listAdapter = listView.getAdapter();
@@ -172,18 +167,6 @@ public class MainActivity extends BaseActivity {
         // params.height设置ListView完全显示需要的高度
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
-    }
-
-    private class OnItemClickListenerImpl implements AdapterView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            int lifeId = (int) dataList.get(position).get(MyStatic.LIFE_ID);
-            int lifeType = (int) dataList.get(position).get(MyStatic.LIFE_CLASSINT);
-            Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
-            intent.putExtra(MyStatic.LIFE_ID, lifeId);
-            intent.putExtra(MyStatic.LIFE_CLASSINT, lifeType);
-            startActivity(intent);
-        }
     }
 
     public void LifeMainOnClick(View view) {
@@ -252,22 +235,37 @@ public class MainActivity extends BaseActivity {
         dataList.add(map);
     }
 
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message message) {
-            fixListViewHeight(listView);
-            listView.setAdapter(simpleAdapter);
-            simpleAdapter.notifyDataSetChanged();
-            System.out.println("### 活动列表刷新成功");
-        }
-    };
-
     private void LifeMainBroadcas() {
         //动态方式注册广播接收者
         this.receiver = new LifeMainBroadcastReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction(MyStatic.LIFE_MAIN);
         this.registerReceiver(receiver, filter);
+    }
+
+    private class ViewBinderImpl implements SimpleAdapter.ViewBinder {
+        @Override
+        public boolean setViewValue(View view, Object data, String textRepresentation) {
+            // TODO Auto-generated method stub
+            if (view instanceof ImageView && data instanceof Bitmap) {
+                ImageView i = (ImageView) view;
+                i.setImageBitmap((Bitmap) data);
+                return true;
+            }
+            return false;
+        }
+    }
+
+    private class OnItemClickListenerImpl implements AdapterView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            int lifeId = (int) dataList.get(position).get(MyStatic.LIFE_ID);
+            int lifeType = (int) dataList.get(position).get(MyStatic.LIFE_CLASSINT);
+            Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+            intent.putExtra(MyStatic.LIFE_ID, lifeId);
+            intent.putExtra(MyStatic.LIFE_CLASSINT, lifeType);
+            startActivity(intent);
+        }
     }
 
     public class LifeMainBroadcastReceiver extends BroadcastReceiver {

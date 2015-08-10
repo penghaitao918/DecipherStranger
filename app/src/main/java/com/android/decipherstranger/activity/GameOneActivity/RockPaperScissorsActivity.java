@@ -126,7 +126,7 @@ public class RockPaperScissorsActivity extends BaseActivity {
             if (slidingDrawer.isOpened()) {
                 slidingDrawer.animateClose();
                 return true;
-            }else if (popupWindow.isShowing()) {
+            } else if (popupWindow.isShowing()) {
                 popupWindow.dismiss();
                 return true;
             } else {
@@ -142,21 +142,21 @@ public class RockPaperScissorsActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    private void init(){
+    private void init() {
         //  获取布局控件
-        this.gradeText = (TextView)super.findViewById(R.id.grade);
-        this.playerText = (TextView)super.findViewById(R.id.player);
-        this.computerText = (TextView)super.findViewById(R.id.computer);
-        this.playerImage = (ImageView)super.findViewById(R.id.PlayerImage);
-        this.computerImage = (ImageView)super.findViewById(R.id.ComputerImage);
-        this.gameAnswerImage = (ImageView)super.findViewById(R.id.gameAnswer_Image);
-        this.slidingDrawer = (SlidingDrawer)super.findViewById(R.id.slidingDrawer);
+        this.gradeText = (TextView) super.findViewById(R.id.grade);
+        this.playerText = (TextView) super.findViewById(R.id.player);
+        this.computerText = (TextView) super.findViewById(R.id.computer);
+        this.playerImage = (ImageView) super.findViewById(R.id.PlayerImage);
+        this.computerImage = (ImageView) super.findViewById(R.id.ComputerImage);
+        this.gameAnswerImage = (ImageView) super.findViewById(R.id.gameAnswer_Image);
+        this.slidingDrawer = (SlidingDrawer) super.findViewById(R.id.slidingDrawer);
 
         //  设置Animation
         animationDrawablePlayer = new AnimationDrawable();
         animationDrawableComputer = new AnimationDrawable();
-        animationDrawablePlayer = (AnimationDrawable)getResources().getDrawable(R.drawable.game_animation_player);
-        animationDrawableComputer = (AnimationDrawable)getResources().getDrawable(R.drawable.game_animation_computer);
+        animationDrawablePlayer = (AnimationDrawable) getResources().getDrawable(R.drawable.game_animation_player);
+        animationDrawableComputer = (AnimationDrawable) getResources().getDrawable(R.drawable.game_animation_computer);
 
         //  获取游戏初始数据
         Intent intent = getIntent();
@@ -166,7 +166,7 @@ public class RockPaperScissorsActivity extends BaseActivity {
 
         //  获取Menu控件
         LayoutInflater inflater = LayoutInflater.from(RockPaperScissorsActivity.this);
-        View view = inflater.inflate(R.layout.game_meun_popup, null);
+        View view = inflater.inflate(R.layout.game_menu_popup, null);
         this.popupWindow = new PopupWindow(view, LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
     }
 
@@ -175,7 +175,7 @@ public class RockPaperScissorsActivity extends BaseActivity {
         this.setEffectMusic();
     }
 
-    private void setBackgroundMusic(){
+    private void setBackgroundMusic() {
         if (MyStatic.gameBackgroundMusicFlag) {
             this.backgroundMusic.setLooping(true);
             this.backgroundMusic.start();
@@ -186,7 +186,7 @@ public class RockPaperScissorsActivity extends BaseActivity {
         }
     }
 
-    private void setEffectMusic(){
+    private void setEffectMusic() {
         if (MyStatic.gameEffectMusicFlag) {
             this.winMusic = MediaPlayer.create(this, R.raw.win_music); //  获取资源
             this.loseMusic = MediaPlayer.create(this, R.raw.lose_music); //  获取资源
@@ -198,7 +198,7 @@ public class RockPaperScissorsActivity extends BaseActivity {
         }
     }
 
-    private void closeMusic(){
+    private void closeMusic() {
         this.winMusic.release();
         this.loseMusic.release();
         this.dogfallMusic.release();
@@ -211,23 +211,27 @@ public class RockPaperScissorsActivity extends BaseActivity {
                 if (!isRun) {
                     gameStart();
                     isRun = true;
-                } break;
+                }
+                break;
             case R.id.RockImageBtn:
                 if (isRun) {
                     gamePause(0);
-                } break;
+                }
+                break;
             case R.id.PaperImageBtn:
                 if (isRun) {
                     gamePause(5);
-                } break;
+                }
+                break;
             case R.id.ScissorsImageBtn:
                 if (isRun) {
                     gamePause(2);
-                } break;
+                }
+                break;
         }
     }
 
-    private void gameStart(){
+    private void gameStart() {
         this.sum += 1;
         this.gameAnswerImage.setImageDrawable(null);
         this.playerImage.setImageDrawable(this.animationDrawablePlayer);
@@ -236,9 +240,9 @@ public class RockPaperScissorsActivity extends BaseActivity {
         this.animationDrawableComputer.start();
     }
 
-    private void gamePause(int player){
+    private void gamePause(int player) {
         isRun = false;
-        new Thread(){
+        new Thread() {
             public void run() {
                 animationDrawablePlayer.stop();
                 animationDrawableComputer.stop();
@@ -246,49 +250,57 @@ public class RockPaperScissorsActivity extends BaseActivity {
         }.start();
         GameUtils.update(player);
         int computer = computerShow();
-        switch (player){
-            case 0:this.playerImageSrc = getResources().getDrawable(R.drawable.game_rock_pressed);
+        switch (player) {
+            case 0:
+                this.playerImageSrc = getResources().getDrawable(R.drawable.game_rock_pressed);
                 break;
-            case 2:this.playerImageSrc = getResources().getDrawable(R.drawable.game_scissors_pressed);
+            case 2:
+                this.playerImageSrc = getResources().getDrawable(R.drawable.game_scissors_pressed);
                 break;
-            case 5:this.playerImageSrc = getResources().getDrawable(R.drawable.game_paper_pressed);
+            case 5:
+                this.playerImageSrc = getResources().getDrawable(R.drawable.game_paper_pressed);
                 break;
         }
         this.playerImage.setImageDrawable(playerImageSrc);
         int answer = player - computer;
-        if (answer == 0){
+        if (answer == 0) {
             answerImageSrc = getResources().getDrawable(R.drawable.game_dogfall);
             this.dogfallMusic.start();
             player = computer = 1;
-        }else if (answer == -2 || answer == -3 || answer == 5){
+        } else if (answer == -2 || answer == -3 || answer == 5) {
             answerImageSrc = getResources().getDrawable(R.drawable.game_win);
             this.winMusic.start();
-            player = 2; computer = 0;
-        }else {
+            player = 2;
+            computer = 0;
+        } else {
             answerImageSrc = getResources().getDrawable(R.drawable.game_lose);
             this.loseMusic.start();
-            player = 0; computer = 2;
+            player = 0;
+            computer = 2;
         }
         setText(player, computer);
         this.gameAnswerImage.setImageDrawable(answerImageSrc);
         IfGameOver();
     }
 
-    private int computerShow(){
+    private int computerShow() {
         int answerC = GameUtils.Answer();
-        switch (answerC){
-            case 0:this.computerImageSrc = getResources().getDrawable(R.drawable.game_rock_computer);
+        switch (answerC) {
+            case 0:
+                this.computerImageSrc = getResources().getDrawable(R.drawable.game_rock_computer);
                 break;
-            case 2:this.computerImageSrc = getResources().getDrawable(R.drawable.game_scissors_computer);
+            case 2:
+                this.computerImageSrc = getResources().getDrawable(R.drawable.game_scissors_computer);
                 break;
-            case 5:this.computerImageSrc = getResources().getDrawable(R.drawable.game_paper_computer);
+            case 5:
+                this.computerImageSrc = getResources().getDrawable(R.drawable.game_paper_computer);
                 break;
         }
         this.computerImage.setImageDrawable(computerImageSrc);
         return answerC;
     }
 
-    private void setText(int playerGrade, int computerGrade){
+    private void setText(int playerGrade, int computerGrade) {
         this.playerGradeInt += playerGrade;
         this.computerGradeInt += computerGrade;
         this.gameGradeInt = this.playerGradeInt - this.computerGradeInt;
@@ -302,7 +314,7 @@ public class RockPaperScissorsActivity extends BaseActivity {
         this.gradeText.setText(this.gameGradeString);
     }
 
-    private void IfGameOver(){
+    private void IfGameOver() {
         int type = -1;
         boolean flag = false;
         if (this.gameGradeInt >= this.Grade && this.sum <= this.MaxSum) {
@@ -319,7 +331,7 @@ public class RockPaperScissorsActivity extends BaseActivity {
             switch (type) {
                 case 0:
                     Intent intent1 = new Intent(this, SuccessActivity.class);
-                    intent1.putExtra("Type",this.Type);
+                    intent1.putExtra("Type", this.Type);
                     startActivity(intent1);
                     finish();
                     break;
@@ -340,7 +352,8 @@ public class RockPaperScissorsActivity extends BaseActivity {
                 if (popupWindow.isShowing()) {
                     popupWindow.dismiss();
                 }
-                settings(); break;
+                settings();
+                break;
             case R.id.game_help:
                 if (popupWindow.isShowing()) {
                     popupWindow.dismiss();
@@ -361,8 +374,8 @@ public class RockPaperScissorsActivity extends BaseActivity {
         }
     }
 
-    private void settings(){
-        CustomDialogSettings dialogSettings = new CustomDialogSettings(RockPaperScissorsActivity.this,R.style.Dialog);
+    private void settings() {
+        CustomDialogSettings dialogSettings = new CustomDialogSettings(RockPaperScissorsActivity.this, R.style.Dialog);
         dialogSettings.show();
     }
 
@@ -374,6 +387,10 @@ public class RockPaperScissorsActivity extends BaseActivity {
         this.registerReceiver(receiver, filter);
     }
 
+    public void backToGame(View view) {
+        slidingDrawer.animateClose();
+    }
+
     public class MyBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -381,10 +398,6 @@ public class RockPaperScissorsActivity extends BaseActivity {
                 setMusic();
             }
         }
-    }
-
-    public void backToGame(View view) {
-        slidingDrawer.animateClose();
     }
 
 }

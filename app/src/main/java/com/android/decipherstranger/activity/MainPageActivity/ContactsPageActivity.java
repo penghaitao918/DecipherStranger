@@ -39,22 +39,20 @@ import java.util.Collections;
 
 public class ContactsPageActivity extends BaseActivity {
 
+    private final static int NORMAL = 0;
     private ListView contactListView;
     private SideBar sideBar;
     private TextView dialog;
     private SortAdapter adapter;
     private ClearEditText clearEditText;
-
     private SQLiteOpenHelper helper;
     private ContactsList readerContactLog;
     private ContactsList writeContactLog;
-
-    private ArrayList<User>mContactList;
+    private ArrayList<User> mContactList;
     private CharacterParser characterParser;
     private PinyinComparator pinyinComparator;
     private BadgeView friendsRequestCount;
     private FriendBroadcastReceiver receiver = null;
-    private final static int NORMAL = 0;
     private RelativeLayout newFriends;
 
     @Override
@@ -67,10 +65,12 @@ public class ContactsPageActivity extends BaseActivity {
         friendBroadcas();
         friendsRequestCount(NORMAL);
     }
+
     @Override
     protected void onStart() {
         super.onStart();
     }
+
     @Override
     protected void onRestart() {
         super.onRestart();
@@ -87,17 +87,17 @@ public class ContactsPageActivity extends BaseActivity {
         super.unregisterReceiver(ContactsPageActivity.this.receiver);
         super.onDestroy();
     }
-    
+
     private void initData() {
         readerContactLog = new ContactsList(this.helper.getReadableDatabase());
         mContactList = new ArrayList<>();
         mContactList = readerContactLog.getUserList();
         mContactList = filledData(mContactList);
-        if(!mContactList.isEmpty()){
+        if (!mContactList.isEmpty()) {
             Collections.sort(mContactList, pinyinComparator);
-            adapter = new SortAdapter(this,mContactList);
+            adapter = new SortAdapter(this, mContactList);
             contactListView.setAdapter(adapter);
-        }else {
+        } else {
             networkRequest();
         }
     }
@@ -109,7 +109,7 @@ public class ContactsPageActivity extends BaseActivity {
         sideBar = (SideBar) findViewById(R.id.sidrbar);
         dialog = (TextView) findViewById(R.id.dialog);
 
-        friendsRequestCount = (BadgeView)findViewById(R.id.friends_request_count);
+        friendsRequestCount = (BadgeView) findViewById(R.id.friends_request_count);
         newFriends = (RelativeLayout) findViewById(R.id.new_friends);
         newFriends = (RelativeLayout) findViewById(R.id.new_friends);
         newFriends.setOnClickListener(new View.OnClickListener() {
@@ -139,17 +139,17 @@ public class ContactsPageActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(ContactsPageActivity.this, FriendInfoActivity.class);
-                Bundle bundle =new Bundle();
+                Bundle bundle = new Bundle();
                 bundle.putParcelable("userPhoto", mContactList.get(position).getPortrait());
-                bundle.putString("userName",mContactList.get(position).getUsername());
-                bundle.putString("userSex",mContactList.get(position).getUserSex());
-                bundle.putString("userAccount",mContactList.get(position).getAccount());
+                bundle.putString("userName", mContactList.get(position).getUsername());
+                bundle.putString("userSex", mContactList.get(position).getUserSex());
+                bundle.putString("userAccount", mContactList.get(position).getAccount());
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
 
-        clearEditText = (ClearEditText)findViewById(R.id.filter_edit);
+        clearEditText = (ClearEditText) findViewById(R.id.filter_edit);
         clearEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -157,7 +157,7 @@ public class ContactsPageActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!mContactList.isEmpty()){
+                if (!mContactList.isEmpty()) {
                     filterData(s.toString());
                 }
             }
@@ -208,24 +208,23 @@ public class ContactsPageActivity extends BaseActivity {
         adapter.updateListView(filterDateList);
     }
 
-    public void friendsRequestCount(int friendsRequestCounts){
-        if (friendsRequestCounts == 0){
+    public void friendsRequestCount(int friendsRequestCounts) {
+        if (friendsRequestCounts == 0) {
             friendsRequestCount.hide();
-        }else {
+        } else {
             friendsRequestCount.setText(friendsRequestCounts);
             friendsRequestCount.show();
         }
     }
 
-    private void networkRequest(){
-        if(NetworkService.getInstance().getIsConnected()) {
-        //    MyApplication application = (MyApplication) getApplication();
+    private void networkRequest() {
+        if (NetworkService.getInstance().getIsConnected()) {
+            //    MyApplication application = (MyApplication) getApplication();
             MyApplication application = MyApplication.getInstance();
-            String msg = "type"+":"+Integer.toString(GlobalMsgUtils.msgFriendList)+":"+"account"+":"+application.getAccount();
+            String msg = "type" + ":" + Integer.toString(GlobalMsgUtils.msgFriendList) + ":" + "account" + ":" + application.getAccount();
             Log.v("aaaaa", msg);
             NetworkService.getInstance().sendUpload(msg);
-        }
-        else {
+        } else {
             NetworkService.getInstance().closeConnection();
             Log.v("Login", "已经执行T（）方法");
         }
@@ -242,24 +241,24 @@ public class ContactsPageActivity extends BaseActivity {
     public class FriendBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent.getAction().equals("com.android.decipherstranger.FRIEND")){
-                if (intent.getStringExtra("reFresh")!=null && intent.getStringExtra("reFresh").equals("reFresh")){
+            if (intent.getAction().equals("com.android.decipherstranger.FRIEND")) {
+                if (intent.getStringExtra("reFresh") != null && intent.getStringExtra("reFresh").equals("reFresh")) {
                     readerContactLog = new ContactsList(helper.getReadableDatabase());
                     mContactList = readerContactLog.getUserList();
                     try {
                         mContactList = filledData(mContactList);
                         Collections.sort(mContactList, pinyinComparator);
-                        if (adapter == null){
-                            adapter = new SortAdapter(context,mContactList);
+                        if (adapter == null) {
+                            adapter = new SortAdapter(context, mContactList);
                             contactListView.setAdapter(adapter);
-                        }else {
+                        } else {
                             adapter.updateListView(mContactList);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                }else {
-                    if(intent.getBooleanExtra("reResult", false)) {
+                } else {
+                    if (intent.getBooleanExtra("reResult", false)) {
                         User contact = new User();
                         contact.setAccount(intent.getStringExtra("reAccount"));
                         contact.setUsername(intent.getStringExtra("reName"));
@@ -268,7 +267,7 @@ public class ContactsPageActivity extends BaseActivity {
                         mContactList.add(contact);
                         writeContactLog = new ContactsList(helper.getWritableDatabase());
                         writeContactLog.insert(contact);
-                    }else if(intent.getBooleanExtra("isfinish", false)) {
+                    } else if (intent.getBooleanExtra("isfinish", false)) {
                         mContactList = filledData(mContactList);
                         Collections.sort(mContactList, pinyinComparator);
                         if (adapter == null) {
@@ -277,7 +276,7 @@ public class ContactsPageActivity extends BaseActivity {
                         } else {
                             adapter.updateListView(mContactList);
                         }
-                    }else {
+                    } else {
                         Toast.makeText(context, "没有好友=_=！！！", Toast.LENGTH_SHORT).show();
                     }
                 }

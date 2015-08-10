@@ -51,17 +51,17 @@ public class NearbyListViewActivity extends BaseActivity {
     private MyApplication application = null;
     private ListView nearbyListView;
     private NearbyListViewAdapter adapter;
-    private ArrayList<NearbyUserInfo>nearbyUserInfos = new ArrayList<>();
+    private ArrayList<NearbyUserInfo> nearbyUserInfos = new ArrayList<>();
     private NearbyBroadcastReceiver receiver = null;
     private LocationClient mLocationClient;
     private MyLocationListener mLocationListener;
     private ProgressDialog progressDialog = null;
     private double mLatitude;
     private double mLongtitude;
-    private boolean isFristIn=true;
-    
+    private boolean isFristIn = true;
+
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SDKInitializer.initialize(getApplicationContext());
         application = MyApplication.getInstance();
@@ -71,15 +71,15 @@ public class NearbyListViewActivity extends BaseActivity {
     }
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
-        if(!mLocationClient.isStarted()){
+        if (!mLocationClient.isStarted()) {
             mLocationClient.start();
         }
     }
 
     @Override
-    protected  void onStop(){
+    protected void onStop() {
         super.onStop();
         mLocationClient.stop();
     }
@@ -94,23 +94,11 @@ public class NearbyListViewActivity extends BaseActivity {
         option.setOpenGps(true);
         mLocationClient.setLocOption(option);
     }
-    
+
     public void NearOnClick(View view) {
         onBackPressed();
     }
 
-    public class MyLocationListener implements BDLocationListener {
-
-        @Override
-        public void onReceiveLocation(BDLocation location){
-            mLatitude = location.getLatitude();
-            mLongtitude = location.getLongitude();
-            if (isFristIn){
-                sendMsg();
-                isFristIn = false;
-            }
-        }
-    }
     private void initView() {
         nearbyListView = (ListView) findViewById(R.id.nearby_list_view);
         nearbyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -133,10 +121,9 @@ public class NearbyListViewActivity extends BaseActivity {
         super.unregisterReceiver(NearbyListViewActivity.this.receiver);
     }
 
-
-    private void showList(ArrayList<NearbyUserInfo>nearbyUserInfos) {
+    private void showList(ArrayList<NearbyUserInfo> nearbyUserInfos) {
         nearbyListView = (ListView) findViewById(R.id.nearby_list_view);
-        adapter = new NearbyListViewAdapter( nearbyUserInfos,this);
+        adapter = new NearbyListViewAdapter(nearbyUserInfos, this);
         nearbyListView.setAdapter(adapter);
     }
 
@@ -157,6 +144,7 @@ public class NearbyListViewActivity extends BaseActivity {
             Log.v("Login", "已经执行T（）方法");
         }
     }
+
     private void nearbyBroadcas() {
         //动态方式注册广播接收者
         this.receiver = new NearbyBroadcastReceiver();
@@ -165,11 +153,24 @@ public class NearbyListViewActivity extends BaseActivity {
         this.registerReceiver(receiver, filter);
     }
 
+    public class MyLocationListener implements BDLocationListener {
+
+        @Override
+        public void onReceiveLocation(BDLocation location) {
+            mLatitude = location.getLatitude();
+            mLongtitude = location.getLongitude();
+            if (isFristIn) {
+                sendMsg();
+                isFristIn = false;
+            }
+        }
+    }
+
     public class NearbyBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals("com.android.decipherstranger.NEARBY")) {
-                if(intent.getBooleanExtra("reResult", false)) {
+                if (intent.getBooleanExtra("reResult", false)) {
                     NearbyUserInfo info = new NearbyUserInfo();
                     info.setUserAccount(intent.getStringExtra("reAccount"));
                     info.setUserName(intent.getStringExtra("reName"));
@@ -179,10 +180,10 @@ public class NearbyListViewActivity extends BaseActivity {
                     info.setLongtitude(Double.parseDouble(intent.getStringExtra("reLongtitude")));
                     info.setDistance(intent.getStringExtra("reDistance"));
                     nearbyUserInfos.add(info);
-                }else if(intent.getBooleanExtra("isfinish", false)){
+                } else if (intent.getBooleanExtra("isfinish", false)) {
                     initView();
                     progressDialog.dismiss();
-                }else{
+                } else {
                     progressDialog.dismiss();
                     Toast.makeText(NearbyListViewActivity.this, "附近好像还没有人哦( ⊙ o ⊙ )！啦啦啦~~", Toast.LENGTH_SHORT).show();
                 }

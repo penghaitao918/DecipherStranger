@@ -7,12 +7,10 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,7 +25,6 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.decipherstranger.Network.NetworkService;
@@ -71,6 +68,14 @@ public class MyLifeActivity extends BaseActivity {
     private PopupWindow popupWindow = null;
     private ArrayList<Map<String, Object>> dataList = null;
     private MyLifeBroadcastReceiver receiver = null;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message message) {
+            fixListViewHeight(listView);
+            listView.setAdapter(simpleAdapter);
+            simpleAdapter.notifyDataSetChanged();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,11 +99,11 @@ public class MyLifeActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-            if (popupWindow.isShowing()) {
-                popupWindow.dismiss();
-            } else {
-                popupWindow.showAsDropDown(findViewById(R.id.top)/*, Gravity.BOTTOM|Gravity.RIGHT, 0, 0*/);
-            }
+        if (popupWindow.isShowing()) {
+            popupWindow.dismiss();
+        } else {
+            popupWindow.showAsDropDown(findViewById(R.id.top)/*, Gravity.BOTTOM|Gravity.RIGHT, 0, 0*/);
+        }
         return false;
     }
 
@@ -106,7 +111,7 @@ public class MyLifeActivity extends BaseActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {// 防止连续两次返回键
             //返回处理
-             if (popupWindow.isShowing()) {
+            if (popupWindow.isShowing()) {
                 popupWindow.dismiss();
                 return true;
             } else {
@@ -140,12 +145,12 @@ public class MyLifeActivity extends BaseActivity {
     private void initData() {
         this.bitmap = ImageCompression.comp(MyApplication.getInstance().getPortrait());
         this.imagePortrait.setImageDrawable(new BitmapDrawable(bitmap));
-    //    this.dataList.addAll(this.selectAll());
+        //    this.dataList.addAll(this.selectAll());
         this.simpleAdapter = new SimpleAdapter(this,
                 this.dataList,
                 R.layout.list_item_life,
-                new String[] {MyStatic.LIFE_CLASS, MyStatic.LIFE_NAME, MyStatic.LIFE_TIME, MyStatic.LIFE_SPACE},
-                new int[] {R.id.life_class, R.id.life_name, R.id.life_time, R.id.life_space}
+                new String[]{MyStatic.LIFE_CLASS, MyStatic.LIFE_NAME, MyStatic.LIFE_TIME, MyStatic.LIFE_SPACE},
+                new int[]{R.id.life_class, R.id.life_name, R.id.life_time, R.id.life_space}
         );
         /*实现ViewBinder()这个接口*/
         simpleAdapter.setViewBinder(new ViewBinderImpl());
@@ -154,19 +159,6 @@ public class MyLifeActivity extends BaseActivity {
         simpleAdapter.notifyDataSetChanged();
         /*动态计算ListView的高度*/
         this.fixListViewHeight(listView);
-    }
-
-    private class ViewBinderImpl implements SimpleAdapter.ViewBinder {
-        @Override
-        public boolean setViewValue(View view, Object data, String textRepresentation) {
-            // TODO Auto-generated method stub
-            if(view instanceof ImageView && data instanceof Bitmap){
-                ImageView i = (ImageView)view;
-                i.setImageBitmap((Bitmap) data);
-                return true;
-            }
-            return false;
-        }
     }
 
     private void fixListViewHeight(ListView listView) {
@@ -191,17 +183,20 @@ public class MyLifeActivity extends BaseActivity {
         listView.setLayoutParams(params);
     }
 
-    private void setData (int lifeId, int type, String name, String time, String place){
+    private void setData(int lifeId, int type, String name, String time, String place) {
         Bitmap bitmap = null;
         switch (type) {
             // 美食
-            case 1:bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.life_class_food);
+            case 1:
+                bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.life_class_food);
                 break;
             // 旅游
-            case 2:bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.life_class_travel);
+            case 2:
+                bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.life_class_travel);
                 break;
             // 休闲娱乐
-            case 3:bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.life_class_other);
+            case 3:
+                bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.life_class_other);
                 break;
         }
         Map<String, Object> map = new HashMap<String, Object>();
@@ -212,28 +207,6 @@ public class MyLifeActivity extends BaseActivity {
         map.put(MyStatic.LIFE_TIME, time);
         map.put(MyStatic.LIFE_SPACE, place);
         dataList.add(map);
-    }
-
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message message) {
-            fixListViewHeight(listView);
-            listView.setAdapter(simpleAdapter);
-            simpleAdapter.notifyDataSetChanged();
-        }
-    };
-
-    private class OnItemClickListenerImpl implements AdapterView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            int lifeId = (int) dataList.get(position).get(MyStatic.LIFE_ID);
-            int lifeType = (int) dataList.get(position).get(MyStatic.LIFE_CLASSINT);
-            Intent intent = new Intent(MyLifeActivity.this, DetailsActivity.class);
-            intent.putExtra(MyStatic.DETAILS_FLAG, true);
-            intent.putExtra(MyStatic.LIFE_ID, lifeId);
-            intent.putExtra(MyStatic.LIFE_CLASSINT, lifeType);
-            startActivity(intent);
-        }
     }
 
     public void MyLifeOnClick(View view) {
@@ -281,14 +254,14 @@ public class MyLifeActivity extends BaseActivity {
         }
     }
 
-    private void getData(String  flag) {
+    private void getData(String flag) {
         dataList.clear();
-        if (NetworkService.getInstance().getIsConnected()){
-            String Msg = "type"+":"+"26"+":"+"re_matter"+":"+flag+":"
-                    +"account"+":"+ MyApplication.getInstance().getAccount();
+        if (NetworkService.getInstance().getIsConnected()) {
+            String Msg = "type" + ":" + "26" + ":" + "re_matter" + ":" + flag + ":"
+                    + "account" + ":" + MyApplication.getInstance().getAccount();
             Log.v("### aaaaa", Msg);
             NetworkService.getInstance().sendUpload(Msg);
-        }else {
+        } else {
             NetworkService.getInstance().closeConnection();
             Log.v("### 晒图", "服务器连接失败");
         }
@@ -302,13 +275,39 @@ public class MyLifeActivity extends BaseActivity {
         this.registerReceiver(receiver, filter);
     }
 
+    private class ViewBinderImpl implements SimpleAdapter.ViewBinder {
+        @Override
+        public boolean setViewValue(View view, Object data, String textRepresentation) {
+            // TODO Auto-generated method stub
+            if (view instanceof ImageView && data instanceof Bitmap) {
+                ImageView i = (ImageView) view;
+                i.setImageBitmap((Bitmap) data);
+                return true;
+            }
+            return false;
+        }
+    }
+
+    private class OnItemClickListenerImpl implements AdapterView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            int lifeId = (int) dataList.get(position).get(MyStatic.LIFE_ID);
+            int lifeType = (int) dataList.get(position).get(MyStatic.LIFE_CLASSINT);
+            Intent intent = new Intent(MyLifeActivity.this, DetailsActivity.class);
+            intent.putExtra(MyStatic.DETAILS_FLAG, true);
+            intent.putExtra(MyStatic.LIFE_ID, lifeId);
+            intent.putExtra(MyStatic.LIFE_CLASSINT, lifeType);
+            startActivity(intent);
+        }
+    }
+
     public class MyLifeBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(MyStatic.LIFE_MY_LIFE)) {
                 // TODO 将获取的数据赋值到本地
                 Message message = new Message();
-                if (intent.getStringExtra("reResult").equals("true")){
+                if (intent.getStringExtra("reResult").equals("true")) {
                     System.out.println("### 个人中心数据接收成功");
                     int lifeId = intent.getIntExtra("reId", 0);
                     int type = intent.getIntExtra("reType", 3);
@@ -316,17 +315,17 @@ public class MyLifeActivity extends BaseActivity {
                     String time = intent.getStringExtra("reTime");
                     String place = intent.getStringExtra("rePlace");
                     setData(lifeId, type, name, time, place);
-                }else if (intent.getStringExtra("reResult").equals("finish")){
+                } else if (intent.getStringExtra("reResult").equals("finish")) {
                     System.out.println("### 哎哟我去");
                     handler.sendMessage(message);
-                }else {
+                } else {
                     handler.sendMessage(message);
-                    if (intent.getStringExtra("reMatter").equals("send")){
+                    if (intent.getStringExtra("reMatter").equals("send")) {
                         //TODO 提示还未发起活动
-                        Toast.makeText(MyLifeActivity.this,"您当前没有发布的活动",Toast.LENGTH_SHORT).show();
-                    }else {
+                        Toast.makeText(MyLifeActivity.this, "您当前没有发布的活动", Toast.LENGTH_SHORT).show();
+                    } else {
                         //TODO 提示还未参加活动
-                        Toast.makeText(MyLifeActivity.this,"您当前没有参与的活动",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MyLifeActivity.this, "您当前没有参与的活动", Toast.LENGTH_SHORT).show();
                     }
                 }
             }

@@ -5,22 +5,21 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
+ * @version 1.0
  * @Author SunnyCoffee
  * @Date 2014-1-28
- * @version 1.0
  * @Desc 工具类
  */
 
 public class TimeUtils {
 
-	public static String getCurrentTime(String format) {
-		Date date = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.getDefault());
-		String currentTime = sdf.format(date);
-		return currentTime;
-	}
+    public static String getCurrentTime(String format) {
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.getDefault());
+        return sdf.format(date);
+    }
 
-	public static String getCurrentTime() {
-		return getCurrentTime("yyyy-MM-dd  HH:mm:ss");
-	}
+    public static String getCurrentTime() {
+        return getCurrentTime("yyyy-MM-dd  HH:mm:ss");
+    }
 }

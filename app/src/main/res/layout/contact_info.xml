@@ -1,190 +1,210 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background">
+    android:background="@drawable/background"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/tab"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:background="@color/tab">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="好友信息"
-            android:textColor="@color/text_hint"
-            android:textSize="20dp"
-            android:layout_margin="10dp"
+            android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_margin="10dp"
+            android:text="好友信息"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/text_hint"
+            android:textSize="20dp" />
 
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_marginTop="10dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
+
         <ImageView
+            android:id="@+id/friend_photo"
             android:layout_width="50dip"
             android:layout_height="50dip"
-            android:layout_margin="20dip"
-            android:id="@+id/friend_photo"/>
+            android:layout_margin="20dip" />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
+                    android:id="@+id/friend_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dip"
-                    android:textSize="18dip"
                     android:textColor="@color/text_checked"
-                    android:id="@+id/friend_name"/>
+                    android:textSize="18dip" />
+
                 <ImageView
+                    android:id="@+id/friend_sex"
                     android:layout_width="20dip"
                     android:layout_height="20dip"
-                    android:layout_marginTop="20dip"
                     android:layout_marginLeft="5dip"
-                    android:id="@+id/friend_sex"
-                    android:scaleType="fitXY"
+                    android:layout_marginTop="20dip"
                     android:background="@null"
-                    android:src="@drawable/ic_sex_female"/>
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_sex_female" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dip"
-                    android:textColor="@color/text_hint"
-                    android:text="解密账号："/>
+                    android:text="解密账号："
+                    android:textColor="@color/text_hint" />
+
                 <TextView
+                    android:id="@+id/friend_account"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dip"
                     android:layout_marginLeft="10dp"
-                    android:textColor="@color/text_hint"
-                    android:id="@+id/friend_account" />
+                    android:layout_marginTop="5dip"
+                    android:textColor="@color/text_hint" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginBottom="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/login_input_bg"
-        android:layout_gravity="center_horizontal">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dip"
-                android:textSize="18dip"
+                android:text="邮箱："
                 android:textColor="@color/text_hint"
-                android:text="邮箱："/>
+                android:textSize="18dip" />
+
             <TextView
+                android:id="@+id/friend_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dip"
-                android:textColor="@color/text_checked"
-                android:id="@+id/friend_email"/>
+                android:textColor="@color/text_checked" />
         </LinearLayout>
+
         <view
+            class="android.support.v7.widget.LinearLayoutCompat"
             android:layout_width="fill_parent"
             android:layout_height="2px"
-            class="android.support.v7.widget.LinearLayoutCompat"
+            android:layout_alignParentBottom="true"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/shape_line"
-            android:layout_alignParentBottom="true"/>
+            android:background="@drawable/shape_line" />
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dip"
-                android:textSize="18dip"
+                android:text="生日："
                 android:textColor="@color/text_hint"
-                android:text="生日："/>
+                android:textSize="18dip" />
+
             <TextView
+                android:id="@+id/friend_birth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dip"
-                android:textColor="@color/text_checked"
-                android:id="@+id/friend_birth"/>
+                android:textColor="@color/text_checked" />
         </LinearLayout>
+
         <view
+            class="android.support.v7.widget.LinearLayoutCompat"
             android:layout_width="fill_parent"
             android:layout_height="2px"
-            class="android.support.v7.widget.LinearLayoutCompat"
+            android:layout_alignParentBottom="true"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/shape_line"
-            android:layout_alignParentBottom="true"/>
+            android:background="@drawable/shape_line" />
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dip"
-                android:textSize="18dip"
+                android:text="手机："
                 android:textColor="@color/text_hint"
-                android:text="手机："/>
+                android:textSize="18dip" />
+
             <TextView
+                android:id="@+id/friend_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dip"
-                android:textColor="@color/text_checked"
-                android:id="@+id/friend_phone"/>
+                android:textColor="@color/text_checked" />
         </LinearLayout>
-    
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical">
-        
+
         <Button
+            android:id="@+id/send_message"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dip"
+            android:layout_marginBottom="20dip"
             android:layout_marginLeft="20dip"
             android:layout_marginRight="20dip"
-            android:layout_marginBottom="20dip"
+            android:layout_marginTop="40dip"
+            android:background="@drawable/login_button_bg"
             android:text="发送消息"
             android:textColor="@color/btn_text"
-            android:textSize="22dp"
-            android:background="@drawable/login_button_bg"
-            android:id="@+id/send_message"/>
+            android:textSize="22dp" />
+
         <Button
+            android:id="@+id/delete_friend"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dip"
             android:layout_marginRight="20dip"
-            android:textColor="@color/btn_text"
-            android:textSize="22dp"
-            android:text="删除好友"
             android:background="@drawable/login_button_bg"
-            android:id="@+id/delete_friend"/>
+            android:text="删除好友"
+            android:textColor="@color/btn_text"
+            android:textSize="22dp" />
     </LinearLayout>
-    
+
 </LinearLayout>

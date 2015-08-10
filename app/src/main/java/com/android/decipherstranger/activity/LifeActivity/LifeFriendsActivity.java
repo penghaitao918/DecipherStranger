@@ -20,11 +20,8 @@ import android.widget.Toast;
 import com.android.decipherstranger.Network.NetworkService;
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
-import com.android.decipherstranger.activity.Base.MyApplication;
-import com.android.decipherstranger.activity.GameOneActivity.WelcomeRspActivity;
 import com.android.decipherstranger.activity.SubpageActivity.NearbyInfoActivity;
 import com.android.decipherstranger.util.ChangeUtils;
-import com.android.decipherstranger.util.GlobalMsgUtils;
 import com.android.decipherstranger.util.MyStatic;
 
 import java.util.ArrayList;
@@ -58,6 +55,13 @@ public class LifeFriendsActivity extends BaseActivity {
     private SimpleAdapter simpleAdapter = null;
     private ArrayList<Map<String, Object>> dataList = null;
     private LifeFriendsBroadcast receiver = null;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message message) {
+            simpleAdapter.notifyDataSetChanged();
+            listView.setAdapter(simpleAdapter);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +81,7 @@ public class LifeFriendsActivity extends BaseActivity {
 
     private void init() {
         this.Id = getIntent().getIntExtra(MyStatic.LIFE_ID, 0);
-        this.dataList = new ArrayList< Map<String, Object> >();
+        this.dataList = new ArrayList<Map<String, Object>>();
         this.listView = (ListView) super.findViewById(R.id.listView);
         this.listView.setOnItemClickListener(new OnItemClickListenerImpl());
     }
@@ -86,8 +90,8 @@ public class LifeFriendsActivity extends BaseActivity {
         this.simpleAdapter = new SimpleAdapter(this,
                 this.dataList,
                 R.layout.list_item_life_friends,
-                new String[] {MyStatic.USER_PORTRAIT, MyStatic.USER_NAME, MyStatic.SHARE_SEX},
-                new int[] {R.id.life_friends_portrait, R.id.life_friends_name, R.id.life_friends_sex}
+                new String[]{MyStatic.USER_PORTRAIT, MyStatic.USER_NAME, MyStatic.SHARE_SEX},
+                new int[]{R.id.life_friends_portrait, R.id.life_friends_name, R.id.life_friends_sex}
         );
         /*实现ViewBinder()这个接口*/
         simpleAdapter.setViewBinder(new ViewBinderImpl());
@@ -96,26 +100,13 @@ public class LifeFriendsActivity extends BaseActivity {
         simpleAdapter.notifyDataSetChanged();
     }
 
-    private class ViewBinderImpl implements SimpleAdapter.ViewBinder {
-        @Override
-        public boolean setViewValue(View view, Object data, String textRepresentation) {
-            // TODO Auto-generated method stub
-            if(view instanceof ImageView && data instanceof Bitmap){
-                ImageView i = (ImageView)view;
-                i.setImageBitmap((Bitmap) data);
-                return true;
-            }
-            return false;
-        }
-    }
-
     private void getData() {
         //  send Id
-        if (NetworkService.getInstance().getIsConnected()){
-            String Msg = "type"+":"+"27"+":"+"activityId"+":"+ Id;
+        if (NetworkService.getInstance().getIsConnected()) {
+            String Msg = "type" + ":" + "27" + ":" + "activityId" + ":" + Id;
             Log.v("aaaaa", Msg);
             NetworkService.getInstance().sendUpload(Msg);
-        }else {
+        } else {
             NetworkService.getInstance().closeConnection();
             Log.v("晒图", "服务器连接失败");
         }
@@ -128,11 +119,41 @@ public class LifeFriendsActivity extends BaseActivity {
         map.put(MyStatic.USER_NAME, name);
         map.put(MyStatic.USER_SEX, sex);
         if (sex == 0) {
-            map.put(MyStatic.SHARE_SEX, BitmapFactory.decodeResource(LifeFriendsActivity.this.getResources(),R.drawable.ic_sex_female));
+            map.put(MyStatic.SHARE_SEX, BitmapFactory.decodeResource(LifeFriendsActivity.this.getResources(), R.drawable.ic_sex_female));
         } else {
-            map.put(MyStatic.SHARE_SEX, BitmapFactory.decodeResource(LifeFriendsActivity.this.getResources(),R.drawable.ic_sex_male));
+            map.put(MyStatic.SHARE_SEX, BitmapFactory.decodeResource(LifeFriendsActivity.this.getResources(), R.drawable.ic_sex_male));
         }
         dataList.add(map);
+    }
+
+    public void LifeFriendsOnClick(View view) {
+        switch (view.getId()) {
+            /*返回*/
+            case R.id.life_back_button:
+                onBackPressed();
+                break;
+        }
+    }
+
+    private void LifeFriendsBroadcas() {
+        //动态方式注册广播接收者
+        this.receiver = new LifeFriendsBroadcast();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(MyStatic.LIFE_LIFE_FRIENDS);
+        this.registerReceiver(receiver, filter);
+    }
+
+    private class ViewBinderImpl implements SimpleAdapter.ViewBinder {
+        @Override
+        public boolean setViewValue(View view, Object data, String textRepresentation) {
+            // TODO Auto-generated method stub
+            if (view instanceof ImageView && data instanceof Bitmap) {
+                ImageView i = (ImageView) view;
+                i.setImageBitmap((Bitmap) data);
+                return true;
+            }
+            return false;
+        }
     }
 
     private class OnItemClickListenerImpl implements AdapterView.OnItemClickListener {
@@ -147,49 +168,23 @@ public class LifeFriendsActivity extends BaseActivity {
         }
     }
 
-    public void LifeFriendsOnClick(View view) {
-        switch (view.getId()) {
-            /*返回*/
-            case R.id.life_back_button:
-                onBackPressed();
-                break;
-        }
-    }
-
-
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message message) {
-            simpleAdapter.notifyDataSetChanged();
-            listView.setAdapter(simpleAdapter);
-        }
-    };
-
-    private void LifeFriendsBroadcas() {
-        //动态方式注册广播接收者
-        this.receiver = new LifeFriendsBroadcast();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(MyStatic.LIFE_LIFE_FRIENDS);
-        this.registerReceiver(receiver, filter);
-    }
-
     public class LifeFriendsBroadcast extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(MyStatic.LIFE_LIFE_FRIENDS)) {
                 System.out.println("### 参团成员列表接收成功");
-                if (intent.getStringExtra("reResult").equals(MyStatic.resultTrue)){
+                if (intent.getStringExtra("reResult").equals(MyStatic.resultTrue)) {
                     String account = intent.getStringExtra("reAccount");
                     Bitmap portrait = ChangeUtils.toBitmap(intent.getStringExtra("rePhoto"));
                     String name = intent.getStringExtra("reName");
                     int sex = intent.getIntExtra("reGender", 0);
                     setData(account, portrait, name, sex);
-                }else if (intent.getStringExtra("reResult").equals("finish")){
+                } else if (intent.getStringExtra("reResult").equals("finish")) {
                     System.out.println("### 哎哟我去");
                     Message message = new Message();
                     handler.sendMessage(message);
-                }else{
-                    Toast.makeText(LifeFriendsActivity.this,"暂无人员参与此活动",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(LifeFriendsActivity.this, "暂无人员参与此活动", Toast.LENGTH_SHORT).show();
                 }
             }
         }

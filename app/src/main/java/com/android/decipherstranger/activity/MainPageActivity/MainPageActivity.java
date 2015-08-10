@@ -46,17 +46,15 @@ import java.util.UUID;
 
 public class MainPageActivity extends BaseActivity implements OnPageChangeListener {
 
+    private static final int TEXT_MESSAGE = 0;
+    private static final int VOICE_MESSAGE = 1;
+    private static final int PHOTO_MESSAGE = 2;
     private ViewPager pager = null;
     private TextView textTab = null;
     private LocalActivityManager manager = null;
     private TextView text1, text2, text3, text4;
     private ImageView image1, image2, image3, image4;
-    private BadgeView badgeView ;
-
-    private static final int TEXT_MESSAGE = 0;
-    private static final int VOICE_MESSAGE = 1;
-    private static final int PHOTO_MESSAGE = 2;
-
+    private BadgeView badgeView;
     //写入本地缓存聊天记录
     private ChatRecord writeChatLog;
     private ContactsList contactsList;
@@ -92,10 +90,12 @@ public class MainPageActivity extends BaseActivity implements OnPageChangeListen
         super.unregisterReceiver(MainPageActivity.this.receiver);
         super.onDestroy();
     }
-    protected void onStart(){
+
+    protected void onStart() {
         super.onStart();
     }
-    protected void onStop(){
+
+    protected void onStop() {
         super.onStop();
     }
 
@@ -123,8 +123,8 @@ public class MainPageActivity extends BaseActivity implements OnPageChangeListen
         this.text2 = (TextView) super.findViewById(R.id.contactsText);
         this.text3 = (TextView) super.findViewById(R.id.moreText);
         this.text4 = (TextView) super.findViewById(R.id.userText);
-        badgeView = new BadgeView(this,image1);
-        builder =  new AlertDialog.Builder(MainPageActivity.this);
+        badgeView = new BadgeView(this, image1);
+        builder = new AlertDialog.Builder(MainPageActivity.this);
     }
 
     private void initViewPage() {
@@ -171,7 +171,7 @@ public class MainPageActivity extends BaseActivity implements OnPageChangeListen
                 this.image3.setImageDrawable(getResources().getDrawable(R.drawable.service_normal));
                 this.text4.setTextColor(getResources().getColor(R.color.text_hint));
                 this.image4.setImageDrawable(getResources().getDrawable(R.drawable.user_normal));
-              //  networkRequest();
+                //  networkRequest();
                 break;
             case R.id.morePage:
                 this.pager.setCurrentItem(2);
@@ -202,12 +202,12 @@ public class MainPageActivity extends BaseActivity implements OnPageChangeListen
     }
 
     //未读消息提醒
-    public void setUnReadMessage(int unReadMessageNum){
+    public void setUnReadMessage(int unReadMessageNum) {
         badgeView.setText(String.valueOf(unReadMessageNum));
         badgeView.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
-        if (unReadMessageNum != 0){
+        if (unReadMessageNum != 0) {
             badgeView.show();
-        }else {
+        } else {
             badgeView.hide();
         }
     }
@@ -256,7 +256,7 @@ public class MainPageActivity extends BaseActivity implements OnPageChangeListen
                 this.image3.setImageDrawable(getResources().getDrawable(R.drawable.service_normal));
                 this.text4.setTextColor(getResources().getColor(R.color.text_hint));
                 this.image4.setImageDrawable(getResources().getDrawable(R.drawable.user_normal));
-               // networkRequest();
+                // networkRequest();
                 break;
             case 2:
                 this.pager.setCurrentItem(2);
@@ -284,6 +284,46 @@ public class MainPageActivity extends BaseActivity implements OnPageChangeListen
             default:
                 break;
         }
+    }
+
+    private String getDate() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        dateFormat.format(new java.util.Date());
+        return dateFormat.format(new java.util.Date());
+    }
+
+    public String getDir() {
+        return Environment.getExternalStorageDirectory() + "/JMMSH/voiceMsg";
+    }
+
+    public String getFileName() {
+        return UUID.randomUUID().toString() + ".amr";
+    }
+
+    private void reFreshContact() {
+        Intent intent = new Intent("com.android.decipherstranger.FRIEND");
+        intent.putExtra("reFresh", "reFresh");
+        sendBroadcast(intent);
+    }
+
+    private void sendOffMsg() {
+        if (NetworkService.getInstance().getIsConnected()) {
+            String offMsg = "type" + ":" + Integer.toString(GlobalMsgUtils.msgOffMsg) + ":" +
+                    "account" + ":" + application.getAccount();
+            Log.v("aaaaa", offMsg);
+            NetworkService.getInstance().sendUpload(offMsg);
+        } else {
+            NetworkService.getInstance().closeConnection();
+            Toast.makeText(MainPageActivity.this, "服务器连接失败~(≧▽≦)~啦啦啦", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void chatBroadcas() {
+        //动态方式注册广播接收者
+        this.receiver = new ChatBroadcastReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("com.android.decipherstranger.MESSAGE");
+        this.registerReceiver(receiver, filter);
     }
 
     public class MyFramePagerAdapter extends PagerAdapter {
@@ -335,47 +375,6 @@ public class MainPageActivity extends BaseActivity implements OnPageChangeListen
 
     }
 
-    private String getDate() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        dateFormat.format(new java.util.Date());
-        return dateFormat.format(new java.util.Date());
-    }
-
-    public String getDir(){
-        return Environment.getExternalStorageDirectory()+"/JMMSH/voiceMsg";
-    }
-
-    public String getFileName(){
-        return UUID.randomUUID().toString()+".amr";
-    }
-
-    private void reFreshContact(){
-        Intent intent = new Intent("com.android.decipherstranger.FRIEND");
-        intent.putExtra("reFresh","reFresh");
-        sendBroadcast(intent);
-    }
-
-    private void sendOffMsg(){
-        if(NetworkService.getInstance().getIsConnected()) {
-            String offMsg = "type"+":"+Integer.toString(GlobalMsgUtils.msgOffMsg)+":"+
-                            "account"+":"+application.getAccount();
-            Log.v("aaaaa", offMsg);
-            NetworkService.getInstance().sendUpload(offMsg);
-        }
-        else {
-            NetworkService.getInstance().closeConnection();
-            Toast.makeText(MainPageActivity.this, "服务器连接失败~(≧▽≦)~啦啦啦", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void chatBroadcas() {
-        //动态方式注册广播接收者
-        this.receiver = new ChatBroadcastReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("com.android.decipherstranger.MESSAGE");
-        this.registerReceiver(receiver, filter);
-    }
-
     public class ChatBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -383,8 +382,8 @@ public class MainPageActivity extends BaseActivity implements OnPageChangeListen
                 if (intent.getStringExtra("Decrease") != null && intent.getStringExtra("Decrease").equals("Decrease")) {
                     application.setUnReadMessage(application.getUnReadMessage() - intent.getIntExtra("DecreaseCount", 0));
 //                    setUnReadMessage(application.getUnReadMessage());
-                } else if(intent.getStringExtra("Friend") !=null && intent.getStringExtra("Friend").equals("Friend")) {
-                    if (intent.getStringExtra("Del") != null && intent.getStringExtra("Del").equals("Del")){
+                } else if (intent.getStringExtra("Friend") != null && intent.getStringExtra("Friend").equals("Friend")) {
+                    if (intent.getStringExtra("Del") != null && intent.getStringExtra("Del").equals("Del")) {
                         //Todo reAccount就是要删的
                         writeChatLog = new ChatRecord(helper.getWritableDatabase());
                         writeChatLog.delete(intent.getStringExtra("reAccount"));
@@ -392,8 +391,8 @@ public class MainPageActivity extends BaseActivity implements OnPageChangeListen
                         contactsList.delete(intent.getStringExtra("reAccount"));
                         System.out.println("+++++++++++删了");
                         reFreshContact();
-                    }else {
-                        if(intent.getBooleanExtra("reResult",true) ) {
+                    } else {
+                        if (intent.getBooleanExtra("reResult", true)) {
                             //Todo reAccount rePhoto reGender reName
                             contactsList = new ContactsList(helper.getWritableDatabase());
                             User contact = new User();
@@ -404,7 +403,7 @@ public class MainPageActivity extends BaseActivity implements OnPageChangeListen
                             contactsList.insert(contact);
                             reFreshContact();
                             builder.setTitle(contact.getUsername() + "已添加您为好友");
-                            Drawable drawable = new BitmapDrawable(getResources(),contact.getPortrait());
+                            Drawable drawable = new BitmapDrawable(getResources(), contact.getPortrait());
                             builder.setIcon(drawable);
                             builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {
@@ -412,11 +411,11 @@ public class MainPageActivity extends BaseActivity implements OnPageChangeListen
                             });
                             builder.create().show();
                             Toast.makeText(context, intent.getStringExtra("reName") + "已添加您为好友", Toast.LENGTH_SHORT).show();
-                        }else{
+                        } else {
                             Toast.makeText(context, "添加好友失败~", Toast.LENGTH_SHORT).show();
                         }
                     }
-                } else{
+                } else {
                     Contacts receiveMsg = new Contacts();
                     System.out.println("+++++++++++++++++++又接到一条消息");
                     application.receiveMessage(MainPageActivity.this);
@@ -464,7 +463,7 @@ public class MainPageActivity extends BaseActivity implements OnPageChangeListen
                     Intent it = new Intent(MyStatic.CONVERSATION_BOARD);
                     it.putExtra(MyStatic.CONVERSATION_TYPE, "Update");
                     it.putExtra(MyStatic.CONVERSATION_ACCOUNT, receiveMsg.getAccount());
-                    System.out.println("+++++++++"+receiveMsg.getType());
+                    System.out.println("+++++++++" + receiveMsg.getType());
                     if (receiveMsg.getType() == VOICE_MESSAGE) {
                         System.out.println("++++++++++语音");
                         it.putExtra(MyStatic.CONVERSATION_MESSAGE, "[语音]");
@@ -476,7 +475,7 @@ public class MainPageActivity extends BaseActivity implements OnPageChangeListen
                     }
                     sendBroadcast(it);
                 }
-            } else{
+            } else {
                 Toast.makeText(context, "接收失败？！", Toast.LENGTH_SHORT).show();
             }
         }

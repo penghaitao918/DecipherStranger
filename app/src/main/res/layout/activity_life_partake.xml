@@ -1,98 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background">
+    android:background="@drawable/background"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/tab"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:background="@color/tab">
 
         <ImageButton
+            android:id="@+id/life_back_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/life_back_button"
-            android:onClick="LifePartakeOnClick"
-            android:background="@null"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/life_back_btn"
-            android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:onClick="LifePartakeOnClick"
+            android:src="@drawable/life_back_btn" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/partake"
-            android:textColor="@color/text_hint"
-            android:textSize="20dp"
-            android:layout_margin="10dp"
+            android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_margin="10dp"
+            android:text="@string/partake"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/text_hint"
+            android:textSize="20dp" />
 
     </RelativeLayout>
 
     <view
+        android:id="@+id/view"
+        class="com.android.decipherstranger.view.MyScrollView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        class="com.android.decipherstranger.view.MyScrollView"
-        android:id="@+id/view"
-        android:layout_gravity="center_horizontal" >
+        android:layout_gravity="center_horizontal">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:id="@+id/advertLayout"
-                android:onClick="LifePartakeOnClick"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:onClick="LifePartakeOnClick">
 
 
                 <ImageView
+                    android:id="@+id/advertisement"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/advertisement"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
                     android:background="@null"
                     android:scaleType="fitXY"
-                    android:src="@drawable/animation_advertisement"
-                    android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true" />
+                    android:src="@drawable/animation_advertisement" />
 
-<!--                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/exitButton"
-                    android:layout_margin="5dp"
-                    android:src="@drawable/emotionstore_progresscancelbtn"
-                    android:background="@null"
-                    android:onClick="LifePartakeOnClick"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />-->
+                <!--                <ImageButton
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/exitButton"
+                                    android:layout_margin="5dp"
+                                    android:src="@drawable/emotionstore_progresscancelbtn"
+                                    android:background="@null"
+                                    android:onClick="LifePartakeOnClick"
+                                    android:layout_alignParentTop="true"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_alignParentEnd="true" />-->
 
             </RelativeLayout>
 
             <include
                 android:id="@+id/sort"
-                android:layout_marginTop="5dp"
+                layout="@layout/winpop_life_sort"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                layout="@layout/winpop_life_sort"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp" />
 
             <ListView
+                android:id="@+id/listView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/listView"
-                android:layout_marginTop="3dp"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="3dp"
                 android:divider="@null"
                 android:listSelector="#00000000" />
 

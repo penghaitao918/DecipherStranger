@@ -33,7 +33,9 @@ public class User implements Serializable {
     //  个性签名
     private String signature;
 
-    public User(){}
+    public User() {
+    }
+
     public User(User user) {
         this.account = user.account;
         this.password = user.password;
@@ -47,67 +49,101 @@ public class User implements Serializable {
         this.signature = user.signature;
     }
 
-    public void setAccount(String account) {this.account = account;}
-    
-    public String getAccount() {return account;}
+    public String getAccount() {
+        return account;
+    }
 
-    public void setPassword(String password) {this.password = password;}
+    public void setAccount(String account) {
+        this.account = account;
+    }
 
-    public String getPassword() {return password;}
+    public String getPassword() {
+        return password;
+    }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public String getRemark() {return remark;}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-    public void setRemark(String remark) {this.remark = remark;}
+    public String getRemark() {
+        return remark;
+    }
 
-    public String getUserSex() {return userSex;}
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 
-    public void setUserSex(String userSex) {this.userSex = userSex;}
+    public String getUserSex() {
+        return userSex;
+    }
 
-    public void setEmail(String email) {this.email = email;}
+    public void setUserSex(String userSex) {
+        this.userSex = userSex;
+    }
 
-    public String getEmail() {return email;}
+    public String getEmail() {
+        return email;
+    }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPhone() {
         return phone;
     }
 
-    public void setBirth(String birth) {this.birth = birth;}
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-    public String getBirth() {return birth;}
+    public String getBirth() {
+        return birth;
+    }
 
-    public void setAddress(String address) {this.address = address;}
+    public void setBirth(String birth) {
+        this.birth = birth;
+    }
 
-    public String getAddress() {return address;}
+    public String getAddress() {
+        return address;
+    }
 
-    public void setSignature(String portraitUrl) {
-        this.signature = signature;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getSignature() {
         return signature;
     }
-    
-    public String getSortLetters() {return sortLetters;}
 
-    public void setSortLetters(String sortLetters) {this.sortLetters = sortLetters;}
+    public void setSignature(String portraitUrl) {
+        this.signature = signature;
+    }
+
+    public String getSortLetters() {
+        return sortLetters;
+    }
+
+    public void setSortLetters(String sortLetters) {
+        this.sortLetters = sortLetters;
+    }
 
     public Bitmap getPortrait() {
         return portrait;
     }
 
-    public void setPortrait(Bitmap portrait) {this.portrait = portrait;}
+    public void setPortrait(Bitmap portrait) {
+        this.portrait = portrait;
+    }
 
 
 }

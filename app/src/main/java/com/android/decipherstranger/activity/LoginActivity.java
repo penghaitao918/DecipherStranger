@@ -57,6 +57,7 @@ import com.android.decipherstranger.util.StringUtils;
  */
 public class LoginActivity extends BaseActivity {
 
+    private static final String FILENAME = "Login_CheckBox";
     private MyApplication application = null;
     private Intent it = null;
     private ArrayAdapter<String> adapter = null;
@@ -65,8 +66,6 @@ public class LoginActivity extends BaseActivity {
     private UserTabOperate userInfo = null;
     private LoginBroadcastReceiver receiver = null;
     private ProgressDialog progressDialog = null;
-
-    private static final String FILENAME = "Login_CheckBox";
     private SharedPreferencesUtils sharedPreferencesUtils = null;
 
     private AutoCompleteTextView accountEdit = null;
@@ -76,7 +75,37 @@ public class LoginActivity extends BaseActivity {
     private Button registerButton = null;
     private String account = null;
     private String passwordMD5 = null;
-
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message message) {
+            switch (message.what) {
+                case 0:
+                    InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    im.hideSoftInputFromWindow(getCurrentFocus().getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    progressDialog.onStart();
+                    progressDialog.show();
+                    break;
+                case 1:
+                    if (progressDialog.isShowing()) {
+                        progressDialog.dismiss();
+                    }
+                    Toast.makeText(LoginActivity.this, "请输入用户名", Toast.LENGTH_SHORT).show();
+                    break;
+                case 2:
+                    if (progressDialog.isShowing()) {
+                        progressDialog.dismiss();
+                    }
+                    Toast.makeText(LoginActivity.this, "请输入密码", Toast.LENGTH_SHORT).show();
+                    break;
+                case 3:
+                    if (progressDialog.isShowing()) {
+                        progressDialog.dismiss();
+                    }
+                    Toast.makeText(LoginActivity.this, "服务器连接失败~(≧▽≦)~啦啦啦", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -118,20 +147,20 @@ public class LoginActivity extends BaseActivity {
         passwordMD5 = null;
     }
 
-    private void initView(){
+    private void initView() {
         this.progressDialog = new ProgressDialog(LoginActivity.this);
         progressDialog.setMessage("Login...");
 
         LoginActivity.this.userInfo = new UserTabOperate(LoginActivity.this.helper.getReadableDatabase());
         this.adapter =
-                new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,LoginActivity.this.userInfo.accountInfo());
+                new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, LoginActivity.this.userInfo.accountInfo());
 
-        this.accountEdit = (AutoCompleteTextView)super.findViewById(R.id.login_edit_account);
+        this.accountEdit = (AutoCompleteTextView) super.findViewById(R.id.login_edit_account);
         this.accountEdit.setAdapter(adapter);
-        this.pawEdit = (EditText)super.findViewById(R.id.login_edit_password);
-        this.loginButton = (Button)super.findViewById(R.id.login_button);
-        this.checkBox = (CheckBox)super.findViewById(R.id.auto_save_password);
-        this.registerButton = (Button)super.findViewById(R.id.register_button);
+        this.pawEdit = (EditText) super.findViewById(R.id.login_edit_password);
+        this.loginButton = (Button) super.findViewById(R.id.login_button);
+        this.checkBox = (CheckBox) super.findViewById(R.id.auto_save_password);
+        this.registerButton = (Button) super.findViewById(R.id.register_button);
 
         this.accountEdit.setOnItemClickListener(new OnItemClickListenerImpl());
         this.accountEdit.setOnClickListener(new accountOnClickListenerImpl());
@@ -140,16 +169,67 @@ public class LoginActivity extends BaseActivity {
         this.registerButton.setOnClickListener(new registerOnClickListenerImpl());
     }
 
+    /**
+     * Created by Feng on 2015/3/24.
+     */
+    private void accountCheckByWeb(String account, String password) {
+
+        NetworkService.getInstance().closeConnection();
+        NetworkService.getInstance().onInit(LoginActivity.this, application);
+        NetworkService.getInstance().setupConnection();
+        if (NetworkService.getInstance().getIsConnected()) {
+            String userInfo = "type" + ":" + Integer.toString(GlobalMsgUtils.msgLogin) + ":" + "account" + ":" + account + ":" + "password" + ":" + password;
+            NetworkService.getInstance().sendUpload(userInfo);
+        } else {
+            NetworkService.getInstance().closeConnection();
+            Handler mhandler = new Handler();
+            mhandler.postDelayed(new Runnable() {
+                public void run() {
+                    Message m = new Message();
+                    m.what = 3;
+                    handler.sendMessage(m);
+                    Log.v("Login", "已经执行T（）方法");
+                }
+            }, 2000);
+        }
+    }
+
+    private void getCheckBox() {
+        SharedPreferences shared = getSharedPreferences(FILENAME, LoginActivity.MODE_PRIVATE);
+        LoginActivity.this.checkBox.setChecked(shared.getBoolean("Checked", true));
+    }
+
+    private void loginBroadcas() {
+        //动态方式注册广播接收者
+        this.receiver = new LoginBroadcastReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("com.android.decipherstranger.LOGIN");
+        this.registerReceiver(receiver, filter);
+    }
+
+    private void saveUserInfo() {
+        sharedPreferencesUtils.set(MyStatic.USER_LOGIN, true);
+        sharedPreferencesUtils.set(MyStatic.USER_ACCOUNT, account);
+        sharedPreferencesUtils.set(MyStatic.USER_PASSWORD, passwordMD5);
+        sharedPreferencesUtils.set(MyStatic.USER_NAME, application.getName());
+        sharedPreferencesUtils.set(MyStatic.USER_PORTRAIT, ChangeUtils.toBinary(application.getPortrait()));
+        sharedPreferencesUtils.set(MyStatic.USER_SEX, application.getSex());
+        sharedPreferencesUtils.set(MyStatic.USER_BIRTH, application.getBirth());
+        sharedPreferencesUtils.set(MyStatic.USER_EMAIL, application.getEmail());
+        sharedPreferencesUtils.set(MyStatic.USER_PHONE, application.getPhone());
+        //       sharedPreferencesUtils.set(MyStatic.USER_SIGNATURE, application.getSignature());
+    }
+
     private class accountOnClickListenerImpl implements View.OnClickListener {
         @Override
-        public void onClick(View view){
+        public void onClick(View view) {
             LoginActivity.this.accountEdit.setText("");
         }
     }
 
     private class passwordOnClickListenerImpl implements View.OnClickListener {
         @Override
-        public void onClick(View view){
+        public void onClick(View view) {
             LoginActivity.this.pawEdit.setText("");
         }
     }
@@ -166,7 +246,7 @@ public class LoginActivity extends BaseActivity {
 
     private class loginOnClickListenerImpl implements View.OnClickListener {
         @Override
-        public void onClick(View view){
+        public void onClick(View view) {
 
 /*            Intent it = new Intent(LoginActivity.this, MainPageActivity.class);
             startActivity(it);
@@ -182,13 +262,13 @@ public class LoginActivity extends BaseActivity {
                     account = LoginActivity.this.accountEdit.getText().toString();
                     String password = LoginActivity.this.pawEdit.getText().toString();
                     passwordMD5 = stringUtils.MD5(password);
-                    if (account.equals("")){
+                    if (account.equals("")) {
                         m.what = 1;
                         handler.sendMessage(m);
-                    }else if (password.equals("")){
+                    } else if (password.equals("")) {
                         m.what = 2;
                         handler.sendMessage(m);
-                    }else {
+                    } else {
                         LoginActivity.this.userInfo = new UserTabOperate(LoginActivity.this.helper.getReadableDatabase());
                         User user = LoginActivity.this.userInfo.userTabInfo(account);
 
@@ -197,17 +277,17 @@ public class LoginActivity extends BaseActivity {
                         SharedPreferences.Editor editor = share.edit();
 
                         if (LoginActivity.this.checkBox.isChecked()) {
-                            editor.putBoolean("Checked",true);
+                            editor.putBoolean("Checked", true);
                             if (!user.getAccount().equals("")) {
                                 LoginActivity.this.userInfo.update(account, password);
-                            }else {
+                            } else {
                                 LoginActivity.this.userInfo.insert(account, password);
                             }
-                        }else {
-                            editor.putBoolean("Checked",false);
+                        } else {
+                            editor.putBoolean("Checked", false);
                             if (!user.getAccount().equals("")) {
                                 LoginActivity.this.userInfo.update(account, "");
-                            }else {
+                            } else {
                                 LoginActivity.this.userInfo.insert(account, "");
                             }
                         }
@@ -222,113 +302,31 @@ public class LoginActivity extends BaseActivity {
 
     private class registerOnClickListenerImpl implements View.OnClickListener {
         @Override
-        public void onClick(View view){
+        public void onClick(View view) {
             it = new Intent(LoginActivity.this, RegisterActivityBase.class);
             startActivity(it);
         }
-    }
-
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message message) {
-            switch (message.what) {
-                case 0:
-                    InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    im.hideSoftInputFromWindow(getCurrentFocus().getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                    progressDialog.onStart();
-                    progressDialog.show();
-                    break;
-                case 1:
-                    if (progressDialog.isShowing()) {
-                        progressDialog.dismiss();
-                    } Toast.makeText(LoginActivity.this, "请输入用户名", Toast.LENGTH_SHORT).show();
-                    break;
-                case 2:
-                    if (progressDialog.isShowing()) {
-                        progressDialog.dismiss();
-                    } Toast.makeText(LoginActivity.this, "请输入密码", Toast.LENGTH_SHORT).show();
-                    break;
-                case 3:
-                    if (progressDialog.isShowing()) {
-                        progressDialog.dismiss();
-                    } Toast.makeText(LoginActivity.this, "服务器连接失败~(≧▽≦)~啦啦啦", Toast.LENGTH_SHORT).show();
-                    break;
-            }
-        }
-    };
-
-    /**
-     * Created by Feng on 2015/3/24.
-     */
-    private void accountCheckByWeb(String account, String password){
-
-        NetworkService.getInstance().closeConnection();
-        NetworkService.getInstance().onInit(LoginActivity.this,application);
-        NetworkService.getInstance().setupConnection();
-        if(NetworkService.getInstance().getIsConnected()) {
-            String userInfo = "type"+":"+Integer.toString(GlobalMsgUtils.msgLogin)+":"+"account"+":"+account+":"+"password"+":"+password;
-            NetworkService.getInstance().sendUpload(userInfo);
-        }
-        else {
-            NetworkService.getInstance().closeConnection();
-            Handler mhandler = new Handler();
-            mhandler.postDelayed(new Runnable() {
-                public void run() {
-                    Message m = new Message();
-                    m.what = 3;
-                    handler.sendMessage(m);
-                    Log.v("Login", "已经执行T（）方法");
-                }
-            }, 2000);
-        }
-    }
-
-    private void getCheckBox(){
-        SharedPreferences shared = getSharedPreferences(FILENAME, LoginActivity.MODE_PRIVATE);
-        LoginActivity.this.checkBox.setChecked(shared.getBoolean("Checked",true));
-    }
-
-    private void loginBroadcas() {
-        //动态方式注册广播接收者
-        this.receiver = new LoginBroadcastReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("com.android.decipherstranger.LOGIN");
-        this.registerReceiver(receiver, filter);
     }
 
     public class LoginBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals("com.android.decipherstranger.LOGIN")) {
-                if(intent.getStringExtra("result").equals(MyStatic.resultTrue)) {
+                if (intent.getStringExtra("result").equals(MyStatic.resultTrue)) {
                     application.setAccount(account);
                     saveUserInfo();
                     progressDialog.dismiss();
                     Intent it = new Intent(LoginActivity.this, MainPageActivity.class);
                     startActivity(it);
                     finish();
-                }
-                else if(intent.getStringExtra("result").equals("same")) {
+                } else if (intent.getStringExtra("result").equals("same")) {
                     progressDialog.dismiss();
                     Toast.makeText(context, "账号已经登录了！", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     progressDialog.dismiss();
                     Toast.makeText(context, "账号或密码错误！", Toast.LENGTH_SHORT).show();
                 }
             }
         }
-    }
-    
-    private void saveUserInfo() {
-        sharedPreferencesUtils.set(MyStatic.USER_LOGIN, true);
-        sharedPreferencesUtils.set(MyStatic.USER_ACCOUNT, account);
-        sharedPreferencesUtils.set(MyStatic.USER_PASSWORD, passwordMD5);
-        sharedPreferencesUtils.set(MyStatic.USER_NAME, application.getName());
-        sharedPreferencesUtils.set(MyStatic.USER_PORTRAIT, ChangeUtils.toBinary(application.getPortrait()));
-        sharedPreferencesUtils.set(MyStatic.USER_SEX, application.getSex());
-        sharedPreferencesUtils.set(MyStatic.USER_BIRTH, application.getBirth());
-        sharedPreferencesUtils.set(MyStatic.USER_EMAIL, application.getEmail());
-        sharedPreferencesUtils.set(MyStatic.USER_PHONE, application.getPhone());
- //       sharedPreferencesUtils.set(MyStatic.USER_SIGNATURE, application.getSignature());
     }
 }

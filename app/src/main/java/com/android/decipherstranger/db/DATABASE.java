@@ -11,13 +11,13 @@ public class DATABASE extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "decipher_stranger.db";
     private static final int DATABASE_VERSION = 1;
-    
-    public DATABASE(Context context){
-        super(context,DATABASE_NAME,null,DATABASE_VERSION);
+
+    public DATABASE(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
-    
+
     @Override
-    public void onCreate(SQLiteDatabase db){
+    public void onCreate(SQLiteDatabase db) {
         this.CreateUserTab(db);
         this.CreateChatRecord(db);
         this.CreateContactsList(db);
@@ -26,7 +26,7 @@ public class DATABASE extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db,int oldVersion, int newVersion){
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         this.DropUserTab(db);
         this.DropChatRecord(db);
         this.DropContactsList(db);
@@ -34,7 +34,7 @@ public class DATABASE extends SQLiteOpenHelper {
         this.DropLifeShare(db);
         DATABASE.this.onCreate(db);
     }
-    
+
     //  登陆
     private void CreateUserTab(SQLiteDatabase db) {
         String sql = "CREATE TABLE user_tab (" +
@@ -42,7 +42,7 @@ public class DATABASE extends SQLiteOpenHelper {
                 "password   VARCHAR(50)     NOT NULL)";
         db.execSQL(sql);
     }
-    
+
     //  最近联系人
     private void CreateRecentContactsTab(SQLiteDatabase db) {
         String sql = "CREATE TABLE `recent_contacts` (" +
@@ -52,12 +52,12 @@ public class DATABASE extends SQLiteOpenHelper {
                 "  `newest` varchar(30) DEFAULT NULL," +
                 "  `contacts_time` varchar(20) DEFAULT NULL," +
                 "  PRIMARY KEY (`account`)" +
-                ")" ;
+                ")";
         db.execSQL(sql);
     }
-    
+
     //  聊天记录
-    private void CreateChatRecord(SQLiteDatabase db){
+    private void CreateChatRecord(SQLiteDatabase db) {
         String sql = "CREATE TABLE `chatrecord` (" +
                 "  `contacts` varchar(20) NOT NULL," +
                 "  `ismine` tinyint(1) DEFAULT NULL," +
@@ -100,22 +100,22 @@ public class DATABASE extends SQLiteOpenHelper {
                 ")";
         db.execSQL(sql);
     }
-    
+
     private void DropUserTab(SQLiteDatabase db) {
         String sql = "DROP TABLE IF EXISTS user_tab";
         db.execSQL(sql);
     }
-    
+
     private void DropRecentContactsTab(SQLiteDatabase db) {
         String sql = "DROP TABLE IF EXISTS `recent_contacts`;";
         db.execSQL(sql);
     }
-    
+
     private void DropChatRecord(SQLiteDatabase db) {
         String sql = "DROP TABLE IF EXISTS `chatrecord`";
         db.execSQL(sql);
     }
-    
+
     private void DropContactsList(SQLiteDatabase db) {
         String sql = "DROP TABLE IF EXISTS `contacts_list`";
         db.execSQL(sql);

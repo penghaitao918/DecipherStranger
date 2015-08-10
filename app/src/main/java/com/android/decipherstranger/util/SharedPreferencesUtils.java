@@ -57,7 +57,7 @@ public class SharedPreferencesUtils {
 
     //  查询并获取数据
     public Object get(String KEY, Object defaultObject) {
-        SharedPreferences sp = context.getSharedPreferences(FILENAME,Context.MODE_PRIVATE);
+        SharedPreferences sp = context.getSharedPreferences(FILENAME, Context.MODE_PRIVATE);
         if (defaultObject instanceof String) {
             return sp.getString(KEY, (String) defaultObject);
         } else if (defaultObject instanceof Integer) {
@@ -74,7 +74,7 @@ public class SharedPreferencesUtils {
 
     // 删除指定KEY的数据
     public void delete(String KEY) {
-        SharedPreferences sp = context.getSharedPreferences(FILENAME,Context.MODE_PRIVATE);
+        SharedPreferences sp = context.getSharedPreferences(FILENAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.remove(KEY);
         editor.commit();
@@ -82,7 +82,7 @@ public class SharedPreferencesUtils {
 
     //  清空所有数据
     public void clear() {
-        SharedPreferences sp = context.getSharedPreferences(FILENAME,Context.MODE_PRIVATE);
+        SharedPreferences sp = context.getSharedPreferences(FILENAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.clear();
         editor.commit();
@@ -90,17 +90,17 @@ public class SharedPreferencesUtils {
 
     //  判断KEY是否存在
     public boolean isContain(String key) {
-        SharedPreferences sp = context.getSharedPreferences(FILENAME,Context.MODE_PRIVATE);
+        SharedPreferences sp = context.getSharedPreferences(FILENAME, Context.MODE_PRIVATE);
         return sp.contains(key);
     }
 
     //  取出所有数据
     public Map<String, ?> getAll() {
-        SharedPreferences sp = context.getSharedPreferences(FILENAME,Context.MODE_PRIVATE);
+        SharedPreferences sp = context.getSharedPreferences(FILENAME, Context.MODE_PRIVATE);
         return sp.getAll();
     }
 
-    public void recycle(){
+    public void recycle() {
         context = null;
         FILENAME = null;
     }

@@ -16,6 +16,17 @@ public class NetworkService {
 
     private static NetworkService instanceServer;
     private static String jsonArray[] = new String[50];
+    private boolean isConnectedServer;
+    private NetConnect serNetCon;
+    private ClientListenThread serListenThread;
+    private ClientSendThread serSendThread;
+    private Socket serSocket;
+    private Context serContext;
+    private MyApplication application = null;
+    // here, it should always do nothing except set mIsConnected to false
+    private NetworkService() {
+        isConnectedServer = false;
+    }
 
     public static NetworkService getInstance() {
         if (instanceServer == null) {
@@ -24,20 +35,7 @@ public class NetworkService {
         return instanceServer;
     }
 
-    private boolean isConnectedServer;
-    private NetConnect serNetCon;
-    private ClientListenThread serListenThread;
-    private ClientSendThread serSendThread;
-    private Socket serSocket;
-    private Context serContext;
-    private MyApplication application = null;
-
-    // here, it should always do nothing except set mIsConnected to false
-    private NetworkService() {
-        isConnectedServer = false;
-    }
-
-    public void onInit(Context context,MyApplication application) {
+    public void onInit(Context context, MyApplication application) {
         serContext = context;
         this.application = application;
     }
@@ -52,11 +50,11 @@ public class NetworkService {
         try {
             serNetCon.join();
         } catch (Exception e) {
+            e.printStackTrace();
         }
 
         if (serNetCon == null || !serNetCon.connectedOrNot()) {
             isConnectedServer = false;
-            return;
         } else {
             serSocket = serNetCon.getSocket();
             isConnectedServer = true;
@@ -101,12 +99,14 @@ public class NetworkService {
                 serListenThread.closeBufferedReader();
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
         try {
             if (serSocket != null) {
                 serSocket.close();
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
         serSocket = null;
         isConnectedServer = false;

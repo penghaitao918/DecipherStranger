@@ -84,10 +84,11 @@ public class ShakeActivity extends BaseActivity {
     }
 
     @Override
-    protected void onRestart(){
+    protected void onRestart() {
         super.onRestart();
         this.registerBroadcas();
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -113,10 +114,10 @@ public class ShakeActivity extends BaseActivity {
             if (PortraitWindow.isShowing()) {
                 PortraitWindow.dismiss();
                 return true;
-            }else if (progressDialog.isShowing()) {
+            } else if (progressDialog.isShowing()) {
                 progressDialog.dismiss();
                 return true;
-            }else if (popupWindow.isShowing()) {
+            } else if (popupWindow.isShowing()) {
                 popupWindow.dismiss();
                 return true;
             } else {
@@ -164,7 +165,8 @@ public class ShakeActivity extends BaseActivity {
             case R.id.shakeMain:
                 if (popupWindow.isShowing()) {
                     popupWindow.dismiss();
-                } break;
+                }
+                break;
         }
     }
 
@@ -201,12 +203,11 @@ public class ShakeActivity extends BaseActivity {
         progressDialog.setMessage("正在搜寻同一时刻摇晃手机的人");
         progressDialog.onStart();
         progressDialog.show();
-        if(NetworkService.getInstance().getIsConnected()) {
-            String userInfo = "type"+":"+Integer.toString(GlobalMsgUtils.msgShake)+":"+"account"+":"+application.getAccount();
+        if (NetworkService.getInstance().getIsConnected()) {
+            String userInfo = "type" + ":" + Integer.toString(GlobalMsgUtils.msgShake) + ":" + "account" + ":" + application.getAccount();
             Log.v("aaaaa", userInfo);
             NetworkService.getInstance().sendUpload(userInfo);
-        }
-        else {
+        } else {
             NetworkService.getInstance().closeConnection();
             Toast.makeText(ShakeActivity.this, "服务器连接失败~(≧▽≦)~啦啦啦", Toast.LENGTH_SHORT).show();
             Log.v("Login", "已经执行T（）方法");
@@ -216,12 +217,12 @@ public class ShakeActivity extends BaseActivity {
     public void ShakePopup(View view) {
         switch (view.getId()) {
             case R.id.shake_friend_info:
-                Intent intent1 = new Intent(ShakeActivity.this,WelcomeRspActivity.class);
-                intent1.putExtra("Type","AddFriend");
+                Intent intent1 = new Intent(ShakeActivity.this, WelcomeRspActivity.class);
+                intent1.putExtra("Type", "AddFriend");
                 intent1.putExtra("Account", FriendAccount);
                 intent1.putExtra("Name", FriendName);
                 intent1.putExtra("Photo", bitmap);
-                intent1.putExtra("Sex",FriendSex);
+                intent1.putExtra("Sex", FriendSex);
                 startActivity(intent1);
                 if (popupWindow.isShowing()) {
                     popupWindow.dismiss();
@@ -235,16 +236,17 @@ public class ShakeActivity extends BaseActivity {
             case R.id.imageView2:
                 if (PortraitWindow.isShowing()) {
                     PortraitWindow.dismiss();
-                }break;
+                }
+                break;
         }
     }
 
     private void popInitView(Intent intent) {
-        Drawable sexDrawable ;
+        Drawable sexDrawable;
         this.bitmap = ChangeUtils.toBitmap(intent.getStringExtra("rePhoto"));
         this.portrait.setImageBitmap(bitmap);
         this.userName.setText(intent.getStringExtra("reName"));
-        this.FriendSex = intent.getIntExtra("reGender", 1)+"";
+        this.FriendSex = intent.getIntExtra("reGender", 1) + "";
         if (intent.getIntExtra("reGender", 1) == 1) {
             sexDrawable = getResources().getDrawable(R.drawable.ic_sex_male);
         } else {
@@ -265,15 +267,14 @@ public class ShakeActivity extends BaseActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals("com.android.decipherstranger.SHAKE")) {
-                if(intent.getBooleanExtra("reResult", false)) {
+                if (intent.getBooleanExtra("reResult", false)) {
                     popInitView(intent);
                     FriendAccount = intent.getStringExtra("reAccount");
                     FriendName = intent.getStringExtra("reName");
                     progressDialog.dismiss();
                     popupWindow.setAnimationStyle(R.style.MyDialogStyleBottom);
                     popupWindow.showAsDropDown(findViewById(R.id.shake_image));
-                }
-                else{
+                } else {
                     progressDialog.dismiss();
                     Toast.makeText(ShakeActivity.this, "没摇到( ⊙ o ⊙ )！重新来过~~", Toast.LENGTH_SHORT).show();
                 }

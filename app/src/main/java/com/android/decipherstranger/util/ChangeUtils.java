@@ -32,12 +32,11 @@ public class ChangeUtils {
         if (bitmap == null) {
             return "False";
         }
-        String s = null;
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, os);
         byte[] Buffer = os.toByteArray();
         //s = new String(Buffer);
-        s = Base64.encodeToString(Buffer, Base64.DEFAULT);
+        String s = Base64.encodeToString(Buffer, Base64.DEFAULT);
         try {
             os.flush();
             os.close();
@@ -51,7 +50,7 @@ public class ChangeUtils {
     * toBinary 将File转为String
     * @param file 要转换的
     * */
-    public static String toBinary(File file){
+    public static String toBinary(File file) {
         String s = null;
         byte[] buffer = new byte[1024];
         int len = -1;
@@ -59,7 +58,7 @@ public class ChangeUtils {
         FileInputStream inputStream = null;
         try {
             inputStream = new FileInputStream(file);
-            while ((len = inputStream.read(buffer)) != -1){
+            while ((len = inputStream.read(buffer)) != -1) {
                 os.write(buffer, 0, len);
             }
             byte[] data = os.toByteArray();
@@ -117,10 +116,10 @@ public class ChangeUtils {
     * toFile 将String转为File
     * @param 转换的String
     * */
-    public static File toFile(String s,String dir,String fileName) {
+    public static File toFile(String s, String dir, String fileName) {
         //byte[] Buffer = s.getBytes();
         byte[] Buffer = Base64.decode(s, Base64.DEFAULT);
-        File file =new File(dir,fileName);
+        File file = new File(dir, fileName);
         //ByteArrayInputStream is = new ByteArrayInputStream(Buffer);
         try {
             FileOutputStream outputStream = new FileOutputStream(file);

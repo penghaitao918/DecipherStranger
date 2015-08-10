@@ -1,110 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@null">
+    android:background="@null"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="2dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:layout_marginBottom="2dp"
+        android:layout_marginTop="5dp"
         android:background="@drawable/login_button_bg"
-        android:layout_gravity="center_horizontal">
+        android:orientation="vertical">
 
         <RelativeLayout
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginBottom="2dp"
+            android:id="@+id/relativeLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/relativeLayout2">
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp">
 
             <ImageView
+                android:id="@+id/life_class"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="5dp"
-                android:id="@+id/life_class"
+                android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true"/>
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp" />
 
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
                 android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_marginTop="2dp"
                 android:layout_toRightOf="@+id/life_class">
 
                 <RelativeLayout
+                    android:id="@+id/relativeLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:id="@+id/relativeLayout">
+                    android:layout_centerHorizontal="true">
 
                     <TextView
+                        android:id="@+id/textView1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="名称："
-                        android:textSize="18dp"
-                        android:textColor="@color/text_checked"
-                        android:layout_marginLeft="5dp"
-                        android:layout_centerVertical="true"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
-                        android:id="@+id/textView1" />
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dp"
+                        android:text="名称："
+                        android:textColor="@color/text_checked"
+                        android:textSize="18dp" />
 
                     <TextView
                         android:id="@+id/life_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="New Text"
-                        android:textSize="18dp"
-                        android:maxLines="1"
-                        android:textColor="@color/text_checked"
                         android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/textView1"
                         android:layout_toRightOf="@+id/textView1"
-                        android:layout_toEndOf="@+id/textView1" />
+                        android:maxLines="1"
+                        android:text="New Text"
+                        android:textColor="@color/text_checked"
+                        android:textSize="18dp" />
 
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/relativeLayout3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/relativeLayout"
-                    android:layout_centerHorizontal="true"
-                    android:id="@+id/relativeLayout3">
+                    android:layout_centerHorizontal="true">
 
                     <TextView
+                        android:id="@+id/textView2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="时间："
-                        android:textSize="16dp"
-                        android:textColor="@color/text_hint"
-                        android:layout_marginLeft="6dp"
-                        android:paddingRight="4dp"
-                        android:layout_centerVertical="true"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
-                        android:id="@+id/textView2" />
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="6dp"
+                        android:paddingRight="4dp"
+                        android:text="时间："
+                        android:textColor="@color/text_hint"
+                        android:textSize="16dp" />
 
                     <TextView
                         android:id="@+id/life_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="New Text"
-                        android:textSize="16dp"
-                        android:layout_marginLeft="2dp"
-                        android:textColor="@color/text_hint"
                         android:layout_centerVertical="true"
+                        android:layout_marginLeft="2dp"
+                        android:layout_toEndOf="@+id/textView2"
                         android:layout_toRightOf="@+id/textView2"
-                        android:layout_toEndOf="@+id/textView2" />
+                        android:text="New Text"
+                        android:textColor="@color/text_hint"
+                        android:textSize="16dp" />
 
                 </RelativeLayout>
 
@@ -115,30 +116,30 @@
                     android:layout_centerHorizontal="true">
 
                     <TextView
+                        android:id="@+id/textView3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="地点："
-                        android:textSize="16dp"
-                        android:textColor="@color/text_hint"
-                        android:layout_marginLeft="6dp"
-                        android:paddingRight="4dp"
-                        android:layout_centerVertical="true"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
-                        android:id="@+id/textView3" />
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="6dp"
+                        android:paddingRight="4dp"
+                        android:text="地点："
+                        android:textColor="@color/text_hint"
+                        android:textSize="16dp" />
 
                     <TextView
                         android:id="@+id/life_space"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="New Text"
-                        android:textSize="16dp"
-                        android:maxLines="1"
-                        android:layout_marginLeft="2dp"
-                        android:textColor="@color/text_hint"
                         android:layout_centerVertical="true"
+                        android:layout_marginLeft="2dp"
+                        android:layout_toEndOf="@+id/textView3"
                         android:layout_toRightOf="@+id/textView3"
-                        android:layout_toEndOf="@+id/textView3" />
+                        android:maxLines="1"
+                        android:text="New Text"
+                        android:textColor="@color/text_hint"
+                        android:textSize="16dp" />
 
                 </RelativeLayout>
 

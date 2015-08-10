@@ -21,10 +21,10 @@ public class SortAdapter extends BaseAdapter implements SectionIndexer {
     private ArrayList<User> list = null;
     private Context mContext;
 
-	public SortAdapter(Context mContext, ArrayList<User> list) {
-		this.mContext = mContext;
-		this.list = list;
-	}
+    public SortAdapter(Context mContext, ArrayList<User> list) {
+        this.mContext = mContext;
+        this.list = list;
+    }
 
     /**
      * 当ListView数据发生变化时,调用此方法来更新ListView
@@ -80,15 +80,9 @@ public class SortAdapter extends BaseAdapter implements SectionIndexer {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Drawable drawable = new BitmapDrawable(view.getResources(),photo);
+        Drawable drawable = new BitmapDrawable(view.getResources(), photo);
         viewHolder.ivUserPhoto.setImageDrawable(drawable);
         return view;
-    }
-
-    final static class ViewHolder {
-        TextView tvLetter;
-        TextView tvUserName;
-        ImageView ivUserPhoto;
     }
 
     /**
@@ -116,5 +110,11 @@ public class SortAdapter extends BaseAdapter implements SectionIndexer {
     @Override
     public Object[] getSections() {
         return null;
+    }
+
+    final static class ViewHolder {
+        TextView tvLetter;
+        TextView tvUserName;
+        ImageView ivUserPhoto;
     }
 }

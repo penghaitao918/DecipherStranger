@@ -91,14 +91,14 @@ public class ListButtonAdapter extends BaseAdapter {
         } else {
             view = mInflater.inflate(resource, parent, false);
             holder = new ViewHolder();
-            holder.sharePortrait = (ImageView)view.findViewById(mTo[0]);
-            holder.shareName = (TextView)view.findViewById(mTo[1]);
-            holder.shareMessage = (TextView)view.findViewById(mTo[2]);
-            holder.sharePhoto = (ImageView)view.findViewById(mTo[3]);
-            holder.shareTime = (TextView)view.findViewById(mTo[4]);
-            holder.shareNum = (TextView)view.findViewById(mTo[5]);
-            holder.numButton = (ImageButton)view.findViewById(mTo[6]);
-            holder.friendButton = (ImageButton)view.findViewById(mTo[7]);
+            holder.sharePortrait = (ImageView) view.findViewById(mTo[0]);
+            holder.shareName = (TextView) view.findViewById(mTo[1]);
+            holder.shareMessage = (TextView) view.findViewById(mTo[2]);
+            holder.sharePhoto = (ImageView) view.findViewById(mTo[3]);
+            holder.shareTime = (TextView) view.findViewById(mTo[4]);
+            holder.shareNum = (TextView) view.findViewById(mTo[5]);
+            holder.numButton = (ImageButton) view.findViewById(mTo[6]);
+            holder.friendButton = (ImageButton) view.findViewById(mTo[7]);
             view.setTag(holder);
         }
 
@@ -110,19 +110,19 @@ public class ListButtonAdapter extends BaseAdapter {
     private void bindView(int position) {
         Map<String, Object> itemData = mData.get(position);
         if (itemData != null) {
-            Bitmap portrait = (Bitmap)itemData.get(MyStatic.SHARE_PORTRAIT);
+            Bitmap portrait = (Bitmap) itemData.get(MyStatic.SHARE_PORTRAIT);
             String name = (String) itemData.get(MyStatic.SHARE_NAME);
             String message = (String) itemData.get(MyStatic.SHARE_MESSAGE);
-            Bitmap photo = (Bitmap)itemData.get(MyStatic.SHARE_PHOTO);
+            Bitmap photo = (Bitmap) itemData.get(MyStatic.SHARE_PHOTO);
             String time = (String) itemData.get(MyStatic.SHARE_TIME);
-            int num = (Integer)itemData.get(MyStatic.SHARE_NUM);
+            int num = (Integer) itemData.get(MyStatic.SHARE_NUM);
 
             holder.sharePortrait.setImageDrawable(new BitmapDrawable(portrait));
             holder.shareName.setText(name);
             holder.shareMessage.setText(message);
             holder.sharePhoto.setImageDrawable(new BitmapDrawable(photo));
             holder.shareTime.setText(time);
-            if(num == 0) {
+            if (num == 0) {
                 holder.shareNum.setText("");
             } else {
                 holder.shareNum.setText(String.valueOf(num));
@@ -133,6 +133,45 @@ public class ListButtonAdapter extends BaseAdapter {
         }
     }
 
+    //  点赞成功回执调用
+    public void itemDo(int position) {
+        int count = (Integer) mData.get(position).get(MyStatic.SHARE_NUM);
+        mData.get(position).put(MyStatic.SHARE_NUM, count + 1);
+        this.notifyDataSetChanged();
+    }
+
+    //  接受均在ShareLife中进行
+    private void addNum(int position) {
+        /**
+         * TODO 点赞 若账号为account的用户为ID为id的点过赞了，返回false，否则返回True
+         */
+        int Id = (Integer) mData.get(position).get(MyStatic.SHARE_ID);
+        String account = MyApplication.getInstance().getAccount();
+        if (NetworkService.getInstance().getIsConnected()) {
+            String Msg = "type" + ":" + "25" + ":" + "disId" + ":" + Id + ":" + "account" + ":" + account;
+            Log.v("### aaaaa", Msg);
+            NetworkService.getInstance().sendUpload(Msg);
+        } else {
+            NetworkService.getInstance().closeConnection();
+            Log.v("### 点赞", "服务器连接失败");
+        }
+    }
+
+    private void addFriends(int position) {
+        Map<String, Object> itemData = mData.get(position);
+        String account = (String) itemData.get(MyStatic.SHARE_ACCOUNT);
+        Bitmap portrait = (Bitmap) itemData.get(MyStatic.SHARE_PORTRAIT);
+        String name = (String) itemData.get(MyStatic.SHARE_NAME);
+        String sex = (String) itemData.get(MyStatic.SHARE_SEX);
+
+        Intent intent = new Intent(mContext, WelcomeRspActivity.class);
+        intent.putExtra("Type", "AddFriend");
+        intent.putExtra("Account", account);
+        intent.putExtra("Photo", portrait);
+        intent.putExtra("Name", name);
+        intent.putExtra("Sex", sex);
+        mContext.startActivity(intent);
+    }
 
     private class ViewHolder {
         ImageView sharePortrait;
@@ -143,13 +182,6 @@ public class ListButtonAdapter extends BaseAdapter {
         TextView shareNum;
         ImageButton numButton;
         ImageButton friendButton;
-    }
-
-    //  点赞成功回执调用
-    public void itemDo(int position){
-        int count = (Integer) mData.get(position).get(MyStatic.SHARE_NUM);
-        mData.get(position).put(MyStatic.SHARE_NUM, count + 1);
-        this.notifyDataSetChanged();
     }
 
     private class AddNumOnClickListenerImpl implements View.OnClickListener {
@@ -173,38 +205,5 @@ public class ListButtonAdapter extends BaseAdapter {
                     break;
             }
         }
-    }
-
-    //  接受均在ShareLife中进行
-    private void addNum(int position){
-        /**
-         * TODO 点赞 若账号为account的用户为ID为id的点过赞了，返回false，否则返回True
-         */
-        int Id =(Integer) mData.get(position).get(MyStatic.SHARE_ID);
-        String account = MyApplication.getInstance().getAccount();
-        if (NetworkService.getInstance().getIsConnected()){
-            String Msg = "type"+":"+"25"+":"+"disId"+":"+Id+":"+"account"+":"+account;
-            Log.v("### aaaaa", Msg);
-            NetworkService.getInstance().sendUpload(Msg);
-        }else {
-            NetworkService.getInstance().closeConnection();
-            Log.v("### 点赞", "服务器连接失败");
-        }
-    }
-
-    private void addFriends(int position){
-        Map<String, Object> itemData = mData.get(position);
-        String account =(String) itemData.get(MyStatic.SHARE_ACCOUNT);
-        Bitmap portrait = (Bitmap) itemData.get(MyStatic.SHARE_PORTRAIT);
-        String name = (String) itemData.get(MyStatic.SHARE_NAME);
-        String sex = (String) itemData.get(MyStatic.SHARE_SEX);
-
-        Intent intent = new Intent(mContext,WelcomeRspActivity.class);
-        intent.putExtra("Type", "AddFriend");
-        intent.putExtra("Account", account);
-        intent.putExtra("Photo", portrait);
-        intent.putExtra("Name", name);
-        intent.putExtra("Sex", sex);
-        mContext.startActivity(intent);
     }
 }

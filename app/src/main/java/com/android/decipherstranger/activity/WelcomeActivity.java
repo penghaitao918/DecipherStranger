@@ -1,12 +1,9 @@
 package com.android.decipherstranger.activity;
 
-import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.android.decipherstranger.Network.NetworkService;
@@ -52,7 +49,7 @@ public class WelcomeActivity extends BaseActivity {
         setContentView(R.layout.activity_welcome);
         this.getLoginFlag();
         handler = new Handler();
-        handler.postDelayed( new Runnable() {
+        handler.postDelayed(new Runnable() {
             public void run() {
                 if (isLogin && !password.equals("")) {
                     Intent intent = new Intent(WelcomeActivity.this, MainPageActivity.class);
@@ -96,16 +93,15 @@ public class WelcomeActivity extends BaseActivity {
         sharedPreferencesUtils.recycle();
     }
 
-    private void tellWebLogin(String account, String password){
+    private void tellWebLogin(String account, String password) {
 
         NetworkService.getInstance().closeConnection();
-        NetworkService.getInstance().onInit(WelcomeActivity.this,application);
+        NetworkService.getInstance().onInit(WelcomeActivity.this, application);
         NetworkService.getInstance().setupConnection();
-        if(NetworkService.getInstance().getIsConnected()) {
-            String userInfo = "type"+":"+Integer.toString(GlobalMsgUtils.msgLogin)+":"+"account"+":"+account+":"+"password"+":"+password;
+        if (NetworkService.getInstance().getIsConnected()) {
+            String userInfo = "type" + ":" + Integer.toString(GlobalMsgUtils.msgLogin) + ":" + "account" + ":" + account + ":" + "password" + ":" + password;
             NetworkService.getInstance().sendUpload(userInfo);
-        }
-        else {
+        } else {
             NetworkService.getInstance().closeConnection();
             Toast.makeText(WelcomeActivity.this, "服务器连接失败~(≧▽≦)~啦啦啦", Toast.LENGTH_SHORT).show();
             Log.v("Login", "已经执行T（）方法");

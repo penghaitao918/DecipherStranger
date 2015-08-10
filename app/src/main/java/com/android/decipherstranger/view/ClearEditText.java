@@ -35,6 +35,13 @@ public class ClearEditText extends EditText implements OnFocusChangeListener,
         init();
     }
 
+    public static Animation shakeAnimation(int counts) {
+        Animation translateAnimation = new TranslateAnimation(0, 10, 0, 0);
+        translateAnimation.setInterpolator(new CycleInterpolator(counts));
+        translateAnimation.setDuration(1000);
+        return translateAnimation;
+    }
+
     private void init() {
         mClearDrawable = getCompoundDrawables()[2];
         if (mClearDrawable == null) {
@@ -80,7 +87,6 @@ public class ClearEditText extends EditText implements OnFocusChangeListener,
                 getCompoundDrawables()[1], right, getCompoundDrawables()[3]);
     }
 
-
     @Override
     public void onTextChanged(CharSequence s, int start, int count, int after) {
         setClearIconVisible(s.length() > 0);
@@ -99,14 +105,6 @@ public class ClearEditText extends EditText implements OnFocusChangeListener,
 
     public void setShakeAnimation() {
         this.setAnimation(shakeAnimation(5));
-    }
-
-
-    public static Animation shakeAnimation(int counts) {
-        Animation translateAnimation = new TranslateAnimation(0, 10, 0, 0);
-        translateAnimation.setInterpolator(new CycleInterpolator(counts));
-        translateAnimation.setDuration(1000);
-        return translateAnimation;
     }
 
 }

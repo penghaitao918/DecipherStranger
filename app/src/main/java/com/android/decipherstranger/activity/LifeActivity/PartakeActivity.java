@@ -67,30 +67,6 @@ import java.util.Map;
  */
 public class PartakeActivity extends BaseActivity implements MyScrollView.OnScrollListener {
 
-    private double mLatitude;
-    private double mLongtitude;
-    private LocationClient mLocationClient;
-    private MyLocationListener mLocationListener;
-
-    private ImageView advertisementImage = null;
-    private AnimationDrawable animationAdvertisement = null;
-
-    private RelativeLayout topLayout = null;
-    private TextView textView1 = null;
-    private TextView textView2 = null;
-    private TextView textView3 = null;
-    private TextView textView4 = null;
-    private ListView listView = null;
-    private SimpleAdapter simpleAdapter = null;
-    private ArrayList<Map<String, Object>> dataList = null;
-
-    private LifePartakeBroadcastReceiver receiver = null;
-
-    private MyScrollView myScrollView;
-    private LinearLayout mBuyLayout;
-    private WindowManager mWindowManager;
-    /* 手机屏幕宽度 */
-    private int screenWidth;
     /**
      * 悬浮框View
      */
@@ -99,6 +75,26 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
      * 悬浮框的参数
      */
     private static WindowManager.LayoutParams suspendLayoutParams;
+    private double mLatitude;
+    private double mLongtitude;
+    private LocationClient mLocationClient;
+    private MyLocationListener mLocationListener;
+    private ImageView advertisementImage = null;
+    private AnimationDrawable animationAdvertisement = null;
+    private RelativeLayout topLayout = null;
+    private TextView textView1 = null;
+    private TextView textView2 = null;
+    private TextView textView3 = null;
+    private TextView textView4 = null;
+    private ListView listView = null;
+    private SimpleAdapter simpleAdapter = null;
+    private ArrayList<Map<String, Object>> dataList = null;
+    private LifePartakeBroadcastReceiver receiver = null;
+    private MyScrollView myScrollView;
+    private LinearLayout mBuyLayout;
+    private WindowManager mWindowManager;
+    /* 手机屏幕宽度 */
+    private int screenWidth;
     /**
      * 排序布局的高度
      */
@@ -111,7 +107,14 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
      * 排序布局与其父类布局的顶部距离
      */
     private int buyLayoutTop;
-
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message message) {
+            listView.setAdapter(simpleAdapter);
+            simpleAdapter.notifyDataSetChanged();
+            fixListViewHeight(listView);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,7 +158,7 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
         initLocation();
 
         this.animationAdvertisement = new AnimationDrawable();
-        this.animationAdvertisement = (AnimationDrawable)getResources().getDrawable(R.drawable.animation_advertisement);
+        this.animationAdvertisement = (AnimationDrawable) getResources().getDrawable(R.drawable.animation_advertisement);
         this.advertisementImage = (ImageView) super.findViewById(R.id.advertisement);
         this.advertisementImage.setImageDrawable(this.animationAdvertisement);
 
@@ -198,31 +201,6 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
         this.fixListViewHeight(listView);
 
         this.animationAdvertisement.start();
-    }
-
-    private class ViewBinderImpl implements SimpleAdapter.ViewBinder {
-        @Override
-        public boolean setViewValue(View view, Object data, String textRepresentation) {
-            // TODO Auto-generated method stub
-            if (view instanceof ImageView && data instanceof Bitmap) {
-                ImageView i = (ImageView) view;
-                i.setImageBitmap((Bitmap) data);
-                return true;
-            }
-            return false;
-        }
-    }
-
-    private class OnItemClickListenerImpl implements AdapterView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            int lifeId = (int) dataList.get(position).get(MyStatic.LIFE_ID);
-            int lifeType = (int) dataList.get(position).get(MyStatic.LIFE_CLASSINT);
-            Intent intent = new Intent(PartakeActivity.this, DetailsActivity.class);
-            intent.putExtra(MyStatic.LIFE_ID, lifeId);
-            intent.putExtra(MyStatic.LIFE_CLASSINT, lifeType);
-            startActivity(intent);
-        }
     }
 
     private void fixListViewHeight(ListView listView) {
@@ -277,7 +255,6 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
             }
         }
     }
-
 
     /**
      * 显示购买的悬浮框
@@ -342,19 +319,22 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
         Bitmap bitmap = null;
         switch (type) {
             // 美食
-            case 1:bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.life_class_food);
+            case 1:
+                bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.life_class_food);
                 break;
             // 旅游
-            case 2:bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.life_class_travel);
+            case 2:
+                bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.life_class_travel);
                 break;
             // 休闲娱乐
-            case 3:bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.life_class_other);
+            case 3:
+                bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.life_class_other);
                 break;
         }
         Map<String, Object> map = new HashMap<String, Object>();
         map.put(MyStatic.LIFE_ID, lifeId);
         map.put(MyStatic.LIFE_CLASSINT, type);
-        map.put(MyStatic.LIFE_DISTANCE, (int)distance);
+        map.put(MyStatic.LIFE_DISTANCE, (int) distance);
         map.put(MyStatic.LIFE_FAVORITE, favorite);
         map.put(MyStatic.LIFE_TIME, date);
         map.put(MyStatic.LIFE_CLASS, bitmap);
@@ -421,14 +401,38 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
         }
     }
 
-    private Handler handler = new Handler() {
+    private void LifePartakeBroadcas() {
+        //动态方式注册广播接收者
+        this.receiver = new LifePartakeBroadcastReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(MyStatic.LIFE_PARTAKE);
+        this.registerReceiver(receiver, filter);
+    }
+
+    private class ViewBinderImpl implements SimpleAdapter.ViewBinder {
         @Override
-        public void handleMessage(Message message) {
-            listView.setAdapter(simpleAdapter);
-            simpleAdapter.notifyDataSetChanged();
-            fixListViewHeight(listView);
+        public boolean setViewValue(View view, Object data, String textRepresentation) {
+            // TODO Auto-generated method stub
+            if (view instanceof ImageView && data instanceof Bitmap) {
+                ImageView i = (ImageView) view;
+                i.setImageBitmap((Bitmap) data);
+                return true;
+            }
+            return false;
         }
-    };
+    }
+
+    private class OnItemClickListenerImpl implements AdapterView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            int lifeId = (int) dataList.get(position).get(MyStatic.LIFE_ID);
+            int lifeType = (int) dataList.get(position).get(MyStatic.LIFE_CLASSINT);
+            Intent intent = new Intent(PartakeActivity.this, DetailsActivity.class);
+            intent.putExtra(MyStatic.LIFE_ID, lifeId);
+            intent.putExtra(MyStatic.LIFE_CLASSINT, lifeType);
+            startActivity(intent);
+        }
+    }
 
     public class MyLocationListener implements BDLocationListener {
         @Override
@@ -436,14 +440,6 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
             mLatitude = location.getLatitude();
             mLongtitude = location.getLongitude();
         }
-    }
-
-    private void LifePartakeBroadcas() {
-        //动态方式注册广播接收者
-        this.receiver = new LifePartakeBroadcastReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(MyStatic.LIFE_PARTAKE);
-        this.registerReceiver(receiver, filter);
     }
 
     public class LifePartakeBroadcastReceiver extends BroadcastReceiver {

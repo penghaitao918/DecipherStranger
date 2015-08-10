@@ -32,10 +32,10 @@ import com.android.decipherstranger.util.GlobalMsgUtils;
 
 /**
  * Created by WangXin on 2015/4/19 0019.
- *
- **/
+ */
 public class FriendInfoActivity extends BaseActivity {
-    
+
+    private final static String MALE = "1";
     private ImageView friendPhoto;
     private ImageView friendSex;
     private TextView friendName;
@@ -45,17 +45,13 @@ public class FriendInfoActivity extends BaseActivity {
     private TextView friendPhone;
     private Button sendMessage;
     private Button deleteFriend;
-
     private Bundle friendInfo;
-
-    private final static String MALE = "1";
-
     /*
     *  Created by penghaitao 2015/05/13
     **/
     private SQLiteOpenHelper helper = null;
     private ConversationList conversationList = null;
-    private ContactsList contactsList= null;
+    private ContactsList contactsList = null;
     private ChatRecord chatRecord = null;
     private String userAccount = null;
     private String userName = null;
@@ -79,7 +75,7 @@ public class FriendInfoActivity extends BaseActivity {
     }
 
     @Override
-    protected void onDestroy(){
+    protected void onDestroy() {
         super.unregisterReceiver(FriendInfoActivity.this.receiver);
         super.onDestroy();
     }
@@ -93,14 +89,14 @@ public class FriendInfoActivity extends BaseActivity {
         presonalInfo.setUserSex(friendInfo.getString("userSex"));
     }
 
-    private void showInfo(){
+    private void showInfo() {
         friendAccount.setText(userAccount);
-        if (presonalInfo.getUserSex().equals(MALE)){
+        if (presonalInfo.getUserSex().equals(MALE)) {
             friendSex.setImageResource(R.drawable.ic_sex_male);
-        }else{
+        } else {
             friendSex.setImageResource(R.drawable.ic_sex_female);
         }
-        Drawable drawable = new BitmapDrawable(getResources(),userPhoto);
+        Drawable drawable = new BitmapDrawable(getResources(), userPhoto);
         friendPhoto.setImageDrawable(drawable);
         friendName.setText(userName);
         friendEmail.setText(presonalInfo.getEmail());
@@ -119,17 +115,17 @@ public class FriendInfoActivity extends BaseActivity {
         friendPhone = (TextView) findViewById(R.id.friend_phone);
         sendMessage = (Button) findViewById(R.id.send_message);
         deleteFriend = (Button) findViewById(R.id.delete_friend);
-        builder =  new AlertDialog.Builder(FriendInfoActivity.this);
+        builder = new AlertDialog.Builder(FriendInfoActivity.this);
     }
 
-    private void reFresh(){
+    private void reFresh() {
         Intent intent = new Intent("com.android.decipherstranger.FRIEND");
-        intent.putExtra("reFresh","reFresh");
+        intent.putExtra("reFresh", "reFresh");
         sendBroadcast(intent);
         Toast.makeText(this, "删除成功", Toast.LENGTH_LONG).show();
         onBackPressed();
     }
-    
+
     private void initListener() {
         sendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,7 +134,7 @@ public class FriendInfoActivity extends BaseActivity {
                 conversationList.create(userAccount, userName, userPhoto);
                 Intent intent = new Intent(FriendInfoActivity.this, ChatMsgActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("userName",userName);
+                bundle.putString("userName", userName);
                 bundle.putString("userAccount", userAccount);
                 bundle.putParcelable("userPhoto", userPhoto);
                 intent.putExtras(bundle);
@@ -151,7 +147,7 @@ public class FriendInfoActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 builder.setTitle("你确定要删除" + userName + "吗?");
-                Drawable drawable = new BitmapDrawable(getResources(),userPhoto);
+                Drawable drawable = new BitmapDrawable(getResources(), userPhoto);
                 builder.setIcon(drawable);
                 builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
@@ -165,7 +161,7 @@ public class FriendInfoActivity extends BaseActivity {
                         intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent1);
                         finish();
-                        
+
                     }
                 });
                 builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -177,28 +173,26 @@ public class FriendInfoActivity extends BaseActivity {
         });
     }
 
-    private void SendMsg(){
-        if(NetworkService.getInstance().getIsConnected()) {
-            String delFri = "type"+":"+Integer.toString(GlobalMsgUtils.msgDelFri)+":"+
-                            "account"+":"+application.getAccount()+":"+
-                            "delaccount"+":"+userAccount;
+    private void SendMsg() {
+        if (NetworkService.getInstance().getIsConnected()) {
+            String delFri = "type" + ":" + Integer.toString(GlobalMsgUtils.msgDelFri) + ":" +
+                    "account" + ":" + application.getAccount() + ":" +
+                    "delaccount" + ":" + userAccount;
             Log.v("aaaaa", delFri);
             NetworkService.getInstance().sendUpload(delFri);
-        }
-        else {
+        } else {
             NetworkService.getInstance().closeConnection();
             Toast.makeText(FriendInfoActivity.this, "服务器连接失败~(≧▽≦)~啦啦啦", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void SendInf(){
-        if(NetworkService.getInstance().getIsConnected()) {
-            String showInf = "type"+":"+Integer.toString(GlobalMsgUtils.msgShowFri)+":"+
-                             "account"+":"+userAccount;
+    private void SendInf() {
+        if (NetworkService.getInstance().getIsConnected()) {
+            String showInf = "type" + ":" + Integer.toString(GlobalMsgUtils.msgShowFri) + ":" +
+                    "account" + ":" + userAccount;
             Log.v("aaaaa", showInf);
             NetworkService.getInstance().sendUpload(showInf);
-        }
-        else {
+        } else {
             NetworkService.getInstance().closeConnection();
             Toast.makeText(FriendInfoActivity.this, "服务器连接失败~(≧▽≦)~啦啦啦", Toast.LENGTH_SHORT).show();
         }
@@ -215,12 +209,12 @@ public class FriendInfoActivity extends BaseActivity {
     public class ShowBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent.getAction().equals("com.android.decipherstranger.SHOWFRI")) {
-                    //Todo reEmail rePhone reBirth
-                    presonalInfo.setEmail(intent.getStringExtra("reEmail"));
-                    presonalInfo.setBirth(intent.getStringExtra("reBirth"));
-                    presonalInfo.setPhone(intent.getStringExtra("rePhone"));
-                    showInfo();
+            if (intent.getAction().equals("com.android.decipherstranger.SHOWFRI")) {
+                //Todo reEmail rePhone reBirth
+                presonalInfo.setEmail(intent.getStringExtra("reEmail"));
+                presonalInfo.setBirth(intent.getStringExtra("reBirth"));
+                presonalInfo.setPhone(intent.getStringExtra("rePhone"));
+                showInfo();
             }
         }
     }

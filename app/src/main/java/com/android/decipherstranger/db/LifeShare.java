@@ -36,7 +36,7 @@ public class LifeShare {
 
     private SQLiteDatabase db = null;
 
-    public LifeShare(SQLiteDatabase db){
+    public LifeShare(SQLiteDatabase db) {
         this.db = db;
     }
 
@@ -55,14 +55,14 @@ public class LifeShare {
     }
 
     //  刷新
-    public ArrayList<Map<String, Object>> refresh(){
+    public ArrayList<Map<String, Object>> refresh() {
         String sql = "SELECT * FROM `life_share` ORDER BY id DESC";
         Cursor result = this.db.rawQuery(sql, null);
         ArrayList<Map<String, Object>> all = new ArrayList<Map<String, Object>>();
 
         for (result.moveToFirst(); !result.isAfterLast(); result.moveToNext()) {
             Map<String, Object> map = new HashMap<String, Object>();
-            map.put(MyStatic.SHARE_ID,  result.getInt(0));
+            map.put(MyStatic.SHARE_ID, result.getInt(0));
             map.put(MyStatic.SHARE_ACCOUNT, result.getString(1));
             byte[] inPortrait = result.getBlob(2);
             Bitmap portrait = BitmapFactory.decodeByteArray(inPortrait, 0, inPortrait.length);
@@ -82,15 +82,15 @@ public class LifeShare {
     }
 
     //  加载
-    public ArrayList<Map<String, Object>> load(int id){
+    public ArrayList<Map<String, Object>> load(int id) {
         String sql = "SELECT * FROM life_share WHERE id<? ORDER BY id DESC";
-        String args[] = new String[]{ String.valueOf(id) };
+        String args[] = new String[]{String.valueOf(id)};
         Cursor result = this.db.rawQuery(sql, args);
         ArrayList<Map<String, Object>> all = new ArrayList<Map<String, Object>>();
 
         for (result.moveToFirst(); !result.isAfterLast(); result.moveToNext()) {
             Map<String, Object> map = new HashMap<String, Object>();
-            map.put(MyStatic.SHARE_ID,  result.getInt(0));
+            map.put(MyStatic.SHARE_ID, result.getInt(0));
             byte[] inPortrait = result.getBlob(1);
             Bitmap portrait = BitmapFactory.decodeByteArray(inPortrait, 0, inPortrait.length);
             map.put(MyStatic.SHARE_PORTRAIT, portrait);
@@ -112,7 +112,7 @@ public class LifeShare {
         int id = 0;
         String sql = "SELECT id FROM life_share ORDER BY id ASC LIMIT 1";
         Cursor result = this.db.rawQuery(sql, null);
-        if (result.moveToNext()){
+        if (result.moveToNext()) {
             id = result.getInt(0);
         }
         return id;

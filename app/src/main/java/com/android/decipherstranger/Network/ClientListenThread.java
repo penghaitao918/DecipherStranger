@@ -43,12 +43,12 @@ public class ClientListenThread extends Thread {
             String test = new String();
             while (true) {
                 System.out.println("### 服务器线程");
-                while(true){
+                while (true) {
                     test = bufferedReader.readLine();
-                    if(test.contains("+++++")){
-                        reMsg += test.substring(0, test.length()-5);
+                    if (test.contains("+++++")) {
+                        reMsg += test.substring(0, test.length() - 5);
                         break;
-                    } else if(test != null){
+                    } else if (test != null) {
                         reMsg += test;
                     } else {
                         break;
@@ -64,7 +64,7 @@ public class ClientListenThread extends Thread {
                         case GlobalMsgUtils.msgLogin:
                             Intent itLogin = new Intent("com.android.decipherstranger.LOGIN");
                             itLogin.putExtra("result", jsonObj.getString("re_message"));
-                            if(jsonObj.getString("re_message").equals(MyStatic.resultTrue)) {
+                            if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)) {
                                 application.setName(jsonObj.getString("re_name"));
                                 application.setPortrait(ChangeUtils.toBitmap(jsonObj.getString("re_photo")));
                                 if (jsonObj.getInt("re_gender") == 1) {
@@ -94,9 +94,9 @@ public class ClientListenThread extends Thread {
                             break;
                         case GlobalMsgUtils.msgShake:
                             Intent itShake = new Intent("com.android.decipherstranger.SHAKE");
-                            if (jsonObj.getString("re_message").equals(MyStatic.resultFalse)){
+                            if (jsonObj.getString("re_message").equals(MyStatic.resultFalse)) {
                                 itShake.putExtra("reResult", false);
-                            }else {
+                            } else {
                                 itShake.putExtra("reResult", true);
                                 itShake.putExtra("reAccount", jsonObj.getString("re_account"));
                                 itShake.putExtra("rePhoto", jsonObj.getString("re_photo"));
@@ -107,23 +107,21 @@ public class ClientListenThread extends Thread {
                             break;
                         case GlobalMsgUtils.msgFriendList:
                             Intent itFriend = new Intent("com.android.decipherstranger.FRIEND");
-                            if(jsonObj.getString("re_message").equals(MyStatic.resultFalse)){
+                            if (jsonObj.getString("re_message").equals(MyStatic.resultFalse)) {
                                 itFriend.putExtra("reResult", false);
                                 itFriend.putExtra("isfinsh", false);
-                            }
-                            else if(jsonObj.getString("re_message").equals(MyStatic.resultTrue)){
+                            } else if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)) {
                                 itFriend.putExtra("reResult", true);
                                 itFriend.putExtra("reAccount", jsonObj.getString("re_account"));
                                 itFriend.putExtra("reName", jsonObj.getString("re_name"));
                                 itFriend.putExtra("reGender", jsonObj.getString("re_gender"));
                                 itFriend.putExtra("rePhoto", jsonObj.getString("re_photo"));
-                            }
-                            else{
+                            } else {
                                 itFriend.putExtra("reResult", false);
                                 itFriend.putExtra("isfinish", true);
                             }
                             clContext.sendBroadcast(itFriend);
-                            Log.v("Test","发送啦！！！");
+                            Log.v("Test", "发送啦！！！");
                             break;
                         case GlobalMsgUtils.msgGameOneReceive:
                             Intent itGameRec = new Intent("com.android.decipherstranger.GAMEONE");
@@ -138,15 +136,14 @@ public class ClientListenThread extends Thread {
                             break;
                         case GlobalMsgUtils.msgAddFriend:
                             Intent itAddFriend = new Intent("com.android.decipherstranger.MESSAGE");
-                            if(jsonObj.getString("re_message").equals(MyStatic.resultTrue)) {
+                            if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)) {
                                 itAddFriend.putExtra("Friend", "Friend");
                                 itAddFriend.putExtra("reAccount", jsonObj.getString("re_account"));
                                 itAddFriend.putExtra("rePhoto", jsonObj.getString("re_photo"));
                                 itAddFriend.putExtra("reGender", jsonObj.getInt("re_gender"));
                                 itAddFriend.putExtra("reName", jsonObj.getString("re_name"));
                                 itAddFriend.putExtra("reResult", true);
-                            }
-                            else{
+                            } else {
                                 itAddFriend.putExtra("Friend", "Friend");
                                 itAddFriend.putExtra("reResult", false);
                             }
@@ -166,11 +163,10 @@ public class ClientListenThread extends Thread {
                         case GlobalMsgUtils.msgNearBy:
                             System.out.println("daacallll");
                             Intent itNearBy = new Intent("com.android.decipherstranger.NEARBY");
-                            if(jsonObj.getString("re_message").equals(MyStatic.resultFalse)){
+                            if (jsonObj.getString("re_message").equals(MyStatic.resultFalse)) {
                                 itNearBy.putExtra("reResult", false);
                                 itNearBy.putExtra("isfinsh", false);
-                            }
-                            else if(jsonObj.getString("re_message").equals(MyStatic.resultTrue)){
+                            } else if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)) {
                                 itNearBy.putExtra("reResult", true);
                                 itNearBy.putExtra("reAccount", jsonObj.getString("re_account"));
                                 itNearBy.putExtra("reName", jsonObj.getString("re_name"));
@@ -179,13 +175,12 @@ public class ClientListenThread extends Thread {
                                 itNearBy.putExtra("reLongtitude", jsonObj.getString("re_longtitude"));
                                 itNearBy.putExtra("reLatitude", jsonObj.getString("re_latitude"));
                                 itNearBy.putExtra("reDistance", jsonObj.getString("re_distance"));
-                            }
-                            else{
+                            } else {
                                 itNearBy.putExtra("reResult", false);
                                 itNearBy.putExtra("isfinish", true);
                             }
                             clContext.sendBroadcast(itNearBy);
-                            Log.v("Test","发送啦！！！");
+                            Log.v("Test", "发送啦！！！");
                             break;
                         case GlobalMsgUtils.msgChangeInf:
                             Intent itChange = new Intent("com.android.decipherstranger.CHANGE");
@@ -216,9 +211,9 @@ public class ClientListenThread extends Thread {
                             clContext.sendBroadcast(itShowFri);
                             break;
                         case GlobalMsgUtils.msgOffMsg:
-                            if(jsonObj.getString("re_message").equals(MyStatic.resultFalse)){
+                            if (jsonObj.getString("re_message").equals(MyStatic.resultFalse)) {
                                 break;
-                            }else {
+                            } else {
                                 Intent itOffMsg = new Intent("com.android.decipherstranger.MESSAGE");
                                 itOffMsg.putExtra("reMessage", jsonObj.getString("re_message"));
                                 itOffMsg.putExtra("reSender", jsonObj.getString("re_sender"));
@@ -238,114 +233,114 @@ public class ClientListenThread extends Thread {
                             break;
                         case GlobalMsgUtils.msgReceiveInv:
                             Intent itReInv = new Intent("com.android.decipherstranger.INVITATION");
-                            if(jsonObj.getString("re_message").equals(MyStatic.resultTrue)){
+                            if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)) {
                                 itReInv.putExtra("reResult", true);
                                 itReInv.putExtra("reAccount", jsonObj.getString("re_account"));
                                 itReInv.putExtra("rePhoto", jsonObj.getString("re_photo"));
                                 itReInv.putExtra("reGender", jsonObj.getInt("re_gender"));
                                 itReInv.putExtra("reName", jsonObj.getString("re_name"));
-                            }else{
+                            } else {
                                 itReInv.putExtra("reResult", false);
                             }
                             clContext.sendBroadcast(itReInv);
                             break;
                         case GlobalMsgUtils.msgLifeMain:
                             Intent itLife = new Intent("com.android.life.main");
-                            if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)){
+                            if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)) {
                                 itLife.putExtra("reResult", true);
-                                itLife.putExtra("reId",jsonObj.getInt("re_id"));
-                                itLife.putExtra("reType",jsonObj.getInt("re_activity_type"));
-                                itLife.putExtra("reName",jsonObj.getString("re_name"));
-                                itLife.putExtra("reTime",jsonObj.getString("re_time"));
-                                itLife.putExtra("rePlace",jsonObj.getString("re_place"));
-                            }else{
+                                itLife.putExtra("reId", jsonObj.getInt("re_id"));
+                                itLife.putExtra("reType", jsonObj.getInt("re_activity_type"));
+                                itLife.putExtra("reName", jsonObj.getString("re_name"));
+                                itLife.putExtra("reTime", jsonObj.getString("re_time"));
+                                itLife.putExtra("rePlace", jsonObj.getString("re_place"));
+                            } else {
                                 itLife.putExtra("reResult", false);
                             }
                             clContext.sendBroadcast(itLife);
                             break;
                         case GlobalMsgUtils.msgSendActivity:
                             Intent itSendActivity = new Intent(MyStatic.LIFE_SEND);
-                            if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)){
-                                itSendActivity.putExtra("reResult",true);
-                            }else {
-                                itSendActivity.putExtra("reResult",false);
+                            if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)) {
+                                itSendActivity.putExtra("reResult", true);
+                            } else {
+                                itSendActivity.putExtra("reResult", false);
                             }
                             clContext.sendBroadcast(itSendActivity);
                             break;
                         case GlobalMsgUtils.msgDetialsActivity:
                             Intent itDetials = new Intent(MyStatic.LIFE_DETAILS);
-                            itDetials.putExtra("reResult",jsonObj.getString("re_message"));
-                            itDetials.putExtra("re_matter",jsonObj.getString("re_matter"));
-                            if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)){
-                                if (jsonObj.getString("re_matter").equals("details")){
-                                    itDetials.putExtra("re_name",jsonObj.getString("re_name"));
-                                    itDetials.putExtra("re_time",jsonObj.getString("re_time"));
-                                    itDetials.putExtra("re_place",jsonObj.getString("re_place"));
-                                    itDetials.putExtra("activity_type_name",jsonObj.getString("activity_type_name"));
-                                    itDetials.putExtra("re_number",jsonObj.getInt("re_number"));
-                                    itDetials.putExtra("re_end_time",jsonObj.getString("re_end_time"));
-                                    itDetials.putExtra("re_set_place",jsonObj.getString("re_set_place"));
-                                    itDetials.putExtra("re_set_time",jsonObj.getString("re_set_time"));
-                                    itDetials.putExtra("re_current_number",jsonObj.getInt("re_current_number"));
-                                    itDetials.putExtra("re_send_account",jsonObj.getString("re_send_account"));
-                                    itDetials.putExtra("re_activity_password",jsonObj.getString("activity_password"));
-                                    itDetials.putExtra("re_userName",jsonObj.getString("re_user_name"));
-                                    itDetials.putExtra("re_userPhoto",jsonObj.getString("re_small_photo"));
-                                    itDetials.putExtra("re_gender",jsonObj.getInt("re_gender"));
+                            itDetials.putExtra("reResult", jsonObj.getString("re_message"));
+                            itDetials.putExtra("re_matter", jsonObj.getString("re_matter"));
+                            if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)) {
+                                if (jsonObj.getString("re_matter").equals("details")) {
+                                    itDetials.putExtra("re_name", jsonObj.getString("re_name"));
+                                    itDetials.putExtra("re_time", jsonObj.getString("re_time"));
+                                    itDetials.putExtra("re_place", jsonObj.getString("re_place"));
+                                    itDetials.putExtra("activity_type_name", jsonObj.getString("activity_type_name"));
+                                    itDetials.putExtra("re_number", jsonObj.getInt("re_number"));
+                                    itDetials.putExtra("re_end_time", jsonObj.getString("re_end_time"));
+                                    itDetials.putExtra("re_set_place", jsonObj.getString("re_set_place"));
+                                    itDetials.putExtra("re_set_time", jsonObj.getString("re_set_time"));
+                                    itDetials.putExtra("re_current_number", jsonObj.getInt("re_current_number"));
+                                    itDetials.putExtra("re_send_account", jsonObj.getString("re_send_account"));
+                                    itDetials.putExtra("re_activity_password", jsonObj.getString("activity_password"));
+                                    itDetials.putExtra("re_userName", jsonObj.getString("re_user_name"));
+                                    itDetials.putExtra("re_userPhoto", jsonObj.getString("re_small_photo"));
+                                    itDetials.putExtra("re_gender", jsonObj.getInt("re_gender"));
                                 }
                             }
                             clContext.sendBroadcast(itDetials);
                             break;
-                        case GlobalMsgUtils.msgShowAllActivity :
+                        case GlobalMsgUtils.msgShowAllActivity:
                             Intent itShowAll = new Intent(MyStatic.LIFE_PARTAKE);
                             System.out.println("### " + jsonObj.getString("re_message"));
-                            if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)){
+                            if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)) {
                                 itShowAll.putExtra("reResult", "true");
-                                itShowAll.putExtra("reId",jsonObj.getInt("re_id"));
-                                itShowAll.putExtra("reName",jsonObj.getString("re_name"));
-                                itShowAll.putExtra("rePlace",jsonObj.getString("re_place"));
-                                itShowAll.putExtra("reTime",jsonObj.getString("re_time"));
-                                itShowAll.putExtra("reType",jsonObj.getInt("re_activity_type"));
-                                itShowAll.putExtra("reDistance",jsonObj.getDouble("re_distance"));
-                                itShowAll.putExtra("reFavorite",jsonObj.getInt("favorite"));
-                            }else if (jsonObj.getString("re_message").equals("finish")){
+                                itShowAll.putExtra("reId", jsonObj.getInt("re_id"));
+                                itShowAll.putExtra("reName", jsonObj.getString("re_name"));
+                                itShowAll.putExtra("rePlace", jsonObj.getString("re_place"));
+                                itShowAll.putExtra("reTime", jsonObj.getString("re_time"));
+                                itShowAll.putExtra("reType", jsonObj.getInt("re_activity_type"));
+                                itShowAll.putExtra("reDistance", jsonObj.getDouble("re_distance"));
+                                itShowAll.putExtra("reFavorite", jsonObj.getInt("favorite"));
+                            } else if (jsonObj.getString("re_message").equals("finish")) {
                                 itShowAll.putExtra("reResult", "finish");
-                            }else {
+                            } else {
                                 itShowAll.putExtra("reResult", "false");
                             }
                             clContext.sendBroadcast(itShowAll);
                             break;
-                        case GlobalMsgUtils.msgShareActivity :
+                        case GlobalMsgUtils.msgShareActivity:
                             Intent itShare = new Intent(MyStatic.LIFE_SHARE_DO);
-                            if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)){
-                                itShare.putExtra("reResult",true);
-                            }else {
-                                itShare.putExtra("reResult",false);
+                            if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)) {
+                                itShare.putExtra("reResult", true);
+                            } else {
+                                itShare.putExtra("reResult", false);
                             }
                             clContext.sendBroadcast(itShare);
                             break;
-                        case GlobalMsgUtils.msgShowShare :
+                        case GlobalMsgUtils.msgShowShare:
                             Intent itShowShare = new Intent(MyStatic.LIFE_SHARE);
-                            itShowShare.putExtra("reRequestType",jsonObj.getInt("re_requestType"));
-                            itShowShare.putExtra("reMatter","showShare");
+                            itShowShare.putExtra("reRequestType", jsonObj.getInt("re_requestType"));
+                            itShowShare.putExtra("reMatter", "showShare");
                             System.out.println("### 数据广播接收 " + jsonObj.getString("re_message"));
-                            if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)){
-                                itShowShare.putExtra("reResult","true");
-                                itShowShare.putExtra("reId",jsonObj.getInt("reId"));
-                                itShowShare.putExtra("reAccount",jsonObj.getString("reAccount"));
-                                itShowShare.putExtra("reUserPhoto",jsonObj.getString("reUserPhoto"));
-                                itShowShare.putExtra("reUserName",jsonObj.getString("reUserName"));
-                                itShowShare.putExtra("reSharePhoto",jsonObj.getString("reSharePhoto"));
-                                itShowShare.putExtra("reSpeech",jsonObj.getString("reSpeech"));
-                                itShowShare.putExtra("reTime",jsonObj.getString("reTime"));
-                                itShowShare.putExtra("reZan",jsonObj.getInt("reZan"));
+                            if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)) {
+                                itShowShare.putExtra("reResult", "true");
+                                itShowShare.putExtra("reId", jsonObj.getInt("reId"));
+                                itShowShare.putExtra("reAccount", jsonObj.getString("reAccount"));
+                                itShowShare.putExtra("reUserPhoto", jsonObj.getString("reUserPhoto"));
+                                itShowShare.putExtra("reUserName", jsonObj.getString("reUserName"));
+                                itShowShare.putExtra("reSharePhoto", jsonObj.getString("reSharePhoto"));
+                                itShowShare.putExtra("reSpeech", jsonObj.getString("reSpeech"));
+                                itShowShare.putExtra("reTime", jsonObj.getString("reTime"));
+                                itShowShare.putExtra("reZan", jsonObj.getInt("reZan"));
                                 itShowShare.putExtra("re_gender", jsonObj.getInt("re_gender"));
                                 System.out.println("### 数据广播 成功接收数据 ");
-                            }else if (jsonObj.getString("re_message").equals("finish")){
-                                itShowShare.putExtra("reResult","finish");
+                            } else if (jsonObj.getString("re_message").equals("finish")) {
+                                itShowShare.putExtra("reResult", "finish");
                                 System.out.println("### 数据广播 接收完毕 ");
-                            }else {
-                                itShowShare.putExtra("reResult","false");
+                            } else {
+                                itShowShare.putExtra("reResult", "false");
                             }
                             System.out.println("### 数据广播 开始发送 ");
                             clContext.sendBroadcast(itShowShare);
@@ -353,51 +348,50 @@ public class ClientListenThread extends Thread {
                             System.out.println("### 数据广播 发送完成 ");
                             break;
                         case GlobalMsgUtils.msgClickZan:
-                                Intent itClickZan = new Intent(MyStatic.LIFE_SHARE);
-                                itClickZan.putExtra("reMatter","Zan");
-                                if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)){
-                                    itClickZan.putExtra("reResult","true");
-                                }else {
-                                    itClickZan.putExtra("reResult","false");
-                                }
+                            Intent itClickZan = new Intent(MyStatic.LIFE_SHARE);
+                            itClickZan.putExtra("reMatter", "Zan");
+                            if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)) {
+                                itClickZan.putExtra("reResult", "true");
+                            } else {
+                                itClickZan.putExtra("reResult", "false");
+                            }
                             clContext.sendBroadcast(itClickZan);
                             break;
                         case GlobalMsgUtils.msgPersonalCenter:
                             Intent itPersonal = new Intent(MyStatic.LIFE_MY_LIFE);
-                            itPersonal.putExtra("reMatter",jsonObj.getString("reMatter"));
-                            itPersonal.putExtra("reResult",jsonObj.getString("re_message"));
-                            if (jsonObj.getString("re_message").equals("true")){
-                                itPersonal.putExtra("reId",jsonObj.getInt("reId"));
-                                itPersonal.putExtra("reType",jsonObj.getInt("reType"));
-                                itPersonal.putExtra("reName",jsonObj.getString("reName"));
-                                itPersonal.putExtra("reTime",jsonObj.getString("reTime"));
-                                itPersonal.putExtra("rePlace",jsonObj.getString("rePlace"));
-                                itPersonal.putExtra("reNumber",jsonObj.getString("reNumber"));
+                            itPersonal.putExtra("reMatter", jsonObj.getString("reMatter"));
+                            itPersonal.putExtra("reResult", jsonObj.getString("re_message"));
+                            if (jsonObj.getString("re_message").equals("true")) {
+                                itPersonal.putExtra("reId", jsonObj.getInt("reId"));
+                                itPersonal.putExtra("reType", jsonObj.getInt("reType"));
+                                itPersonal.putExtra("reName", jsonObj.getString("reName"));
+                                itPersonal.putExtra("reTime", jsonObj.getString("reTime"));
+                                itPersonal.putExtra("rePlace", jsonObj.getString("rePlace"));
+                                itPersonal.putExtra("reNumber", jsonObj.getString("reNumber"));
                             }
                             clContext.sendBroadcast(itPersonal);
                             break;
                         case GlobalMsgUtils.msgActivityPeople:
-                                Intent itAttendPeople = new Intent(MyStatic.LIFE_LIFE_FRIENDS);
-                                if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)){
-                                    itAttendPeople.putExtra("reResult","true");
-                                    itAttendPeople.putExtra("reAccount",jsonObj.getString("reAccount"));
-                                    itAttendPeople.putExtra("reName",jsonObj.getString("reName"));
-                                    itAttendPeople.putExtra("rePhoto",jsonObj.getString("rePhoto"));
-                                    itAttendPeople.putExtra("reGender",jsonObj.getInt("reGender"));
-                                }else if (jsonObj.getString("re_message").equals("finish")){
-                                    itAttendPeople.putExtra("reResult","finish");
-                                }else {
-                                    itAttendPeople.putExtra("reResult","false");
-                                }
+                            Intent itAttendPeople = new Intent(MyStatic.LIFE_LIFE_FRIENDS);
+                            if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)) {
+                                itAttendPeople.putExtra("reResult", "true");
+                                itAttendPeople.putExtra("reAccount", jsonObj.getString("reAccount"));
+                                itAttendPeople.putExtra("reName", jsonObj.getString("reName"));
+                                itAttendPeople.putExtra("rePhoto", jsonObj.getString("rePhoto"));
+                                itAttendPeople.putExtra("reGender", jsonObj.getInt("reGender"));
+                            } else if (jsonObj.getString("re_message").equals("finish")) {
+                                itAttendPeople.putExtra("reResult", "finish");
+                            } else {
+                                itAttendPeople.putExtra("reResult", "false");
+                            }
                             clContext.sendBroadcast(itAttendPeople);
                             break;
                         default:
-                            if(NetworkService.getInstance().getIsConnected()) {
-                                String testNet = "type"+":"+"ping";
+                            if (NetworkService.getInstance().getIsConnected()) {
+                                String testNet = "type" + ":" + "ping";
                                 Log.v("aaaaa", testNet);
                                 NetworkService.getInstance().sendUpload(testNet);
-                            }
-                            else {
+                            } else {
                                 NetworkService.getInstance().closeConnection();
                                 Toast.makeText(clContext, "服务器连接失败~(≧▽≦)~啦啦啦", Toast.LENGTH_SHORT).show();
                             }

@@ -1,146 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/myPortrait"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginBottom="5dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:onClick="MePageOnClick"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/login_button_bg"
-        android:layout_gravity="center_horizontal">
+        android:onClick="MePageOnClick">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/portrait"
-            android:paddingLeft="30dp"
-            android:textSize="24dp"
-            android:textColor="@color/text_hint"
+            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true" />
+            android:paddingLeft="30dp"
+            android:text="@string/portrait"
+            android:textColor="@color/text_hint"
+            android:textSize="24dp" />
 
         <ImageButton
+            android:id="@+id/portraitImage"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:id="@+id/portraitImage"
-            android:layout_marginTop="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="10dp"
-            android:src="@null"
-            android:scaleType="fitXY"
+            android:layout_marginTop="15dp"
             android:background="@null"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true" />
+            android:scaleType="fitXY"
+            android:src="@null" />
 
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/myName"
-        android:layout_margin="5dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:onClick="MePageOnClick"
-        android:background="@drawable/login_button_bg">
+        android:layout_margin="5dp"
+        android:background="@drawable/login_button_bg"
+        android:onClick="MePageOnClick">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="30dp"
             android:text="@string/name"
-            android:paddingLeft="30dp"
-            android:textSize="24dp"
             android:textColor="@color/text_hint"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true" />
+            android:textSize="24dp" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
             android:id="@+id/nameText"
-            android:textSize="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
+            android:text=""
             android:textColor="@color/text_hint"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true" />
+            android:textSize="24dp" />
 
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_margin="5dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/login_input_bg"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="5dp"
+        android:background="@drawable/login_input_bg">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="30dp"
             android:text="@string/account_lab"
-            android:paddingLeft="30dp"
-            android:textSize="24dp"
             android:textColor="@color/white"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true" />
+            android:textSize="24dp" />
 
         <TextView
+            android:id="@+id/accountText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
-            android:id="@+id/accountText"
-            android:textSize="24dp"
-            android:layout_marginRight="10dp"
-            android:textColor="@color/white"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_alignParentRight="true" />
+            android:layout_marginRight="10dp"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="24dp" />
 
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_margin="5dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/login_input_bg"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="5dp"
+        android:background="@drawable/login_input_bg">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/sex"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
             android:paddingLeft="30dp"
-            android:textSize="24dp"
+            android:text="@string/sex"
             android:textColor="@color/white"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true" />
+            android:textSize="24dp" />
 
         <TextView
+            android:id="@+id/sexText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
-            android:id="@+id/sexText"
-            android:textSize="24dp"
-            android:layout_marginRight="10dp"
-            android:textColor="@color/white"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_alignParentRight="true" />
+            android:layout_marginRight="10dp"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="24dp" />
 
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginBottom="5dp"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/login_input_bg"
-        android:layout_gravity="center_horizontal">
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -149,35 +150,35 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/sound"
-                android:layout_marginLeft="15dp"
-                android:textSize="24dp"
-                android:padding="15dp"
-                android:textColor="@color/white"
+                android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true" />
+                android:layout_marginLeft="15dp"
+                android:padding="15dp"
+                android:text="@string/sound"
+                android:textColor="@color/white"
+                android:textSize="24dp" />
 
             <Switch
+                android:id="@+id/switch1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/switch1"
-                android:thumb="@color/sidebar"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/text_checked"
                 android:textOff="关闭"
                 android:textOn="打开"
-                android:textColor="@color/text_checked"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"  />
+                android:thumb="@color/sidebar" />
 
         </RelativeLayout>
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="1dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="@color/page"/>
+            android:background="@color/page"
+            android:orientation="vertical" />
 
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -186,41 +187,41 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
                 android:padding="15dp"
                 android:text="@string/shake_effect"
-                android:layout_marginLeft="15dp"
-                android:textSize="24dp"
                 android:textColor="@color/white"
-                android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true" />
+                android:textSize="24dp" />
 
             <Switch
+                android:id="@+id/switch2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/switch2"     
-                android:thumb="@color/sidebar"        
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
                 android:textOff="关闭"
                 android:textOn="打开"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp" />
+                android:thumb="@color/sidebar" />
 
         </RelativeLayout>
 
     </LinearLayout>
 
     <Button
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        android:id="@+id/button"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button"
-        android:textSize="24dp"
-        android:text="@string/main_quit"
-        android:onClick="MePageOnClick"
-        android:textColor="@color/orange"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/login_button_bg"
-        android:layout_gravity="center_horizontal" />
+        android:onClick="MePageOnClick"
+        android:text="@string/main_quit"
+        android:textColor="@color/orange"
+        android:textSize="24dp" />
 
 </LinearLayout>

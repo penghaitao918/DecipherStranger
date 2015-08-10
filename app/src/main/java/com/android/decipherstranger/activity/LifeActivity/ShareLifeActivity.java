@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -50,6 +49,8 @@ import com.android.decipherstranger.util.MyStatic;
  */
 public class ShareLifeActivity extends BaseActivity {
 
+    private static final int IMAGE_REQUEST_CODE = 0;
+    private static final int RESULT_REQUEST_CODE = 1;
     private EditText editText = null;
     private ImageButton imageButton = null;
     private MyApplication application = null;
@@ -60,9 +61,29 @@ public class ShareLifeActivity extends BaseActivity {
     private String smallPhoto = null;
     private String message = null;
     private ProgressDialog progressDialog = null;
-
-    private static final int IMAGE_REQUEST_CODE = 0;
-    private static final int RESULT_REQUEST_CODE = 1;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message message) {
+            switch (message.what) {
+                case 0:
+                    progressDialog.onStart();
+                    progressDialog.show();
+                    break;
+                case 1:
+                    if (progressDialog.isShowing()) {
+                        progressDialog.dismiss();
+                    }
+                    Toast.makeText(ShareLifeActivity.this, "分享内容不能为空！", Toast.LENGTH_SHORT).show();
+                    break;
+                case 2:
+                    if (progressDialog.isShowing()) {
+                        progressDialog.dismiss();
+                    }
+                    Toast.makeText(ShareLifeActivity.this, "请选择图片！", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,39 +133,16 @@ public class ShareLifeActivity extends BaseActivity {
 
     private void send() {
         String account = application.getAccount();
-        if(NetworkService.getInstance().getIsConnected()){
-            String Msg = "type"+":"+"23"+":"+"account"+":"+account+":"+"activitySpeech"+":"+message+":"+
-                    "photo"+":"+photo+":"+"smallPhoto"+":"+smallPhoto;
+        if (NetworkService.getInstance().getIsConnected()) {
+            String Msg = "type" + ":" + "23" + ":" + "account" + ":" + account + ":" + "activitySpeech" + ":" + message + ":" +
+                    "photo" + ":" + photo + ":" + "smallPhoto" + ":" + smallPhoto;
             Log.v("### aaaaa", Msg);
             NetworkService.getInstance().sendUpload(Msg);
-        }else {
+        } else {
             NetworkService.getInstance().closeConnection();
             Log.v("### 晒图", "服务器连接失败");
         }
     }
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message message) {
-            switch (message.what) {
-                case 0:
-                    progressDialog.onStart();
-                    progressDialog.show();
-                    break;
-                case 1:
-                    if (progressDialog.isShowing()) {
-                        progressDialog.dismiss();
-                    }
-                    Toast.makeText(ShareLifeActivity.this,"分享内容不能为空！",Toast.LENGTH_SHORT).show();
-                    break;
-                case 2:
-                    if (progressDialog.isShowing()) {
-                        progressDialog.dismiss();
-                    }
-                    Toast.makeText(ShareLifeActivity.this,"请选择图片！",Toast.LENGTH_SHORT).show();
-                    break;
-            }
-        }
-    };
 
     public void SendShareOnclick(View view) {
         switch (view.getId()) {
@@ -163,7 +161,7 @@ public class ShareLifeActivity extends BaseActivity {
                         if (message == null || message.equals("")) {
                             m.what = 1;
                             handler.sendMessage(m);
-                        }else if (photo == null) {
+                        } else if (photo == null) {
                             m.what = 2;
                             handler.sendMessage(m);
                         } else {
@@ -180,7 +178,7 @@ public class ShareLifeActivity extends BaseActivity {
         }
     }
 
-    public  void selectPhoto(){
+    public void selectPhoto() {
         Intent intentFromGallery = new Intent();
         intentFromGallery.setType("image/*"); // 设置文件类型
         intentFromGallery
@@ -190,23 +188,23 @@ public class ShareLifeActivity extends BaseActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        if (requestCode == IMAGE_REQUEST_CODE){
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == IMAGE_REQUEST_CODE) {
             try {
                 startPhotoZoom(data.getData());
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }else {
-            if (data!= null){
+        } else {
+            if (data != null) {
                 getImageToView(data);
             }
         }
     }
 
-    public void getImageToView(Intent data){
+    public void getImageToView(Intent data) {
         Bundle extras = data.getExtras();
-        if (extras != null){
+        if (extras != null) {
             selectPhoto = extras.getParcelable("data");
             photo = ChangeUtils.toBinary(selectPhoto);
             photoBitmap = ImageCompression.compressSimplify(selectPhoto, 0.6f);
@@ -216,6 +214,7 @@ public class ShareLifeActivity extends BaseActivity {
         }
 
     }
+
     private void startPhotoZoom(Uri uri) {
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image/*");
@@ -244,13 +243,13 @@ public class ShareLifeActivity extends BaseActivity {
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(MyStatic.LIFE_SHARE_DO)) {
                 progressDialog.dismiss();
-                if (intent.getBooleanExtra("reResult", true)){
+                if (intent.getBooleanExtra("reResult", true)) {
                     //TODO 显示分享成功，跳转页面
                     System.out.println("### 晒图返回接收成功");
                     onBackPressed();
-                }else{
+                } else {
                     //TODO 显示分享失败
-                    Toast.makeText(ShareLifeActivity.this,"分享失败，请检查网络连接~",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ShareLifeActivity.this, "分享失败，请检查网络连接~", Toast.LENGTH_SHORT).show();
                 }
             }
         }

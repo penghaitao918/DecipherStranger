@@ -91,13 +91,13 @@ public class SendActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if(!mLocationClient.isStarted()){
+        if (!mLocationClient.isStarted()) {
             mLocationClient.start();
         }
     }
 
     @Override
-    protected  void onStop(){
+    protected void onStop() {
         super.onStop();
         mLocationClient.stop();
     }
@@ -116,9 +116,9 @@ public class SendActivity extends BaseActivity {
         this.spaceEdit = (EditText) super.findViewById(R.id.lifeSpace);
         this.timeButton = (Button) super.findViewById(R.id.lifeTime);
         this.numPeople = (EditText) super.findViewById(R.id.lifePeople);
-        this.endTime  = (Button) super.findViewById(R.id.timeEnd);
+        this.endTime = (Button) super.findViewById(R.id.timeEnd);
         this.rallySpace = (EditText) super.findViewById(R.id.rallySpace);
-        this.rallyTime  = (Button) super.findViewById(R.id.rallyTime);
+        this.rallyTime = (Button) super.findViewById(R.id.rallyTime);
         this.passwordEdit = (EditText) super.findViewById(R.id.lifePassword);
 
         this.LifeSendBroadcas();
@@ -144,16 +144,16 @@ public class SendActivity extends BaseActivity {
      * 发送数据到服务器
      */
     private void send() {
-        if (NetworkService.getInstance().getIsConnected()){
+        if (NetworkService.getInstance().getIsConnected()) {
             String Msg = "type" + ":" + Integer.toString(GlobalMsgUtils.msgSendActivity) + ":" +
-                    "account"+ ":" + application.getAccount() + ":" +"activity_type" +":" +classRadInt +":" +"activity_name"+ ":" +
-                    nameEdit.getText().toString() + ":" + "activity_place"+":"+ spaceEdit.getText().toString()+":"+ "activity_time" +
-                    ":"+timeBtnString+":"+"people_num"+":"+Integer.parseInt(numPeople.getText().toString())+":"+"end_time"+":"+
-                    endTimeString+":"+"set_place"+":"+rallySpace.getText().toString()+":"+"set_time"+":"+rallyTimeString+":"+"activity_password"+
-                    ":"+passwordEdit.getText().toString()+":"+"mLatitude"+":"+ mLatitude+":"+"mLongtitude"+":"+mLongtitude;
+                    "account" + ":" + application.getAccount() + ":" + "activity_type" + ":" + classRadInt + ":" + "activity_name" + ":" +
+                    nameEdit.getText().toString() + ":" + "activity_place" + ":" + spaceEdit.getText().toString() + ":" + "activity_time" +
+                    ":" + timeBtnString + ":" + "people_num" + ":" + Integer.parseInt(numPeople.getText().toString()) + ":" + "end_time" + ":" +
+                    endTimeString + ":" + "set_place" + ":" + rallySpace.getText().toString() + ":" + "set_time" + ":" + rallyTimeString + ":" + "activity_password" +
+                    ":" + passwordEdit.getText().toString() + ":" + "mLatitude" + ":" + mLatitude + ":" + "mLongtitude" + ":" + mLongtitude;
             Log.v("aaaaa", Msg);
             NetworkService.getInstance().sendUpload(Msg);
-        }else{
+        } else {
             NetworkService.getInstance().closeConnection();
             Log.v("发布", "服务器连接失败");
         }
@@ -162,47 +162,47 @@ public class SendActivity extends BaseActivity {
     private boolean check() {
         if (classRadInt == -1) {
             classRadio.requestFocus();
-            Toast.makeText(this,"请选择活动类别",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "请选择活动类别", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (nameEdit.getText().toString().equals("")) {
             nameEdit.requestFocus();
-            Toast.makeText(this,"请输入活动名称",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "请输入活动名称", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (spaceEdit.getText().toString().equals("")) {
             spaceEdit.requestFocus();
-            Toast.makeText(this,"请输入活动地点",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "请输入活动地点", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (timeBtnString.equals("")) {
             classRadio.requestFocus();
-            Toast.makeText(this,"请选择活动日期",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "请选择活动日期", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (numPeople.getText().toString().equals("")) {
             numPeople.requestFocus();
-            Toast.makeText(this,"请输入活动人数",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "请输入活动人数", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (endTimeString.equals("")) {
             classRadio.requestFocus();
-            Toast.makeText(this,"请选择截止日期",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "请选择截止日期", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (rallySpace.getText().toString().equals("")) {
             rallySpace.requestFocus();
-            Toast.makeText(this,"请输入集合地点",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "请输入集合地点", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (rallyTimeString.equals("")) {
             rallyTime.requestFocus();
-            Toast.makeText(this,"请选择集合时间",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "请选择集合时间", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (passwordEdit.getText().toString().equals("")) {
             passwordEdit.requestFocus();
-            Toast.makeText(this,"请输入活动口令",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "请输入活动口令", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -229,41 +229,41 @@ public class SendActivity extends BaseActivity {
             /*活动日期*/
             case R.id.lifeTime:
                 Dialog dialog0 = new DatePickerDialog(this,
-                        new DatePickerDialog.OnDateSetListener(){
+                        new DatePickerDialog.OnDateSetListener() {
                             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                                 month += 1;
                                 timeButton.setTextColor(Color.parseColor("#ffa79c88"));
                                 timeButton.setText(year + "-" + month + "-" + day);
                                 timeBtnString = timeButton.getText().toString();
-                                timeBtnInt = ( year * 100 + month ) * 100 + day;
+                                timeBtnInt = (year * 100 + month) * 100 + day;
                             }
-                        },2015,9,22);
+                        }, 2015, 9, 22);
                 dialog0.show();
                 break;
             /*截止日期*/
             case R.id.timeEnd:
                 Dialog dialog1 = new DatePickerDialog(this,
-                        new DatePickerDialog.OnDateSetListener(){
+                        new DatePickerDialog.OnDateSetListener() {
                             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                                 month += 1;
                                 endTime.setTextColor(Color.parseColor("#ffa79c88"));
                                 endTime.setText(year + "-" + month + "-" + day);
                                 endTimeString = endTime.getText().toString();
-                                endTimeInt = ( year * 100 + month ) * 100 + day;
+                                endTimeInt = (year * 100 + month) * 100 + day;
                             }
-                        },2015,9,22);
+                        }, 2015, 9, 22);
                 dialog1.show();
                 break;
             /*集合时间*/
             case R.id.rallyTime:
                 Dialog dialog2 = new TimePickerDialog(this,
-                        new TimePickerDialog.OnTimeSetListener(){
+                        new TimePickerDialog.OnTimeSetListener() {
                             public void onTimeSet(TimePicker timePicker, int hour, int minute) {
                                 rallyTime.setTextColor(Color.parseColor("#ffa79c88"));
-                                rallyTime.setText(hour + " ： " + minute );
+                                rallyTime.setText(hour + " ： " + minute);
                                 rallyTimeString = rallyTime.getText().toString();
                             }
-                        },9,0,true);
+                        }, 9, 0, true);
                 dialog2.show();
                 break;
             /*发布*/
@@ -278,14 +278,6 @@ public class SendActivity extends BaseActivity {
         }
     }
 
-    public class MyLocationListener implements BDLocationListener {
-        @Override
-        public void onReceiveLocation(BDLocation location){
-            mLatitude = location.getLatitude();
-            mLongtitude = location.getLongitude();
-        }
-    }
-
     private void LifeSendBroadcas() {
         //动态方式注册广播接收者
         this.receiver = new LifeSendBroadcastReceiver();
@@ -294,13 +286,21 @@ public class SendActivity extends BaseActivity {
         this.registerReceiver(receiver, filter);
     }
 
+    public class MyLocationListener implements BDLocationListener {
+        @Override
+        public void onReceiveLocation(BDLocation location) {
+            mLatitude = location.getLatitude();
+            mLongtitude = location.getLongitude();
+        }
+    }
+
     public class LifeSendBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(MyStatic.LIFE_SEND)) {
-                if (intent.getBooleanExtra("reResult", true)){
+                if (intent.getBooleanExtra("reResult", true)) {
                     Handler handler = new Handler();
-                    handler.postDelayed( new Runnable() {
+                    handler.postDelayed(new Runnable() {
                         public void run() {
                             progressDialog.dismiss();
                             Intent intent = new Intent(SendActivity.this, MainActivity.class);

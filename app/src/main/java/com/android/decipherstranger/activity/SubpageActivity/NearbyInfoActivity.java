@@ -24,6 +24,7 @@ public class NearbyInfoActivity extends BaseActivity {
     private Button addFriend;
     private Button back;
     private Bitmap bitmap = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,20 +41,20 @@ public class NearbyInfoActivity extends BaseActivity {
         bitmap = getIntent().getParcelableExtra("photo");
         photo.setImageBitmap(bitmap);
         name.setText(getIntent().getStringExtra("name"));
-        if (getIntent().getStringExtra("sex").equals("0")){
+        if (getIntent().getStringExtra("sex").equals("0")) {
             sex.setText("女");
-        }else {
+        } else {
             sex.setText("男");
         }
         addFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(NearbyInfoActivity.this,WelcomeRspActivity.class);
-                intent.putExtra("Type","AddFriend");
-                intent.putExtra("Account",getIntent().getStringExtra("account"));
-                intent.putExtra("Photo",bitmap);
-                intent.putExtra("Name",getIntent().getStringExtra("name"));
-                intent.putExtra("Sex",getIntent().getStringExtra("sex"));
+                Intent intent = new Intent(NearbyInfoActivity.this, WelcomeRspActivity.class);
+                intent.putExtra("Type", "AddFriend");
+                intent.putExtra("Account", getIntent().getStringExtra("account"));
+                intent.putExtra("Photo", bitmap);
+                intent.putExtra("Name", getIntent().getStringExtra("name"));
+                intent.putExtra("Sex", getIntent().getStringExtra("sex"));
                 startActivity(intent);
             }
         });
@@ -64,18 +65,18 @@ public class NearbyInfoActivity extends BaseActivity {
             }
         });
     }
-    
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0){
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             back();
             return true;
         }
         return super.onKeyDown(keyCode, event);
     }
-    
+
     private void back() {
-        Intent intent = new Intent(NearbyInfoActivity.this,NearbyListViewActivity.class);
+        Intent intent = new Intent(NearbyInfoActivity.this, NearbyListViewActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         NearbyInfoActivity.this.finish();
