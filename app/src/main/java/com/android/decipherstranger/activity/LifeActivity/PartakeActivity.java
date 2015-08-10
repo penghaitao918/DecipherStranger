@@ -39,6 +39,7 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.baidu.mapapi.SDKInitializer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -119,11 +120,11 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_life_partake);
 
         this.init();
         this.initData();
-        this.getData();
         this.LifePartakeBroadcas();
 
         System.out.println("### mLatitude = " + mLatitude);
@@ -443,6 +444,7 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
         public void onReceiveLocation(BDLocation location) {
             mLatitude = location.getLatitude();
             mLongtitude = location.getLongitude();
+            PartakeActivity.this.getData();
         }
     }
 

@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -98,7 +99,11 @@ public class ShowMapActivity extends BaseActivity {
                 //经纬度
                 latLng = new LatLng(nearByUserInfo.getLatitude(), nearByUserInfo.getLongtitude());
                 //图标
-                mMarker = BitmapDescriptorFactory.fromBitmap(nearByUserInfo.getImgId());
+                if (nearByUserInfo.getImgId() == null){
+                    mMarker = BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(this.getResources(), R.drawable.ds_icon));
+                } else {
+                    mMarker = BitmapDescriptorFactory.fromBitmap(nearByUserInfo.getImgId());
+                }
                 options = new MarkerOptions().position(latLng).icon(mMarker).zIndex(5);
                 marker = (Marker) mBaiduMap.addOverlay(options);
                 Bundle bundle = new Bundle();
