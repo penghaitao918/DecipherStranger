@@ -11,8 +11,12 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -30,6 +34,19 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.baidu.mapapi.SDKInitializer;
+import com.baidu.mapapi.search.core.CityInfo;
+import com.baidu.mapapi.search.core.PoiInfo;
+import com.baidu.mapapi.search.core.SearchResult;
+import com.baidu.mapapi.search.poi.OnGetPoiSearchResultListener;
+import com.baidu.mapapi.search.poi.PoiCitySearchOption;
+import com.baidu.mapapi.search.poi.PoiDetailResult;
+import com.baidu.mapapi.search.poi.PoiResult;
+import com.baidu.mapapi.search.poi.PoiSearch;
+import com.baidu.mapapi.search.sug.OnGetSuggestionResultListener;
+import com.baidu.mapapi.search.sug.SuggestionResult;
+import com.baidu.mapapi.search.sug.SuggestionSearch;
+import com.baidu.mapapi.search.sug.SuggestionSearchOption;
 
 /**
  * へ　　　　　／|
@@ -79,13 +96,20 @@ public class SendActivity extends BaseActivity {
     private int endTimeInt = 30000000;
     private String rallyTimeString = "";
 
+//    private PoiSearch mPoiSearch = null;// POI检索对象
+//    private SuggestionSearch mSuggestionSearch = null; //联想词检索对象
+//    private ArrayAdapter<String> sugAdapter = null;
+//    private int load_Index = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_life_send);
         //  application = (MyApplication) getApplication();
         application = MyApplication.getInstance();
         this.init();
+//        this.initPOIListener();
     }
 
     @Override
@@ -106,6 +130,8 @@ public class SendActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         super.unregisterReceiver(SendActivity.this.receiver);
+//        mPoiSearch.destroy();
+//        mSuggestionSearch.destroy();
     }
 
     private void init() {
@@ -128,8 +154,120 @@ public class SendActivity extends BaseActivity {
         classRadio.setFocusable(true);
         classRadio.setFocusableInTouchMode(true);
         classRadio.requestFocus();
+
+
+//        sugAdapter = new ArrayAdapter<String>(this,
+//                android.R.layout.simple_dropdown_item_1line);
+//        spaceEdit.setAdapter(sugAdapter);
     }
 
+    /**
+     * 初始化搜索模块，注册搜索事件监听
+     */
+//    private void initPOIListener() {
+//        // POI检索实例
+//        mPoiSearch = PoiSearch.newInstance();
+//        // 创建POI检索监听者
+//        mPoiSearch.setOnGetPoiSearchResultListener(this);
+//        // 联想词检索实例
+//        mSuggestionSearch = SuggestionSearch.newInstance();
+//        // 联想词检索监听者
+//        mSuggestionSearch.setOnGetSuggestionResultListener(this);
+//        /**
+//         * 当输入关键字变化时，动态更新建议列表
+//         */
+//        spaceEdit.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void afterTextChanged(Editable arg0) {
+//            }
+//
+//            @Override
+//            public void beforeTextChanged(CharSequence arg0, int arg1,
+//                                          int arg2, int arg3) {
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence cs, int arg1, int arg2,
+//                                      int arg3) {
+//                if (cs.length() <= 0) {
+//                    return;
+//                }
+////                String city = ((EditText) findViewById(R.id.city)).getText()
+////                        .toString();
+//                /**
+//                 * 使用建议搜索服务获取建议列表，结果在onSuggestionResult()中更新
+//                 */
+//                mPoiSearch.searchInCity((new PoiCitySearchOption())
+//                        .city("长春")// 根据城市
+//                        .keyword(cs.toString())// 根据关键字
+//                        .pageNum(load_Index));// 查询的页数
+//            }
+//        });
+//    }
+//    @Override
+//    public void onGetSuggestionResult(SuggestionResult res) {
+//        if (res == null || res.getAllSuggestions() == null) {
+//            return;
+//        }
+//        sugAdapter.clear();
+//        for (SuggestionResult.SuggestionInfo info : res.getAllSuggestions()) {
+//            if (info.key != null)
+//                sugAdapter.add(info.key);
+//        }
+//        sugAdapter.notifyDataSetChanged();
+
+//    }
+
+//    @Override
+//    public void onGetPoiDetailResult(PoiDetailResult result) {
+//        // 未找到了结果
+//        if (result.error != SearchResult.ERRORNO.NO_ERROR) {
+//            Toast.makeText(MainActivity.this, "抱歉，未找到结果", Toast.LENGTH_SHORT)
+//                    .show();
+//        } else {
+//            Toast.makeText(MainActivity.this,
+//                    result.getName() + ": " + result.getAddress(),
+//                    Toast.LENGTH_SHORT).show();
+//        }
+//
+//    }
+//
+//    @Override
+//    public void onGetPoiResult(PoiResult result) {
+//        // 未找到结果
+//        if (result == null
+//                || result.error == SearchResult.ERRORNO.RESULT_NOT_FOUND) {
+//            return;
+//        }
+//        // 结果没有异常，找到了结果
+//        if (result.error == SearchResult.ERRORNO.NO_ERROR) {
+////            mBaiduMap.clear();
+////            PoiOverlay overlay = new MyPoiOverlay(mBaiduMap);
+////            mBaiduMap.setOnMarkerClickListener(overlay);
+////            overlay.setData(result);
+////            overlay.addToMap();
+////            overlay.zoomToSpan();
+//            sugAdapter.clear();
+//            for (PoiInfo info: result.getAllPoi()) {
+//                if (info.name!= null)
+//                    sugAdapter.add(info.address);
+//            }
+//            sugAdapter.notifyDataSetChanged();
+//            return;
+//        }
+        // 当输入关键字在本市没有找到，但在其他城市找到时，返回包含该关键字信息的城市列表
+//        if (result.error == SearchResult.ERRORNO.AMBIGUOUS_KEYWORD) {
+
+//            String strInfo = "在";
+//            for (CityInfo cityInfo : result.getSuggestCityList()) {
+//                strInfo += cityInfo.city;
+//                strInfo += ",";
+//            }
+//            strInfo += "找到结果";
+//            Toast.makeText(MainActivity.this, strInfo, Toast.LENGTH_LONG)
+//                    .show();
+//        }
+//    }
     private void initLocation() {
         mLocationClient = new LocationClient(this);
         mLocationListener = new MyLocationListener();

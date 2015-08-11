@@ -386,6 +386,17 @@ public class ClientListenThread extends Thread {
                             }
                             clContext.sendBroadcast(itAttendPeople);
                             break;
+                        case GlobalMsgUtils.msgRecommend:
+                            Intent itRecommend = new Intent("com.android.decipherstranger.RECOMMEND");
+                            itRecommend.putExtra("reResult",jsonObj.getString("re_message"));
+                            if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)){
+                                itRecommend.putExtra("reAccount",jsonObj.getString("reAccount"));
+                                itRecommend.putExtra("reName",jsonObj.getString("reName"));
+                                itRecommend.putExtra("rePhoto",jsonObj.getString("rePhoto"));
+                                itRecommend.putExtra("reGender",jsonObj.getInt("reGender"));
+                            }
+                            clContext.sendBroadcast(itRecommend);
+                            break;
                         default:
                             if (NetworkService.getInstance().getIsConnected()) {
                                 String testNet = "type" + ":" + "ping";

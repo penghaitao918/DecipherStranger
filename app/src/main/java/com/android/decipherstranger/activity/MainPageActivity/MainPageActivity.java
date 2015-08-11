@@ -61,7 +61,6 @@ public class MainPageActivity extends BaseActivity implements OnPageChangeListen
     private SQLiteOpenHelper helper = null;
     private MyApplication application = null;
     private ChatBroadcastReceiver receiver = null;
-
     private AlertDialog.Builder builder = null;
 
     @Override

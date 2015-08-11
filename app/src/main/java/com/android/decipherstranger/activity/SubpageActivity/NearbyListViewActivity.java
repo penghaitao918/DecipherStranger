@@ -109,6 +109,7 @@ public class NearbyListViewActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        super.unregisterReceiver(NearbyListViewActivity.this.receiver);
         System.out.println("### 再见我退出了。。。");
     }
 
@@ -207,7 +208,6 @@ public class NearbyListViewActivity extends BaseActivity {
             mLatitude = location.getLatitude();
             mLongtitude = location.getLongitude();
             NearbyListViewActivity.this.getData();
-            System.out.println("### 获取完毕");
         }
     }
 

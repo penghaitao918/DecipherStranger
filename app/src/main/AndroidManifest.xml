@@ -36,6 +36,7 @@
         <activity
             android:name=".activity.MainPageActivity.ContactsPageActivity"
             android:windowSoftInputMode="stateUnchanged" />
+        <activity android:name=".activity.SubpageActivity.RecommendFriend"/>
         <activity android:name=".activity.MainPageActivity.ServicePageActivity" />
         <activity android:name=".activity.MainPageActivity.UserPageActivity" />
         <activity android:name=".activity.SubpageActivity.UpdateNameActivity" />
@@ -105,12 +106,12 @@
         <!--百度地图Key-->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="8jhcIPCZchUbYrwY1OC8mD5f" />
+            android:value="hCAkwdsRwEvGynujpDO9zMXo" />
         <!-- 彭海涛 -->
         <!-- android:value="WN8ktA9ihtBXFIHKPszx64G9" -->
         <!-- android:value="8jhcIPCZchUbYrwY1OC8mD5f"-->
         <!-- 王鑫 -->
-        <!-- android:value="MoFospIwrq9MMDxeRtmLBBL2" -->
+        <!-- android:value="hCAkwdsRwEvGynujpDO9zMXo" -->
 
         <service
             android:name="com.baidu.location.f"
