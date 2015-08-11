@@ -22,6 +22,7 @@ import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
 import com.android.decipherstranger.activity.Base.MyApplication;
 import com.android.decipherstranger.activity.SubpageActivity.FriendInfoActivity;
+import com.android.decipherstranger.activity.SubpageActivity.RecommendFriend;
 import com.android.decipherstranger.adapter.SortAdapter;
 import com.android.decipherstranger.db.ContactsList;
 import com.android.decipherstranger.db.DATABASE;
@@ -111,6 +112,8 @@ public class ContactsPageActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 friendsRequestCount(NORMAL);
+                Intent it =  new Intent(ContactsPageActivity.this, RecommendFriend.class);
+                startActivity(it);
             }
         });
 

@@ -44,7 +44,7 @@
     <string name="effectMusic">游戏音效</string>
     <string name="backgroundMusic">背景音乐</string>
     <string name="setting">设  置</string>
-    <string name="new_friend">新的好友</string>
+    <string name="new_friend">推荐好友</string>
     <string name="str_recorder_normal">按住 说话</string>
     <string name="str_recorder_recording">松开 结束</string>
     <string name="str_recorder_want_cancel">松开手指，取消发送</string>

@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -47,9 +48,10 @@ import java.util.Map;
 public class RecommendFriend extends BaseActivity {
     private ListView recommend = null;
     private SimpleAdapter adapter;
-    public RecommendBroadcastReceiver receiver = null;
+    private RecommendBroadcastReceiver receiver = null;
     private MyApplication application = null;
     private ArrayList<Map<String,Object>>dataList = null;
+    private ImageButton back = null;
 
     private Handler handler = new Handler(){
         @Override
@@ -76,7 +78,15 @@ public class RecommendFriend extends BaseActivity {
     }
     private void initView() {
         this.recommend = (ListView) findViewById(R.id.listView);
+        this.back = (ImageButton) findViewById(R.id.btn_back);
         this.dataList = new ArrayList<Map<String,Object>>();
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         this.adapter = new SimpleAdapter(this,dataList,
                 R.layout.nearby_view_item,
@@ -104,7 +114,7 @@ public class RecommendFriend extends BaseActivity {
     }
     public void getData() {
         if (NetworkService.getInstance().getIsConnected()){
-            String Msg = "type"+":"+"28"+ ":account"+":"+ application.getAccount();
+            String Msg = "type"+":"+"28";
             Log.v("aaaaa", Msg);
             NetworkService.getInstance().sendUpload(Msg);
         }else{
