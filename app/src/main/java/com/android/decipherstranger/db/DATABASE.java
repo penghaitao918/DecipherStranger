@@ -75,7 +75,7 @@ public class DATABASE extends SQLiteOpenHelper {
                 "  `username` varbinary(20) DEFAULT NULL," +
                 "  `remark` varbinary(20) DEFAULT NULL," +
                 "  `portrait` mediumblob," +
-                "  `sex` varbinary(10) DEFAULT NULL," +
+                "  `sex` tinyint(1) DEFAULT NULL," +
                 "  `email` varbinary(20) DEFAULT NULL," +
                 "  `birth` date DEFAULT NULL," +
                 "  `phone` varbinary(15) DEFAULT NULL," +

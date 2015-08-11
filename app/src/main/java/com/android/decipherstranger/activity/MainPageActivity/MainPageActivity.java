@@ -398,7 +398,7 @@ public class MainPageActivity extends BaseActivity implements OnPageChangeListen
                             contact.setAccount(intent.getStringExtra("reAccount"));
                             contact.setUsername(intent.getStringExtra("reName"));
                             contact.setPortrait(ChangeUtils.toBitmap(intent.getStringExtra("rePhoto")));
-                            contact.setUserSex(intent.getIntExtra("reGender", 0) + "");
+                            contact.setUserSex(intent.getIntExtra("reGender", 0));
                             contactsList.insert(contact);
                             reFreshContact();
                             builder.setTitle(contact.getUsername() + "已添加您为好友");

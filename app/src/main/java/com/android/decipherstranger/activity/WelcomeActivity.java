@@ -84,7 +84,7 @@ public class WelcomeActivity extends BaseActivity {
             this.password = (String) sharedPreferencesUtils.get(MyStatic.USER_PASSWORD, "");
             this.application.setName((String) sharedPreferencesUtils.get(MyStatic.USER_NAME, ""));
             this.application.setPortrait(ChangeUtils.toBitmap((String) sharedPreferencesUtils.get(MyStatic.USER_PORTRAIT, "")));
-            this.application.setSex((String) sharedPreferencesUtils.get(MyStatic.USER_SEX, ""));
+            this.application.setSex((int) sharedPreferencesUtils.get(MyStatic.USER_SEX, 0));
             this.application.setBirth((String) sharedPreferencesUtils.get(MyStatic.USER_BIRTH, ""));
             this.application.setEmail((String) sharedPreferencesUtils.get(MyStatic.USER_EMAIL, ""));
             this.application.setPhone((String) sharedPreferencesUtils.get(MyStatic.USER_PHONE, ""));

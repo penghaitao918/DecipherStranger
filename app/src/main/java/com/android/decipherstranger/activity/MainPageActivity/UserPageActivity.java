@@ -113,10 +113,13 @@ public class UserPageActivity extends BaseActivity {
 
         photo = ImageCompression.comp(application.getPortrait());
         portraitImage.setImageDrawable(new BitmapDrawable(this.getResources(), photo));
-        //    photo.recycle();
         this.nameText.setText(application.getName());
         this.accountText.setText(application.getAccount());
-        this.sexText.setText(application.getSex());
+        if (application.getSex() == 0) {
+            this.sexText.setText("女");
+        } else {
+            this.sexText.setText("男");
+        }
         this.moveSwitch.setChecked(application.isMoveFlag());
         this.musicSwitch.setChecked(application.isMusicFlag());
 

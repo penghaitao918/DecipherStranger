@@ -17,7 +17,7 @@ public class User implements Serializable {
     //用户备注
     private String remark;
     //用户性别
-    private String userSex;
+    private int userSex;
     //用户邮箱
     private String email;
     //用户电话
@@ -81,11 +81,11 @@ public class User implements Serializable {
         this.remark = remark;
     }
 
-    public String getUserSex() {
+    public int getUserSex() {
         return userSex;
     }
 
-    public void setUserSex(String userSex) {
+    public void setUserSex(int userSex) {
         this.userSex = userSex;
     }
 

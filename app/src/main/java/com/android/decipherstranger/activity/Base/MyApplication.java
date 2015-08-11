@@ -49,7 +49,7 @@ public class MyApplication extends Application {
     //  用户头像
     private Bitmap portrait = null;
     //  用户性别
-    private String sex = null;
+    private int sex = 0;
     //  用户邮箱
     private String email = null;
     //  用户电话
@@ -132,11 +132,11 @@ public class MyApplication extends Application {
         this.portrait = portrait;
     }
 
-    public String getSex() {
+    public int getSex() {
         return sex;
     }
 
-    public void setSex(String userSex) {
+    public void setSex(int userSex) {
         this.sex = userSex;
     }
 

@@ -61,9 +61,10 @@ public class NearbyInfoActivity extends BaseActivity {
                 Intent intent = new Intent(NearbyInfoActivity.this, WelcomeRspActivity.class);
                 intent.putExtra("Type", "AddFriend");
                 intent.putExtra("Account", getIntent().getStringExtra("account"));
-                intent.putExtra("Photo", bitmap);
                 intent.putExtra("Name", getIntent().getStringExtra("name"));
-                intent.putExtra("Sex", getIntent().getStringExtra("sex"));
+                intent.putExtra("Photo", bitmap);
+                intent.putExtra("Sex", getIntent().getIntExtra("sex", 0));
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 NearbyInfoActivity.this.finish();
             }

@@ -75,7 +75,7 @@ public class ContactsList {
             contacts.setRemark(result.getString(2));
             byte[] in = result.getBlob(3);
             contacts.setPortrait(BitmapFactory.decodeByteArray(in, 0, in.length));
-            contacts.setUserSex(result.getString(4));
+            contacts.setUserSex(result.getInt(4));
             contacts.setEmail(result.getString(5));
             contacts.setBirth(result.getString(6));
             contacts.setPhone(result.getString(7));
@@ -101,7 +101,7 @@ public class ContactsList {
             contacts.setRemark(result.getString(2));
             byte[] in = result.getBlob(3);
             contacts.setPortrait(BitmapFactory.decodeByteArray(in, 0, in.length));
-            contacts.setUserSex(result.getString(4));
+            contacts.setUserSex(result.getInt(4));
             contacts.setEmail(result.getString(5));
             contacts.setBirth(result.getString(6));
             contacts.setPhone(result.getString(7));

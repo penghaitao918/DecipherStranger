@@ -199,6 +199,11 @@ public class ShowMapActivity extends BaseActivity {
                         it.putExtra("Name", nearByUserInfo.getUserName());
                         it.putExtra("Photo", nearByUserInfo.getImgId());
                         it.putExtra("Sex", nearByUserInfo.getSex());
+                        System.out.println("### Account" + nearByUserInfo.getUserAccount());
+                        System.out.println("### name " + nearByUserInfo.getUserName());
+                        System.out.println("### sex " + nearByUserInfo.getSex());
+                        System.out.println("### bitmap" + nearByUserInfo.getImgId());
+                        it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(it);
                         ShowMapActivity.this.finish();
                     }

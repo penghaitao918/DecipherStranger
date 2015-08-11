@@ -140,7 +140,7 @@ public class ContactsPageActivity extends BaseActivity {
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("userPhoto", mContactList.get(position).getPortrait());
                 bundle.putString("userName", mContactList.get(position).getUsername());
-                bundle.putString("userSex", mContactList.get(position).getUserSex());
+                bundle.putInt("userSex", mContactList.get(position).getUserSex());
                 bundle.putString("userAccount", mContactList.get(position).getAccount());
                 intent.putExtras(bundle);
                 startActivity(intent);
@@ -261,7 +261,7 @@ public class ContactsPageActivity extends BaseActivity {
                         contact.setAccount(intent.getStringExtra("reAccount"));
                         contact.setUsername(intent.getStringExtra("reName"));
                         contact.setPortrait(ChangeUtils.toBitmap(intent.getStringExtra("rePhoto")));
-                        contact.setUserSex(intent.getStringExtra("reGender"));
+                        contact.setUserSex(intent.getIntExtra("reGender",0));
                         mContactList.add(contact);
                         writeContactLog = new ContactsList(helper.getWritableDatabase());
                         writeContactLog.insert(contact);

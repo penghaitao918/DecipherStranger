@@ -49,7 +49,7 @@ public class DetailsActivity extends BaseActivity {
     private String sendAccount = null;
     private String sendName = null;
     private Bitmap sendPortrait = null;
-    private String sendSex = null;
+    private int sendSex = 0;
 
     private String password = null;
     private int lifeId = 0;
@@ -197,6 +197,7 @@ public class DetailsActivity extends BaseActivity {
                 intent.putExtra("Name", sendName);
                 intent.putExtra("Photo", sendPortrait);
                 intent.putExtra("Sex", sendSex);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 DetailsActivity.this.finish();
                 break;
@@ -243,7 +244,7 @@ public class DetailsActivity extends BaseActivity {
                         String activityTypeName = intent.getStringExtra("activity_type_name");
                         sendName = intent.getStringExtra("re_userName");
                         sendPortrait = ChangeUtils.toBitmap(intent.getStringExtra("re_userPhoto"));
-                        sendSex = intent.getIntExtra("re_gender", 0) + "";
+                        sendSex = intent.getIntExtra("re_gender", 0);
                         number = intent.getIntExtra("re_current_number", 0);
                         sendAccount = intent.getStringExtra("re_send_account");
                         password = intent.getStringExtra("re_activity_password");

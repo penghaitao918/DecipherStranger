@@ -116,7 +116,7 @@ public class WelcomeRspActivity extends BaseActivity {
                 MyStatic.friendAccount = intent.getStringExtra("Account");
                 MyStatic.friendName = intent.getStringExtra("Name");
                 MyStatic.friendPhoto = intent.getParcelableExtra("Photo");
-                MyStatic.friendSex = intent.getStringExtra("Sex");
+                MyStatic.friendSex = intent.getIntExtra("Sex",0);
                 break;
             case "Practice":
                 MyStatic.friendAccount = application.getAccount();

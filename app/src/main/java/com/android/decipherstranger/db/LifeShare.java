@@ -74,7 +74,7 @@ public class LifeShare {
             map.put(MyStatic.SHARE_PHOTO, photo);
             map.put(MyStatic.SHARE_TIME, result.getString(6));
             map.put(MyStatic.SHARE_NUM, result.getInt(7));
-            map.put(MyStatic.SHARE_SEX, result.getString(8));
+            map.put(MyStatic.SHARE_SEX, result.getInt(8));
             all.add(map);
         }
         this.db.close();
@@ -91,16 +91,19 @@ public class LifeShare {
         for (result.moveToFirst(); !result.isAfterLast(); result.moveToNext()) {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put(MyStatic.SHARE_ID, result.getInt(0));
-            byte[] inPortrait = result.getBlob(1);
+            map.put(MyStatic.SHARE_ACCOUNT, result.getString(1));
+            byte[] inPortrait = result.getBlob(2);
             Bitmap portrait = BitmapFactory.decodeByteArray(inPortrait, 0, inPortrait.length);
             map.put(MyStatic.SHARE_PORTRAIT, portrait);
-            map.put(MyStatic.SHARE_NAME, result.getString(2));
-            map.put(MyStatic.SHARE_MESSAGE, result.getString(3));
-            byte[] inPhoto = result.getBlob(4);
+            map.put(MyStatic.SHARE_NAME, result.getString(3));
+            map.put(MyStatic.SHARE_MESSAGE, result.getString(4));
+            byte[] inPhoto = result.getBlob(5);
             Bitmap photo = BitmapFactory.decodeByteArray(inPhoto, 0, inPhoto.length);
             map.put(MyStatic.SHARE_PHOTO, photo);
-            map.put(MyStatic.SHARE_TIME, result.getString(5));
-            map.put(MyStatic.SHARE_NUM, result.getInt(6));
+            map.put(MyStatic.SHARE_TIME, result.getString(6));
+            map.put(MyStatic.SHARE_NUM, result.getInt(7));
+            map.put(MyStatic.SHARE_SEX, result.getInt(8));
+            all.add(map);
             all.add(map);
         }
         this.db.close();

@@ -83,12 +83,9 @@ public class InvitationInfoActivity extends BaseActivity {
         intent.putExtra("Type", "AddFriend");
         intent.putExtra("Account", account);
         intent.putExtra("Name", name);
-        intent.putExtra("Sex", sex + "");
+        intent.putExtra("Sex", sex);
         intent.putExtra("Photo", bitmap);
-        System.out.println("### Account" + account);
-        System.out.println("### name " + name);
-        System.out.println("### sex " + sex);
-        System.out.println("### bitmap" + bitmap);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         InvitationInfoActivity.this.finish();
     }

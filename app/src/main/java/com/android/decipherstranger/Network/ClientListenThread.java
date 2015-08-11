@@ -73,11 +73,7 @@ public class ClientListenThread extends Thread {
                             if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)) {
                                 application.setName(jsonObj.getString("re_name"));
                                 application.setPortrait(ChangeUtils.toBitmap(jsonObj.getString("re_photo")));
-                                if (jsonObj.getInt("re_gender") == 1) {
-                                    application.setSex("男");
-                                } else {
-                                    application.setSex("女");
-                                }
+                                application.setSex(jsonObj.getInt("re_gender"));
                                 application.setPhone(jsonObj.getString("re_phone"));
                                 application.setEmail(jsonObj.getString("re_email"));
                                 application.setBirth(jsonObj.getString("re_birth"));
@@ -120,7 +116,7 @@ public class ClientListenThread extends Thread {
                                 itFriend.putExtra("reResult", true);
                                 itFriend.putExtra("reAccount", jsonObj.getString("re_account"));
                                 itFriend.putExtra("reName", jsonObj.getString("re_name"));
-                                itFriend.putExtra("reGender", jsonObj.getString("re_gender"));
+                                itFriend.putExtra("reGender", jsonObj.getInt("re_gender"));
                                 itFriend.putExtra("rePhoto", jsonObj.getString("re_photo"));
                             } else {
                                 itFriend.putExtra("reResult", false);

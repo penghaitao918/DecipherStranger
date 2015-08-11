@@ -162,14 +162,19 @@ public class ListButtonAdapter extends BaseAdapter {
         String account = (String) itemData.get(MyStatic.SHARE_ACCOUNT);
         Bitmap portrait = (Bitmap) itemData.get(MyStatic.SHARE_PORTRAIT);
         String name = (String) itemData.get(MyStatic.SHARE_NAME);
-        String sex = (String) itemData.get(MyStatic.SHARE_SEX);
+        int sex = (int) itemData.get(MyStatic.SHARE_SEX);
 
         Intent intent = new Intent(mContext, WelcomeRspActivity.class);
         intent.putExtra("Type", "AddFriend");
         intent.putExtra("Account", account);
-        intent.putExtra("Photo", portrait);
         intent.putExtra("Name", name);
+        intent.putExtra("Photo", portrait);
         intent.putExtra("Sex", sex);
+        System.out.println("### Account" + account);
+        System.out.println("### name " + name);
+        System.out.println("### sex " + sex);
+        System.out.println("### bitmap" + portrait);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         mContext.startActivity(intent);
     }
 

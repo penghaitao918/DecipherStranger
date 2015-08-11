@@ -63,7 +63,6 @@ public class SuccessActivity extends BaseActivity {
 
     public void GameSuccessOnClick(View view) {
         Intent intent = new Intent(SuccessActivity.this, MainPageActivity.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         SuccessActivity.this.finish();

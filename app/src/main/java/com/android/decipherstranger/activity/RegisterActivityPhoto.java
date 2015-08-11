@@ -94,7 +94,7 @@ public class RegisterActivityPhoto extends BaseActivity {
         userInfo.setAccount(intent.getStringExtra("account"));
         userInfo.setPassword(intent.getStringExtra("possword"));
         userInfo.setUsername(intent.getStringExtra("name"));
-        userInfo.setUserSex(intent.getStringExtra("sex"));
+        userInfo.setUserSex(intent.getIntExtra("sex", 0));
         userInfo.setEmail(intent.getStringExtra("email"));
         userInfo.setPhone(intent.getStringExtra("phone"));
         userInfo.setBirth(intent.getStringExtra("birth"));
@@ -249,17 +249,12 @@ public class RegisterActivityPhoto extends BaseActivity {
                 NetworkService.getInstance().setupConnection();
                 int userGender = 1;
                 if (NetworkService.getInstance().getIsConnected()) {
-                    if (userInfo.getUserSex().equals("男")) {
-                        userGender = 1;
-                    } else {
-                        userGender = 0;
-                    }
                     StringUtils stringUtils = null;
                     String sendInfo = "type" + ":" + Integer.toString(GlobalMsgUtils.msgRegister) + ":" +
                             "account" + ":" + userInfo.getAccount() + ":" +
                             "password" + ":" + stringUtils.MD5(userInfo.getPassword()) + ":" +
                             "name" + ":" + userInfo.getUsername() + ":" +
-                            "sex" + ":" + userGender + ":" +
+                            "sex" + ":" + userInfo.getUserSex() + ":" +
                             "email" + ":" + userInfo.getEmail() + ":" +
                             "phone" + ":" + userInfo.getPhone() + ":" +
                             "birth" + ":" + userInfo.getBirth() + ":" +

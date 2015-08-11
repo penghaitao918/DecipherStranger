@@ -98,12 +98,12 @@ public class FriendInfoActivity extends BaseActivity {
         this.userPhoto = friendInfo.getParcelable("userPhoto");
         this.userName = friendInfo.getString("userName");
         presonalInfo = new User();
-        presonalInfo.setUserSex(friendInfo.getString("userSex"));
+        presonalInfo.setUserSex(friendInfo.getInt("userSex"));
     }
 
     private void showInfo() {
         friendAccount.setText(userAccount);
-        if (presonalInfo.getUserSex().equals(MALE)) {
+        if (presonalInfo.getUserSex() == 1) {
             friendSex.setImageResource(R.drawable.ic_sex_male);
         } else {
             friendSex.setImageResource(R.drawable.ic_sex_female);
