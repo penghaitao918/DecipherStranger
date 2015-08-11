@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -70,7 +71,6 @@ public class ShowMapActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //  application = (MyApplication) getApplication();
         application = MyApplication.getInstance();
         //在使用SDK各组件之前初始化context信息，传入ApplicationContext
         //注意该方法要再setContentView方法之前实现
@@ -83,6 +83,74 @@ public class ShowMapActivity extends BaseActivity {
         this.context = this;
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //开启定位
+        mBaiduMap.setMyLocationEnabled(true);
+        if (!mLocationClient.isStarted()) {
+            mLocationClient.start();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //在activity执行onPause时执行mMapView. onPause ()，实现地图生命周期管理
+        mMapView.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //在activity执行onResume时执行mMapView. onResume ()，实现地图生命周期管理
+        mMapView.onResume();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //停止定位
+        mBaiduMap.setMyLocationEnabled(false);
+        mLocationClient.stop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        super.unregisterReceiver(ShowMapActivity.this.receiver);
+        //在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
+        mMapView.onDestroy();
+        mMapView = null;
+        application = null;
+        mBaiduMap.clear();
+        mBaiduMap = null;
+        if(mLocationClient.isStarted()){
+            mLocationClient.stop();
+            mLocationClient = null;
+        }
+        mLocationListener = null;
+        if (progressDialog.isShowing()){
+            progressDialog.dismiss();
+            progressDialog = null;
+        }
+        nearbyInfo.clear();
+        nearbyInfo = null;
+        receiver = null;
+        context = null;
+        mMarker.recycle();
+        mMarker = null;
+        mMarkerlayout.removeAllViews();
+        mMarkerlayout = null;
+    }
+
+    private void initView() {
+        mMapView = (MapView) findViewById(R.id.user_map_view);
+        mBaiduMap = mMapView.getMap();
+        MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(15.0f);
+        mBaiduMap.setMapStatus(msu);
+    }
+
     private void initMarker() {
         addOverlays(nearbyInfo);
         mMarkerlayout = (RelativeLayout) findViewById(R.id.nearby_info);
@@ -91,13 +159,11 @@ public class ShowMapActivity extends BaseActivity {
     //添加覆盖物
     private void addOverlays(List<NearbyUserInfo> infos) {
         mBaiduMap.clear();
-        LatLng latLng = null;
-        Marker marker = null;
         OverlayOptions options;
         if (!infos.isEmpty()) {
             for (NearbyUserInfo nearByUserInfo : infos) {
                 //经纬度
-                latLng = new LatLng(nearByUserInfo.getLatitude(), nearByUserInfo.getLongtitude());
+                LatLng latLng = new LatLng(nearByUserInfo.getLatitude(), nearByUserInfo.getLongtitude());
                 //图标
                 if (nearByUserInfo.getImgId() == null){
                     mMarker = BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(this.getResources(), R.drawable.ds_icon));
@@ -105,7 +171,7 @@ public class ShowMapActivity extends BaseActivity {
                     mMarker = BitmapDescriptorFactory.fromBitmap(nearByUserInfo.getImgId());
                 }
                 options = new MarkerOptions().position(latLng).icon(mMarker).zIndex(5);
-                marker = (Marker) mBaiduMap.addOverlay(options);
+                Marker marker = (Marker) mBaiduMap.addOverlay(options);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("nearByUserInfo", nearByUserInfo);
                 marker.setExtraInfo(bundle);
@@ -134,6 +200,7 @@ public class ShowMapActivity extends BaseActivity {
                         it.putExtra("Photo", nearByUserInfo.getImgId());
                         it.putExtra("Sex", nearByUserInfo.getSex());
                         startActivity(it);
+                        ShowMapActivity.this.finish();
                     }
                 });
 
@@ -181,53 +248,6 @@ public class ShowMapActivity extends BaseActivity {
         option.setScanSpan(1000);
         mLocationClient.setLocOption(option);
 
-    }
-
-    private void initView() {
-        mMapView = (MapView) findViewById(R.id.user_map_view);
-        mBaiduMap = mMapView.getMap();
-        MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(15.0f);
-        mBaiduMap.setMapStatus(msu);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.unregisterReceiver(ShowMapActivity.this.receiver);
-        super.onDestroy();
-        //在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
-        mMapView.onDestroy();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //在activity执行onResume时执行mMapView. onResume ()，实现地图生命周期管理
-        mMapView.onResume();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        //开启定位
-        mBaiduMap.setMyLocationEnabled(true);
-        if (!mLocationClient.isStarted()) {
-            mLocationClient.start();
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        //在activity执行onPause时执行mMapView. onPause ()，实现地图生命周期管理
-        mMapView.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        //停止定位
-        mBaiduMap.setMyLocationEnabled(false);
-        mLocationClient.stop();
     }
 
     //定位到我的位置
@@ -323,17 +343,15 @@ public class ShowMapActivity extends BaseActivity {
             }
         }
     }
-/*
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         // TODO Auto-generated method stub
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0){// 防止连续两次返回键
             //这你写你的返回处理
-            Intent intent = new Intent(ShowMapActivity.this,MainActivity.class);
-            startActivity(intent);
+            onBackPressed();
             ShowMapActivity.this.finish();
             return true;
         }
         return super.onKeyDown(keyCode, event);
-    }*/
+    }
 }

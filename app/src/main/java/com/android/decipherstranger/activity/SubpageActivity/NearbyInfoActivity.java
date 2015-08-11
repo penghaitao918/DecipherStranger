@@ -32,6 +32,15 @@ public class NearbyInfoActivity extends BaseActivity {
         initView();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (bitmap != null && !bitmap.isRecycled()) {
+            bitmap.recycle();
+            bitmap = null;
+        }
+    }
+
     private void initView() {
         photo = (ImageView) findViewById(R.id.nearby_info_photo);
         name = (TextView) findViewById(R.id.nearby_info_name);
@@ -56,6 +65,7 @@ public class NearbyInfoActivity extends BaseActivity {
                 intent.putExtra("Name", getIntent().getStringExtra("name"));
                 intent.putExtra("Sex", getIntent().getStringExtra("sex"));
                 startActivity(intent);
+                NearbyInfoActivity.this.finish();
             }
         });
         back.setOnClickListener(new View.OnClickListener() {
@@ -70,6 +80,7 @@ public class NearbyInfoActivity extends BaseActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             onBackPressed();
+            NearbyInfoActivity.this.finish();
             return true;
         }
         return super.onKeyDown(keyCode, event);

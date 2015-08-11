@@ -96,7 +96,7 @@ public class WelcomeActivity extends BaseActivity {
     private void tellWebLogin(String account, String password) {
 
         NetworkService.getInstance().closeConnection();
-        NetworkService.getInstance().onInit(WelcomeActivity.this, application);
+        NetworkService.getInstance().onInit(WelcomeActivity.this);
         NetworkService.getInstance().setupConnection();
         if (NetworkService.getInstance().getIsConnected()) {
             String userInfo = "type" + ":" + Integer.toString(GlobalMsgUtils.msgLogin) + ":" + "account" + ":" + account + ":" + "password" + ":" + password;

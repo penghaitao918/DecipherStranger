@@ -91,10 +91,23 @@ public class MyLifeActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         super.unregisterReceiver(MyLifeActivity.this.receiver);
-        bitmap.recycle();
+        if (bitmap != null && !bitmap.isRecycled()) {
+            bitmap.recycle();
+            bitmap = null;
+        }
         dataList.clear();
-        bitmap = null;
         dataList = null;
+        imagePortrait = null;
+        topLayout.removeAllViews();
+        topLayout = null;
+        listView = null;
+        simpleAdapter = null;
+        if (popupWindow.isShowing()) {
+            popupWindow.dismiss();
+        }
+        popupWindow = null;
+        receiver = null;
+        handler = null;
     }
 
     @Override
@@ -115,6 +128,7 @@ public class MyLifeActivity extends BaseActivity {
                 popupWindow.dismiss();
                 return true;
             } else {
+                onBackPressed();
                 MyLifeActivity.this.finish();
                 return true;
             }
@@ -184,7 +198,6 @@ public class MyLifeActivity extends BaseActivity {
     }
 
     private void setData(int lifeId, int type, String name, String time, String place) {
-        Bitmap bitmap = null;
         switch (type) {
             // 美食
             case 1:
@@ -214,6 +227,7 @@ public class MyLifeActivity extends BaseActivity {
             /*返回*/
             case R.id.life_back_button:
                 onBackPressed();
+                MyLifeActivity.this.finish();
                 break;
             /*menu*/
             case R.id.menu:

@@ -47,23 +47,36 @@ public class RegisterActivityBase extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_base);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         initView();
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onStop() {
+        super.onStop();
         OkIcon.setCallback(null);
         OkIcon = null;
         ErrorIcon.setCallback(null);
         ErrorIcon = null;
     }
+/*
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }*/
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {// 防止连续两次返回键
             //这你写你的返回处理
             onBackPressed();
+            Intent intent = new Intent(RegisterActivityBase.this, LoginActivity.class);
+            startActivity(intent);
+            RegisterActivityBase.this.finish();
         }
         return super.onKeyDown(keyCode, event);
     }

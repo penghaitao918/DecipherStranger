@@ -35,13 +35,9 @@ public class NetworkService {
         return instanceServer;
     }
 
-    public void onInit(Context context, MyApplication application) {
-        serContext = context;
-        this.application = application;
-    }
-
     public void onInit(Context context) {
         serContext = context;
+        this.application = MyApplication.getInstance();
     }
 
     public void setupConnection() {
@@ -69,7 +65,7 @@ public class NetworkService {
     }
 
     private void startListen(Context context0) {
-        serListenThread = new ClientListenThread(context0, serSocket, application);
+        serListenThread = new ClientListenThread(context0, serSocket);
         serListenThread.start();
 
         serSendThread = new ClientSendThread();

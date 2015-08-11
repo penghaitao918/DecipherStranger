@@ -28,10 +28,16 @@ public class ClientListenThread extends Thread {
 
     private MyApplication application = null;
 
-    public ClientListenThread(Context context, Socket s, MyApplication application) {
+    public ClientListenThread(Context context, Socket s) {
         this.clContext = context;
         this.clSocket = s;
-        this.application = application;
+        this.application = MyApplication.getInstance();
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        System.out.println("### 服务器进程被关闭了");
     }
 
     public void run() {

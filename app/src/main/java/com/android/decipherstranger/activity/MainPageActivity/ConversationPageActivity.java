@@ -56,20 +56,22 @@ public class ConversationPageActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_main_conversation);
+        registerBroadcas();
         this.init();
         this.setData();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        registerBroadcas();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         super.unregisterReceiver(receiver);
+        list.clear();
+        helper.close();
+        dataList = null;
+        helper = null;
+        simpleAdapter = null;
+        list = null;
+        receiver = null;
     }
 
     private void init() {

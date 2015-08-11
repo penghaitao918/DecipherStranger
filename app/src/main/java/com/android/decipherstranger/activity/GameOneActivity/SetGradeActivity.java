@@ -42,9 +42,16 @@ public class SetGradeActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_rsp_set_grade);
-        //  application = (MyApplication) getApplication();
         application = MyApplication.getInstance();
         this.init();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        application = null;
+        gradeEdit = null;
+        sumEdit = null;
     }
 
     private void init() {

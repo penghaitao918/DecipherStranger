@@ -92,7 +92,10 @@ public class DetailsActivity extends BaseActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {// 防止连续两次返回键
             //返回处理
-            sendPortrait.recycle();
+            if (sendPortrait != null && !sendPortrait.isRecycled()) {
+                sendPortrait.recycle();
+                sendPortrait = null;
+            }
             onBackPressed();
             DetailsActivity.this.finish();
             return true;
@@ -188,7 +191,7 @@ public class DetailsActivity extends BaseActivity {
                 intent.putExtra("Photo", sendPortrait);
                 intent.putExtra("Sex", sendSex);
                 startActivity(intent);
-                finish();
+                DetailsActivity.this.finish();
                 break;
         }
     }

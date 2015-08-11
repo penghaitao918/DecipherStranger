@@ -67,25 +67,20 @@ public class ContactsPageActivity extends BaseActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        System.out.println("这是通讯录重新显示");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
     protected void onDestroy() {
-        super.unregisterReceiver(ContactsPageActivity.this.receiver);
         super.onDestroy();
+        super.unregisterReceiver(ContactsPageActivity.this.receiver);
+        mContactList.clear();
+        helper.close();
+        newFriends.removeAllViews();
+        contactListView = null;
+        receiver = null;
+        mContactList = null;
+        sideBar = null;
+        clearEditText = null;
+        helper = null;
+        friendsRequestCount = null;
+        newFriends = null;
     }
 
     private void initData() {

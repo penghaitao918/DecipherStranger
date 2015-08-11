@@ -126,9 +126,6 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
         this.init();
         this.initData();
         this.LifePartakeBroadcas();
-
-        System.out.println("### mLatitude = " + mLatitude);
-        System.out.println("### mLongtitude = " + mLongtitude);
         System.out.println("### 啦啦啦我进来了。。。");
     }
 
@@ -445,6 +442,9 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
             mLatitude = location.getLatitude();
             mLongtitude = location.getLongitude();
             PartakeActivity.this.getData();
+
+            System.out.println("### mLatitude = " + mLatitude);
+            System.out.println("### mLongtitude = " + mLongtitude);
         }
     }
 

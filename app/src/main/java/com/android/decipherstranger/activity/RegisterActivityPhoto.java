@@ -48,7 +48,7 @@ public class RegisterActivityPhoto extends BaseActivity {
     private LinearLayout takePicture;
     private ImageView userPhoto;
     private User userInfo;
-    private String portraitUrl;
+    private String portraitUrl = null;
     private String sPortaitUrl;
     private RegisterBroadcastReceiver receiver = null;
     private ImageButton backButton = null;
@@ -67,14 +67,14 @@ public class RegisterActivityPhoto extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         super.unregisterReceiver(RegisterActivityPhoto.this.receiver);
-        photo.recycle();
-        photo = null;
+        if (photo != null && !photo.isRecycled()) {
+            photo.recycle();
+            photo = null;
+        }
         selectPhoto.removeAllViews();
         takePicture.removeAllViews();
-        userPhoto.removeCallbacks(null);
         userPhoto = null;
         userInfo = null;
-        backButton.removeCallbacks(null);
         backButton = null;
     }
 
@@ -239,35 +239,39 @@ public class RegisterActivityPhoto extends BaseActivity {
     public class registerButtonOnClickListenerImpl implements View.OnClickListener {
         @Override
         public void onClick(View view) {
-            initData();
-
-            NetworkService.getInstance().closeConnection();
-            NetworkService.getInstance().onInit(RegisterActivityPhoto.this);
-            NetworkService.getInstance().setupConnection();
-            int userGender = 1;
-            if (NetworkService.getInstance().getIsConnected()) {
-                if (userInfo.getUserSex().equals("男")) {
-                    userGender = 1;
-                } else
-                    userGender = 0;
-                StringUtils stringUtils = null;
-                String sendInfo = "type" + ":" + Integer.toString(GlobalMsgUtils.msgRegister) + ":" +
-                        "account" + ":" + userInfo.getAccount() + ":" +
-                        "password" + ":" + stringUtils.MD5(userInfo.getPassword()) + ":" +
-                        "name" + ":" + userInfo.getUsername() + ":" +
-                        "sex" + ":" + userGender + ":" +
-                        "email" + ":" + userInfo.getEmail() + ":" +
-                        "phone" + ":" + userInfo.getPhone() + ":" +
-                        "birth" + ":" + userInfo.getBirth() + ":" +
-                        "photo" + ":" + portraitUrl + ":" +
-                        "sphoto" + ":" + sPortaitUrl;
-                NetworkService.getInstance().sendUpload(sendInfo);
+            System.out.print("### Portrait = " + portraitUrl);
+            if (portraitUrl == null || portraitUrl.equals("")) {
+                Toast.makeText(RegisterActivityPhoto.this, "请设置您的头像~", Toast.LENGTH_SHORT).show();
             } else {
+                initData();
                 NetworkService.getInstance().closeConnection();
-                Toast.makeText(RegisterActivityPhoto.this, "服务器连接失败~(≧▽≦)~啦啦啦", Toast.LENGTH_SHORT).show();
-                Log.v("Login", "已经执行T（）方法");
+                NetworkService.getInstance().onInit(RegisterActivityPhoto.this);
+                NetworkService.getInstance().setupConnection();
+                int userGender = 1;
+                if (NetworkService.getInstance().getIsConnected()) {
+                    if (userInfo.getUserSex().equals("男")) {
+                        userGender = 1;
+                    } else {
+                        userGender = 0;
+                    }
+                    StringUtils stringUtils = null;
+                    String sendInfo = "type" + ":" + Integer.toString(GlobalMsgUtils.msgRegister) + ":" +
+                            "account" + ":" + userInfo.getAccount() + ":" +
+                            "password" + ":" + stringUtils.MD5(userInfo.getPassword()) + ":" +
+                            "name" + ":" + userInfo.getUsername() + ":" +
+                            "sex" + ":" + userGender + ":" +
+                            "email" + ":" + userInfo.getEmail() + ":" +
+                            "phone" + ":" + userInfo.getPhone() + ":" +
+                            "birth" + ":" + userInfo.getBirth() + ":" +
+                            "photo" + ":" + portraitUrl + ":" +
+                            "sphoto" + ":" + sPortaitUrl;
+                    NetworkService.getInstance().sendUpload(sendInfo);
+                } else {
+                    NetworkService.getInstance().closeConnection();
+                    Toast.makeText(RegisterActivityPhoto.this, "服务器连接失败~(≧▽≦)~啦啦啦", Toast.LENGTH_SHORT).show();
+                    Log.v("Login", "已经执行T（）方法");
+                }
             }
-
         }
     }
 

@@ -123,6 +123,7 @@ public class LifeShare {
         String clear = "DELETE FROM life_share";
         this.db.execSQL(clear);
         this.db.close();
+        System.out.println("### 删除成功");
     }
 
 }

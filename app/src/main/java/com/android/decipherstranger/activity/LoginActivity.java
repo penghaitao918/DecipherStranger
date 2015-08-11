@@ -175,7 +175,7 @@ public class LoginActivity extends BaseActivity {
     private void accountCheckByWeb(String account, String password) {
 
         NetworkService.getInstance().closeConnection();
-        NetworkService.getInstance().onInit(LoginActivity.this, application);
+        NetworkService.getInstance().onInit(LoginActivity.this);
         NetworkService.getInstance().setupConnection();
         if (NetworkService.getInstance().getIsConnected()) {
             String userInfo = "type" + ":" + Integer.toString(GlobalMsgUtils.msgLogin) + ":" + "account" + ":" + account + ":" + "password" + ":" + password;
@@ -248,10 +248,6 @@ public class LoginActivity extends BaseActivity {
         @Override
         public void onClick(View view) {
 
-/*            Intent it = new Intent(LoginActivity.this, MainPageActivity.class);
-            startActivity(it);
-            finish();*/
-
             Message m = new Message();
             m.what = 0;
             handler.sendMessage(m);
@@ -305,6 +301,7 @@ public class LoginActivity extends BaseActivity {
         public void onClick(View view) {
             it = new Intent(LoginActivity.this, RegisterActivityBase.class);
             startActivity(it);
+            finish();
         }
     }
 
@@ -317,6 +314,7 @@ public class LoginActivity extends BaseActivity {
                     saveUserInfo();
                     progressDialog.dismiss();
                     Intent it = new Intent(LoginActivity.this, MainPageActivity.class);
+                    it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(it);
                     finish();
                 } else if (intent.getStringExtra("result").equals("same")) {

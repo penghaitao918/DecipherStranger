@@ -54,13 +54,13 @@ public class UserPageActivity extends BaseActivity {
 
     private MyApplication application = null;
     private UserBroadcastReceiver receiver = null;
-    private ImageView PopPortrait = null;
 
     private SQLiteOpenHelper helper = null;
     private ChatRecord chatRecord;
     private ContactsList contacts;
     private ConversationList conversationList;
 
+    private Bitmap photo = null;
     private ImageView portraitImage = null;
     private TextView nameText = null;
     private TextView accountText = null;
@@ -72,20 +72,36 @@ public class UserPageActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.helper = new DATABASE(this);
         super.setContentView(R.layout.activity_main_user);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        this.helper = new DATABASE(this);
         this.registerBroadcas();
         this.init();
     }
 
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onStop() {
+        super.onStop();
         super.unregisterReceiver(receiver);
+        helper.close();
+        if (photo != null && !photo.isRecycled()) {
+            photo.recycle();
+            photo = null;
+        }
+        receiver = null;
+        portraitImage = null;
+        nameText = null;
+        accountText = null;
+        sexText = null;
+        moveSwitch = null;
+        musicSwitch = null;
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void init() {
-        //  application = (MyApplication) getApplication();
         application = MyApplication.getInstance();
         this.portraitImage = (ImageView) super.findViewById(R.id.portraitImage);
         this.nameText = (TextView) super.findViewById(R.id.nameText);
@@ -95,9 +111,8 @@ public class UserPageActivity extends BaseActivity {
         this.moveSwitch = (Switch) super.findViewById(R.id.switch2);
 
 
-        Bitmap photo = ImageCompression.comp(application.getPortrait());
-        Drawable drawable = new BitmapDrawable(this.getResources(), photo);
-        portraitImage.setImageDrawable(drawable);
+        photo = ImageCompression.comp(application.getPortrait());
+        portraitImage.setImageDrawable(new BitmapDrawable(this.getResources(), photo));
         //    photo.recycle();
         this.nameText.setText(application.getName());
         this.accountText.setText(application.getAccount());

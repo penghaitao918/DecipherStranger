@@ -216,19 +216,6 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
         }
     }
 
-/*    private class ViewBinderImpl implements SimpleAdapter.ViewBinder {
-        @Override
-        public boolean setViewValue(View view, Object data, String textRepresentation) {
-            // TODO Auto-generated method stub
-            if(view instanceof ImageView && data instanceof Bitmap){
-                ImageView i = (ImageView)view;
-                i.setImageBitmap((Bitmap) data);
-                return true;
-            }
-            return false;
-        }
-    }*/
-
     private void LifeShareBroadcas() {
         //动态方式注册广播接收者
         this.receiver = new LifeShareBroadcastReceiver();

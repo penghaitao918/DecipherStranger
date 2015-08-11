@@ -49,6 +49,7 @@ public class GameListActivity extends BaseActivity {
                 this.intent = new Intent(this, WelcomeRspActivity.class);
                 this.intent.putExtra("Type", "Practice");
                 this.startActivity(intent);
+                this.finish();
                 break;
             case R.id.button1:
                 this.intent = new Intent(this, SetGradeActivity.class);

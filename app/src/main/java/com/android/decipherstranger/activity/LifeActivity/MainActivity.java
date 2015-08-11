@@ -59,6 +59,7 @@ public class MainActivity extends BaseActivity {
     private SimpleAdapter simpleAdapter = null;
     private ArrayList<Map<String, Object>> dataList = null;
 
+    private Bitmap bitmap = null;
     private ImageView advertisementImage = null;
     private AnimationDrawable animationAdvertisement = null;
 
@@ -87,13 +88,29 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        animationAdvertisement.stop();
+        if (animationAdvertisement.isRunning()) {
+            animationAdvertisement.stop();
+        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         super.unregisterReceiver(MainActivity.this.receiver);
+        topLayout.removeAllViews();
+        topLayout = null;
+        dataList.clear();
+        dataList = null;
+        listView = null;
+        simpleAdapter = null;
+        if (bitmap != null && !bitmap.isRecycled()) {
+            bitmap.recycle();
+            bitmap = null;
+        }
+        advertisementImage = null;
+        application = null;
+        receiver = null;
+        handler = null;
     }
 
     private void init() {
@@ -174,6 +191,7 @@ public class MainActivity extends BaseActivity {
             /*返回*/
             case R.id.life_back_button:
                 onBackPressed();
+                MainActivity.this.finish();
                 break;
             /*广告*/
             case R.id.advertLayout:
@@ -181,11 +199,6 @@ public class MainActivity extends BaseActivity {
                 Intent intent0 = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent0);
                 break;
-            /*删除广告*/
-/*            case R.id.exitButton:
-                RelativeLayout layout = (RelativeLayout) super.findViewById(R.id.advertLayout);
-                layout.setVisibility(View.GONE);
-                break;*/
             /*我的活动*/
             case R.id.mylife:
                 Intent intent1 = new Intent(this, MyLifeActivity.class);
@@ -209,8 +222,19 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    private class OnItemClickListenerImpl implements AdapterView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            int lifeId = (int) dataList.get(position).get(MyStatic.LIFE_ID);
+            int lifeType = (int) dataList.get(position).get(MyStatic.LIFE_CLASSINT);
+            Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+            intent.putExtra(MyStatic.LIFE_ID, lifeId);
+            intent.putExtra(MyStatic.LIFE_CLASSINT, lifeType);
+            startActivity(intent);
+        }
+    }
+
     private void setData(int lifeId, int type, String name, String time, String place) {
-        Bitmap bitmap = null;
         switch (type) {
             // 美食
             case 1:
@@ -253,18 +277,6 @@ public class MainActivity extends BaseActivity {
                 return true;
             }
             return false;
-        }
-    }
-
-    private class OnItemClickListenerImpl implements AdapterView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            int lifeId = (int) dataList.get(position).get(MyStatic.LIFE_ID);
-            int lifeType = (int) dataList.get(position).get(MyStatic.LIFE_CLASSINT);
-            Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
-            intent.putExtra(MyStatic.LIFE_ID, lifeId);
-            intent.putExtra(MyStatic.LIFE_CLASSINT, lifeType);
-            startActivity(intent);
         }
     }
 

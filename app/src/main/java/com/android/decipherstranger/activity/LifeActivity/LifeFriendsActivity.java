@@ -51,6 +51,7 @@ import java.util.Map;
 public class LifeFriendsActivity extends BaseActivity {
 
     private int Id = -1;
+    private Bitmap itemBitmap = null;
     private ListView listView = null;
     private SimpleAdapter simpleAdapter = null;
     private ArrayList<Map<String, Object>> dataList = null;
@@ -77,6 +78,16 @@ public class LifeFriendsActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         super.unregisterReceiver(LifeFriendsActivity.this.receiver);
+        if (itemBitmap != null && !itemBitmap.isRecycled()) {
+            itemBitmap.isRecycled();
+            itemBitmap = null;
+        }
+        dataList.clear();
+        dataList = null;
+        simpleAdapter = null;
+        listView = null;
+        receiver = null;
+        handler = null;
     }
 
     private void init() {
@@ -175,10 +186,10 @@ public class LifeFriendsActivity extends BaseActivity {
                 System.out.println("### 参团成员列表接收成功");
                 if (intent.getStringExtra("reResult").equals(MyStatic.resultTrue)) {
                     String account = intent.getStringExtra("reAccount");
-                    Bitmap portrait = ChangeUtils.toBitmap(intent.getStringExtra("rePhoto"));
+                    itemBitmap = ChangeUtils.toBitmap(intent.getStringExtra("rePhoto"));
                     String name = intent.getStringExtra("reName");
                     int sex = intent.getIntExtra("reGender", 0);
-                    setData(account, portrait, name, sex);
+                    setData(account, itemBitmap, name, sex);
                 } else if (intent.getStringExtra("reResult").equals("finish")) {
                     System.out.println("### 哎哟我去");
                     Message message = new Message();
