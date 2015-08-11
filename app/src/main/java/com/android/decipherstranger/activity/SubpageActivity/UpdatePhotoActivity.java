@@ -47,7 +47,7 @@ public class UpdatePhotoActivity extends BaseActivity {
     private String imageData;
     private String smallImageData;
     private MyApplication application = null;
-    private Bitmap myPhoto;
+    private Bitmap bitmap;
     private UpdateBroadcastReceiver receiver = null;
     private SharedPreferencesUtils sharedPreferencesUtils = null;
 
@@ -65,6 +65,10 @@ public class UpdatePhotoActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         super.unregisterReceiver(receiver);
+        if (bitmap != null && !bitmap.isRecycled()) {
+            bitmap.recycle();
+            bitmap = null;
+        }
     }
 
     private void initView() {
@@ -176,7 +180,7 @@ public class UpdatePhotoActivity extends BaseActivity {
     public void setImageToView(Intent intent) {
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
-            Bitmap bitmap = bundle.getParcelable("data");
+            bitmap = bundle.getParcelable("data");
             updatePhoto.setImageBitmap(bitmap);
             imageData = ChangeUtils.toBinary(bitmap);
             smallImageData = ChangeUtils.toBinary(ImageCompression.compressSimplify(bitmap, 0.3f));

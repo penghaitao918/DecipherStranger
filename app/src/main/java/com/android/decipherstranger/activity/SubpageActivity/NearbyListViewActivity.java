@@ -110,6 +110,13 @@ public class NearbyListViewActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         super.unregisterReceiver(NearbyListViewActivity.this.receiver);
+        dataList.clear();
+        if (progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+        progressDialog = null;
+        dataList = null;
+        listView = null;
         System.out.println("### 再见我退出了。。。");
     }
 

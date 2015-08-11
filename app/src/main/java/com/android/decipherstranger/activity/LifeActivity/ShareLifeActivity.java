@@ -108,12 +108,15 @@ public class ShareLifeActivity extends BaseActivity {
         super.onDestroy();
         System.out.println("### 内存释放开始 %");
         super.unregisterReceiver(ShareLifeActivity.this.receiver);
-        photoBitmap.recycle();
-        selectPhoto.recycle();
-        handler.removeCallbacksAndMessages(null);
+        if (photoBitmap != null && !photoBitmap.isRecycled()) {
+            photoBitmap.recycle();
+            photoBitmap = null;
+        }
+        if (selectPhoto != null && !selectPhoto.isRecycled()) {
+            selectPhoto.recycle();
+            selectPhoto = null;
+        }
         progressDialog.dismiss();
-        photoBitmap = null;
-        selectPhoto = null;
         progressDialog = null;
         editText = null;
         imageButton = null;
@@ -148,6 +151,7 @@ public class ShareLifeActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.sendShare_back_button:
                 onBackPressed();
+                ShareLifeActivity.this.finish();
                 break;
             case R.id.send_share:
                 Message m = new Message();
@@ -247,6 +251,7 @@ public class ShareLifeActivity extends BaseActivity {
                     //TODO 显示分享成功，跳转页面
                     System.out.println("### 晒图返回接收成功");
                     onBackPressed();
+                    ShareLifeActivity.this.finish();
                 } else {
                     //TODO 显示分享失败
                     Toast.makeText(ShareLifeActivity.this, "分享失败，请检查网络连接~", Toast.LENGTH_SHORT).show();

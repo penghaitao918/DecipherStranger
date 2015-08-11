@@ -137,7 +137,7 @@ public class ListButtonAdapter extends BaseAdapter {
     public void itemDo(int position) {
         int count = (Integer) mData.get(position).get(MyStatic.SHARE_NUM);
         mData.get(position).put(MyStatic.SHARE_NUM, count + 1);
-        this.notifyDataSetChanged();
+    //    this.notifyDataSetChanged();
     }
 
     //  接受均在ShareLife中进行
@@ -196,6 +196,7 @@ public class ListButtonAdapter extends BaseAdapter {
             switch (view.getId()) {
                 case R.id.numButton:
                     MyStatic.sharePosition = position;
+               //     itemDo(position);
                     addNum(position);
                     System.out.println("### 执行点赞");
                     break;

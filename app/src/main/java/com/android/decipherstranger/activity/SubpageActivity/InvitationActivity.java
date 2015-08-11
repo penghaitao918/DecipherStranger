@@ -122,20 +122,33 @@ public class InvitationActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_invitation);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         this.resources = this.getResources();
         this.imageView = (ImageView) super.findViewById(R.id.invitationImage);
         this.bitmap = BitmapFactory.decodeResource(resources, startAnimationFile[0]);
         this.imageView.setImageBitmap(bitmap);
-        //  application = (MyApplication) getApplication();
         application = MyApplication.getInstance();
         this.registerBroadcas();
         this.start();
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onStop() {
+        super.onStop();
         super.unregisterReceiver(InvitationActivity.this.receiver);
+        application = null;
+        receiver = null;
+        if (bitmap != null && !bitmap.isRecycled()) {
+            bitmap.recycle();
+            bitmap = null;
+        }
+        resources = null;
+        imageView = null;
+        portrait = null;
     }
 
     @Override

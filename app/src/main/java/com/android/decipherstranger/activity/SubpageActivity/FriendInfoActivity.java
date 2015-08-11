@@ -68,7 +68,6 @@ public class FriendInfoActivity extends BaseActivity {
         showBroadcas();
         initData();
         SendInf();
-        //  application = (MyApplication) getApplication();
         application = MyApplication.getInstance();
         initView();
         initListener();
@@ -78,6 +77,19 @@ public class FriendInfoActivity extends BaseActivity {
     protected void onDestroy() {
         super.unregisterReceiver(FriendInfoActivity.this.receiver);
         super.onDestroy();
+
+        if (userPhoto != null && !userPhoto.isRecycled()) {
+            userPhoto.recycle();
+            userPhoto = null;
+        }
+        helper.close();
+        helper = null;
+        contactsList = null;
+        conversationList = null;
+        chatRecord = null;
+        application = null;
+        receiver = null;
+        presonalInfo = null;
     }
 
     private void initData() {

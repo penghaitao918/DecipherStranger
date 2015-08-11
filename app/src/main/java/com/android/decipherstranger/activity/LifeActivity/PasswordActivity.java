@@ -53,6 +53,7 @@ public class PasswordActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.blank:
                 onBackPressed();
+                PasswordActivity.this.finish();
                 break;
         }
     }

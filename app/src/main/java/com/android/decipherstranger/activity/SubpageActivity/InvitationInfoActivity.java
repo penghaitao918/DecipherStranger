@@ -51,6 +51,16 @@ public class InvitationInfoActivity extends BaseActivity {
         this.setInfo();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (bitmap != null && !bitmap.isRecycled()) {
+            bitmap.recycle();
+            bitmap = null;
+        }
+        portrait = null;
+    }
+
     private void init() {
         this.accountText = (TextView) super.findViewById(R.id.accountInvitation);
         this.nameText = (TextView) super.findViewById(R.id.nameInvitation);
@@ -80,6 +90,6 @@ public class InvitationInfoActivity extends BaseActivity {
         System.out.println("### sex " + sex);
         System.out.println("### bitmap" + bitmap);
         startActivity(intent);
-        finish();
+        InvitationInfoActivity.this.finish();
     }
 }

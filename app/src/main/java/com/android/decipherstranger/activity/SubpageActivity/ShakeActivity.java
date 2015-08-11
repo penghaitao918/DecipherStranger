@@ -68,7 +68,8 @@ public class ShakeActivity extends BaseActivity {
     private ImageButton portrait = null;
     private TextView userName = null;
     private ImageView sex = null;
-
+    private View view = null;
+    private View viewPortrait = null;
     private String FriendAccount = null;
     private String FriendName = null;
     private Bitmap bitmap = null;
@@ -104,6 +105,35 @@ public class ShakeActivity extends BaseActivity {
     protected void onStop() {
         super.onStop();
         super.unregisterReceiver(ShakeActivity.this.receiver);
+        if (bitmap != null && !bitmap.isRecycled()){
+            bitmap.recycle();
+            bitmap = null;
+        }
+        application = null;
+        if (progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+        progressDialog = null;
+        shakeListener = null;
+        imageView = null;
+        inflater = null;
+        if (popupWindow.isShowing()){
+            popupWindow.dismiss();
+        }
+        popupWindow = null;
+        if (PortraitWindow.isShowing()){
+            PortraitWindow.dismiss();
+        }
+        PortraitWindow = null;
+        receiver = null;
+        PopPortrait = null;
+        friendButton.removeAllViews();
+        friendButton = null;
+        portrait = null;
+        view = null;
+        sex = null;
+        viewPortrait = null;
+
     }
 
     @Override
@@ -136,9 +166,9 @@ public class ShakeActivity extends BaseActivity {
         this.progressDialog = new ProgressDialog(ShakeActivity.this);
         this.imageView = (ImageView) super.findViewById(R.id.shake_image);
         this.inflater = LayoutInflater.from(ShakeActivity.this);
-        View view = this.inflater.inflate(R.layout.shake_friend_popup, null);
+        this.view = this.inflater.inflate(R.layout.shake_friend_popup, null);
         this.popupWindow = new PopupWindow(view, LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        View viewPortrait = this.inflater.inflate(R.layout.activity_shake_portrait, null);
+        this.viewPortrait = this.inflater.inflate(R.layout.activity_shake_portrait, null);
         this.PortraitWindow = new PopupWindow(viewPortrait, LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT);
         this.PopPortrait = (ImageView) viewPortrait.findViewById(R.id.imageView2);
 

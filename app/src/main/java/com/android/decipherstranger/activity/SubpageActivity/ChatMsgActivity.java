@@ -91,6 +91,7 @@ public class ChatMsgActivity extends BaseActivity implements OnClickListener {
     //从相册选择图片发送
     private ImageView select_photo;
     //拍张发送
+    private Bitmap photo = null;
     private ImageView take_picture;
     //切换语音发送
     private ImageView chatting_mode_btn;
@@ -126,8 +127,16 @@ public class ChatMsgActivity extends BaseActivity implements OnClickListener {
 
     @Override
     protected void onDestroy() {
-        super.unregisterReceiver(ChatMsgActivity.this.receiver);
         super.onDestroy();
+        super.unregisterReceiver(ChatMsgActivity.this.receiver);
+        if (currentUserPhoto != null && !currentUserPhoto.isRecycled()) {
+            currentUserPhoto.recycle();
+            currentUserPhoto = null;
+        }
+        if (photo != null && !photo.isRecycled()) {
+            photo.recycle();
+            photo = null;
+        }
     }
 
     public void initView() {
@@ -324,7 +333,7 @@ public class ChatMsgActivity extends BaseActivity implements OnClickListener {
     private void getImageToView(Intent data) {
         Bundle extras = data.getExtras();
         if (extras != null) {
-            Bitmap photo = extras.getParcelable("data");
+            photo = extras.getParcelable("data");
             Contacts entity = new Contacts();
             entity.setAccount(application.getAccount());
             entity.setUsername(application.getName());

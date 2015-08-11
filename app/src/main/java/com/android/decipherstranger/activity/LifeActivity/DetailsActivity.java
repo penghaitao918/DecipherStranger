@@ -86,16 +86,23 @@ public class DetailsActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         super.unregisterReceiver(DetailsActivity.this.receiver);
+        if (sendPortrait != null && !sendPortrait.isRecycled()) {
+            sendPortrait.recycle();
+            sendPortrait = null;
+        }
+        intent = null;
+        application = null;
+        receiver = null;
+        passwordLayout.removeAllViews();
+        passwordLayout = null;
+        buttonLayout.removeAllViews();
+        buttonLayout = null;
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {// 防止连续两次返回键
             //返回处理
-            if (sendPortrait != null && !sendPortrait.isRecycled()) {
-                sendPortrait.recycle();
-                sendPortrait = null;
-            }
             onBackPressed();
             DetailsActivity.this.finish();
             return true;

@@ -80,6 +80,7 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
     private double mLongtitude;
     private LocationClient mLocationClient;
     private MyLocationListener mLocationListener;
+    private Bitmap bitmap = null;
     private ImageView advertisementImage = null;
     private AnimationDrawable animationAdvertisement = null;
     private RelativeLayout topLayout = null;
@@ -154,6 +155,20 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
     protected void onDestroy() {
         super.onDestroy();
         super.unregisterReceiver(PartakeActivity.this.receiver);
+        if (bitmap != null && !bitmap.isRecycled()) {
+            bitmap.recycle();
+            bitmap = null;
+        }
+        topLayout.removeAllViews();
+        dataList.clear();
+        myScrollView.removeAllViews();
+        mBuyLayout.removeAllViews();
+        receiver = null;
+        topLayout = null;
+        dataList = null;
+        listView = null;
+        myScrollView = null;
+        mBuyLayout = null;
     }
 
     private void init() {
@@ -318,7 +333,6 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
 
     //    lifeList.setData(id, name, type, distance, favorite, space, date);
     private void setData(int lifeId, String name, int type, double distance, int favorite, String space, String date) {
-        Bitmap bitmap = null;
         switch (type) {
             // 美食
             case 1:
@@ -356,6 +370,7 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
             /*返回*/
             case R.id.life_back_button:
                 onBackPressed();
+                PartakeActivity.this.finish();
                 break;
             /*广告*/
             case R.id.advertLayout:

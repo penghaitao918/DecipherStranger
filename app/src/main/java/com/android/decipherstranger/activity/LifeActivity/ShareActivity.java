@@ -53,6 +53,9 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
     private SQLiteOpenHelper helper = null;
     private LifeShare shareList = null;
 
+    Bitmap photo = null;
+    Bitmap portrait = null;
+
     private AutoListView listView;
     private ListButtonAdapter adapter = null;
     private ArrayList<Map<String, Object>> dataList = null;
@@ -78,8 +81,8 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
                     break;
             }
             //   listView.setResultSize(result.size());
-            adapter.notifyDataSetChanged();
             listView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
         }
     };
 
@@ -89,9 +92,9 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
         setContentView(R.layout.activity_life_share);
 
         this.LifeShareBroadcas();
-        this.refresh();
         this.init();
         initData();
+        this.refresh();
     }
 
     @Override
@@ -104,6 +107,23 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
     protected void onDestroy() {
         super.onDestroy();
         super.unregisterReceiver(ShareActivity.this.receiver);
+        topLayout.removeAllViews();
+        helper.close();
+        dataList.clear();
+        if (photo != null && !photo.isRecycled()) {
+            photo.recycle();
+            photo = null;
+        }
+        if (portrait != null && !portrait.isRecycled()) {
+            portrait.recycle();
+            portrait = null;
+        }
+        topLayout = null;
+        helper = null;
+        shareList = null;
+        listView = null;
+        adapter = null;
+        dataList = null;
     }
 
     /* 刷新 */
@@ -236,10 +256,10 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
                         //  获取返回类型为 刷新 还是 加载, 刷新为1，加载为0
                         int id = intent.getIntExtra("reId", 0);
                         String account = intent.getStringExtra("reAccount");
-                        Bitmap portrait = ChangeUtils.toBitmap(intent.getStringExtra("reUserPhoto"));
+                        portrait = ChangeUtils.toBitmap(intent.getStringExtra("reUserPhoto"));
                         String name = intent.getStringExtra("reUserName");
                         String message = intent.getStringExtra("reSpeech");
-                        Bitmap photo = ChangeUtils.toBitmap(intent.getStringExtra("reSharePhoto"));
+                        photo = ChangeUtils.toBitmap(intent.getStringExtra("reSharePhoto"));
                         String time = intent.getStringExtra("reTime");
                         int number = intent.getIntExtra("reZan", 0);
                         int gender = intent.getIntExtra("re_gender", 0);
@@ -276,6 +296,8 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
                     if (intent.getStringExtra("reResult").equals("true")) {
                         //TODO 点赞成功处理
                         adapter.itemDo(MyStatic.sharePosition);
+                        listView.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
                     } else {
                         //TODO 已经赞过处理
                         Toast.makeText(ShareActivity.this, "您已赞过了该分享~", Toast.LENGTH_SHORT).show();
