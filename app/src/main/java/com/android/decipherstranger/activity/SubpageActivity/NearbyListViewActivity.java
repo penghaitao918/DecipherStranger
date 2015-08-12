@@ -14,6 +14,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -58,6 +59,7 @@ public class NearbyListViewActivity extends BaseActivity {
     private ListView listView = null;
     private SimpleAdapter simpleAdapter = null;
     private ArrayList<Map<String, Object>> dataList = null;
+    private ImageButton back = null;
 
     private double mLatitude;
     private double mLongtitude;
@@ -109,6 +111,13 @@ public class NearbyListViewActivity extends BaseActivity {
 
     private void init() {
         this.progressDialog = new ProgressDialog(NearbyListViewActivity.this);
+        this.back = (ImageButton) findViewById(R.id.near_back_button);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         this.dataList = new ArrayList<Map<String, Object>>();
         this.listView = (ListView) super.findViewById(R.id.nearby_list_view);
