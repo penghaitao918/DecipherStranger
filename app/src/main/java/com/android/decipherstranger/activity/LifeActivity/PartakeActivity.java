@@ -127,15 +127,10 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
         this.init();
         this.initData();
         this.LifePartakeBroadcas();
-        System.out.println("### 啦啦啦我进来了。。。");
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
         if (!mLocationClient.isStarted()) {
             mLocationClient.start();
         }
+        System.out.println("### 啦啦啦我进来了。。。");
     }
 
     @Override
@@ -147,7 +142,6 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
     @Override
     protected void onStop() {
         super.onStop();
-        mLocationClient.stop();
         animationAdvertisement.stop();
     }
 
@@ -155,6 +149,7 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
     protected void onDestroy() {
         super.onDestroy();
         super.unregisterReceiver(PartakeActivity.this.receiver);
+        mLocationClient.stop();
         if (bitmap != null && !bitmap.isRecycled()) {
             bitmap.recycle();
             bitmap = null;

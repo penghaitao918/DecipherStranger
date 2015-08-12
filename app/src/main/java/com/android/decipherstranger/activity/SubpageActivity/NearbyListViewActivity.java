@@ -88,27 +88,15 @@ public class NearbyListViewActivity extends BaseActivity {
         this.init();
         this.initData();
         this.nearbyBroadcas();
-        System.out.println("### 啦啦啦我进来了。。。");
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (!mLocationClient.isStarted()) {
-            mLocationClient.start();
-        }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        mLocationClient.stop();
+        mLocationClient.start();
+        System.out.println("#### 啦啦啦我进来了。。。");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         super.unregisterReceiver(NearbyListViewActivity.this.receiver);
+        mLocationClient.stop();
         dataList.clear();
         if (progressDialog.isShowing()) {
             progressDialog.dismiss();
@@ -116,7 +104,7 @@ public class NearbyListViewActivity extends BaseActivity {
         progressDialog = null;
         dataList = null;
         listView = null;
-        System.out.println("### 再见我退出了。。。");
+        System.out.println("#### 再见我退出了。。。");
     }
 
     private void init() {
