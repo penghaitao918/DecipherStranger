@@ -297,9 +297,7 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
                         //TODO 点赞成功处理
                         shareList = new LifeShare(helper.getWritableDatabase());
                         shareList.addNum(MyStatic.sharePositionId, MyStatic.sharePositionNum + 1);
-                        listView.setAdapter(adapter);
-                        adapter.notifyDataSetChanged();
-                    //    adapter.itemDo(MyStatic.sharePositionId);
+                        adapter.itemDo(MyStatic.sharePosition);
                     } else {
                         //TODO 已经赞过处理
                         Toast.makeText(ShareActivity.this, "您已赞过了该分享~", Toast.LENGTH_SHORT).show();
