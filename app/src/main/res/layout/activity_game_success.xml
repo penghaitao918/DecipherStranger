@@ -15,7 +15,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/friend_get_success" />
+            android:src="@drawable/friend_get_fail" />
+
+<!--        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/friend_get_success" />-->
 
         <LinearLayout
             android:layout_width="fill_parent"
