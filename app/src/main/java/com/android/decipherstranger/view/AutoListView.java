@@ -300,12 +300,17 @@ public class AutoListView extends ListView implements OnScrollListener {
     /**
      * 初始化底部控件
      */
-    public void initFooter() {
+    public void initFooter(int type) {
         isLoadFull = false;
         loadFull.setVisibility(View.GONE);
-        loading.setVisibility(View.GONE);
-        more.setVisibility(View.GONE);
         noData.setVisibility(View.GONE);
+        if (type == 0) {
+            loading.setVisibility(View.GONE);
+            more.setVisibility(View.GONE);
+        } else {
+            loading.setVisibility(View.VISIBLE);
+            more.setVisibility(View.VISIBLE);
+        }
     }
 
     /**

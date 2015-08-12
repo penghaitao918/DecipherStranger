@@ -132,6 +132,7 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
 
     @Override
     public void onLoad() {
+        listView.initFooter(1);
         getMinId();
         load();
     }
@@ -151,7 +152,6 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
     }
 
     private void load() {
-        //send  minId;
         System.out.println("### 加载");
         //  TODO 向服务器发送加载数据,获取ID<count的10条数据（从count-1到count-10）
         if (NetworkService.getInstance().getIsConnected()) {
@@ -185,7 +185,7 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
         //    this.adapter.setViewBinder(new ViewBinderImpl());
         this.listView.setAdapter(adapter);
 
-        listView.initFooter();
+        listView.initFooter(0);
 
         this.listView.setOnRefreshListener(this);
         this.listView.setOnLoadListener(this);
