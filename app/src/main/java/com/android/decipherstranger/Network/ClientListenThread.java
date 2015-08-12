@@ -67,6 +67,7 @@ public class ClientListenThread extends Thread {
                         jsonObj = new JSONObject(reMsg);
                     } catch (Exception e) {
                         e.printStackTrace();
+                        System.out.println("### 特么的这JSON有毒！！");
                     }
                     Log.v(" ### 能不能接到", reMsg);
                     int msgType = jsonObj.getInt("re_type");            // type of message received
