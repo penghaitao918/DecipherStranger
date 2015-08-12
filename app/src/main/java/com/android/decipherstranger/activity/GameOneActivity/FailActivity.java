@@ -14,17 +14,25 @@ import com.android.decipherstranger.activity.MainPageActivity.ServicePageActivit
  */
 public class FailActivity extends BaseActivity {
 
+    private MediaPlayer mediaPlayer = null;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_fail);
-        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.makefriend_lose);
+        mediaPlayer = MediaPlayer.create(this, R.raw.makefriend_lose);
         mediaPlayer.start();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mediaPlayer.release();
+        mediaPlayer = null;
     }
 
     public void GameFailOnClick(View view) {
         Intent intent = new Intent(FailActivity.this, ServicePageActivity.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         FailActivity.this.finish();
