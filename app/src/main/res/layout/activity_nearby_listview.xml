@@ -20,7 +20,6 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:background="@null"
-            android:onClick="NearOnClick"
             android:src="@drawable/home_btn" />
 
         <TextView

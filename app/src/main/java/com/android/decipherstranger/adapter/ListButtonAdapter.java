@@ -133,12 +133,13 @@ public class ListButtonAdapter extends BaseAdapter {
         }
     }
 
-    //  点赞成功回执调用
+/*    //  点赞成功回执调用
     public void itemDo(int position) {
+        int Id = (Integer) mData.get(position).get(MyStatic.SHARE_ID);
         int count = (Integer) mData.get(position).get(MyStatic.SHARE_NUM);
         mData.get(position).put(MyStatic.SHARE_NUM, count + 1);
     //    this.notifyDataSetChanged();
-    }
+    }*/
 
     //  接受均在ShareLife中进行
     private void addNum(int position) {
@@ -200,9 +201,9 @@ public class ListButtonAdapter extends BaseAdapter {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.numButton:
-                    MyStatic.sharePosition = position;
-               //     itemDo(position);
                     addNum(position);
+                    MyStatic.sharePositionId = (Integer) mData.get(position).get(MyStatic.SHARE_ID);;
+                    MyStatic.sharePositionNum = (Integer) mData.get(position).get(MyStatic.SHARE_NUM);
                     System.out.println("### 执行点赞");
                     break;
                 case R.id.friendButton:

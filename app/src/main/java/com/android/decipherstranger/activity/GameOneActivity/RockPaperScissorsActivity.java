@@ -4,7 +4,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Build;
@@ -59,9 +62,9 @@ public class RockPaperScissorsActivity extends BaseActivity {
     private ImageView gameAnswerImage = null;
     private AnimationDrawable animationDrawablePlayer = null;
     private AnimationDrawable animationDrawableComputer = null;
-    private Drawable answerImageSrc = null;
-    private Drawable playerImageSrc = null;
-    private Drawable computerImageSrc = null;
+    private Bitmap answerImageSrc = null;
+    private Bitmap playerImageSrc = null;
+    private Bitmap computerImageSrc = null;
     private PopupWindow popupWindow = null;
     private MediaPlayer backgroundMusic = WelcomeRspActivity.backgroundMusic;
     private MediaPlayer winMusic = null;
@@ -104,6 +107,43 @@ public class RockPaperScissorsActivity extends BaseActivity {
         super.onPause();
         super.unregisterReceiver(RockPaperScissorsActivity.this.receiver);
         this.closeMusic();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        application = null;
+        if (animationDrawableComputer.isRunning()) {
+            animationDrawableComputer.stop();
+        }animationDrawableComputer = null;
+        if (animationDrawablePlayer.isRunning()) {
+            animationDrawablePlayer.stop();
+        }animationDrawablePlayer = null;
+        if (answerImageSrc != null && !answerImageSrc.isRecycled()) {
+            answerImageSrc.recycle();
+        }answerImageSrc = null;
+        if (playerImageSrc != null && !playerImageSrc.isRecycled()) {
+            playerImageSrc.recycle();
+        }playerImageSrc = null;
+        if (computerImageSrc != null && !computerImageSrc.isRecycled()) {
+            computerImageSrc.recycle();
+        }computerImageSrc = null;
+        playerImage = null;
+        computerImage = null;
+        gameAnswerImage = null;
+        if (popupWindow.isShowing()) {
+            popupWindow.dismiss();
+        }popupWindow = null;
+        if (backgroundMusic != null && backgroundMusic.isPlaying()){
+            backgroundMusic.stop();
+            backgroundMusic.release();
+        }backgroundMusic = null;
+        winMusic = null;
+        loseMusic = null;
+        dogfallMusic = null;
+        slidingDrawer.removeAllViews();
+        slidingDrawer = null;
+        receiver = null;
     }
 
     @Override
@@ -251,34 +291,40 @@ public class RockPaperScissorsActivity extends BaseActivity {
         int computer = computerShow();
         switch (player) {
             case 0:
-                this.playerImageSrc = getResources().getDrawable(R.drawable.game_rock_pressed);
+                this.playerImageSrc = BitmapFactory.decodeResource(getResources(), R.drawable.game_rock_pressed);
                 break;
             case 2:
-                this.playerImageSrc = getResources().getDrawable(R.drawable.game_scissors_pressed);
+                this.playerImageSrc = BitmapFactory.decodeResource(getResources(), R.drawable.game_scissors_pressed);
                 break;
             case 5:
-                this.playerImageSrc = getResources().getDrawable(R.drawable.game_paper_pressed);
+                this.playerImageSrc = BitmapFactory.decodeResource(getResources(), R.drawable.game_paper_pressed);
                 break;
         }
-        this.playerImage.setImageDrawable(playerImageSrc);
+        this.playerImage.setImageDrawable(new BitmapDrawable(this.getResources(), playerImageSrc));
         int answer = player - computer;
         if (answer == 0) {
-            answerImageSrc = getResources().getDrawable(R.drawable.game_dogfall);
-            this.dogfallMusic.start();
+            this.answerImageSrc = BitmapFactory.decodeResource(getResources(), R.drawable.game_dogfall);
+            if (!dogfallMusic.isPlaying()) {
+                this.dogfallMusic.start();
+            }
             player = computer = 1;
         } else if (answer == -2 || answer == -3 || answer == 5) {
-            answerImageSrc = getResources().getDrawable(R.drawable.game_win);
-            this.winMusic.start();
+            this.answerImageSrc = BitmapFactory.decodeResource(getResources(), R.drawable.game_win);
+            if (!winMusic.isPlaying()) {
+                this.winMusic.start();
+            }
             player = 2;
             computer = 0;
         } else {
-            answerImageSrc = getResources().getDrawable(R.drawable.game_lose);
-            this.loseMusic.start();
+            this.answerImageSrc = BitmapFactory.decodeResource(getResources(), R.drawable.game_lose);
+            if (!loseMusic.isPlaying()) {
+                this.loseMusic.start();
+            }
             player = 0;
             computer = 2;
         }
         setText(player, computer);
-        this.gameAnswerImage.setImageDrawable(answerImageSrc);
+        this.gameAnswerImage.setImageDrawable(new BitmapDrawable(this.getResources(), answerImageSrc));
         IfGameOver();
     }
 
@@ -286,16 +332,16 @@ public class RockPaperScissorsActivity extends BaseActivity {
         int answerC = GameUtils.Answer();
         switch (answerC) {
             case 0:
-                this.computerImageSrc = getResources().getDrawable(R.drawable.game_rock_computer);
+                this.computerImageSrc = BitmapFactory.decodeResource(getResources(), R.drawable.game_rock_computer);
                 break;
             case 2:
-                this.computerImageSrc = getResources().getDrawable(R.drawable.game_scissors_computer);
+                this.computerImageSrc = BitmapFactory.decodeResource(getResources(), R.drawable.game_scissors_computer);
                 break;
             case 5:
-                this.computerImageSrc = getResources().getDrawable(R.drawable.game_paper_computer);
+                this.computerImageSrc = BitmapFactory.decodeResource(getResources(), R.drawable.game_paper_computer);
                 break;
         }
-        this.computerImage.setImageDrawable(computerImageSrc);
+        this.computerImage.setImageDrawable(new BitmapDrawable(this.getResources(), computerImageSrc));
         return answerC;
     }
 

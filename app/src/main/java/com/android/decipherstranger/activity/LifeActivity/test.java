@@ -1,32 +1,5 @@
 package com.android.decipherstranger.activity.LifeActivity;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Bitmap;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
-import android.view.View;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
-
-import com.android.decipherstranger.Network.NetworkService;
-import com.android.decipherstranger.R;
-import com.android.decipherstranger.activity.Base.BaseActivity;
-import com.android.decipherstranger.adapter.ListButtonAdapter;
-import com.android.decipherstranger.db.DATABASE;
-import com.android.decipherstranger.db.LifeShare;
-import com.android.decipherstranger.util.ChangeUtils;
-import com.android.decipherstranger.util.MyStatic;
-import com.android.decipherstranger.view.AutoListView;
-
-import java.util.ArrayList;
-import java.util.Map;
-
 /**
  * へ　　　　　／|
  * 　　/＼7　　　 ∠＿/
@@ -44,10 +17,10 @@ import java.util.Map;
  *
  * @author penghaitao
  * @version V1.1
- * @Date 2015/7/28 18:25
- * @e-mail 785351408@qq.com
+ * @Date 2015/8/12 14:24
+ * @e-mail penghaitao918@163.com
  */
-public class ShareActivity extends BaseActivity implements AutoListView.OnRefreshListener, AutoListView.OnLoadListener {
+public class test /*extends BaseActivity implements AutoListView.OnRefreshListener, AutoListView.OnLoadListener {
 
     Bitmap photo = null;
     Bitmap portrait = null;
@@ -64,20 +37,20 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
     private LifeShareBroadcastReceiver receiver = null;
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
-            ArrayList<Map<String, Object>> result = (ArrayList<Map<String, Object>>) msg.obj;
-            switch (msg.what) {
-                case AutoListView.REFRESH:
-                    listView.onRefreshComplete();
-                    dataList.clear();
-                    dataList.addAll(result);
-                    System.out.println("### 数据刷新成功");
-                    break;
-                case AutoListView.LOAD:
-                    listView.onLoadComplete(result.size());
-                    dataList.addAll(result);
-                    System.out.println("### 数据加载成功");
-                    break;
-            }
+//            ArrayList<Map<String, Object>> result = (ArrayList<Map<String, Object>>) msg.obj;
+//            switch (msg.what) {
+//                case AutoListView.REFRESH:
+//                    listView.onRefreshComplete();
+//                    dataList.clear();
+//                    dataList.addAll(result);
+//                    System.out.println("### 数据刷新成功");
+//                    break;
+//                case AutoListView.LOAD:
+//                    listView.onLoadComplete(result.size());
+//                    dataList.addAll(result);
+//                    System.out.println("### 数据加载成功");
+//                    break;
+//            }
             //   listView.setResultSize(result.size());
             listView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
@@ -91,7 +64,7 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
 
         this.LifeShareBroadcas();
         this.init();
-        initData();
+//        initData();
         this.refresh();
     }
 
@@ -124,7 +97,7 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
         dataList = null;
     }
 
-    /* 刷新 */
+    *//* 刷新 *//*
     @Override
     public void onRefresh() {
         refresh();
@@ -133,14 +106,13 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
     @Override
     public void onLoad() {
         listView.initFooter(1);
-        getMinId();
+//        getMinId();
         load();
     }
 
     private void refresh() {
         refreshFlag = true;
         System.out.println("### 刷新");
-        listView.initFooter(0);
         //  TODO 向服务器发送刷新请求,获取最新的5条数据（这是一个ID为逆序的数组）
         if (NetworkService.getInstance().getIsConnected()) {
             String Msg = "type" + ":" + "24" + ":" + "requestType" + ":" + "1";
@@ -153,6 +125,7 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
     }
 
     private void load() {
+        //send  minId;
         System.out.println("### 加载");
         //  TODO 向服务器发送加载数据,获取ID<count的10条数据（从count-1到count-10）
         if (NetworkService.getInstance().getIsConnected()) {
@@ -167,7 +140,7 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
 
     private void init() {
         this.helper = new DATABASE(this);
-        /*锁定聚焦到顶部*/
+        *//*锁定聚焦到顶部*//*
         topLayout = (RelativeLayout) super.findViewById(R.id.top);
         topLayout.setFocusable(true);
         topLayout.setFocusableInTouchMode(true);
@@ -182,7 +155,7 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
                         MyStatic.SHARE_PHOTO, MyStatic.SHARE_TIME, MyStatic.SHARE_NUM, MyStatic.SHARE_NUM_BTN, MyStatic.SHARE_FRI_BTN},
                 new int[]{R.id.sharePortrait, R.id.shareName, R.id.shareMessage, R.id.sharePhoto, R.id.shareTime, R.id.shareNum, R.id.numButton, R.id.friendButton}
         );
-        /*实现ViewBinder()这个接口*/
+        *//*实现ViewBinder()这个接口*//*
         //    this.adapter.setViewBinder(new ViewBinderImpl());
         this.listView.setAdapter(adapter);
 
@@ -192,30 +165,43 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
         this.listView.setOnLoadListener(this);
     }
 
-    private void initData() {
-        this.shareList = new LifeShare(helper.getReadableDatabase());
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Message msg = handler.obtainMessage();
-                msg.what = AutoListView.REFRESH;
-                msg.obj = shareList.refresh();
-                handler.sendMessage(msg);
-            }
-        }).start();
-    }
-
-    private void loadData() {
-        this.shareList = new LifeShare(helper.getReadableDatabase());
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Message msg = handler.obtainMessage();
-                msg.what = AutoListView.LOAD;
-                msg.obj = shareList.load(minId);
-                handler.sendMessage(msg);
-            }
-        }).start();
+    //    private void initData() {
+//        this.shareList = new LifeShare(helper.getReadableDatabase());
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                Message msg = handler.obtainMessage();
+//                msg.what = AutoListView.REFRESH;
+//                msg.obj = shareList.refresh();
+//                handler.sendMessage(msg);
+//            }
+//        }).start();
+//    }
+//
+//    private void loadData() {
+//        this.shareList = new LifeShare(helper.getReadableDatabase());
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                Message msg = handler.obtainMessage();
+//                msg.what = AutoListView.LOAD;
+//                msg.obj = shareList.load(minId);
+//                handler.sendMessage(msg);
+//            }
+//        }).start();
+//    }
+    public void setData(int id, String account, Bitmap portrait, String name, String message, Bitmap photo, String time, int number, int sex){
+        Map <String,Object> map = new HashMap<String,Object>();
+        map.put(MyStatic.SHARE_ID,id);
+        map.put(MyStatic.SHARE_ACCOUNT,account);
+        map.put(MyStatic.SHARE_PORTRAIT,portrait);
+        map.put(MyStatic.SHARE_NAME,name);
+        map.put(MyStatic.SHARE_MESSAGE,message);
+        map.put(MyStatic.SHARE_PHOTO,photo);
+        map.put(MyStatic.SHARE_TIME,time);
+        map.put(MyStatic.SHARE_NUM,number);
+        map.put(MyStatic.SHARE_SEX,sex);
+        dataList.add(map);
     }
 
     private void getMinId() {
@@ -251,7 +237,6 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
                 if (intent.getStringExtra("reMatter").equals("showShare")) {
                     System.out.println("### 晒图数据接收成功");
                     int type = intent.getIntExtra("reRequestType", 1);
-                    System.out.println("### result = " + intent.getStringExtra("reResult"));
                     if (intent.getStringExtra("reResult").equals("true")) {
                         //  获取返回类型为 刷新 还是 加载, 刷新为1，加载为0
                         int id = intent.getIntExtra("reId", 0);
@@ -263,27 +248,34 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
                         String time = intent.getStringExtra("reTime");
                         int number = intent.getIntExtra("reZan", 0);
                         int gender = intent.getIntExtra("re_gender", 0);
-                        switch (type) {
-                            case MyStatic.REFRESH:
-                                if (refreshFlag) {
-                                    refreshFlag = false;
-                                    shareList = new LifeShare(helper.getWritableDatabase());
-                                    shareList.clear();
-                                }
-                                shareList = new LifeShare(helper.getWritableDatabase());
-                                shareList.insert(id, account, portrait, name, message, photo, time, number, gender);
-                                break;
-                            case MyStatic.LOAD:
-                                shareList = new LifeShare(helper.getWritableDatabase());
-                                shareList.insert(id, account, portrait, name, message, photo, time, number, gender);
-                                break;
+                        minId = id;
+                        if (type == MyStatic.REFRESH && refreshFlag == true){
+                            dataList.clear();
+                            refreshFlag = false;
                         }
+                        setData(id, account, portrait, name, message, photo, time, number, gender);
+//                        switch (type) {
+//                            case MyStatic.REFRESH:
+//                                if (refreshFlag) {
+//                                    refreshFlag = false;
+//                                    shareList = new LifeShare(helper.getWritableDatabase());
+//                                    shareList.clear();
+//                                }
+//                                shareList = new LifeShare(helper.getWritableDatabase());
+//                                shareList.insert(id, account, portrait, name, message, photo, time, number, gender);
+//                                break;
+//                            case MyStatic.LOAD:
+//                                shareList = new LifeShare(helper.getWritableDatabase());
+//                                shareList.insert(id, account, portrait, name, message, photo, time, number, gender);
+//                                break;
+//                        }
                     } else if (intent.getStringExtra("reResult").equals("finish")) {
-                        if (intent.getIntExtra("reRequestType", 0) == 1) {
-                            initData();
-                        } else {
-                            loadData();
-                        }
+//                        if (intent.getIntExtra("reRequestType", 0) == 1) {
+//                            initData();
+//                        } else {
+//                            loadData();
+//                        }
+                        handler.sendMessage(new Message());
                     } else {
                         if (intent.getIntExtra("reRequestType", 0) == 0) {
                             System.out.println("### 没有数据了");
@@ -295,11 +287,9 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
                 } else {
                     if (intent.getStringExtra("reResult").equals("true")) {
                         //TODO 点赞成功处理
-                        shareList = new LifeShare(helper.getWritableDatabase());
-                        shareList.addNum(MyStatic.sharePositionId, MyStatic.sharePositionNum + 1);
+                        adapter.itemDo(MyStatic.sharePositionId);
                         listView.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
-                    //    adapter.itemDo(MyStatic.sharePositionId);
                     } else {
                         //TODO 已经赞过处理
                         Toast.makeText(ShareActivity.this, "您已赞过了该分享~", Toast.LENGTH_SHORT).show();
@@ -309,3 +299,4 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
         }
     }
 }
+*/{}

@@ -62,7 +62,12 @@ public class ClientListenThread extends Thread {
                 }
                 if (reMsg != null) {
                     Log.v("### AAA", reMsg);
-                    JSONObject jsonObj = new JSONObject(reMsg);
+                    JSONObject jsonObj = null;
+                    try {
+                        jsonObj = new JSONObject(reMsg);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     Log.v(" ### 能不能接到", reMsg);
                     int msgType = jsonObj.getInt("re_type");            // type of message received
                     System.out.println("### ++++++++++++这是一条消息" + msgType);

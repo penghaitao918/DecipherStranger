@@ -111,5 +111,6 @@ public class MyStatic {
     public static int scissorsInt = 10;        //  当前用户出剪刀的几率
     public static int paperInt = 10;           //  当前用户出布的几率
 
-    public static int sharePosition = -1;
+    public static int sharePositionId = -1;
+    public static int sharePositionNum = -1;
 }

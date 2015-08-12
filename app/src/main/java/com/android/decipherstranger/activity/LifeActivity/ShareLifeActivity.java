@@ -89,18 +89,8 @@ public class ShareLifeActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_life_share_do);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
         this.init();
         this.ShareLifeBroadcas();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
     }
 
     @Override

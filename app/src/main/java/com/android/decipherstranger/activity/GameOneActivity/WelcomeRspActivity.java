@@ -83,6 +83,14 @@ public class WelcomeRspActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         super.unregisterReceiver(WelcomeRspActivity.this.receiver);
+        application = null;
+        receiver = null;
+        if (helpPopWin.isShowing()) {
+            helpPopWin.dismiss();
+        }helpPopWin = null;
+        musicImage = null;
+        sharedPreferencesUtils.recycle();
+        sharedPreferencesUtils = null;
     }
 
     @Override

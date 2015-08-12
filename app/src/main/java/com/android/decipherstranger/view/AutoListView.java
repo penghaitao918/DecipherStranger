@@ -72,7 +72,7 @@ public class AutoListView extends ListView implements OnScrollListener {
     private boolean isLoadFull;
 
     //	加载数据结果判定
-    private int pageSize = 5;
+    private int pageSize = 3;
 
     private OnRefreshListener onRefreshListener;
     private OnLoadListener onLoadListener;

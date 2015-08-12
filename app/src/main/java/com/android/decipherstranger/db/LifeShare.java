@@ -48,9 +48,18 @@ public class LifeShare {
         ByteArrayOutputStream osPhoto = new ByteArrayOutputStream();
         photo.compress(Bitmap.CompressFormat.PNG, 100, osPhoto);
 
-        String sql = "insert  into `life_share` values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            String sql = "insert  into `life_share` values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            Object args[] = new Object[]{id, account, osPortrait.toByteArray(), name, message, osPhoto.toByteArray(), time, number, String.valueOf(sex)};
+            this.db.execSQL(sql, args);
+        } catch (Exception e) {
+            String sql = "UPDATE `life_share` SET account=?, portrait=?, name=?, message=?, photo=?, time=?, number=?,  sex=? WHERE id=?";
+            Object args[] = new Object[]{account, osPortrait.toByteArray(), name, message, osPhoto.toByteArray(), time, number, String.valueOf(sex), id};
+            this.db.execSQL(sql, args);
+        }
+/*        String sql = "insert  into `life_share` values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         Object args[] = new Object[]{id, account, osPortrait.toByteArray(), name, message, osPhoto.toByteArray(), time, number, String.valueOf(sex)};
-        this.db.execSQL(sql, args);
+        this.db.execSQL(sql, args);*/
         this.db.close();
     }
 
@@ -104,7 +113,6 @@ public class LifeShare {
             map.put(MyStatic.SHARE_NUM, result.getInt(7));
             map.put(MyStatic.SHARE_SEX, result.getInt(8));
             all.add(map);
-            all.add(map);
         }
         this.db.close();
         return all;
@@ -112,13 +120,21 @@ public class LifeShare {
 
     //  获取当前最小ID
     public int getMinId() {
-        int id = 0;
+        int id = 100000;
         String sql = "SELECT id FROM life_share ORDER BY id ASC LIMIT 1";
         Cursor result = this.db.rawQuery(sql, null);
         if (result.moveToNext()) {
             id = result.getInt(0);
         }
         return id;
+    }
+
+    public void addNum(int id, int number) {
+        String sql = "UPDATE `life_share` SET number=? WHERE id=?";
+        Integer args[] = new Integer[]{number, id};
+        this.db.execSQL(sql, args);
+        this.db.close();
+        System.out.println("### # id & number " + id + " # " + number);
     }
 
     // 清空

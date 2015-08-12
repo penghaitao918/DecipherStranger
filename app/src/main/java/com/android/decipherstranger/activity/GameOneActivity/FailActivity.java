@@ -27,14 +27,14 @@ public class FailActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        while (mediaPlayer.isPlaying()){ System.out.println("### 啦啦啦"); }
         mediaPlayer.release();
         mediaPlayer = null;
+        System.out.println("### 我释放了");
     }
 
     public void GameFailOnClick(View view) {
-        Intent intent = new Intent(FailActivity.this, ServicePageActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+        onBackPressed();
         FailActivity.this.finish();
     }
 
