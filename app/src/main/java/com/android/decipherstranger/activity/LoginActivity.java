@@ -163,7 +163,6 @@ public class LoginActivity extends BaseActivity {
         this.registerButton = (Button) super.findViewById(R.id.register_button);
 
         this.accountEdit.setOnItemClickListener(new OnItemClickListenerImpl());
-        this.accountEdit.setOnClickListener(new accountOnClickListenerImpl());
         this.pawEdit.setOnClickListener(new passwordOnClickListenerImpl());
         this.loginButton.setOnClickListener(new loginOnClickListenerImpl());
         this.registerButton.setOnClickListener(new registerOnClickListenerImpl());
@@ -182,8 +181,8 @@ public class LoginActivity extends BaseActivity {
             NetworkService.getInstance().sendUpload(userInfo);
         } else {
             NetworkService.getInstance().closeConnection();
-            Handler mhandler = new Handler();
-            mhandler.postDelayed(new Runnable() {
+        //    Handler mhandler = new Handler();
+            handler.postDelayed(new Runnable() {
                 public void run() {
                     Message m = new Message();
                     m.what = 3;
@@ -218,13 +217,6 @@ public class LoginActivity extends BaseActivity {
         sharedPreferencesUtils.set(MyStatic.USER_EMAIL, application.getEmail());
         sharedPreferencesUtils.set(MyStatic.USER_PHONE, application.getPhone());
         //       sharedPreferencesUtils.set(MyStatic.USER_SIGNATURE, application.getSignature());
-    }
-
-    private class accountOnClickListenerImpl implements View.OnClickListener {
-        @Override
-        public void onClick(View view) {
-            LoginActivity.this.accountEdit.setText("");
-        }
     }
 
     private class passwordOnClickListenerImpl implements View.OnClickListener {

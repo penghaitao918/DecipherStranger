@@ -210,7 +210,7 @@ public class ShakeActivity extends BaseActivity {
             Vibrator localVibrator = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
             vibrator = localVibrator;
         }
-        long[] pattern = {100, 1000, 500, 1000}; // OFF/ON/OFF/ON
+        long[] pattern = {50, 800, 500, 800}; // OFF/ON/OFF/ON
         vibrator.vibrate(pattern,-1);
         shakeEffect.start();
         Handler handler = new Handler();

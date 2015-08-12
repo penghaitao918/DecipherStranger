@@ -8,16 +8,16 @@
     android:orientation="vertical">
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/scrollView2"
-        android:layout_centerHorizontal="true" >
+        android:layout_centerHorizontal="true">
 
         <LinearLayout
-            android:orientation="vertical"
-            android:paddingBottom="10dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="10dp">
 
             <ImageButton
                 android:id="@+id/register_back_button"
@@ -36,9 +36,9 @@
                 android:id="@+id/register_account_input"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/login_input_bg"
                 android:drawableRight="@null"
                 android:hint="@string/account_input"
@@ -79,8 +79,8 @@
                 android:id="@+id/register_re_paw_input"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="6dp"
                 android:background="@drawable/login_input_bg"
                 android:drawableRight="@null"
@@ -101,8 +101,8 @@
                 android:id="@+id/register_username_input"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="6dp"
                 android:background="@drawable/login_input_bg"
                 android:drawableRight="@null"
@@ -123,8 +123,8 @@
                 android:id="@+id/register_usersex_input"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="6dp"
                 android:background="@drawable/login_input_bg">
 
@@ -230,8 +230,8 @@
                 android:id="@+id/register_birth_input"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="6dp"
                 android:background="@drawable/login_input_bg"
                 android:gravity="left|center"
@@ -245,8 +245,8 @@
                 android:id="@+id/next_step_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/login_button_bg"
                 android:onClick="RegisterBaseOnClick"

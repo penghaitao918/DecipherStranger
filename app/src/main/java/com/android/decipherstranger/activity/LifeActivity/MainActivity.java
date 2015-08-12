@@ -222,18 +222,6 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    private class OnItemClickListenerImpl implements AdapterView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            int lifeId = (int) dataList.get(position).get(MyStatic.LIFE_ID);
-            int lifeType = (int) dataList.get(position).get(MyStatic.LIFE_CLASSINT);
-            Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
-            intent.putExtra(MyStatic.LIFE_ID, lifeId);
-            intent.putExtra(MyStatic.LIFE_CLASSINT, lifeType);
-            startActivity(intent);
-        }
-    }
-
     private void setData(int lifeId, int type, String name, String time, String place) {
         switch (type) {
             // 美食
@@ -265,6 +253,18 @@ public class MainActivity extends BaseActivity {
         IntentFilter filter = new IntentFilter();
         filter.addAction(MyStatic.LIFE_MAIN);
         this.registerReceiver(receiver, filter);
+    }
+
+    private class OnItemClickListenerImpl implements AdapterView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            int lifeId = (int) dataList.get(position).get(MyStatic.LIFE_ID);
+            int lifeType = (int) dataList.get(position).get(MyStatic.LIFE_CLASSINT);
+            Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+            intent.putExtra(MyStatic.LIFE_ID, lifeId);
+            intent.putExtra(MyStatic.LIFE_CLASSINT, lifeType);
+            startActivity(intent);
+        }
     }
 
     private class ViewBinderImpl implements SimpleAdapter.ViewBinder {

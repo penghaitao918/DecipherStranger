@@ -23,7 +23,6 @@ import com.android.decipherstranger.Network.NetworkService;
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
 import com.android.decipherstranger.activity.Base.MyApplication;
-
 import com.android.decipherstranger.util.ChangeUtils;
 import com.android.decipherstranger.util.GlobalMsgUtils;
 import com.android.decipherstranger.util.MyStatic;
@@ -184,6 +183,14 @@ public class NearbyListViewActivity extends BaseActivity {
         dataList.add(map);
     }
 
+    private void nearbyBroadcas() {
+        //动态方式注册广播接收者
+        this.receiver = new NearbyBroadcastReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("com.android.decipherstranger.NEARBY");
+        this.registerReceiver(receiver, filter);
+    }
+
     private class ViewBinderImpl implements SimpleAdapter.ViewBinder {
         @Override
         public boolean setViewValue(View view, Object data, String textRepresentation) {
@@ -216,14 +223,6 @@ public class NearbyListViewActivity extends BaseActivity {
             mLongtitude = location.getLongitude();
             NearbyListViewActivity.this.getData();
         }
-    }
-
-    private void nearbyBroadcas() {
-        //动态方式注册广播接收者
-        this.receiver = new NearbyBroadcastReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("com.android.decipherstranger.NEARBY");
-        this.registerReceiver(receiver, filter);
     }
 
     public class NearbyBroadcastReceiver extends BroadcastReceiver {

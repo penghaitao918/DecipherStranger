@@ -37,6 +37,21 @@ public class AudioRecorderButton extends Button implements AudioManager.AudioSta
     //是否触发longClick事件
     private boolean mReady;
     private AudioFinishRecorderListener mListener;
+    //获取音量大小的Runable
+    private Runnable mGetVoiceLevelRunable = new Runnable() {
+        @Override
+        public void run() {
+            while (isRecording) {
+                try {
+                    Thread.sleep(100);
+                    mTime += 0.1f;
+                    mHandler.sendEmptyMessage(MSG_VOICE_CHANGE);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    };
     private Handler mHandler = new Handler() {
         public void handleMessage(android.os.Message msg) {
             switch (msg.what) {
@@ -55,21 +70,6 @@ public class AudioRecorderButton extends Button implements AudioManager.AudioSta
         }
 
         ;
-    };
-    //获取音量大小的Runable
-    private Runnable mGetVoiceLevelRunable = new Runnable() {
-        @Override
-        public void run() {
-            while (isRecording) {
-                try {
-                    Thread.sleep(100);
-                    mTime += 0.1f;
-                    mHandler.sendEmptyMessage(MSG_VOICE_CHANGE);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
     };
 
 

@@ -36,7 +36,7 @@
         <activity
             android:name=".activity.MainPageActivity.ContactsPageActivity"
             android:windowSoftInputMode="stateUnchanged" />
-        <activity android:name=".activity.SubpageActivity.RecommendFriend"/>
+        <activity android:name=".activity.SubpageActivity.RecommendFriend" />
         <activity android:name=".activity.MainPageActivity.ServicePageActivity" />
         <activity android:name=".activity.MainPageActivity.UserPageActivity" />
         <activity android:name=".activity.SubpageActivity.UpdateNameActivity" />

@@ -123,7 +123,6 @@ public class ShowMapActivity extends BaseActivity {
         mMapView.onDestroy();
         mMapView = null;
         application = null;
-        mBaiduMap.clear();
         mBaiduMap = null;
         if(mLocationClient.isStarted()){
             mLocationClient.stop();
@@ -199,10 +198,6 @@ public class ShowMapActivity extends BaseActivity {
                         it.putExtra("Name", nearByUserInfo.getUserName());
                         it.putExtra("Photo", nearByUserInfo.getImgId());
                         it.putExtra("Sex", nearByUserInfo.getSex());
-                        System.out.println("### Account" + nearByUserInfo.getUserAccount());
-                        System.out.println("### name " + nearByUserInfo.getUserName());
-                        System.out.println("### sex " + nearByUserInfo.getSex());
-                        System.out.println("### bitmap" + nearByUserInfo.getImgId());
                         it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(it);
                         ShowMapActivity.this.finish();
@@ -288,6 +283,18 @@ public class ShowMapActivity extends BaseActivity {
         this.registerReceiver(receiver, filter);
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // TODO Auto-generated method stub
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0){// 防止连续两次返回键
+            //这你写你的返回处理
+            onBackPressed();
+            ShowMapActivity.this.finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
     public class MyLocationListener implements BDLocationListener {
 
         @Override
@@ -347,16 +354,5 @@ public class ShowMapActivity extends BaseActivity {
                 }
             }
         }
-    }
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        // TODO Auto-generated method stub
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0){// 防止连续两次返回键
-            //这你写你的返回处理
-            onBackPressed();
-            ShowMapActivity.this.finish();
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
     }
 }

@@ -100,18 +100,6 @@ public class RecommendFriend extends BaseActivity {
         adapter.notifyDataSetChanged();
     }
 
-    private class ViewBinderImpl implements SimpleAdapter.ViewBinder {
-        @Override
-        public boolean setViewValue(View view, Object data, String textRepresentation) {
-            // TODO Auto-generated method stub
-            if (view instanceof ImageView && data instanceof Bitmap) {
-                ImageView i = (ImageView) view;
-                i.setImageBitmap((Bitmap) data);
-                return true;
-            }
-            return false;
-        }
-    }
     public void getData() {
         if (NetworkService.getInstance().getIsConnected()){
             String Msg = "type"+":"+"28";
@@ -145,6 +133,18 @@ public class RecommendFriend extends BaseActivity {
         this.registerReceiver(receiver, filter);
     }
 
+    private class ViewBinderImpl implements SimpleAdapter.ViewBinder {
+        @Override
+        public boolean setViewValue(View view, Object data, String textRepresentation) {
+            // TODO Auto-generated method stub
+            if (view instanceof ImageView && data instanceof Bitmap) {
+                ImageView i = (ImageView) view;
+                i.setImageBitmap((Bitmap) data);
+                return true;
+            }
+            return false;
+        }
+    }
 
     public class RecommendBroadcastReceiver extends BroadcastReceiver{
         @Override

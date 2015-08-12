@@ -49,13 +49,11 @@ import java.util.Map;
  */
 public class ShareActivity extends BaseActivity implements AutoListView.OnRefreshListener, AutoListView.OnLoadListener {
 
+    Bitmap photo = null;
+    Bitmap portrait = null;
     private RelativeLayout topLayout = null;
     private SQLiteOpenHelper helper = null;
     private LifeShare shareList = null;
-
-    Bitmap photo = null;
-    Bitmap portrait = null;
-
     private AutoListView listView;
     private ListButtonAdapter adapter = null;
     private ArrayList<Map<String, Object>> dataList = null;
