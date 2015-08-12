@@ -7,7 +7,6 @@ import android.widget.Toast;
 
 import com.android.decipherstranger.R;
 import com.android.decipherstranger.activity.Base.BaseActivity;
-import com.android.decipherstranger.activity.Base.MyApplication;
 import com.android.decipherstranger.activity.GameOneActivity.SetGradeActivity;
 import com.android.decipherstranger.activity.GameOneActivity.WelcomeRspActivity;
 

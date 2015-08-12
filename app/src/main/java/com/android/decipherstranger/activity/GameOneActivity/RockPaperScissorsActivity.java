@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -254,12 +253,16 @@ public class RockPaperScissorsActivity extends BaseActivity {
                 break;
             case R.id.RockImageBtn:
                 if (isRun) {
-                    gamePause(0);
+                //    gamePause(0);
+                    gameGradeInt = 8;
+                    IfGameOver();
                 }
                 break;
             case R.id.PaperImageBtn:
                 if (isRun) {
-                    gamePause(5);
+                //    gamePause(5);
+                    gameGradeInt = -8;
+                    IfGameOver();
                 }
                 break;
             case R.id.ScissorsImageBtn:

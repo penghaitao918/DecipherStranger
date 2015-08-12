@@ -43,7 +43,6 @@ public class SuccessActivity extends BaseActivity {
 
     private SQLiteOpenHelper helper = null;
     private ContactsList contactsList = null;
-    private MediaPlayer mediaPlayer = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,16 +57,14 @@ public class SuccessActivity extends BaseActivity {
             this.SendToLocal();
         }
 
-        mediaPlayer = MediaPlayer.create(this, R.raw.makefriend_success);
+        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.makefriend_success);
         mediaPlayer.start();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mediaPlayer.release();
         helper.close();
-        mediaPlayer = null;
         helper = null;
     }
 

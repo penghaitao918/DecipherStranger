@@ -411,7 +411,7 @@ public class MainPageActivity extends BaseActivity implements OnPageChangeListen
                             builder.create().show();
                             Toast.makeText(context, intent.getStringExtra("reName") + "已添加您为好友", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(context, "添加好友失败~", Toast.LENGTH_SHORT).show();
+                        //    Toast.makeText(context, "添加好友失败~", Toast.LENGTH_SHORT).show();
                         }
                     }
                 } else {
