@@ -190,6 +190,7 @@ public class ShakeActivity extends BaseActivity {
         switch (v.getId()) {
             case R.id.shake_back_button:
                 onBackPressed();
+                ShakeActivity.this.finish();
                 break;
             case R.id.shakeMain:
                 if (popupWindow.isShowing()) {

@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -26,6 +27,7 @@ import com.android.decipherstranger.util.MyStatic;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -46,6 +48,7 @@ import java.util.Map;
  * Created by WangXin on 2015/8/11 0011.
  */
 public class RecommendFriend extends BaseActivity {
+
     private ListView recommend = null;
     private SimpleAdapter adapter;
     private RecommendBroadcastReceiver receiver = null;
@@ -73,11 +76,20 @@ public class RecommendFriend extends BaseActivity {
 
     @Override
     public void onDestroy(){
-        unregisterReceiver(RecommendFriend.this.receiver);
         super.onDestroy();
+        unregisterReceiver(RecommendFriend.this.receiver);
+        for(int i = 0;i < dataList.size(); i ++) {
+            ((Bitmap) dataList.get(0).get(MyStatic.USER_PORTRAIT)).recycle();
+        }
+        dataList.clear();
+        dataList = null;
+        recommend = null;
+        handler = null;
     }
+
     private void initView() {
         this.recommend = (ListView) findViewById(R.id.listView);
+        this.recommend.setOnItemClickListener(new OnItemClickListenerImpl());
         this.back = (ImageButton) findViewById(R.id.btn_back);
         this.dataList = new ArrayList<Map<String,Object>>();
 
@@ -88,11 +100,12 @@ public class RecommendFriend extends BaseActivity {
             }
         });
 
-        this.adapter = new SimpleAdapter(this,dataList,
-                R.layout.nearby_view_item,
-                new String []{MyStatic.USER_PORTRAIT,MyStatic.USER_NAME,MyStatic.SHARE_SEX},
-                new int[]{R.id.nearby_list_view_user_photo,R.id.nearby_list_view_user_name,
-                R.id.nearby_list_view_sex});
+        this.adapter = new SimpleAdapter(this,
+                this.dataList,
+                R.layout.list_item_life_friends,
+                new String[]{MyStatic.USER_PORTRAIT, MyStatic.USER_NAME, MyStatic.SHARE_SEX},
+                new int[]{R.id.life_friends_portrait, R.id.life_friends_name, R.id.life_friends_sex}
+        );
         /*实现ViewBinder()这个接口*/
         adapter.setViewBinder(new ViewBinderImpl());
         this.recommend.setAdapter(adapter);
@@ -143,6 +156,18 @@ public class RecommendFriend extends BaseActivity {
                 return true;
             }
             return false;
+        }
+    }
+
+    private class OnItemClickListenerImpl implements AdapterView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Intent intent = new Intent(RecommendFriend.this, NearbyInfoActivity.class);
+            intent.putExtra("account", (String) dataList.get(position).get(MyStatic.USER_ACCOUNT));
+            intent.putExtra("photo", (Bitmap) dataList.get(position).get(MyStatic.USER_PORTRAIT));
+            intent.putExtra("name", (String) dataList.get(position).get(MyStatic.USER_NAME));
+            intent.putExtra("sex", (int) dataList.get(position).get(MyStatic.USER_SEX));
+            startActivity(intent);
         }
     }
 

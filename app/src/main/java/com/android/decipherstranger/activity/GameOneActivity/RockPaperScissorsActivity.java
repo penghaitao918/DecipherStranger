@@ -86,7 +86,6 @@ public class RockPaperScissorsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_game_main);
-        //  application = (MyApplication) getApplication();
         application = MyApplication.getInstance();
         this.init();
         this.gameStart();
