@@ -2,12 +2,7 @@ package com.android.decipherstranger.activity.Base;
 
 import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.media.MediaPlayer;
-import android.os.Vibrator;
-
-import com.android.decipherstranger.R;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -204,24 +199,4 @@ public class MyApplication extends Application {
         this.musicFlag = musicFlag;
     }
 
-    public void receiveMessage(final Context context) {
-        if (moveFlag) {
-            Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);  // 获取振动器Vibrator实例
-            if (vibrator == null) {
-                Vibrator localVibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-                vibrator = localVibrator;
-            }
-            vibrator.vibrate(500L);
-        }
-        if (musicFlag) {
-            new Thread() {
-                public void run() {
-                    System.out.println("### 音效啊！！！！");
-                    MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.dingdong);
-                    mediaPlayer.start();
-                    //    mediaPlayer.release();
-                }
-            }.start();
-        }
-    }
 }

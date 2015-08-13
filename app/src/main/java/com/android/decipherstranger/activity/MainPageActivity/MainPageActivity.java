@@ -10,9 +10,11 @@ import android.content.IntentFilter;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
+import android.os.Vibrator;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -317,6 +319,27 @@ public class MainPageActivity extends BaseActivity implements OnPageChangeListen
         }
     }
 
+    private void receiveMessage() {
+        if (application.isMoveFlag()) {
+            Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);  // 获取振动器Vibrator实例
+            if (vibrator == null) {
+                Vibrator localVibrator = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+                vibrator = localVibrator;
+            }
+            vibrator.vibrate(500L);
+        }
+        if (application.isMusicFlag()) {
+            new Thread() {
+                public void run() {
+                    System.out.println("### 音效啊！！！！");
+                    MediaPlayer mediaPlayer = MediaPlayer.create(MainPageActivity.this, R.raw.dingdong);
+                    mediaPlayer.start();
+                    //    mediaPlayer.release();
+                }
+            }.start();
+        }
+    }
+
     private void chatBroadcas() {
         //动态方式注册广播接收者
         this.receiver = new ChatBroadcastReceiver();
@@ -417,7 +440,7 @@ public class MainPageActivity extends BaseActivity implements OnPageChangeListen
                 } else {
                     Contacts receiveMsg = new Contacts();
                     System.out.println("+++++++++++++++++++又接到一条消息");
-                    application.receiveMessage(MainPageActivity.this);
+                    receiveMessage();
                     User contact;
                     ContactsList contactInfo = new ContactsList(helper.getWritableDatabase());
                     contact = contactInfo.getInfo(intent.getStringExtra("reSender"));

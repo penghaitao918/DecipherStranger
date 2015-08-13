@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.SlidingDrawer;
 import android.widget.TextView;
 
@@ -52,6 +53,9 @@ import com.android.decipherstranger.util.MyStatic;
 public class RockPaperScissorsActivity extends BaseActivity {
 
     private MyApplication application = null;
+
+    private Bitmap backGroundBitmap = null;
+    private RelativeLayout imageView = null;
 
     private TextView gradeText = null;
     private TextView playerText = null;
@@ -88,9 +92,17 @@ public class RockPaperScissorsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_game_main);
+        this.imageView = (RelativeLayout) super.findViewById(R.id.background);
         application = MyApplication.getInstance();
         this.init();
         this.gameStart();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+/*        this.backGroundBitmap = BitmapFactory.decodeResource(getResources(),R.drawable.game_bg);
+        this.imageView.setBackground(new BitmapDrawable(backGroundBitmap));*/
     }
 
     @Override
@@ -106,6 +118,16 @@ public class RockPaperScissorsActivity extends BaseActivity {
         super.onPause();
         super.unregisterReceiver(RockPaperScissorsActivity.this.receiver);
         this.closeMusic();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+/*        System.out.println("### 开始释放图片 %");
+        this.backGroundBitmap.recycle();
+        backGroundBitmap = null;
+        imageView = null;
+        System.out.println("### 结束释放图片 %");*/
     }
 
     @Override
@@ -253,9 +275,9 @@ public class RockPaperScissorsActivity extends BaseActivity {
                 break;
             case R.id.RockImageBtn:
                 if (isRun) {
-    //                gamePause(0);
-                    gameGradeInt = 8;
-                    IfGameOver();
+                    gamePause(0);
+/*                    gameGradeInt = 8;
+                    IfGameOver();*/
                 }
                 break;
             case R.id.PaperImageBtn:

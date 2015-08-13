@@ -108,8 +108,7 @@ public class ChangeUtils {
         byte[] buffer = Base64.decode(s, Base64.DEFAULT);
         //ByteArrayInputStream inputStream = new ByteArrayInputStream(Buffer);
         //Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-        Bitmap bitmap = BitmapFactory.decodeByteArray(buffer, 0, buffer.length, null);
-        return bitmap;
+        return BitmapFactory.decodeByteArray(buffer, 0, buffer.length, null);
     }
 
     /*

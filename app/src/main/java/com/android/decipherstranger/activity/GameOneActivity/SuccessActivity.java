@@ -2,10 +2,13 @@ package com.android.decipherstranger.activity.GameOneActivity;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.decipherstranger.Network.NetworkService;
@@ -43,11 +46,15 @@ public class SuccessActivity extends BaseActivity {
 
     private SQLiteOpenHelper helper = null;
     private ContactsList contactsList = null;
+    private Bitmap backGroundBitmap = null;
+    private ImageView imageView = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_success);
+        this.imageView = (ImageView) super.findViewById(R.id.imageView);
+
         Intent intent = getIntent();
         String Type = intent.getStringExtra("Type");
         if (Type.equals("AddFriend")) {
@@ -59,6 +66,21 @@ public class SuccessActivity extends BaseActivity {
 
         MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.makefriend_success);
         mediaPlayer.start();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        this.backGroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.friend_get_success);
+        this.imageView.setImageBitmap(backGroundBitmap);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        this.backGroundBitmap.recycle();
+        this.backGroundBitmap = null;
+        this.imageView = null;
     }
 
     @Override
