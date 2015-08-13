@@ -71,16 +71,16 @@ public class SuccessActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        this.backGroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.friend_get_success);
-        this.imageView.setImageBitmap(backGroundBitmap);
+/*        this.backGroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.friend_get_success);
+        this.imageView.setImageBitmap(backGroundBitmap);*/
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        this.backGroundBitmap.recycle();
+/*        this.backGroundBitmap.recycle();
         this.backGroundBitmap = null;
-        this.imageView = null;
+        this.imageView = null;*/
     }
 
     @Override

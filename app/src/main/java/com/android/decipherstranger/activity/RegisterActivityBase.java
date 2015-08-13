@@ -35,7 +35,7 @@ public class RegisterActivityBase extends BaseActivity {
     private EditText rePawEdit = null;
     private EditText nameEdit = null;
     private RadioGroup sexGroup = null;
-    private String userSex = "男";
+    private int userSex = 0;
     private RadioButton male = null;
     private RadioButton female = null;
     private EditText emailEdit = null;
@@ -158,10 +158,10 @@ public class RegisterActivityBase extends BaseActivity {
                     bundle.putString("account", String.valueOf(accountEdit.getText()));
                     bundle.putString("possword", String.valueOf(passwordEdit.getText()));
                     bundle.putString("name", String.valueOf(nameEdit.getText()));
-                    bundle.putString("sex", (String) userSex);
+                    bundle.putString("sex", String.valueOf(userSex));
                     bundle.putString("email", String.valueOf(emailEdit.getText()));
                     bundle.putString("phone", String.valueOf(phoneEdit.getText()));
-                    bundle.putString("birth", (String) birthButton.getText());
+                    bundle.putString("birth", String.valueOf(birthButton.getText()));
                     intentNext.putExtras(bundle);
                     startActivity(intentNext);
                 } else {
@@ -293,9 +293,9 @@ public class RegisterActivityBase extends BaseActivity {
         @Override
         public void onCheckedChanged(RadioGroup group, int Id) {
             if (male.getId() == Id) {
-                userSex = male.getText().toString();
+                userSex = 1;
             } else {
-                userSex = female.getText().toString();
+                userSex = 0;
             }
         }
     }

@@ -92,6 +92,7 @@
     <orderEntry type="library" exported="" name="support-v4-22.1.1" level="project" />
     <orderEntry type="library" exported="" name="BaiduLBS_Android" level="project" />
     <orderEntry type="library" exported="" name="1_BaiduLBS_Android" level="project" />
+    <orderEntry type="library" exported="" name="2_BaiduLBS_Android" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-22.1.1" level="project" />
   </component>
 </module>
