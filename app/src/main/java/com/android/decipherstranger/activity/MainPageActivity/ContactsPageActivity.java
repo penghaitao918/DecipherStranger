@@ -122,7 +122,12 @@ public class ContactsPageActivity extends BaseActivity {
 
             @Override
             public void onTouchingLetterChanged(String s) {
-                int position = adapter.getPositionForSection(s.charAt(0));
+                int position = 0;
+                try {
+                    position = adapter.getPositionForSection(s.charAt(0));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 if (position != -1) {
                     try {
                         contactListView.setSelection(position);
