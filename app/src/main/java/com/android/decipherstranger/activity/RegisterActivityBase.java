@@ -35,7 +35,7 @@ public class RegisterActivityBase extends BaseActivity {
     private EditText rePawEdit = null;
     private EditText nameEdit = null;
     private RadioGroup sexGroup = null;
-    private int userSex = 0;
+    private int userSex = 1;
     private RadioButton male = null;
     private RadioButton female = null;
     private EditText emailEdit = null;
@@ -294,8 +294,10 @@ public class RegisterActivityBase extends BaseActivity {
         public void onCheckedChanged(RadioGroup group, int Id) {
             if (male.getId() == Id) {
                 userSex = 1;
+                System.out.println("#### 男");
             } else {
                 userSex = 0;
+                System.out.println("#### 女");
             }
         }
     }
