@@ -253,25 +253,25 @@ public class ClientListenThread extends Thread {
                             clContext.sendBroadcast(itReInv);
                             break;
                         case GlobalMsgUtils.msgLifeMain:
-                            Intent itLife = new Intent("com.android.life.main");
+                            Intent itLife = new Intent(MyStatic.LIFE_MAIN);
                             if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)) {
-                                itLife.putExtra("reResult", true);
+                                itLife.putExtra("reResult", "true");
                                 itLife.putExtra("reId", jsonObj.getInt("re_id"));
                                 itLife.putExtra("reType", jsonObj.getInt("re_activity_type"));
                                 itLife.putExtra("reName", jsonObj.getString("re_name"));
                                 itLife.putExtra("reTime", jsonObj.getString("re_time"));
                                 itLife.putExtra("rePlace", jsonObj.getString("re_place"));
                             } else {
-                                itLife.putExtra("reResult", false);
+                                itLife.putExtra("reResult", "finish");
                             }
                             clContext.sendBroadcast(itLife);
                             break;
                         case GlobalMsgUtils.msgSendActivity:
                             Intent itSendActivity = new Intent(MyStatic.LIFE_SEND);
                             if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)) {
-                                itSendActivity.putExtra("reResult", true);
+                                itSendActivity.putExtra("reResult", "true");
                             } else {
-                                itSendActivity.putExtra("reResult", false);
+                                itSendActivity.putExtra("reResult", "false");
                             }
                             clContext.sendBroadcast(itSendActivity);
                             break;
@@ -321,9 +321,9 @@ public class ClientListenThread extends Thread {
                         case GlobalMsgUtils.msgShareActivity:
                             Intent itShare = new Intent(MyStatic.LIFE_SHARE_DO);
                             if (jsonObj.getString("re_message").equals(MyStatic.resultTrue)) {
-                                itShare.putExtra("reResult", true);
+                                itShare.putExtra("reResult", "true");
                             } else {
-                                itShare.putExtra("reResult", false);
+                                itShare.putExtra("reResult", "false");
                             }
                             clContext.sendBroadcast(itShare);
                             break;

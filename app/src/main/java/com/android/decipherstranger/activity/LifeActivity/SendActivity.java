@@ -86,12 +86,15 @@ public class SendActivity extends BaseActivity {
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_life_send);
         application = MyApplication.getInstance();
+        initLocation();
+        System.out.println("### 赋值完了 " + mLocationClient);
         this.init();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        System.out.println("### 正在start " + mLocationClient);
         if (!mLocationClient.isStarted()) {
             mLocationClient.start();
         }
@@ -111,7 +114,6 @@ public class SendActivity extends BaseActivity {
     }
 
     private void init() {
-        initLocation();
         this.progressDialog = new ProgressDialog(this);
 
         this.classRadio = (RadioGroup) super.findViewById(R.id.classRadio);
@@ -301,7 +303,7 @@ public class SendActivity extends BaseActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(MyStatic.LIFE_SEND)) {
-                if (intent.getBooleanExtra("reResult", true)) {
+                if (intent.getStringExtra("reResult").equals("true")) {
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         public void run() {

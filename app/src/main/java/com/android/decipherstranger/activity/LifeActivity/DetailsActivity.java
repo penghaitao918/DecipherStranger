@@ -125,22 +125,9 @@ public class DetailsActivity extends BaseActivity {
         this.textView9 = (TextView) super.findViewById(R.id.textView99);
     }
 
-    /*
-    * 判断该活动的发起人与当前账号是否一致，如果一致，则隐藏最下方的两个按钮
-    */
-    private void initButtonLayout() {
-        System.out.println("### sendAccount = " + sendAccount);
-        System.out.println("### myAccount = " + myAccount);
-        if (myAccount.equals(sendAccount)) {
-            buttonLayout.setVisibility(View.GONE);
-        } else {
-            buttonLayout.setVisibility(View.VISIBLE);
-        }
-    }
-
     private void initPasswordLayout() {
         boolean flag = intent.getBooleanExtra(MyStatic.DETAILS_FLAG, false);
-        if (flag) {
+        if (flag || myAccount.equals(sendAccount)) {
             passwordLayout.setVisibility(View.VISIBLE);
             buttonLayout.setVisibility(View.GONE);
             textView0 = (TextView) super.findViewById(R.id.textView00);
@@ -216,7 +203,6 @@ public class DetailsActivity extends BaseActivity {
         textView7.setText(setPlace);
         textView8.setText(setTime);
         textView9.setText(number + "");
-        initButtonLayout();
         initPasswordLayout();
     }
 

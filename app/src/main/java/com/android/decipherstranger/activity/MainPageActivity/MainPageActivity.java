@@ -56,7 +56,7 @@ public class MainPageActivity extends BaseActivity implements OnPageChangeListen
     private LocalActivityManager manager = null;
     private TextView text1, text2, text3, text4;
     private ImageView image1, image2, image3, image4;
-    private BadgeView badgeView;
+//    private BadgeView badgeView;
     //写入本地缓存聊天记录
     private ChatRecord writeChatLog;
     private ContactsList contactsList;
@@ -75,7 +75,7 @@ public class MainPageActivity extends BaseActivity implements OnPageChangeListen
         application = MyApplication.getInstance();
         initView();
         initViewPage();
-        setUnReadMessage(application.getUnReadMessage());
+//        setUnReadMessage(application.getUnReadMessage());
 //        setUnReadMessage(2, image2);
         chatBroadcas();
         sendOffMsg();
@@ -124,7 +124,7 @@ public class MainPageActivity extends BaseActivity implements OnPageChangeListen
         this.text2 = (TextView) super.findViewById(R.id.contactsText);
         this.text3 = (TextView) super.findViewById(R.id.moreText);
         this.text4 = (TextView) super.findViewById(R.id.userText);
-        badgeView = new BadgeView(this, image1);
+     //   badgeView = new BadgeView(this, image1);
         builder = new AlertDialog.Builder(MainPageActivity.this);
     }
 
@@ -203,7 +203,7 @@ public class MainPageActivity extends BaseActivity implements OnPageChangeListen
     }
 
     //未读消息提醒
-    public void setUnReadMessage(int unReadMessageNum) {
+/*    public void setUnReadMessage(int unReadMessageNum) {
         badgeView.setText(String.valueOf(unReadMessageNum));
         badgeView.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
         if (unReadMessageNum != 0) {
@@ -211,7 +211,7 @@ public class MainPageActivity extends BaseActivity implements OnPageChangeListen
         } else {
             badgeView.hide();
         }
-    }
+    }*/
 
     /**
      * 加载activity

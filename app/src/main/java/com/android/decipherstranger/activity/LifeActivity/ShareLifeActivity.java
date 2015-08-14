@@ -237,7 +237,7 @@ public class ShareLifeActivity extends BaseActivity {
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(MyStatic.LIFE_SHARE_DO)) {
                 progressDialog.dismiss();
-                if (intent.getBooleanExtra("reResult", true)) {
+                if (intent.getStringExtra("reResult").equals("true")) {
                     //TODO 显示分享成功，跳转页面
                     System.out.println("### 晒图返回接收成功");
                     onBackPressed();

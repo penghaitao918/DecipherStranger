@@ -456,8 +456,9 @@ public class ChatMsgActivity extends BaseActivity implements OnClickListener {
         @Override
         public void onReceive(Context context, Intent intent) {
             Contacts receiveMsg = new Contacts();
+            System.out.println("#### currentUserAccount" + currentUserAccount);
             if (intent.getAction().equals("com.android.decipherstranger.MESSAGE") &&
-                    intent.getStringExtra("reSender").equals(currentUserAccount)) {
+                    currentUserAccount != null && intent.getStringExtra("reSender").equals(currentUserAccount)) {
 //                sendToConversation(intent.getStringExtra("reMessage"));
                 receiveMsg.setAccount(currentUserAccount);
                 receiveMsg.setUsername(currentUserName);

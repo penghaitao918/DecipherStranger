@@ -285,15 +285,15 @@ public class MainActivity extends BaseActivity {
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(MyStatic.LIFE_MAIN)) {
                 // TODO 将获取的数据赋值到本地
-                if (intent.getBooleanExtra("reResult", true)) {
+                if (intent.getStringExtra("reResult").equals("true")) {
                     int lifeId = intent.getIntExtra("reId", 0);
                     int type = intent.getIntExtra("reType", 3);
                     String name = intent.getStringExtra("reName");
                     String time = intent.getStringExtra("reTime");
                     String place = intent.getStringExtra("rePlace");
                     setData(lifeId, type, name, time, place);
-                    System.out.println("### 接收了一条活动数据");
-                } else {
+                    System.out.println("### 接收了一条活动数据 " + lifeId);
+                } else if (intent.getStringExtra("reResult").equals("finish")){
                     handler.sendMessage(new Message());
                     System.out.println("### 哎哟我去");
                 }

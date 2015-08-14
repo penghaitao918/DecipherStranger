@@ -453,8 +453,8 @@ public class PartakeActivity extends BaseActivity implements MyScrollView.OnScro
             mLongtitude = location.getLongitude();
             PartakeActivity.this.getData();
 
-            System.out.println("### mLatitude = " + mLatitude);
-            System.out.println("### mLongtitude = " + mLongtitude);
+            System.out.println("#### mLatitude = " + mLatitude);
+            System.out.println("#### mLongtitude = " + mLongtitude);
         }
     }
 
