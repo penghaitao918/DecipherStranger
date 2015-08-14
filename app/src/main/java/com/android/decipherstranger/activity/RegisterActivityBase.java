@@ -138,7 +138,7 @@ public class RegisterActivityBase extends BaseActivity {
                 break;
             case R.id.register_birth_input:
                 Dialog dialog = new DatePickerDialog(this,
-                        new DatePickerDialog.OnDateSetListener() {
+                         new DatePickerDialog.OnDateSetListener() {
                             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                                 month += 1;
                                 birthButton.setText(year + "-" + month + "-" + day);
