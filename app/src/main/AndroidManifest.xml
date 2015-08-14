@@ -107,8 +107,9 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="WN8ktA9ihtBXFIHKPszx64G9" />
-        <!-- 彭海涛 -->
+        <!-- 彭海涛 笔记本-->
         <!-- android:value="WN8ktA9ihtBXFIHKPszx64G9" -->
+        <!-- 彭海涛 实验室一体机-->
         <!-- android:value="8jhcIPCZchUbYrwY1OC8mD5f"-->
         <!-- 王鑫 -->
         <!-- android:value="hCAkwdsRwEvGynujpDO9zMXo" -->
