@@ -199,10 +199,10 @@ public class ContactsPageActivity extends BaseActivity {
         } else {
             filterDateList.clear();
             for (User sortModel : mContactList) {
-                String name = sortModel.getUsername();
-                if (name.indexOf(filterStr.toString()) != -1
+                String name = sortModel.getUsername().toLowerCase();
+                if (name.indexOf(filterStr.toString().toLowerCase()) != -1
                         || characterParser.getSelling(name).startsWith(
-                        filterStr.toString())) {
+                        filterStr.toString().toLowerCase())) {
                     filterDateList.add(sortModel);
                 }
             }
