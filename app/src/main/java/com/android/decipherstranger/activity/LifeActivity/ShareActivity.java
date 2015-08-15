@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -49,6 +50,8 @@ import java.util.Map;
  */
 public class ShareActivity extends BaseActivity implements AutoListView.OnRefreshListener, AutoListView.OnLoadListener {
 
+    private LinearLayout layout = null;
+
     Bitmap photo = null;
     Bitmap portrait = null;
     private RelativeLayout topLayout = null;
@@ -64,23 +67,33 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
     private LifeShareBroadcastReceiver receiver = null;
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
+            boolean flag = false;
             ArrayList<Map<String, Object>> result = (ArrayList<Map<String, Object>>) msg.obj;
             switch (msg.what) {
+                case AutoListView.INITDATA:
+                    listView.onRefreshComplete();
+                    dataList.clear();
+                    dataList.addAll(result);
+                    flag = true;
+                    System.out.println("#### 数据初始化成功");
+                    break;
                 case AutoListView.REFRESH:
                     listView.onRefreshComplete();
                     dataList.clear();
                     dataList.addAll(result);
-                    System.out.println("### 数据刷新成功");
+                    System.out.println("#### 数据刷新成功");
                     break;
                 case AutoListView.LOAD:
                     listView.onLoadComplete(result.size());
                     dataList.addAll(result);
-                    System.out.println("### 数据加载成功");
+                    System.out.println("#### 数据加载成功");
                     break;
             }
             //   listView.setResultSize(result.size());
             listView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
+            layout.setClickable(flag);
+            System.out.println("#### 解锁");
         }
     };
 
@@ -91,7 +104,7 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
 
         this.LifeShareBroadcas();
         this.init();
-        initData();
+        initData(0);
         this.refresh();
     }
 
@@ -139,7 +152,8 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
 
     private void refresh() {
         refreshFlag = true;
-        System.out.println("### 刷新");
+        layout.setClickable(true);
+        System.out.println("#### 刷新锁定");
         listView.initFooter(0);
         //  TODO 向服务器发送刷新请求,获取最新的5条数据（这是一个ID为逆序的数组）
         if (NetworkService.getInstance().getIsConnected()) {
@@ -153,7 +167,8 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
     }
 
     private void load() {
-        System.out.println("### 加载");
+        layout.setClickable(true);
+        System.out.println("#### 加载锁定");
         //  TODO 向服务器发送加载数据,获取ID<count的10条数据（从count-1到count-10）
         if (NetworkService.getInstance().getIsConnected()) {
             String Msg = "type" + ":" + "24" + ":" + "requestType" + ":" + "0" + ":" + "minId" + ":" + minId;
@@ -167,6 +182,10 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
 
     private void init() {
         this.helper = new DATABASE(this);
+        /*锁定界面*/
+        layout = (LinearLayout) super.findViewById(R.id.addFlag);
+        layout.setClickable(true);
+        System.out.println("#### 初始锁定");
         /*锁定聚焦到顶部*/
         topLayout = (RelativeLayout) super.findViewById(R.id.top);
         topLayout.setFocusable(true);
@@ -192,13 +211,17 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
         this.listView.setOnLoadListener(this);
     }
 
-    private void initData() {
+    private void initData(final int type) {
         this.shareList = new LifeShare(helper.getReadableDatabase());
         new Thread(new Runnable() {
             @Override
             public void run() {
                 Message msg = handler.obtainMessage();
-                msg.what = AutoListView.REFRESH;
+                if (type == 0) {
+                    msg.what = AutoListView.INITDATA;
+                } else {
+                    msg.what = AutoListView.REFRESH;
+                }
                 msg.obj = shareList.refresh();
                 handler.sendMessage(msg);
             }
@@ -231,6 +254,8 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
             case R.id.myShare:
                 Intent intent = new Intent(this, ShareLifeActivity.class);
                 startActivity(intent);
+                break;
+            default:
                 break;
         }
     }
@@ -280,7 +305,7 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
                         }
                     } else if (intent.getStringExtra("reResult").equals("finish")) {
                         if (intent.getIntExtra("reRequestType", 0) == 1) {
-                            initData();
+                            initData(1);
                         } else {
                             loadData();
                         }
