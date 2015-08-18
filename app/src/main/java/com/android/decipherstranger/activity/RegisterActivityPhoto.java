@@ -176,7 +176,8 @@ public class RegisterActivityPhoto extends BaseActivity {
             portraitUrl = ChangeUtils.toBinary(photo);
             sPortaitUrl = ChangeUtils.toBinary(ImageCompression.compressSimplify(photo, 0.3f));
             Drawable drawable = new BitmapDrawable(this.getResources(), photo);
-            userPhoto.setImageDrawable(drawable);
+        //    userPhoto.setImageDrawable(drawable);
+            userPhoto.setImageBitmap(photo);
         }
     }
 
