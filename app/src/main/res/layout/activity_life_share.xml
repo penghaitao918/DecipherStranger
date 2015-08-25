@@ -49,18 +49,18 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
+    <view
+        android:id="@+id/lifeShare"
+        class="com.android.decipherstranger.view.AutoListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@null"
+        android:listSelector="#00000000" />
+
+<!--    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <view
-            android:id="@+id/lifeShare"
-            class="com.android.decipherstranger.view.AutoListView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:background="@null"
-            android:listSelector="#00000000" />
 
         <LinearLayout
             android:id="@+id/addFlag"
@@ -72,6 +72,6 @@
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"/>
 
-    </RelativeLayout>
+    </RelativeLayout>-->
 
 </LinearLayout>

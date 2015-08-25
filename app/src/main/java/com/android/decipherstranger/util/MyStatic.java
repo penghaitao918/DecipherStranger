@@ -25,6 +25,8 @@ import android.graphics.Bitmap;
 public class MyStatic {
     //  设置全局静态常量
 
+    public static boolean flag = false;
+
     public static final int LOAD = 0;
     public static final int REFRESH = 1;
 

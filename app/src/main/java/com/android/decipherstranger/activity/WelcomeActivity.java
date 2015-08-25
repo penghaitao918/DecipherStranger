@@ -1,6 +1,7 @@
 package com.android.decipherstranger.activity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -15,6 +16,11 @@ import com.android.decipherstranger.util.ChangeUtils;
 import com.android.decipherstranger.util.GlobalMsgUtils;
 import com.android.decipherstranger.util.MyStatic;
 import com.android.decipherstranger.util.SharedPreferencesUtils;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * へ　　　　　／|
@@ -42,12 +48,14 @@ public class WelcomeActivity extends BaseActivity {
     private String password = "";
     private Boolean isLogin = false;
     private MyApplication application = null;
+    private MediaPlayer welcomeBgm = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         this.getLoginFlag();
+        this.welcome();
         handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
@@ -67,9 +75,31 @@ public class WelcomeActivity extends BaseActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        this.welcomeBgm.release();
         handler.removeCallbacksAndMessages(null);
         handler = null;
         application = null;
+        welcomeBgm = null;
+    }
+
+    private void welcome() {
+        /*如果使用此音效，时间为2s*/
+        this.welcomeBgm = MediaPlayer.create(this, R.raw.welcome); //  获取资源
+/*        DateFormat df = new SimpleDateFormat("HH");
+        int hour = Integer.parseInt(df.format(new Date()));
+        Log.v("WELCOME2", "### hour " + hour);
+        *//*如果使用此音效，时间为3s*//*
+        if (hour >= 5 && hour <= 11){
+            this.welcomeBgm = MediaPlayer.create(this, R.raw.morning); //  获取资源
+            Log.v("WELCOME3", "### hour " + hour);
+        } else if(hour >= 12 && hour <= 18){
+            this.welcomeBgm = MediaPlayer.create(this, R.raw.afternoon); //  获取资源
+            Log.v("WELCOME4", "### hour " + hour);
+        } else {
+            this.welcomeBgm = MediaPlayer.create(this, R.raw.evening); //  获取资源
+            Log.v("WELCOME5", "### hour " + hour);
+        }*/
+        this.welcomeBgm.start();
     }
 
     private void getLoginFlag() {

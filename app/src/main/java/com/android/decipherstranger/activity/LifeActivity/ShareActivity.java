@@ -50,7 +50,7 @@ import java.util.Map;
  */
 public class ShareActivity extends BaseActivity implements AutoListView.OnRefreshListener, AutoListView.OnLoadListener {
 
-    private LinearLayout layout = null;
+  //  private LinearLayout layout = null;
 
     Bitmap photo = null;
     Bitmap portrait = null;
@@ -67,14 +67,13 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
     private LifeShareBroadcastReceiver receiver = null;
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
-            boolean flag = false;
+      //      MyStatic.flag = false;
             ArrayList<Map<String, Object>> result = (ArrayList<Map<String, Object>>) msg.obj;
             switch (msg.what) {
                 case AutoListView.INITDATA:
                     listView.onRefreshComplete();
                     dataList.clear();
                     dataList.addAll(result);
-                    flag = true;
                     System.out.println("#### 数据初始化成功");
                     break;
                 case AutoListView.REFRESH:
@@ -92,7 +91,8 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
             //   listView.setResultSize(result.size());
             listView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
-            layout.setClickable(flag);
+            MyStatic.flag = true;
+        //    layout.setClickable(ListButtonAdapter.flag);
             System.out.println("#### 解锁");
         }
     };
@@ -152,7 +152,8 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
 
     private void refresh() {
         refreshFlag = true;
-        layout.setClickable(true);
+        MyStatic.flag = false;
+     //   layout.setClickable(true);
         System.out.println("#### 刷新锁定");
         listView.initFooter(0);
         //  TODO 向服务器发送刷新请求,获取最新的5条数据（这是一个ID为逆序的数组）
@@ -167,7 +168,8 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
     }
 
     private void load() {
-        layout.setClickable(true);
+        MyStatic.flag = false;
+     //   layout.setClickable(true);
         System.out.println("#### 加载锁定");
         //  TODO 向服务器发送加载数据,获取ID<count的10条数据（从count-1到count-10）
         if (NetworkService.getInstance().getIsConnected()) {
@@ -183,8 +185,8 @@ public class ShareActivity extends BaseActivity implements AutoListView.OnRefres
     private void init() {
         this.helper = new DATABASE(this);
         /*锁定界面*/
-        layout = (LinearLayout) super.findViewById(R.id.addFlag);
-        layout.setClickable(true);
+    //    layout = (LinearLayout) super.findViewById(R.id.addFlag);
+    //    layout.setClickable(true);
         System.out.println("#### 初始锁定");
         /*锁定聚焦到顶部*/
         topLayout = (RelativeLayout) super.findViewById(R.id.top);

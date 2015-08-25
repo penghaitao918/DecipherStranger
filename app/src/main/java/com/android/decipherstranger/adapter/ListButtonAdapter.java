@@ -198,18 +198,20 @@ public class ListButtonAdapter extends BaseAdapter {
 
         @Override
         public void onClick(View view) {
-            switch (view.getId()) {
-                case R.id.numButton:
-                    addNum(position);
-                    MyStatic.sharePosition = position;
-                    MyStatic.sharePositionId = (Integer) mData.get(position).get(MyStatic.SHARE_ID);;
-                    MyStatic.sharePositionNum = (Integer) mData.get(position).get(MyStatic.SHARE_NUM);
-                    System.out.println("### 执行点赞");
-                    break;
-                case R.id.friendButton:
-                    addFriends(position);
-                    System.out.println("### 执行加友");
-                    break;
+            if (MyStatic.flag) {
+                switch (view.getId()) {
+                    case R.id.numButton:
+                        addNum(position);
+                        MyStatic.sharePosition = position;
+                        MyStatic.sharePositionId = (Integer) mData.get(position).get(MyStatic.SHARE_ID);
+                        MyStatic.sharePositionNum = (Integer) mData.get(position).get(MyStatic.SHARE_NUM);
+                        System.out.println("### 执行点赞");
+                        break;
+                    case R.id.friendButton:
+                        addFriends(position);
+                        System.out.println("### 执行加友");
+                        break;
+                }
             }
         }
     }
